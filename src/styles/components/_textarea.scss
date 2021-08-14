@@ -1,0 +1,18 @@
+.textarea-A {
+  width: 100%;
+  color: #333333;
+  font-family: 'Apple SD Gothic Neo';
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19px;
+  outline: none;
+  border: none;
+  resize: none;
+  overflow: visible;
+  &::placeholder {
+    color: #bdbdbd;
+  }
+  &::selection {
+    background-color: #cbd0ec;
+  }
+}

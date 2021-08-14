@@ -1,0 +1,47 @@
+// 팝업 로그인 페이지의 Input 컴포넌트
+.input-A {
+  width: 100%;
+  font-size: 13px;
+  line-height: 24px;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #7a84dc;
+  padding-bottom: 5px;
+  margin-bottom: 28px;
+
+  &:placeholder-shown {
+    border-bottom: 2px solid #bdbdbd;
+  }
+
+  &:focus {
+    border-bottom: 2px solid #7a84dc;
+  }
+
+  &::placeholder {
+    color: #bdbdbd;
+  }
+
+  &__error {
+    font-size: 9px;
+    color: #ff3165;
+    line-height: 24px;
+    margin: 0;
+    transform: translateY(-28px);
+  }
+}
+
+.input-B {
+  width: 100%;
+  font-family: 'Apple SD Gothic Neo';
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #cbd0ec;
+  padding-bottom: 2px;
+
+  &::placeholder {
+    color: #bdbdbd;
+  }
+}
