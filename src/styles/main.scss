@@ -7,19 +7,17 @@
 @import 'vendors/normalize';
 
 // 3. Base stuff
-@import 'base/base', 'base/fonts', 'base/helpers';
+@import 'base/base', 'base/fonts';
 
 // 4. Layout-related sections
-@import 'layout/header', 'layout/footer', 'layout/sidebar', 'layout/editor',
-  'layout/tag';
+@import 'layout/header', 'layout/footer', 'layout/editor', 'layout/tag';
 
 // 5. Components
 @import 'components/button', 'components/card', 'components/input',
   'components/textarea';
 
 // 6. Page-specific styles
-@import 'pages/home', 'pages/login', 'pages/loading', 'pages/bookmark',
-  'pages/success';
+@import 'pages/home', 'pages/login';
 
 // 7. Themes
 @import 'themes/default';

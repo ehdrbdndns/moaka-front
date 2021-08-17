@@ -3,6 +3,20 @@ export type LoginInfo = {
   pwd: string;
 };
 
+export type googleRegisterInfo = {
+  sub: string;
+  id: string;
+  name: string;
+  profile: string;
+  auth_type: string;
+};
+
+export type RegisterResponseByAxios = {
+  no: number;
+  isSuccess: boolean;
+  error: string | null;
+};
+
 export type LoginResponseByAxios = {
   isLogin: boolean;
   token: string;
