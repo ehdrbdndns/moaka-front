@@ -16,3 +16,7 @@ export const getLogout = () => ({
 export const getIsLogin = () => ({
   type: sagaType.GET_ISLOGIN,
 });
+export const getRegister = (localRegisterInfo: sagaType.localRegisterInfo) => ({
+  type: sagaType.GET_REGISTER,
+  payload: localRegisterInfo,
+});

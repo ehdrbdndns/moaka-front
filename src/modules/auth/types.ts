@@ -22,6 +22,12 @@ export const GET_ISLOGIN_SUCCESS = 'auth/ISLOGIN_SUCCESS' as const;
 export const GET_ISLOGIN_FAILE = 'auth/ISLOGIN_FAILE' as const;
 export const GET_ISLOGIN_ERROR = 'auth/ISLOGIN_ERROR' as const;
 
+// REF 회원가입
+export const GET_REGISTER = 'auth/REGISTER' as const;
+export const GET_REGISTER_SUCCESS = 'auth/REGISTER_SUCCESS' as const;
+export const GET_REGISTER_FAILE = 'auth/REGISTER_FAILE' as const;
+export const GET_REGISTER_ERROR = 'auth/REGISTER_ERROR';
+
 // TODO 액션 함수 매개변수 타입
 export type userInfo = {
   no: number;
@@ -40,6 +46,13 @@ export type googleUserInfo = {
   auth_type: string;
 };
 
+export type localRegisterInfo = {
+  id: string;
+  pwd: string;
+  name: string;
+  auth_type: string;
+};
+
 //TODO Reducer 변수 타입
 // REF 초기 상태 타입
 export type authState = {
@@ -55,6 +68,7 @@ export type initialState = {
   data: authState;
   error: string | null;
 };
+
 // REF 초기 상태 객체
 export const initialAuthState: initialState = {
   loading: false,

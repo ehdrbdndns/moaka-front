@@ -178,6 +178,37 @@ function auth(
         },
         error: action.payload,
       };
+    case type.GET_REGISTER:
+      return {
+        ...state,
+        loading: true,
+        data: {
+          no: 0,
+          id: '',
+          name: '',
+          profile: '',
+          auth_type: '',
+          isLogin: false,
+        },
+        error: null,
+      };
+    case type.GET_REGISTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case type.GET_REGISTER_FAILE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case type.GET_REGISTER_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

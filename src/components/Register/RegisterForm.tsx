@@ -3,16 +3,18 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { registerStyles } from './styles';
 import { useState } from 'react';
+import { registerParams } from './types';
+import { CircularProgress } from '@material-ui/core';
+import { useRef } from 'react';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -27,12 +29,24 @@ function Copyright() {
   );
 }
 
-function RegisterForm() {
+function RegisterForm({ loading, error, localRegister }: registerParams) {
   const classes = registerStyles();
+
+  const { push } = useHistory();
 
   const [name, setName] = useState('');
   const [id, setId] = useState('');
   const [pwd, setPwd] = useState('');
+
+  const prevLoading = useRef<boolean>();
+
+  useEffect(() => {
+    if (prevLoading.current) {
+      error || push('/');
+    } else {
+      prevLoading.current = loading;
+    }
+  }, [loading, error, push]);
 
   const setNameEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -44,6 +58,16 @@ function RegisterForm() {
 
   const setPwdEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPwd(e.target.value);
+  };
+
+  const localRegisterEvent = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    localRegister({
+      id: id,
+      pwd: pwd,
+      name: name,
+      auth_type: 'local',
+    });
   };
 
   return (
@@ -60,7 +84,7 @@ function RegisterForm() {
         <Typography component="h1" variant="h5">
           회원가입
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={localRegisterEvent}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <TextField
@@ -111,15 +135,20 @@ function RegisterForm() {
               />
             </Grid> */}
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            회원가입
-          </Button>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              회원가입
+            </Button>
+          )}
+          {error && <Typography>{error}</Typography>}
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">

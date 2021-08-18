@@ -5,7 +5,7 @@ import * as registerAPI from '../../apis/auth/register';
 import * as sagaType from './types';
 import * as authType from '../../apis/auth/types';
 import jwtDecode from 'jwt-decode';
-import { getGoogleLogin } from './actions';
+import { getGoogleLogin, getRegister } from './actions';
 function* logoutSaga() {
   try {
     yield put({
@@ -46,12 +46,10 @@ function* googleLoginSaga(action: ReturnType<typeof getGoogleLogin>) {
       });
     } else {
       //TODO 로그인 실패
-      console.log('1');
       const registerResponseByAxios: authType.RegisterResponseByAxios =
         yield call(registerAPI.googleRegister, action.payload);
       if (registerResponseByAxios.isSuccess) {
         // TODO 성공적으로 회원가입
-        console.log('2');
         const userInfo: sagaType.userInfo = {
           no: registerResponseByAxios.no,
           id: action.payload.id,
@@ -64,7 +62,6 @@ function* googleLoginSaga(action: ReturnType<typeof getGoogleLogin>) {
           payload: userInfo,
         });
       } else {
-        console.log('3');
         // TODO 회원가입 실패
         yield put({
           type: sagaType.GET_GOOGLE_LOGIN_FAILE,
@@ -119,8 +116,35 @@ function* localLoginSaga(action: ReturnType<typeof getLocalLogin>) {
   }
 }
 
+function* localRegisterSaga(action: ReturnType<typeof getRegister>) {
+  try {
+    const registerResponseByAxios: authType.RegisterResponseByAxios =
+      yield call(registerAPI.localRegister, action.payload);
+    if (registerResponseByAxios.isSuccess) {
+      // TODO 성공적으로 회원가입
+      yield put({
+        type: sagaType.GET_REGISTER_SUCCESS,
+      });
+    } else {
+      // TODO 회원가입 실패 ex) 이미 존재하는 회원
+      yield put({
+        type: sagaType.GET_REGISTER_FAILE,
+        payload: '이미 존재하는 이메일 입니다.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.GET_REGISTER_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
 export function* authSaga() {
   yield takeEvery(sagaType.GET_LOGOUT, logoutSaga);
   yield takeLatest(sagaType.GET_LOCAL_LOGIN, localLoginSaga);
   yield takeLatest(sagaType.GET_GOOGLE_LOGIN, googleLoginSaga);
+  yield takeLatest(sagaType.GET_REGISTER, localRegisterSaga);
 }
