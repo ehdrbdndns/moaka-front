@@ -6,10 +6,14 @@ import Home from './containers/Home';
 import Login from './containers/Login';
 import Register from './containers/Register';
 import MyPage from './containers/MyPage';
+import ArchiveList from './containers/ArchiveList';
 
 function App() {
   return (
     <Switch>
+      <Route path="/test">
+        <ArchiveList />
+      </Route>
       <Route path="/login">
         <Login />
       </Route>
