@@ -6,23 +6,27 @@ import Home from './containers/Home';
 import Login from './containers/Login';
 import Register from './containers/Register';
 import MyPage from './containers/MyPage';
+import Header from './components/Header/Header';
 
 function App() {
   return (
-    <Switch>
-      <Route path="/login">
-        <Login />
-      </Route>
-      <Route path="/register">
-        <Register />
-      </Route>
-      <Route path="/mypage">
-        <MyPage />
-      </Route>
-      <Route path="/">
-        <Home />
-      </Route>
-    </Switch>
+    <div>
+      <Header title="모아카" loginStatus={false} />
+      <Switch>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/register">
+          <Register />
+        </Route>
+        <Route path="/mypage">
+          <MyPage />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </div>
   );
 }
 
