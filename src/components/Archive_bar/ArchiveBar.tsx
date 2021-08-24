@@ -5,67 +5,29 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems } from './listItems';
 import { myPageStyles } from './styles';
-import AddContentModal from '../AddContent/AddContentModal';
 import DashboardProps from './types';
 import { Link } from 'react-router-dom';
+import MainView from '../MainView/MainView';
+import DetailView from '../DetailView/DetailView';
 
-export default function Dashboard(props: DashboardProps) {
+export default function ArchiveBar(props: DashboardProps) {
   const classes = myPageStyles();
   const [open, setOpen] = React.useState(true);
-  const [modalOpen, setModalOpen] = React.useState(false);
-  const [contents, setContents] = React.useState(props.contents);
-  const contentList = contents.map(content => (
-    <List className={classes.listRoot}>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="img/moaka_logo.png" />
-        </ListItemAvatar>
-        <ListItemText
-          primary={content.name}
-          secondary={
-            <React.Fragment>
-              <Typography
-                component="span"
-                variant="body2"
-                className={classes.inline}
-                color="textPrimary"
-              >
-                {content.desc}
-              </Typography>
-              #{content.tag}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-    </List>
-  ));
+  const { view } = props;
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
-  };
-  const handleModalOpen = () => {
-    setModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
   };
 
   return (
@@ -95,7 +57,7 @@ export default function Dashboard(props: DashboardProps) {
             noWrap
             className={classes.title}
           >
-            Mypage
+            Archive
           </Typography>
 
           <IconButton color="inherit">
@@ -116,29 +78,10 @@ export default function Dashboard(props: DashboardProps) {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List className={classes.folderLink}>{mainListItems}</List>
         <Divider />
-        <List>{secondaryListItems}</List>
       </Drawer>
-      <div className={classes.contents}>
-        {/* #콘텐츠 링크 추가 버튼 */}
-        {/* <Button
-          className={classes.addButton}
-          variant="outlined"
-          onClick={handleModalOpen}
-        >
-          Add Content
-        </Button> */}
-        <Modal
-          open={modalOpen}
-          onClose={handleModalClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <AddContentModal />
-        </Modal>
-        {contentList}
-      </div>
+      {view === 'main' ? <MainView /> : <DetailView />}
     </div>
   );
 }

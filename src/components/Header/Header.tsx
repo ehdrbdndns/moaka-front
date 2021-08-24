@@ -64,6 +64,9 @@ function Header(props: HeaderProps) {
         <Link to={'/mypage'} className={classes.toolbarLink}>
           Mypage
         </Link>
+        <Link to={'/archive/main'} className={classes.toolbarLink}>
+          Archive
+        </Link>
       </Toolbar>
       <Divider />
     </React.Fragment>
