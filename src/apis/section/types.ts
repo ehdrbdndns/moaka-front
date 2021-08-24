@@ -8,9 +8,14 @@ export type getSectionResponseByAxios = {
 
 export type makeSectionResponseByAxios = {
   isSuccess: boolean;
+  section_no: number;
   error: number;
 };
 export type deleteSectionResponseByAxios = {
+  isSuccess: boolean;
+  error: number;
+};
+export type updateSectionResponseByAxios = {
   isSuccess: boolean;
   error: number;
 };

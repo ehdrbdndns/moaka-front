@@ -82,13 +82,13 @@ type deleteSectionModalProps = {
   deleteSectionRedux: (section_no: number) => void;
 };
 
-type modifySectionModalProps = {
+type updateSectionModalProps = {
   section_no: number;
   loading: boolean;
   title_prop: string;
   description_prop: string;
   tag_list: Array<string>;
-  modifySectionRedux: (sectionInfo: sectionInfo) => void;
+  updateSectionRedux: (sectionInfo: sectionInfo) => void;
 };
 
 export function MakeSectionModal({
@@ -334,14 +334,14 @@ export function DeleteSectionModal({
   );
 }
 
-export function ModifySectionModal({
+export function UpdateSectionModal({
   section_no,
   loading,
   title_prop,
   description_prop,
   tag_list,
-  modifySectionRedux,
-}: modifySectionModalProps) {
+  updateSectionRedux,
+}: updateSectionModalProps) {
   const sectionBtnClasses = sectionBtnStyles();
 
   const [open, setOpen] = useState(false);
@@ -363,7 +363,6 @@ export function ModifySectionModal({
   useEffect(() => {
     for (let i = 0; i < tag_list.length; i++) {
       setTagList([
-        ...tagList,
         {
           id: ++tagId.current,
           tag: tag_list[i],
@@ -417,10 +416,7 @@ export function ModifySectionModal({
       tag_list,
       regdate: undefined,
     };
-    modifySectionRedux(sectionInfo);
-    setTitle('');
-    setDescription('');
-    setTagList([]);
+    updateSectionRedux(sectionInfo);
     handleClose();
   };
 

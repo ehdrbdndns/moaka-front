@@ -16,7 +16,7 @@ import { Box } from '@material-ui/core';
 import {
   DeleteSectionModal,
   MakeSectionModal,
-  ModifySectionModal,
+  UpdateSectionModal,
 } from './SectionModal';
 import { sectionInfo } from '../../modules/section';
 import { useEffect } from 'react';
@@ -40,7 +40,7 @@ type sectionFormProps = {
   makeSectionRedux: (sectionInfo: sectionInfo) => void;
   deleteSectionRedux: (section_no: number) => void;
   getSectionRedux: (archive_no: number) => void;
-  modifySectionRedux: (sectionInfo: sectionInfo) => void;
+  updateSectionRedux: (sectionInfo: sectionInfo) => void;
 };
 
 function SectionForm({
@@ -48,7 +48,7 @@ function SectionForm({
   error,
   archive_no,
   makeSectionRedux,
-  modifySectionRedux,
+  updateSectionRedux,
   deleteSectionRedux,
   getSectionRedux,
   section_list,
@@ -86,9 +86,9 @@ function SectionForm({
                 deleteSectionRedux={deleteSectionRedux}
                 loading={loading}
               />
-              <ModifySectionModal
+              <UpdateSectionModal
                 section_no={section.no || 0}
-                modifySectionRedux={modifySectionRedux}
+                updateSectionRedux={updateSectionRedux}
                 loading={loading}
                 description_prop={section.description}
                 title_prop={section.title}

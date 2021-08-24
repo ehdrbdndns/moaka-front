@@ -1,11 +1,17 @@
 import { put, call, takeLatest, takeEvery } from 'redux-saga/effects';
-import { deleteSection, getSection, makeSection } from './actions';
+import {
+  deleteSection,
+  getSection,
+  makeSection,
+  updateSection,
+} from './actions';
 import * as sagaType from './types';
 import * as sectionAPI from '../../apis/section/section';
 import {
   deleteSectionResponseByAxios,
   getSectionResponseByAxios,
   makeSectionResponseByAxios,
+  updateSectionResponseByAxios,
 } from '../../apis/section/types';
 
 function* getSectionSaga(action: ReturnType<typeof getSection>) {
@@ -43,6 +49,40 @@ function* getSectionSaga(action: ReturnType<typeof getSection>) {
   }
 }
 
+function* updateSectionSaga(action: ReturnType<typeof updateSection>) {
+  try {
+    const response: updateSectionResponseByAxios = yield call(
+      sectionAPI.updateSection,
+      action.playload,
+    );
+    if (response.isSuccess) {
+      yield put({
+        type: sagaType.UPDATE_SECTION_SUCCESS,
+        payload: action.playload,
+      });
+    } else if (response.error === 403) {
+      alert('로그인 후 다시 이용해 주세요.');
+      localStorage.removeItem('token');
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.UPDATE_SECTION_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: sagaType.UPDATE_SECTION_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
 function* makeSectionSaga(action: ReturnType<typeof makeSection>) {
   try {
     const response: makeSectionResponseByAxios = yield call(
@@ -50,8 +90,10 @@ function* makeSectionSaga(action: ReturnType<typeof makeSection>) {
       action.payload,
     );
     if (response.isSuccess) {
+      action.payload.no = response.section_no;
       yield put({
         type: sagaType.MAKE_SECTION_SUCCESS,
+        payload: action.payload,
       });
     } else if (response.error === 403) {
       alert('로그인 후 다시 이용해 주세요.');
@@ -86,6 +128,7 @@ function* deleteSectionSaga(action: ReturnType<typeof deleteSection>) {
     if (response.isSuccess) {
       yield put({
         type: sagaType.DELETE_SECTION_SUCCESS,
+        payload: action.payload,
       });
     } else if (response.error === 403) {
       alert('로그인 후 다시 이용해 주세요.');
@@ -115,4 +158,5 @@ export function* sectionSaga() {
   yield takeLatest(sagaType.MAKE_SECTION, makeSectionSaga);
   yield takeLatest(sagaType.DELETE_SECTION, deleteSectionSaga);
   yield takeEvery(sagaType.GET_SECTION, getSectionSaga);
+  yield takeLatest(sagaType.UPDATE_SECTION, updateSectionSaga);
 }

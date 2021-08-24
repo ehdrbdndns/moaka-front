@@ -5,6 +5,7 @@ import {
   deleteSectionResponseByAxios,
   getSectionResponseByAxios,
   makeSectionResponseByAxios,
+  updateSectionResponseByAxios,
 } from './types';
 
 export const getSection = async (
@@ -47,6 +48,7 @@ export const makeSection = async (
 ): Promise<makeSectionResponseByAxios> => {
   const result: makeSectionResponseByAxios = {
     isSuccess: false,
+    section_no: 0,
     error: 0,
   };
   const token = localStorage.getItem('token');
@@ -59,6 +61,7 @@ export const makeSection = async (
     .then(function (response) {
       console.log(response);
       result.isSuccess = true;
+      result.section_no = response.data.section_no;
     })
     .catch(function (error) {
       console.log(error.response);
@@ -88,6 +91,33 @@ export const deleteSection = async (
         },
       },
     )
+    .then(function (response) {
+      console.log(response);
+      result.isSuccess = true;
+    })
+    .catch(function (error) {
+      console.log(error.response);
+      result.isSuccess = false;
+      result.error = error.response.status;
+    });
+  return result;
+};
+
+export const updateSection = async (
+  sectionInfo: sectionInfo,
+): Promise<updateSectionResponseByAxios> => {
+  const result: updateSectionResponseByAxios = {
+    isSuccess: false,
+    error: 0,
+  };
+
+  const token = localStorage.getItem('token');
+  await axios
+    .post(BASE_URL + '/user/updateSection', sectionInfo, {
+      headers: {
+        Bearer: token,
+      },
+    })
     .then(function (response) {
       console.log(response);
       result.isSuccess = true;

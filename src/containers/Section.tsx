@@ -7,6 +7,7 @@ import {
   getSection,
   makeSection,
   sectionInfo,
+  updateSection,
 } from '../modules/section';
 
 function Section() {
@@ -26,7 +27,9 @@ function Section() {
     dispatch(getSection(archive_no));
   }
 
-  function modifySectionRedux(sectionInfo: sectionInfo) {}
+  function updateSectionRedux(sectionInfo: sectionInfo) {
+    dispatch(updateSection(sectionInfo));
+  }
 
   return (
     <>
@@ -37,7 +40,7 @@ function Section() {
         makeSectionRedux={makeSectionRedux}
         deleteSectionRedux={deleteSectionRedux}
         getSectionRedux={getSectionRedux}
-        modifySectionRedux={modifySectionRedux}
+        updateSectionRedux={updateSectionRedux}
         // FIXME 아카이브 고유 번호는 추후 디비로부터 가져와야 함
         archive_no={1}
       />

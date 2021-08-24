@@ -14,6 +14,11 @@ export const GET_SECTION = 'section/GET_SECTION' as const;
 export const GET_SECTION_SUCCESS = 'section/GET_SECTION_SUCCESS' as const;
 export const GET_SECTION_ERROR = 'section/GET_SECTION_ERROR' as const;
 
+// REF 섹션 수정하기
+export const UPDATE_SECTION = 'section/UPDATE_SECTION' as const;
+export const UPDATE_SECTION_SUCCESS = 'section/UPDATE_SECTION_SUCCESS' as const;
+export const UPDATE_SECTION_ERROR = 'section/UPDATE_SECTION_ERROR'
+
 // REF JWT 토큰 기한 만료
 export const EXPIRE_JWT_TOKEN = 'section/EXPIRE_JWT_TOKEN' as const;
 

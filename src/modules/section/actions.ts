@@ -13,3 +13,7 @@ export const deleteSection = (section_no: number) => ({
   type: sagaType.DELETE_SECTION,
   payload: section_no,
 });
+export const updateSection = (sectionInfo: sagaType.sectionInfo) => ({
+  type: sagaType.UPDATE_SECTION,
+  playload: sectionInfo,
+});
