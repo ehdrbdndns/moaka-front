@@ -30,6 +30,7 @@ function* googleLoginSaga(action: ReturnType<typeof getGoogleLogin>) {
     console.log(loginResponseByAxios);
     if (loginResponseByAxios.isLogin) {
       //TODO 로그인 성공
+      localStorage.setItem('token', loginResponseByAxios.token);
       const token: authType.JwtDecodeFromUserInfo = jwtDecode(
         loginResponseByAxios.token,
       );
@@ -86,6 +87,7 @@ function* localLoginSaga(action: ReturnType<typeof getLocalLogin>) {
     );
     if (loginResponseByAxios.isLogin) {
       // TODO 로그인 성공
+      localStorage.setItem('token', loginResponseByAxios.token);
       const token: authType.JwtDecodeFromUserInfo = jwtDecode(
         loginResponseByAxios.token,
       );

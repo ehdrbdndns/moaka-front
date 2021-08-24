@@ -24,16 +24,12 @@ export type LoginResponseByAxios = {
 };
 
 export type JwtDecodeFromUserInfo = {
-  age: string;
-  aud: string;
-  auth_type: string;
-  exp: Number;
-  id: string;
-  iss: string;
+  exp: number;
+  iat: number;
   name: string;
   no: number;
   profile: string;
-  pwd: string;
-  regdate: string;
-  version: string;
+  roles: Array<string>;
+  id: string;
+  sub: string;
 };
