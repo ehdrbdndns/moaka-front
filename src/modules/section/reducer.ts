@@ -21,10 +21,24 @@ function section(
       };
     case type.MAKE_SECTION_ERROR:
     case type.DELETE_SECTION_ERROR:
+    case type.GET_SECTION_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case type.GET_SECTION:
+      return {
+        ...state,
+        loading: true,
+        data: [],
+        error: null,
+      };
+    case type.GET_SECTION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
       };
     case type.EXPIRE_JWT_TOKEN:
       return {

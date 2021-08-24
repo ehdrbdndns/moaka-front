@@ -1,6 +1,10 @@
 import * as sagaType from './types';
 
 // TODO 액션 함수
+export const getSection = (archive_no: number) => ({
+  type: sagaType.GET_SECTION,
+  payload: archive_no,
+});
 export const makeSection = (sectionInfo: sagaType.sectionInfo) => ({
   type: sagaType.MAKE_SECTION,
   payload: sectionInfo,

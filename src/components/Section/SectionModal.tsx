@@ -148,7 +148,6 @@ export function MakeSectionModal({
       regdate: undefined,
     };
     makeSectionRedux(sectionInfo);
-    // testAPI.makeSection(sectionInfo);
     setTitle('');
     setDescription('');
     setTagList([]);

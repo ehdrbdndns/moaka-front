@@ -15,6 +15,7 @@ import { Typography } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import { DeleteSectionModal, MakeSectionModal } from './SectionModal';
 import { sectionInfo } from '../../modules/section';
+import { useEffect } from 'react';
 
 const barStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,21 +31,27 @@ const barStyles = makeStyles((theme: Theme) =>
 type sectionFormProps = {
   loading: boolean;
   error: string;
-  section_no: number;
   archive_no: number;
+  section_list: Array<sectionInfo>;
   makeSectionRedux: (sectionInfo: sectionInfo) => void;
   deleteSectionRedux: (section_no: number) => void;
+  getSectionRedux: (archive_no: number) => void;
 };
 
 function SectionForm({
   loading,
   error,
-  section_no,
   archive_no,
   makeSectionRedux,
   deleteSectionRedux,
+  getSectionRedux,
+  section_list,
 }: sectionFormProps) {
   const barClasses = barStyles();
+
+  useEffect(() => {
+    getSectionRedux(archive_no);
+  }, [archive_no]);
 
   return (
     <>
@@ -54,26 +61,28 @@ function SectionForm({
           archive_no={archive_no}
           loading={loading}
         />
-        <AppBar position="static">
-          <Toolbar variant="dense">
-            <IconButton
-              edge="start"
-              className={barClasses.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit">
-              섹션 제목이여~
-            </Typography>
-            <DeleteSectionModal
-              section_no={section_no}
-              deleteSectionRedux={deleteSectionRedux}
-              loading={loading}
-            />
-          </Toolbar>
-        </AppBar>
+        {section_list.map(section => (
+          <AppBar position="static">
+            <Toolbar variant="dense">
+              <IconButton
+                edge="start"
+                className={barClasses.menuButton}
+                color="inherit"
+                aria-label="menu"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" color="inherit">
+                {section.title}
+              </Typography>
+              <DeleteSectionModal
+                section_no={section.no || 0}
+                deleteSectionRedux={deleteSectionRedux}
+                loading={loading}
+              />
+            </Toolbar>
+          </AppBar>
+        ))}
         <Container>
           <Box my={2}>
             <Grid container spacing={3}>

@@ -2,7 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SectionForm from '../components/Section/SectionForm';
 import { RootState } from '../modules';
-import { deleteSection, makeSection, sectionInfo } from '../modules/section';
+import {
+  deleteSection,
+  getSection,
+  makeSection,
+  sectionInfo,
+} from '../modules/section';
 
 function Section() {
   const dispatch = useDispatch();
@@ -17,16 +22,21 @@ function Section() {
     dispatch(deleteSection(section_no));
   }
 
+  function getSectionRedux(archive_no: number) {
+    dispatch(getSection(archive_no));
+  }
+
   return (
     <>
       <SectionForm
         loading={sectionInfo.loading}
         error={sectionInfo.error}
+        section_list={sectionInfo.data}
         makeSectionRedux={makeSectionRedux}
         deleteSectionRedux={deleteSectionRedux}
-        // FIXME 아카이브와 섹션 고유 번호는 추후 디비로부터 가져와야 함
+        getSectionRedux={getSectionRedux}
+        // FIXME 아카이브 고유 번호는 추후 디비로부터 가져와야 함
         archive_no={1}
-        section_no={28}
       />
     </>
   );

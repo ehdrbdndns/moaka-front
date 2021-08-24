@@ -3,8 +3,44 @@ import { sectionInfo } from '../../modules/section/types';
 import { BASE_URL } from '../utils';
 import {
   deleteSectionResponseByAxios,
+  getSectionResponseByAxios,
   makeSectionResponseByAxios,
 } from './types';
+
+export const getSection = async (
+  archive_no: number,
+): Promise<getSectionResponseByAxios> => {
+  const result: getSectionResponseByAxios = {
+    isSuccess: false,
+    error: 0,
+    section_list: [],
+  };
+
+  const token = localStorage.getItem('token');
+  await axios
+    .post(
+      BASE_URL + '/user/getSection',
+      {
+        archive_no,
+      },
+      {
+        headers: {
+          Bearer: token,
+        },
+      },
+    )
+    .then(function (response) {
+      console.log(response);
+      result.isSuccess = true;
+      result.section_list = response.data;
+    })
+    .catch(function (error) {
+      console.log(error.response);
+      result.isSuccess = false;
+      result.error = error.response.status;
+    });
+  return result;
+};
 
 export const makeSection = async (
   sectionInfo: sectionInfo,

@@ -9,6 +9,11 @@ export const DELETE_SECTION = 'section/DELETE_SECTION' as const;
 export const DELETE_SECTION_SUCCESS = 'section/DELETE_SECTION_SUCCESS' as const;
 export const DELETE_SECTION_ERROR = 'section/DELETE_SECTION_ERROR' as const;
 
+// REF 섹션 불러오기
+export const GET_SECTION = 'section/GET_SECTION' as const;
+export const GET_SECTION_SUCCESS = 'section/GET_SECTION_SUCCESS' as const;
+export const GET_SECTION_ERROR = 'section/GET_SECTION_ERROR' as const;
+
 // REF JWT 토큰 기한 만료
 export const EXPIRE_JWT_TOKEN = 'section/EXPIRE_JWT_TOKEN' as const;
 
