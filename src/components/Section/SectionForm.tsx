@@ -13,7 +13,11 @@ import CardForm from '../Chunk/ChunkForm';
 import { Toolbar } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { Box } from '@material-ui/core';
-import { DeleteSectionModal, MakeSectionModal } from './SectionModal';
+import {
+  DeleteSectionModal,
+  MakeSectionModal,
+  ModifySectionModal,
+} from './SectionModal';
 import { sectionInfo } from '../../modules/section';
 import { useEffect } from 'react';
 
@@ -36,6 +40,7 @@ type sectionFormProps = {
   makeSectionRedux: (sectionInfo: sectionInfo) => void;
   deleteSectionRedux: (section_no: number) => void;
   getSectionRedux: (archive_no: number) => void;
+  modifySectionRedux: (sectionInfo: sectionInfo) => void;
 };
 
 function SectionForm({
@@ -43,6 +48,7 @@ function SectionForm({
   error,
   archive_no,
   makeSectionRedux,
+  modifySectionRedux,
   deleteSectionRedux,
   getSectionRedux,
   section_list,
@@ -62,7 +68,7 @@ function SectionForm({
           loading={loading}
         />
         {section_list.map(section => (
-          <AppBar position="static">
+          <AppBar position="static" key={section.no}>
             <Toolbar variant="dense">
               <IconButton
                 edge="start"
@@ -79,6 +85,14 @@ function SectionForm({
                 section_no={section.no || 0}
                 deleteSectionRedux={deleteSectionRedux}
                 loading={loading}
+              />
+              <ModifySectionModal
+                section_no={section.no || 0}
+                modifySectionRedux={modifySectionRedux}
+                loading={loading}
+                description_prop={section.description}
+                title_prop={section.title}
+                tag_list={section.tag_list}
               />
             </Toolbar>
           </AppBar>

@@ -26,6 +26,8 @@ function Section() {
     dispatch(getSection(archive_no));
   }
 
+  function modifySectionRedux(sectionInfo: sectionInfo) {}
+
   return (
     <>
       <SectionForm
@@ -35,6 +37,7 @@ function Section() {
         makeSectionRedux={makeSectionRedux}
         deleteSectionRedux={deleteSectionRedux}
         getSectionRedux={getSectionRedux}
+        modifySectionRedux={modifySectionRedux}
         // FIXME 아카이브 고유 번호는 추후 디비로부터 가져와야 함
         archive_no={1}
       />
