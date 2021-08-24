@@ -40,7 +40,7 @@ const cardStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-function CardForm() {
+function ChunkForm() {
   const classes = cardStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -108,4 +108,4 @@ function CardForm() {
   );
 }
 
-export default CardForm;
+export default ChunkForm;

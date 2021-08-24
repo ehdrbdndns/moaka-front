@@ -6,13 +6,13 @@ import Home from './containers/Home';
 import Login from './containers/Login';
 import Register from './containers/Register';
 import MyPage from './containers/MyPage';
-import ArchiveList from './containers/ArchiveList';
+import Section from './containers/Section';
 
 function App() {
   return (
     <Switch>
       <Route path="/test">
-        <ArchiveList />
+        <Section />
       </Route>
       <Route path="/login">
         <Login />
