@@ -8,6 +8,8 @@ import Register from './containers/Register';
 import MyPage from './containers/MyPage';
 import Section from './containers/Section';
 import Header from './components/Header/Header';
+import Archive_main from './containers/Archive_main';
+import Archive_detail from './containers/Archive_detail';
 
 function App() {
   return (
@@ -25,6 +27,12 @@ function App() {
         </Route>
         <Route path="/mypage">
           <MyPage />
+        </Route>
+        <Route path="/archive/main">
+          <Archive_main />
+        </Route>
+        <Route path="/archive/detail">
+          <Archive_detail />
         </Route>
         <Route path="/">
           <Home />
