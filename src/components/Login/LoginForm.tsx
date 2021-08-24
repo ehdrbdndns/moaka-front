@@ -62,8 +62,6 @@ function LoginForm({
 
   const localLoginEvent = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(id);
-    console.log(pwd);
     localLoginRedux({
       id,
       pwd,
