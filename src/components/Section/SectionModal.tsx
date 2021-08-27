@@ -363,6 +363,7 @@ export function UpdateSectionModal({
   useEffect(() => {
     for (let i = 0; i < tag_list.length; i++) {
       setTagList([
+        ...tagList,
         {
           id: ++tagId.current,
           tag: tag_list[i],
@@ -371,7 +372,7 @@ export function UpdateSectionModal({
     }
     setTitle(title_prop);
     setDescription(description_prop);
-  }, [tag_list]);
+  }, [tag_list, title_prop, description_prop]);
 
   const removeTagListEvent = (tagId: number) => {
     setTagList(tagList?.filter(tagItem => tagItem.id !== tagId));

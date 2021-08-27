@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AppBar from '@material-ui/core/AppBar';
-import CardForm from '../Chunk/ChunkForm';
+import ChunkForm from '../Chunk/ChunkForm';
 import { Toolbar } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { Box } from '@material-ui/core';
@@ -101,28 +101,28 @@ function SectionForm({
           <Box my={2}>
             <Grid container spacing={3}>
               <Grid item lg={3} sm={6} xs={12}>
-                <CardForm />
+                <ChunkForm />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
-                <CardForm />
+                <ChunkForm />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
-                <CardForm />
+                <ChunkForm />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
-                <CardForm />
+                <ChunkForm />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
-                <CardForm />
+                <ChunkForm />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
-                <CardForm />
+                <ChunkForm />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
-                <CardForm />
+                <ChunkForm />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
-                <CardForm />
+                <ChunkForm />
               </Grid>
             </Grid>
           </Box>
