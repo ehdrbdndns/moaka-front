@@ -8,7 +8,7 @@ const headerStyles = makeStyles(theme => ({
   toolbarTitle: {
     flex: 1,
     position: 'relative',
-    marginLeft: '116px',
+    marginLeft: '486px',
   },
   toolbarSecondary: {
     height: '60px',
@@ -26,6 +26,21 @@ const headerStyles = makeStyles(theme => ({
     fontSize: '20px',
     color: 'inherit',
     textDecoration: 'none',
+  },
+  searchRoot: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: 400,
+    height: 30,
+  },
+  searchInput: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+    fontSize: '15px',
+  },
+  searchButton: {
+    padding: 10,
   },
 }));
 
