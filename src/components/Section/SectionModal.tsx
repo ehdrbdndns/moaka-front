@@ -13,7 +13,6 @@ import {
 import SaveIcon from '@material-ui/icons/Save';
 import React, { useRef, useState } from 'react';
 import { sectionInfo } from '../../modules/section/types';
-import * as testAPI from '../../apis/section/section';
 import { useEffect } from 'react';
 
 const sectionBtnStyles = makeStyles((theme: Theme) =>
@@ -155,6 +154,7 @@ export function MakeSectionModal({
       archive_no: archive_no,
       description: description,
       tag_list,
+      chunk_list: [],
       regdate: undefined,
     };
     makeSectionRedux(sectionInfo);
@@ -404,7 +404,7 @@ export function UpdateSectionModal({
     setDescription(e.target.value);
   };
 
-  const makeSection = () => {
+  const updateSection = () => {
     const tag_list = new Array<string>();
     for (let i = 0; i < tagList.length; i++) {
       tag_list.push(tagList[i].tag);
@@ -415,6 +415,7 @@ export function UpdateSectionModal({
       archive_no: 0,
       description: description,
       tag_list,
+      chunk_list: [],
       regdate: undefined,
     };
     updateSectionRedux(sectionInfo);
@@ -501,7 +502,7 @@ export function UpdateSectionModal({
                     size="large"
                     fullWidth
                     startIcon={<SaveIcon />}
-                    onClick={makeSection}
+                    onClick={updateSection}
                   >
                     저장
                   </Button>

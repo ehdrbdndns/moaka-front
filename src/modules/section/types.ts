@@ -17,10 +17,22 @@ export const GET_SECTION_ERROR = 'section/GET_SECTION_ERROR' as const;
 // REF 섹션 수정하기
 export const UPDATE_SECTION = 'section/UPDATE_SECTION' as const;
 export const UPDATE_SECTION_SUCCESS = 'section/UPDATE_SECTION_SUCCESS' as const;
-export const UPDATE_SECTION_ERROR = 'section/UPDATE_SECTION_ERROR'
+export const UPDATE_SECTION_ERROR = 'section/UPDATE_SECTION_ERROR';
 
 // REF JWT 토큰 기한 만료
 export const EXPIRE_JWT_TOKEN = 'section/EXPIRE_JWT_TOKEN' as const;
+
+export type chunkInfo = {
+  no: number;
+  section_no: number;
+  title: string;
+  thumbnail: string;
+  link: string;
+  link_title: string;
+  link_description: string;
+  description: string;
+  regdate: string;
+};
 
 export type sectionInfo = {
   no: number | undefined;
@@ -28,6 +40,7 @@ export type sectionInfo = {
   title: string;
   description: string;
   tag_list: Array<string>;
+  chunk_list: Array<chunkInfo>;
   regdate: string | undefined;
 };
 

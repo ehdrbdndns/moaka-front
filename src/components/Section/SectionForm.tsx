@@ -68,65 +68,58 @@ function SectionForm({
           loading={loading}
         />
         {section_list.map(section => (
-          <AppBar position="static" key={section.no}>
-            <Toolbar variant="dense">
-              <IconButton
-                edge="start"
-                className={barClasses.menuButton}
-                color="inherit"
-                aria-label="menu"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" color="inherit">
-                {section.title}
-              </Typography>
-              <DeleteSectionModal
-                section_no={section.no || 0}
-                deleteSectionRedux={deleteSectionRedux}
-                loading={loading}
-              />
-              <UpdateSectionModal
-                section_no={section.no || 0}
-                updateSectionRedux={updateSectionRedux}
-                loading={loading}
-                description_prop={section.description}
-                title_prop={section.title}
-                tag_list={section.tag_list}
-              />
-            </Toolbar>
-          </AppBar>
+          <>
+            <AppBar position="static" key={section.no}>
+              <Toolbar variant="dense">
+                <IconButton
+                  edge="start"
+                  className={barClasses.menuButton}
+                  color="inherit"
+                  aria-label="menu"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" color="inherit">
+                  {section.title}
+                </Typography>
+                <DeleteSectionModal
+                  section_no={section.no || 0}
+                  deleteSectionRedux={deleteSectionRedux}
+                  loading={loading}
+                />
+                <UpdateSectionModal
+                  section_no={section.no || 0}
+                  updateSectionRedux={updateSectionRedux}
+                  loading={loading}
+                  description_prop={section.description}
+                  title_prop={section.title}
+                  tag_list={section.tag_list}
+                />
+              </Toolbar>
+            </AppBar>
+            <Container>
+              <Box my={2}>
+                <Grid container spacing={3}>
+                  {section.chunk_list.length !== 0 ? (
+                    section.chunk_list.map(chunk => (
+                      <Grid item lg={3} sm={6} xs={12}>
+                        <ChunkForm />
+                      </Grid>
+                    ))
+                  ) : (
+                    <Typography
+                      variant="h1"
+                      color="textSecondary"
+                      align="center"
+                    >
+                      정보가 존재하지 않습니다.
+                    </Typography>
+                  )}
+                </Grid>
+              </Box>
+            </Container>
+          </>
         ))}
-        <Container>
-          <Box my={2}>
-            <Grid container spacing={3}>
-              <Grid item lg={3} sm={6} xs={12}>
-                <ChunkForm />
-              </Grid>
-              <Grid item lg={3} sm={6} xs={12}>
-                <ChunkForm />
-              </Grid>
-              <Grid item lg={3} sm={6} xs={12}>
-                <ChunkForm />
-              </Grid>
-              <Grid item lg={3} sm={6} xs={12}>
-                <ChunkForm />
-              </Grid>
-              <Grid item lg={3} sm={6} xs={12}>
-                <ChunkForm />
-              </Grid>
-              <Grid item lg={3} sm={6} xs={12}>
-                <ChunkForm />
-              </Grid>
-              <Grid item lg={3} sm={6} xs={12}>
-                <ChunkForm />
-              </Grid>
-              <Grid item lg={3} sm={6} xs={12}>
-                <ChunkForm />
-              </Grid>
-            </Grid>
-          </Box>
-        </Container>
       </Container>
       {/* <Container maxWidth="lg"></Container> */}
     </>
