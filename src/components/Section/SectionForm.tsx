@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Container,
   createStyles,
@@ -20,6 +20,7 @@ import {
 } from './SectionModal';
 import { sectionInfo } from '../../modules/section';
 import { useEffect } from 'react';
+import { MakeChunkModal } from '../Chunk/ChunkModal';
 
 const barStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -98,12 +99,23 @@ function SectionForm({
               </Toolbar>
             </AppBar>
             <Container>
+              <MakeChunkModal />
               <Box my={2}>
                 <Grid container spacing={3}>
                   {section.chunk_list.length !== 0 ? (
                     section.chunk_list.map(chunk => (
-                      <Grid item lg={3} sm={6} xs={12}>
-                        <ChunkForm />
+                      <Grid key={chunk.no} item lg={3} sm={6} xs={12}>
+                        <ChunkForm
+                          no={chunk.no}
+                          section_no={chunk.section_no}
+                          title={chunk.title}
+                          thumbnail={chunk.thumbnail}
+                          link={chunk.link}
+                          link_title={chunk.link_title}
+                          link_description={chunk.link_description}
+                          description={chunk.description}
+                          regdate={chunk.regdate}
+                        />
                       </Grid>
                     ))
                   ) : (
@@ -121,7 +133,6 @@ function SectionForm({
           </>
         ))}
       </Container>
-      {/* <Container maxWidth="lg"></Container> */}
     </>
   );
 }

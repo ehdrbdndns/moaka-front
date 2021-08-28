@@ -361,15 +361,17 @@ export function UpdateSectionModal({
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    for (let i = 0; i < tag_list.length; i++) {
+    // TODO 기존 태그 리스트의 내용을 초기화한 후 스토어에 있는 태그 리스트를
+    setTagList([]);
+    tag_list.map(tag => {
       setTagList([
         ...tagList,
         {
           id: ++tagId.current,
-          tag: tag_list[i],
+          tag,
         },
       ]);
-    }
+    });
     setTitle(title_prop);
     setDescription(description_prop);
   }, [tag_list, title_prop, description_prop]);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -12,10 +12,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Theme } from '@material-ui/core';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { DeleteChunkModal, UpdateChunkModal } from './ChunkModal';
 
 const cardStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -40,7 +41,28 @@ const cardStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-function ChunkForm() {
+type chunkFormProps = {
+  no: number;
+  section_no: number;
+  title: string;
+  thumbnail: string;
+  link: string;
+  link_title: string;
+  link_description: string;
+  description: string;
+  regdate: string;
+};
+
+function ChunkForm({
+  no,
+  title,
+  thumbnail,
+  link,
+  link_title,
+  link_description,
+  description,
+  regdate,
+}: chunkFormProps) {
   const classes = cardStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -48,27 +70,72 @@ function ChunkForm() {
     setExpanded(!expanded);
   };
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const ITEM_HEIGHT = 48;
+
   return (
     <Card className={classes.root}>
       <CardHeader
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          <>
+            <IconButton
+              aria-label="more"
+              aria-controls="long-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id="long-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5,
+                  width: '15ch',
+                },
+              }}
+            >
+              <MenuItem onClick={handleClose}>
+                <UpdateChunkModal
+                  link={link}
+                  title={title}
+                  description={description}
+                />
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <DeleteChunkModal />
+              </MenuItem>
+            </Menu>
+          </>
         }
-        title="제목입니다."
-        subheader="생성 날짜"
+        title={title}
+        subheader={regdate}
       />
       <CardMedia
         className={classes.media}
-        image="./img/moaka_logo.png"
-        title="Paella dish"
+        image={thumbnail}
+        title={link_title}
       />
       <CardContent>
+        <Typography variant="h5" color="textSecondary" component="p">
+          {link_title}
+        </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {link_description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -91,12 +158,8 @@ function ChunkForm() {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>댓글 대댓글</Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then
-            serve.
-          </Typography>
+          <Typography paragraph>description</Typography>
+          <Typography>{description}</Typography>
         </CardContent>
       </Collapse>
     </Card>
