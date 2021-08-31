@@ -20,9 +20,17 @@ function section(
       return {
         ...state,
         loading: false,
-        data: state.data.map(section =>
-          section.no === action.payload.no ? action.payload : section,
-        ),
+        data: [
+          ...state.data.map(section => {
+            if (section.no === action.payload.no) {
+              action.payload.chunk_list = section.chunk_list;
+              return action.payload;
+            } else {
+              return section;
+            }
+            // section.no === action.payload.no ? action.payload : section,
+          }),
+        ],
       };
     case type.MAKE_SECTION_SUCCESS:
       return {

@@ -86,8 +86,6 @@ function ChunkForm({
   };
 
   const deleteChunk = () => {
-    console.log(no, section_no);
-
     deleteChunkRedux({
       chunk_no: no,
       section_no,

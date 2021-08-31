@@ -81,8 +81,6 @@ function DeleteChunkModal({ deleteChunk }: deleteChunkModal) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
-    console.log('123');
-
     setOpen(true);
   };
 
