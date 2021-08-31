@@ -15,5 +15,11 @@ export const deleteSection = (section_no: number) => ({
 });
 export const updateSection = (sectionInfo: sagaType.sectionInfo) => ({
   type: sagaType.UPDATE_SECTION,
-  playload: sectionInfo,
+  payload: sectionInfo,
+});
+export const deleteChunk = (
+  deleteChunkActionType: sagaType.deleteChunkActionType,
+) => ({
+  type: sagaType.DELETE_CHUNK,
+  payload: deleteChunkActionType,
 });

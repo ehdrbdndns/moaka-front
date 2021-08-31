@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import SectionForm from '../components/Section/SectionForm';
 import { RootState } from '../modules';
 import {
+  deleteChunk,
+  deleteChunkActionType,
   deleteSection,
   getSection,
   makeSection,
@@ -31,6 +33,10 @@ function Section() {
     dispatch(updateSection(sectionInfo));
   }
 
+  function deleteChunkRedux(deleteChunkActionType: deleteChunkActionType) {
+    dispatch(deleteChunk(deleteChunkActionType));
+  }
+
   return (
     <>
       <SectionForm
@@ -41,6 +47,7 @@ function Section() {
         deleteSectionRedux={deleteSectionRedux}
         getSectionRedux={getSectionRedux}
         updateSectionRedux={updateSectionRedux}
+        deleteChunkRedux={deleteChunkRedux}
         // FIXME 아카이브 고유 번호는 추후 디비로부터 가져와야 함
         archive_no={1}
       />

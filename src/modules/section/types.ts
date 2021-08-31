@@ -19,8 +19,19 @@ export const UPDATE_SECTION = 'section/UPDATE_SECTION' as const;
 export const UPDATE_SECTION_SUCCESS = 'section/UPDATE_SECTION_SUCCESS' as const;
 export const UPDATE_SECTION_ERROR = 'section/UPDATE_SECTION_ERROR';
 
+// REF 청크 삭제
+export const DELETE_CHUNK = 'section/DELETE_CHUNK' as const;
+export const DELETE_CHUNK_SUCCESS = 'section/DELETE_CHUNK_SUCCESS' as const;
+export const DELETE_CHUNK_ERROR = 'section/DELETE_CHUNK_ERROR' as const;
+export const DELETE_CHUNK_NOAUTH = 'section/DELETE_CHUNK_NOAUTH' as const;
+
 // REF JWT 토큰 기한 만료
 export const EXPIRE_JWT_TOKEN = 'section/EXPIRE_JWT_TOKEN' as const;
+
+export type deleteChunkActionType = {
+  section_no: number;
+  chunk_no: number;
+};
 
 export type chunkInfo = {
   no: number;

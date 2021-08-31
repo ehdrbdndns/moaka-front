@@ -9,6 +9,7 @@ function section(
     case type.MAKE_SECTION:
     case type.DELETE_SECTION:
     case type.UPDATE_SECTION:
+    case type.DELETE_CHUNK:
       return {
         ...state,
         loading: true,
@@ -35,10 +36,28 @@ function section(
         data: [...state.data.filter(section => section.no !== action.payload)],
         loading: false,
       };
+    case type.DELETE_CHUNK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: [
+          ...state.data.map(section => {
+            if (section.no === action.payload.section_no) {
+              let chunk_list = section.chunk_list.filter(
+                chunk => chunk.no !== action.payload.chunk_no,
+              );
+              section.chunk_list = chunk_list;
+            }
+            return section;
+          }),
+        ],
+      };
+    case type.DELETE_CHUNK_NOAUTH:
     case type.MAKE_SECTION_ERROR:
     case type.DELETE_SECTION_ERROR:
     case type.GET_SECTION_ERROR:
     case type.UPDATE_SECTION_ERROR:
+    case type.DELETE_CHUNK_ERROR:
       return {
         ...state,
         loading: false,

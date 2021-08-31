@@ -73,7 +73,11 @@ type updateChunkModal = {
   link: string;
 };
 
-function DeleteChunkModal() {
+type deleteChunkModal = {
+  deleteChunk: () => void;
+};
+
+function DeleteChunkModal({ deleteChunk }: deleteChunkModal) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -109,7 +113,7 @@ function DeleteChunkModal() {
             <p id="transition-modal-description">
               정말 링크를 삭제하시겠습니까?
             </p>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={deleteChunk}>
               예
             </Button>
             <Button onClick={handleClose} variant="contained" color="secondary">

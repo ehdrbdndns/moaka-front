@@ -5,7 +5,6 @@ export type getSectionResponseByAxios = {
   error: number;
   section_list: Array<sectionInfo>;
 };
-
 export type makeSectionResponseByAxios = {
   isSuccess: boolean;
   section_no: number;
@@ -16,6 +15,10 @@ export type deleteSectionResponseByAxios = {
   error: number;
 };
 export type updateSectionResponseByAxios = {
+  isSuccess: boolean;
+  error: number;
+};
+export type deleteChunkResponseByAxios = {
   isSuccess: boolean;
   error: number;
 };

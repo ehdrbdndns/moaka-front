@@ -17,6 +17,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { DeleteChunkModal, UpdateChunkModal } from './ChunkModal';
+import { deleteChunkActionType } from '../../modules/section';
 
 const cardStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -51,10 +52,12 @@ type chunkFormProps = {
   link_description: string;
   description: string;
   regdate: string;
+  deleteChunkRedux: (deleteChunkActionType: deleteChunkActionType) => void;
 };
 
 function ChunkForm({
   no,
+  section_no,
   title,
   thumbnail,
   link,
@@ -62,6 +65,7 @@ function ChunkForm({
   link_description,
   description,
   regdate,
+  deleteChunkRedux,
 }: chunkFormProps) {
   const classes = cardStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -79,6 +83,15 @@ function ChunkForm({
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const deleteChunk = () => {
+    console.log(no, section_no);
+
+    deleteChunkRedux({
+      chunk_no: no,
+      section_no,
+    });
   };
 
   const ITEM_HEIGHT = 48;
@@ -117,7 +130,7 @@ function ChunkForm({
                 />
               </MenuItem>
               <MenuItem onClick={handleClose}>
-                <DeleteChunkModal />
+                <DeleteChunkModal deleteChunk={deleteChunk} />
               </MenuItem>
             </Menu>
           </>

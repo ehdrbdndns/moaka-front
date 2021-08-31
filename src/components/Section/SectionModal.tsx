@@ -363,7 +363,7 @@ export function UpdateSectionModal({
   useEffect(() => {
     // TODO 기존 태그 리스트의 내용을 초기화한 후 스토어에 있는 태그 리스트를
     setTagList([]);
-    tag_list.map(tag => {
+    tag_list?.map(tag => {
       setTagList([
         ...tagList,
         {
@@ -371,6 +371,8 @@ export function UpdateSectionModal({
           tag,
         },
       ]);
+
+      return tag;
     });
     setTitle(title_prop);
     setDescription(description_prop);
