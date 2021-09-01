@@ -1,4 +1,4 @@
-import { sectionInfo } from '../../modules/section';
+import { chunkInfo, sectionInfo } from '../../modules/section';
 
 export type getSectionResponseByAxios = {
   isSuccess: boolean;
@@ -21,4 +21,10 @@ export type updateSectionResponseByAxios = {
 export type deleteChunkResponseByAxios = {
   isSuccess: boolean;
   error: number;
+};
+export type makeChunkResponseByAxios = {
+  isSuccess: boolean;
+  error: number;
+  no: number;
+  regdate: string;
 };

@@ -52,6 +52,8 @@ type chunkFormProps = {
   link_description: string;
   description: string;
   regdate: string;
+  chunk_tag_list: string[];
+  section_tag_list: string[];
   deleteChunkRedux: (deleteChunkActionType: deleteChunkActionType) => void;
 };
 
@@ -66,6 +68,8 @@ function ChunkForm({
   description,
   regdate,
   deleteChunkRedux,
+  chunk_tag_list,
+  section_tag_list,
 }: chunkFormProps) {
   const classes = cardStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -125,6 +129,8 @@ function ChunkForm({
                   link={link}
                   title={title}
                   description={description}
+                  chunk_tag_list={chunk_tag_list}
+                  section_tag_list={section_tag_list}
                 />
               </MenuItem>
               <MenuItem onClick={handleClose}>

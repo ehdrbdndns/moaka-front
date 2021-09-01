@@ -12,6 +12,7 @@ import { Editor_A as EditorAComponent } from '../Editor/Editor_A';
 import { Editor_B as EditorBComponent } from '../Editor/Editor_B';
 import { closeTagEvent, Tag_A as TagComponent } from '../Tag/Tag_A';
 import '../../styles/main.scss';
+import { chunkInfo } from '../../modules/section';
 
 const sectionBtnStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,17 +68,25 @@ const sectionBtnStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-type updateChunkModal = {
+type updateChunkModalProps = {
   title: string;
   description: string;
   link: string;
+  chunk_tag_list: string[];
+  section_tag_list: string[];
 };
 
-type deleteChunkModal = {
+type deleteChunkModalProps = {
   deleteChunk: () => void;
 };
 
-function DeleteChunkModal({ deleteChunk }: deleteChunkModal) {
+type makeChunkModalProps = {
+  section_no: number;
+  section_tag_list: string[];
+  makeChunkRedux: (chunkInfo: chunkInfo) => void;
+};
+
+function DeleteChunkModal({ deleteChunk }: deleteChunkModalProps) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -124,7 +133,13 @@ function DeleteChunkModal({ deleteChunk }: deleteChunkModal) {
   );
 }
 
-function UpdateChunkModal({ title, description, link }: updateChunkModal) {
+function UpdateChunkModal({
+  title,
+  description,
+  link,
+  chunk_tag_list,
+  section_tag_list,
+}: updateChunkModalProps) {
   const sectionBtnClasses = sectionBtnStyles();
 
   const [open, setOpen] = useState(false);
@@ -136,6 +151,8 @@ function UpdateChunkModal({ title, description, link }: updateChunkModal) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const [tagList, setTagList] = useState<Array<string>>([]);
 
   return (
     <>
@@ -156,7 +173,12 @@ function UpdateChunkModal({ title, description, link }: updateChunkModal) {
           <div className="popup-bookmark" onClick={closeTagEvent}>
             <form>
               <header className="popup-bookmark__header">
-                <TagComponent />
+                <TagComponent
+                  chunk_tag_list={chunk_tag_list}
+                  section_tag_list={section_tag_list}
+                  tag_list={tagList}
+                  setTagList={setTagList}
+                />
               </header>
               <main>
                 <section>
@@ -176,10 +198,18 @@ function UpdateChunkModal({ title, description, link }: updateChunkModal) {
   );
 }
 
-function MakeChunkModal() {
+function MakeChunkModal({
+  section_no,
+  section_tag_list,
+  makeChunkRedux,
+}: makeChunkModalProps) {
   const sectionBtnClasses = sectionBtnStyles();
 
   const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [url, setUrl] = useState('');
+  const [description, setDescription] = useState('');
+  const [tagList, setTagList] = useState<Array<string>>([]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -187,6 +217,45 @@ function MakeChunkModal() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const makeChunkSubmitEvent = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // LINK PREVIEW에게 가지고 온 정보
+    const link_title: string = (
+      document.getElementsByClassName('Title')[0] as HTMLElement
+    )?.innerText;
+
+    // TODO LINK PREVIEW가 업데이트 됐는지 확인
+    if (link_title !== undefined) {
+      const link_description: string = (
+        document.getElementsByClassName('Description')[0] as HTMLElement
+      )?.innerText;
+      const backgroundImage = (
+        document.getElementsByClassName('Image')[0] as HTMLElement
+      )?.style.backgroundImage;
+      const thumbnail = backgroundImage
+        ? backgroundImage.slice(4, -1).replace(/["']/g, '')
+        : '';
+
+      const chunkInfo: chunkInfo = {
+        no: 0,
+        section_no: section_no,
+        title: title,
+        description: description,
+        tag_list: tagList,
+        link: url,
+        link_description: link_description ? link_description : '',
+        link_title: link_title,
+        thumbnail: thumbnail,
+        regdate: '',
+      };
+
+      console.log('chunkInfo');
+      console.log(chunkInfo);
+
+      makeChunkRedux(chunkInfo);
+    }
   };
 
   return (
@@ -212,13 +281,26 @@ function MakeChunkModal() {
       >
         <Fade in={open}>
           <div className="popup-bookmark" onClick={closeTagEvent}>
-            <form>
+            <form onSubmit={makeChunkSubmitEvent}>
               <header className="popup-bookmark__header">
-                <TagComponent />
+                <TagComponent
+                  section_tag_list={section_tag_list}
+                  tag_list={tagList}
+                  setTagList={setTagList}
+                  chunk_tag_list={[]}
+                />
               </header>
               <main>
                 <section>
-                  <EditorBComponent profile="./img/moaka_logo.png" />
+                  <EditorBComponent
+                    profile="./img/moaka_logo.png"
+                    url={url}
+                    title={title}
+                    description={description}
+                    setTitle={setTitle}
+                    setUrl={setUrl}
+                    setDescription={setDescription}
+                  />
                 </section>
               </main>
             </form>

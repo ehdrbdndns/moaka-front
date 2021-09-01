@@ -3,6 +3,8 @@ import React from 'react';
 import { getLocalDirectory } from '../../apis/user/user';
 import { EditorAProps } from './types';
 
+// TODO 크롬 확장 프로그램에 사용되는 에디터이다.
+
 /** TODO
  * url Priview에서 정보가져오는 것에 실패했을 경우
  * 화면에 보여줄 JSX입니다.

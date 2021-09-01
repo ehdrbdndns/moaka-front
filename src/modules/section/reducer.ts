@@ -6,10 +6,12 @@ function section(
   action: AnyAction,
 ) {
   switch (action.type) {
+    case type.GET_SECTION:
     case type.MAKE_SECTION:
     case type.DELETE_SECTION:
     case type.UPDATE_SECTION:
     case type.DELETE_CHUNK:
+    case type.MAKE_CHUNK:
       return {
         ...state,
         loading: true,
@@ -60,29 +62,38 @@ function section(
           }),
         ],
       };
-    case type.DELETE_CHUNK_NOAUTH:
-    case type.MAKE_SECTION_ERROR:
-    case type.DELETE_SECTION_ERROR:
-    case type.GET_SECTION_ERROR:
-    case type.UPDATE_SECTION_ERROR:
-    case type.DELETE_CHUNK_ERROR:
+    case type.MAKE_CHUNK_SUCCESS:
       return {
         ...state,
         loading: false,
-        error: action.payload,
-      };
-    case type.GET_SECTION:
-      return {
-        ...state,
-        loading: true,
-        data: [],
-        error: null,
+        data: [
+          ...state.data.map(section => {
+            if (section.no === action.payload.section_no) {
+              section.chunk_list = [action.payload, ...section.chunk_list];
+              // section.chunk_list.concat(action.payload);
+            }
+            return section;
+          }),
+        ],
       };
     case type.GET_SECTION_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload,
+      };
+    case type.MAKE_SECTION_ERROR:
+    case type.DELETE_SECTION_ERROR:
+    case type.GET_SECTION_ERROR:
+    case type.UPDATE_SECTION_ERROR:
+    case type.DELETE_CHUNK_ERROR:
+    case type.DELETE_CHUNK_NOAUTH:
+    case type.MAKE_CHUNK_ERROR:
+    case type.MAKE_CHUNK_NOAUTH:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     case type.EXPIRE_JWT_TOKEN:
       return {

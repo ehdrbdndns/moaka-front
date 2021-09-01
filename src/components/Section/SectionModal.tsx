@@ -86,7 +86,7 @@ type updateSectionModalProps = {
   loading: boolean;
   title_prop: string;
   description_prop: string;
-  tag_list: Array<string>;
+  section_tag_list: Array<string>;
   updateSectionRedux: (sectionInfo: sectionInfo) => void;
 };
 
@@ -339,7 +339,7 @@ export function UpdateSectionModal({
   loading,
   title_prop,
   description_prop,
-  tag_list,
+  section_tag_list,
   updateSectionRedux,
 }: updateSectionModalProps) {
   const sectionBtnClasses = sectionBtnStyles();
@@ -363,18 +363,18 @@ export function UpdateSectionModal({
   useEffect(() => {
     // TODO 기존 태그 리스트의 내용을 초기화한 후 스토어에 있는 태그 리스트를
     setTagList([]);
-    for (let i = 0; i < tag_list.length; i++) {
+    for (let i = 0; i < section_tag_list.length; i++) {
       setTagList(tagList => [
         ...tagList,
         {
           id: ++tagId.current,
-          tag: tag_list[i],
+          tag: section_tag_list[i],
         },
       ]);
     }
     setTitle(title_prop);
     setDescription(description_prop);
-  }, [tag_list, title_prop, description_prop]);
+  }, [section_tag_list, title_prop, description_prop]);
 
   const removeTagListEvent = (tagId: number) => {
     setTagList(tagList?.filter(tagItem => tagItem.id !== tagId));

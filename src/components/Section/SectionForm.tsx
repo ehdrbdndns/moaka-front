@@ -18,7 +18,11 @@ import {
   MakeSectionModal,
   UpdateSectionModal,
 } from './SectionModal';
-import { deleteChunkActionType, sectionInfo } from '../../modules/section';
+import {
+  chunkInfo,
+  deleteChunkActionType,
+  sectionInfo,
+} from '../../modules/section';
 import { useEffect } from 'react';
 import { MakeChunkModal } from '../Chunk/ChunkModal';
 
@@ -43,6 +47,7 @@ type sectionFormProps = {
   getSectionRedux: (archive_no: number) => void;
   updateSectionRedux: (sectionInfo: sectionInfo) => void;
   deleteChunkRedux: (deleteChunkActionType: deleteChunkActionType) => void;
+  makeChunkRedux: (chunkInfo: chunkInfo) => void;
 };
 
 function SectionForm({
@@ -55,6 +60,7 @@ function SectionForm({
   getSectionRedux,
   section_list,
   deleteChunkRedux,
+  makeChunkRedux,
 }: sectionFormProps) {
   const barClasses = barStyles();
 
@@ -96,12 +102,16 @@ function SectionForm({
                   loading={loading}
                   description_prop={section.description}
                   title_prop={section.title}
-                  tag_list={section.tag_list}
+                  section_tag_list={section.tag_list}
                 />
               </Toolbar>
             </AppBar>
             <Container>
-              <MakeChunkModal />
+              <MakeChunkModal
+                section_no={section.no || 0}
+                section_tag_list={section.tag_list}
+                makeChunkRedux={makeChunkRedux}
+              />
               <Box my={2}>
                 <Grid container spacing={3}>
                   {section.chunk_list?.length !== 0 ? (
@@ -118,6 +128,8 @@ function SectionForm({
                           description={chunk.description}
                           regdate={chunk.regdate}
                           deleteChunkRedux={deleteChunkRedux}
+                          section_tag_list={section.tag_list}
+                          chunk_tag_list={chunk.tag_list}
                         />
                       </Grid>
                     ))

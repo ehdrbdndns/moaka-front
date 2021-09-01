@@ -25,6 +25,12 @@ export const DELETE_CHUNK_SUCCESS = 'section/DELETE_CHUNK_SUCCESS' as const;
 export const DELETE_CHUNK_ERROR = 'section/DELETE_CHUNK_ERROR' as const;
 export const DELETE_CHUNK_NOAUTH = 'section/DELETE_CHUNK_NOAUTH' as const;
 
+// REF 청크 생성
+export const MAKE_CHUNK = 'section/MAKE_CHUNK' as const;
+export const MAKE_CHUNK_SUCCESS = 'section/MAKE_CHUNK_SUCCESS' as const;
+export const MAKE_CHUNK_ERROR = 'section/MAKE_CHUNK_ERROR' as const;
+export const MAKE_CHUNK_NOAUTH = 'section/MAKE_CHUNK_ERROR' as const;
+
 // REF JWT 토큰 기한 만료
 export const EXPIRE_JWT_TOKEN = 'section/EXPIRE_JWT_TOKEN' as const;
 
@@ -43,6 +49,7 @@ export type chunkInfo = {
   link_description: string;
   description: string;
   regdate: string;
+  tag_list: Array<string>;
 };
 
 export type sectionInfo = {

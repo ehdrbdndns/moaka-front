@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import '../../styles/main.scss';
+import { useEffect } from 'react';
 
 // TODO tag-A의 부모 객체에 onClick 이벤트 리스너로 등록
 const closeTagEvent = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -12,16 +13,33 @@ const closeTagEvent = (e: React.MouseEvent<HTMLDivElement>) => {
   }
 };
 
-function Tag_A() {
-  const [selectTagList, setSelectTagList] = useState<Array<string>>([
-    '태그1',
-    '태그2',
-    '태그3',
-    '태그4',
-    '태그5',
-  ]);
-  const [tagList, setTagList] = useState<Array<string>>([]);
+type tagAProps = {
+  section_tag_list: string[];
+  chunk_tag_list: string[];
+  tag_list: string[];
+  setTagList: (value: string[] | ((prevVar: string[]) => string[])) => void;
+};
+
+function Tag_A({
+  section_tag_list,
+  chunk_tag_list,
+  setTagList,
+  tag_list,
+}: tagAProps) {
+  const [selectTagList, setSelectTagList] = useState<Array<string>>([]);
   const [tag, setTag] = useState<string>('');
+
+  useEffect(() => {
+    section_tag_list?.map(section_tag => {
+      setSelectTagList(tag_list => [...tag_list, section_tag]);
+    });
+  }, [section_tag_list]);
+
+  useEffect(() => {
+    chunk_tag_list?.map(chunk_tag => {
+      setTagList(tag_list => [...tag_list, chunk_tag]);
+    });
+  }, [chunk_tag_list, setTagList]);
 
   const setTagEvent = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setTag(e.target.value);
@@ -29,13 +47,14 @@ function Tag_A() {
 
   const setTagListEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      setTagList(tagList.concat(tag));
+      setTagList(tag_list => [...tag_list, tag]);
+      // setTagList(tagList.concat(tag));
       setTag('');
     }
   };
 
   const removeTagEvent = (index: number) => {
-    setTagList(tagList.filter((tag, i) => i !== index));
+    setTagList(tag_list.filter((tag, i) => i !== index));
   };
 
   // TODO 미리보기 태그 창에서 태그를 추가하는 이벤트
@@ -46,7 +65,10 @@ function Tag_A() {
     const selectItem = (e.target as Element).closest('.tag-A__select-item');
     if (!selectItem) return;
     if (!selectList?.contains(selectItem)) return;
-    setTagList(tagList.concat((selectItem as HTMLElement).innerText));
+    setTagList(tag_list => [
+      ...tag_list,
+      (selectItem as HTMLElement).innerText,
+    ]);
     document.getElementById('tag-input')?.focus();
   };
 
@@ -62,24 +84,24 @@ function Tag_A() {
         id="tag-show"
         onChange={focusTagInputEvent}
       />
-      {tagList.length === 0 && (
+      {tag_list.length === 0 && (
         <label className="tag-A__badge" htmlFor="tag-show">
           <div className="tag-A__minicircle"></div>
         </label>
       )}
       <ul className="tag-A__tag-list">
-        {tagList.map((tag, i, arr) => (
+        {tag_list.map((tag, i, arr) => (
           <li key={nanoid()} className="tag-A__tag">
             {tag}
-            <button
+            <div
               className="tag-A__remove-btn"
               onClick={() => removeTagEvent(i)}
             >
               x
-            </button>
+            </div>
           </li>
         ))}
-        {tagList.length !== 0 && (
+        {tag_list.length !== 0 && (
           <label htmlFor="tag-show" className="tag-A__tag-circle" />
         )}
       </ul>
@@ -87,10 +109,11 @@ function Tag_A() {
         id="tag-input"
         className="tag-A__input"
         type="text"
-        placeholder="태그를 입력해주세요."
+        placeholder="태그를 선택해주세요."
         value={tag}
-        onChange={setTagEvent}
-        onKeyPress={setTagListEvent}
+        disabled
+        // onChange={setTagEvent}
+        // onKeyPress={setTagListEvent}
         autoComplete="off"
       />
       <ul
@@ -100,8 +123,10 @@ function Tag_A() {
       >
         {selectTagList.map(
           select =>
-            !tagList.includes(select) && (
-              <li className="tag-A__select-item">{select}</li>
+            !tag_list.includes(select) && (
+              <li key={nanoid()} className="tag-A__select-item">
+                {select}
+              </li>
             ),
         )}
       </ul>

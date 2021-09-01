@@ -18,8 +18,12 @@ export const updateSection = (sectionInfo: sagaType.sectionInfo) => ({
   payload: sectionInfo,
 });
 export const deleteChunk = (
-  deleteChunkActionType: sagaType.deleteChunkActionType,
+  deleteChunkInfo: sagaType.deleteChunkActionType,
 ) => ({
   type: sagaType.DELETE_CHUNK,
-  payload: deleteChunkActionType,
+  payload: deleteChunkInfo,
+});
+export const makeChunk = (chunkInfo: sagaType.chunkInfo) => ({
+  type: sagaType.MAKE_CHUNK,
+  payload: chunkInfo,
 });

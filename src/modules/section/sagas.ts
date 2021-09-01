@@ -3,6 +3,7 @@ import {
   deleteChunk,
   deleteSection,
   getSection,
+  makeChunk,
   makeSection,
   updateSection,
 } from './actions';
@@ -12,6 +13,7 @@ import {
   deleteChunkResponseByAxios,
   deleteSectionResponseByAxios,
   getSectionResponseByAxios,
+  makeChunkResponseByAxios,
   makeSectionResponseByAxios,
   updateSectionResponseByAxios,
 } from '../../apis/section/types';
@@ -197,10 +199,56 @@ function* deleteChunkSaga(action: ReturnType<typeof deleteChunk>) {
   }
 }
 
+function* makeChunkSaga(action: ReturnType<typeof makeChunk>) {
+  try {
+    const response: makeChunkResponseByAxios = yield call(
+      sectionAPI.makeChunk,
+      action.payload,
+    );
+
+    if (response.isSuccess) {
+      action.payload.no = response.no;
+      action.payload.regdate = response.regdate;
+
+      yield put({
+        type: sagaType.MAKE_CHUNK_SUCCESS,
+        payload: action.payload,
+      });
+    } else if (response.error === 0) {
+      // TODO 해당 링크를 생성할 권한이 있는 아이디가 아님
+      yield put({
+        type: sagaType.MAKE_CHUNK_NOAUTH,
+        error: true,
+        payload: '해당 링크를 생성할 권한이 없습니다.',
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.MAKE_CHUNK_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.MAKE_CHUNK_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
 export function* sectionSaga() {
   yield takeLatest(sagaType.MAKE_SECTION, makeSectionSaga);
   yield takeLatest(sagaType.DELETE_SECTION, deleteSectionSaga);
   yield takeEvery(sagaType.GET_SECTION, getSectionSaga);
   yield takeLatest(sagaType.UPDATE_SECTION, updateSectionSaga);
   yield takeLatest(sagaType.DELETE_CHUNK, deleteChunkSaga);
+  yield takeLatest(sagaType.MAKE_CHUNK, makeChunkSaga);
 }
