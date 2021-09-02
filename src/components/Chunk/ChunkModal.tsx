@@ -13,6 +13,7 @@ import { Editor_B as EditorBComponent } from '../Editor/Editor_B';
 import { closeTagEvent, Tag_A as TagComponent } from '../Tag/Tag_A';
 import '../../styles/main.scss';
 import { chunkInfo } from '../../modules/section';
+import { useEffect } from 'react';
 
 const sectionBtnStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,11 +70,14 @@ const sectionBtnStyles = makeStyles((theme: Theme) =>
 );
 
 type updateChunkModalProps = {
-  title: string;
-  description: string;
-  link: string;
+  chunk_no: number;
+  _title: string;
+  _description: string;
+  _url: string;
   chunk_tag_list: string[];
   section_tag_list: string[];
+  section_no: number;
+  updateChunkRedux: (chunkInfo: chunkInfo) => void;
 };
 
 type deleteChunkModalProps = {
@@ -134,15 +138,28 @@ function DeleteChunkModal({ deleteChunk }: deleteChunkModalProps) {
 }
 
 function UpdateChunkModal({
-  title,
-  description,
-  link,
+  chunk_no,
+  _title,
+  _description,
+  _url,
   chunk_tag_list,
   section_tag_list,
+  section_no,
+  updateChunkRedux,
 }: updateChunkModalProps) {
   const sectionBtnClasses = sectionBtnStyles();
 
   const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [url, setUrl] = useState('');
+  const [description, setDescription] = useState('');
+  const [tagList, setTagList] = useState<Array<string>>([]);
+
+  useEffect(() => {
+    setTitle(_title);
+    setUrl(_url);
+    setDescription(_description);
+  }, [_title, _url, _description]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -152,7 +169,44 @@ function UpdateChunkModal({
     setOpen(false);
   };
 
-  const [tagList, setTagList] = useState<Array<string>>([]);
+  const updateChunkSubmitEvent = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // LINK PREVIEW에게 가지고 온 정보
+    const link_title: string = (
+      document.getElementsByClassName('Title')[0] as HTMLElement
+    )?.innerText;
+
+    // TODO LINK PREVIEW가 업데이트 됐는지 확인
+    if (link_title !== undefined) {
+      const link_description: string = (
+        document.getElementsByClassName('Description')[0] as HTMLElement
+      )?.innerText;
+      const backgroundImage = (
+        document.getElementsByClassName('Image')[0] as HTMLElement
+      )?.style.backgroundImage;
+      const thumbnail = backgroundImage
+        ? backgroundImage.slice(4, -1).replace(/["']/g, '')
+        : '';
+
+      const chunkInfo: chunkInfo = {
+        no: chunk_no,
+        section_no: section_no,
+        title: title,
+        description: description,
+        tag_list: tagList,
+        link: url,
+        link_description: link_description ? link_description : '',
+        link_title: link_title,
+        thumbnail: thumbnail,
+        regdate: '',
+      };
+
+      console.log('chunkInfo');
+      console.log(chunkInfo);
+
+      updateChunkRedux(chunkInfo);
+    }
+  };
 
   return (
     <>
@@ -171,7 +225,7 @@ function UpdateChunkModal({
       >
         <Fade in={open}>
           <div className="popup-bookmark" onClick={closeTagEvent}>
-            <form>
+            <form onSubmit={updateChunkSubmitEvent}>
               <header className="popup-bookmark__header">
                 <TagComponent
                   chunk_tag_list={chunk_tag_list}
@@ -182,11 +236,14 @@ function UpdateChunkModal({
               </header>
               <main>
                 <section>
-                  <EditorAComponent
-                    url={link}
+                  <EditorBComponent
                     profile="./img/moaka_logo.png"
+                    url={url}
                     title={title}
                     description={description}
+                    setTitle={setTitle}
+                    setUrl={setUrl}
+                    setDescription={setDescription}
                   />
                 </section>
               </main>

@@ -48,6 +48,7 @@ type sectionFormProps = {
   updateSectionRedux: (sectionInfo: sectionInfo) => void;
   deleteChunkRedux: (deleteChunkActionType: deleteChunkActionType) => void;
   makeChunkRedux: (chunkInfo: chunkInfo) => void;
+  updateChunkRedux: (chunkInfo: chunkInfo) => void;
 };
 
 function SectionForm({
@@ -61,6 +62,7 @@ function SectionForm({
   section_list,
   deleteChunkRedux,
   makeChunkRedux,
+  updateChunkRedux,
 }: sectionFormProps) {
   const barClasses = barStyles();
 
@@ -130,6 +132,7 @@ function SectionForm({
                           deleteChunkRedux={deleteChunkRedux}
                           section_tag_list={section.tag_list}
                           chunk_tag_list={chunk.tag_list}
+                          updateChunkRedux={updateChunkRedux}
                         />
                       </Grid>
                     ))

@@ -27,3 +27,7 @@ export const makeChunk = (chunkInfo: sagaType.chunkInfo) => ({
   type: sagaType.MAKE_CHUNK,
   payload: chunkInfo,
 });
+export const updateChunk = (chunkInfo: sagaType.chunkInfo) => ({
+  type: sagaType.UPDATE_CHUNK,
+  payload: chunkInfo,
+});

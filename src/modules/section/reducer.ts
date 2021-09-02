@@ -12,6 +12,7 @@ function section(
     case type.UPDATE_SECTION:
     case type.DELETE_CHUNK:
     case type.MAKE_CHUNK:
+    case type.UPDATE_CHUNK:
       return {
         ...state,
         loading: true,
@@ -81,6 +82,29 @@ function section(
         ...state,
         loading: false,
         data: action.payload,
+      };
+    case type.UPDATE_CHUNK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: [
+          ...state.data.map(section => {
+            console.log('reducer');
+
+            console.log(action.payload);
+
+            if (section.no === action.payload.section_no) {
+              let chunk_list = section.chunk_list.map(chunk => {
+                if (chunk.no === action.payload.no) {
+                  chunk = action.payload;
+                }
+                return chunk;
+              });
+              section.chunk_list = chunk_list;
+            }
+            return section;
+          }),
+        ],
       };
     case type.MAKE_SECTION_ERROR:
     case type.DELETE_SECTION_ERROR:

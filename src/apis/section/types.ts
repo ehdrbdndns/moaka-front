@@ -28,3 +28,7 @@ export type makeChunkResponseByAxios = {
   no: number;
   regdate: string;
 };
+export type updateChunkResponseByAxios = {
+  isSuccess: boolean;
+  error: number;
+};

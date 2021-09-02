@@ -86,6 +86,7 @@ function Editor_B({
             id="link"
             required
             autoComplete="off"
+            value={url}
             onBlur={setUrlBlurEvent}
             onKeyPress={setUrlKeyboardEvent}
           />

@@ -11,6 +11,7 @@ import {
   makeChunk,
   makeSection,
   sectionInfo,
+  updateChunk,
   updateSection,
 } from '../modules/section';
 
@@ -43,6 +44,10 @@ function Section() {
     dispatch(makeChunk(chunkInfo));
   }
 
+  function updateChunkRedux(chunkInfo: chunkInfo) {
+    dispatch(updateChunk(chunkInfo));
+  }
+
   return (
     <>
       <SectionForm
@@ -55,6 +60,7 @@ function Section() {
         updateSectionRedux={updateSectionRedux}
         deleteChunkRedux={deleteChunkRedux}
         makeChunkRedux={makeChunkRedux}
+        updateChunkRedux={updateChunkRedux}
         // FIXME 아카이브 고유 번호는 추후 디비로부터 가져와야 함
         archive_no={1}
       />

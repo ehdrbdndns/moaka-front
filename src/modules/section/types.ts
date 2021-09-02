@@ -29,7 +29,13 @@ export const DELETE_CHUNK_NOAUTH = 'section/DELETE_CHUNK_NOAUTH' as const;
 export const MAKE_CHUNK = 'section/MAKE_CHUNK' as const;
 export const MAKE_CHUNK_SUCCESS = 'section/MAKE_CHUNK_SUCCESS' as const;
 export const MAKE_CHUNK_ERROR = 'section/MAKE_CHUNK_ERROR' as const;
-export const MAKE_CHUNK_NOAUTH = 'section/MAKE_CHUNK_ERROR' as const;
+export const MAKE_CHUNK_NOAUTH = 'section/MAKE_CHUNK_NOAUTH' as const;
+
+// REF 청크 수정
+export const UPDATE_CHUNK = 'section/UPDATE_CHUNK' as const;
+export const UPDATE_CHUNK_SUCCESS = 'section/UPDATE_CHUNK_SUCCESS' as const;
+export const UPDATE_CHUNK_ERROR = 'section/UPDATE_CHUNK_ERROR' as const;
+export const UPDATE_CHUNK_NOAUTH = 'section/UPDATE_CHUNK_NOAUTH' as const;
 
 // REF JWT 토큰 기한 만료
 export const EXPIRE_JWT_TOKEN = 'section/EXPIRE_JWT_TOKEN' as const;

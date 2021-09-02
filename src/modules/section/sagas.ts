@@ -2,6 +2,7 @@ import { put, call, takeLatest, takeEvery } from 'redux-saga/effects';
 import {
   deleteChunk,
   deleteSection,
+  updateChunk,
   getSection,
   makeChunk,
   makeSection,
@@ -15,6 +16,7 @@ import {
   getSectionResponseByAxios,
   makeChunkResponseByAxios,
   makeSectionResponseByAxios,
+  updateChunkResponseByAxios,
   updateSectionResponseByAxios,
 } from '../../apis/section/types';
 
@@ -244,6 +246,43 @@ function* makeChunkSaga(action: ReturnType<typeof makeChunk>) {
   }
 }
 
+function* updateChunkSaga(action: ReturnType<typeof updateChunk>) {
+  try {
+    const response: updateChunkResponseByAxios = yield call(
+      sectionAPI.updateChunk,
+      action.payload,
+    );
+
+    if (response.isSuccess) {
+      yield put({
+        type: sagaType.UPDATE_CHUNK_SUCCESS,
+        payload: action.payload,
+      });
+    } else if (response.error === 0) {
+      // TODO 해당 링크를 생성할 권한이 있는 아이디가 아님
+      yield put({
+        type: sagaType.UPDATE_CHUNK_NOAUTH,
+        error: true,
+        payload: '해당 링크를 수정할 권한이 없습니다.',
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.UPDATE_CHUNK_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function* sectionSaga() {
   yield takeLatest(sagaType.MAKE_SECTION, makeSectionSaga);
   yield takeLatest(sagaType.DELETE_SECTION, deleteSectionSaga);
@@ -251,4 +290,5 @@ export function* sectionSaga() {
   yield takeLatest(sagaType.UPDATE_SECTION, updateSectionSaga);
   yield takeLatest(sagaType.DELETE_CHUNK, deleteChunkSaga);
   yield takeLatest(sagaType.MAKE_CHUNK, makeChunkSaga);
+  yield takeLatest(sagaType.UPDATE_CHUNK, updateChunkSaga);
 }

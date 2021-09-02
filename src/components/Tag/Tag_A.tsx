@@ -30,12 +30,14 @@ function Tag_A({
   const [tag, setTag] = useState<string>('');
 
   useEffect(() => {
+    setSelectTagList([]);
     section_tag_list?.map(section_tag => {
       setSelectTagList(tag_list => [...tag_list, section_tag]);
     });
   }, [section_tag_list]);
 
   useEffect(() => {
+    setTagList([]);
     chunk_tag_list?.map(chunk_tag => {
       setTagList(tag_list => [...tag_list, chunk_tag]);
     });

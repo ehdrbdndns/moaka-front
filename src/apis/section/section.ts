@@ -7,6 +7,7 @@ import {
   getSectionResponseByAxios,
   makeChunkResponseByAxios,
   makeSectionResponseByAxios,
+  updateChunkResponseByAxios,
   updateSectionResponseByAxios,
 } from './types';
 
@@ -160,6 +161,8 @@ export const deleteChunk = async (
     })
     .catch(function (error) {
       console.log(error.response);
+      result.isSuccess = false;
+      result.error = error.response.status;
     });
 
   return result;
@@ -183,17 +186,43 @@ export const makeChunk = async (
       },
     })
     .then(function (response) {
-      console.log(response);
       // TODO 해당 청크를 추가할 권한이 없는 계정인 경우 false
-      console.log('api');
-      console.log(response.data);
-
       result.isSuccess = response.data.isSuccess;
       result.no = response.data.no;
       result.regdate = response.data.regdate;
     })
     .catch(function (error) {
       console.log(error.response);
+      result.isSuccess = false;
+      result.error = error.response.status;
+    });
+
+  return result;
+};
+
+export const updateChunk = async (
+  chunk_info: chunkInfo,
+): Promise<updateChunkResponseByAxios> => {
+  const result: updateChunkResponseByAxios = {
+    isSuccess: false,
+    error: 0,
+  };
+
+  const token = localStorage.getItem('token');
+  await axios
+    .post(BASE_URL + '/user/updateChunk', chunk_info, {
+      headers: {
+        Bearer: token,
+      },
+    })
+    .then(function (response) {
+      // TODO 해당 청크를 추가할 권한이 없는 계정인 경우 false
+      result.isSuccess = response.data.isSuccess;
+    })
+    .catch(function (error) {
+      console.log(error.response);
+      result.isSuccess = false;
+      result.error = error.response.status;
     });
 
   return result;
