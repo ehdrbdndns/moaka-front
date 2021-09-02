@@ -37,10 +37,7 @@ function Tag_A({
   }, [section_tag_list]);
 
   useEffect(() => {
-    setTagList([]);
-    chunk_tag_list?.map(chunk_tag => {
-      setTagList(tag_list => [...tag_list, chunk_tag]);
-    });
+    if (chunk_tag_list.length !== 0) setTagList(chunk_tag_list);
   }, [chunk_tag_list, setTagList]);
 
   const setTagEvent = (e: React.ChangeEvent<HTMLInputElement>): void => {

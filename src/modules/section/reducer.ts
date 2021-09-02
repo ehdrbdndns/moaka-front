@@ -19,22 +19,21 @@ function section(
         data: [...state.data],
         error: null,
       };
-    case type.UPDATE_SECTION_SUCCESS:
+    case type.UPDATE_SECTION_SUCCESS: {
+      const index = state.data.findIndex(
+        section => section.no === action.payload.no,
+      );
+
+      const _data = [...state.data];
+      action.payload.chunk_list = _data[index].chunk_list;
+      _data[index] = action.payload;
+
       return {
         ...state,
         loading: false,
-        data: [
-          ...state.data.map(section => {
-            if (section.no === action.payload.no) {
-              action.payload.chunk_list = section.chunk_list;
-              return action.payload;
-            } else {
-              return section;
-            }
-            // section.no === action.payload.no ? action.payload : section,
-          }),
-        ],
+        data: _data,
       };
+    }
     case type.MAKE_SECTION_SUCCESS:
       return {
         ...state,
@@ -47,65 +46,59 @@ function section(
         data: [...state.data.filter(section => section.no !== action.payload)],
         loading: false,
       };
-    case type.DELETE_CHUNK_SUCCESS:
+    case type.DELETE_CHUNK_SUCCESS: {
+      const index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+
+      const _data = [...state.data];
+      _data[index].chunk_list = _data[index].chunk_list.filter(
+        chunk => chunk.no !== action.payload.chunk_no,
+      );
+
       return {
         ...state,
         loading: false,
-        data: [
-          ...state.data.map(section => {
-            if (section.no === action.payload.section_no) {
-              let chunk_list = section.chunk_list.filter(
-                chunk => chunk.no !== action.payload.chunk_no,
-              );
-              section.chunk_list = chunk_list;
-            }
-            return section;
-          }),
-        ],
+        data: _data,
       };
-    case type.MAKE_CHUNK_SUCCESS:
+    }
+    case type.MAKE_CHUNK_SUCCESS: {
+      const index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+
+      const _data = [...state.data];
+      _data[index].chunk_list = [action.payload, ..._data[index].chunk_list];
+
       return {
         ...state,
         loading: false,
-        data: [
-          ...state.data.map(section => {
-            if (section.no === action.payload.section_no) {
-              section.chunk_list = [action.payload, ...section.chunk_list];
-              // section.chunk_list.concat(action.payload);
-            }
-            return section;
-          }),
-        ],
+        data: _data,
       };
+    }
     case type.GET_SECTION_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload,
       };
-    case type.UPDATE_CHUNK_SUCCESS:
+    case type.UPDATE_CHUNK_SUCCESS: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.no,
+      );
+
+      const _data = [...state.data];
+      _data[section_index].chunk_list[chunk_index] = action.payload;
+
       return {
         ...state,
         loading: false,
-        data: [
-          ...state.data.map(section => {
-            console.log('reducer');
-
-            console.log(action.payload);
-
-            if (section.no === action.payload.section_no) {
-              let chunk_list = section.chunk_list.map(chunk => {
-                if (chunk.no === action.payload.no) {
-                  chunk = action.payload;
-                }
-                return chunk;
-              });
-              section.chunk_list = chunk_list;
-            }
-            return section;
-          }),
-        ],
+        data: _data,
       };
+    }
     case type.MAKE_SECTION_ERROR:
     case type.DELETE_SECTION_ERROR:
     case type.GET_SECTION_ERROR:

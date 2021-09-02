@@ -10,7 +10,7 @@ import {
 import React, { useState } from 'react';
 import { Editor_A as EditorAComponent } from '../Editor/Editor_A';
 import { Editor_B as EditorBComponent } from '../Editor/Editor_B';
-import { closeTagEvent, Tag_A as TagComponent } from '../Tag/Tag_A';
+import { closeTagEvent, Tag_A as TagAComponent } from '../Tag/Tag_A';
 import '../../styles/main.scss';
 import { chunkInfo } from '../../modules/section';
 import { useEffect } from 'react';
@@ -227,7 +227,7 @@ function UpdateChunkModal({
           <div className="popup-bookmark" onClick={closeTagEvent}>
             <form onSubmit={updateChunkSubmitEvent}>
               <header className="popup-bookmark__header">
-                <TagComponent
+                <TagAComponent
                   chunk_tag_list={chunk_tag_list}
                   section_tag_list={section_tag_list}
                   tag_list={tagList}
@@ -308,9 +308,6 @@ function MakeChunkModal({
         regdate: '',
       };
 
-      console.log('chunkInfo');
-      console.log(chunkInfo);
-
       makeChunkRedux(chunkInfo);
     }
   };
@@ -340,7 +337,7 @@ function MakeChunkModal({
           <div className="popup-bookmark" onClick={closeTagEvent}>
             <form onSubmit={makeChunkSubmitEvent}>
               <header className="popup-bookmark__header">
-                <TagComponent
+                <TagAComponent
                   section_tag_list={section_tag_list}
                   tag_list={tagList}
                   setTagList={setTagList}

@@ -1,5 +1,6 @@
 import { LinkPreview } from '@dhaiwat10/react-link-preview';
-import React from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { getLocalDirectory } from '../../apis/user/user';
 
 // TODO Editor A에서 링크를 직접 기입할 수 있는 버전이다.
@@ -35,6 +36,12 @@ function Editor_B({
   setUrl,
   setDescription,
 }: EditorBProps) {
+  useEffect(() => {
+    _setUrl(url);
+  }, [url]);
+
+  const [_url, _setUrl] = useState('');
+
   const resizeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const obj = e.target;
     obj.style.height = '1px';
@@ -50,15 +57,17 @@ function Editor_B({
     setTitle(e.target.value);
   };
 
+  const setUrlEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
+    _setUrl(e.target.value);
+  };
+
   const setUrlBlurEvent = (e: React.FocusEvent<HTMLInputElement>) => {
-    const link = (document.getElementById('link') as HTMLInputElement).value;
-    setUrl(link);
+    setUrl(_url);
   };
 
   const setUrlKeyboardEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const link = (document.getElementById('link') as HTMLInputElement).value;
-      setUrl(link);
+      setUrl(_url);
     }
   };
 
@@ -86,7 +95,8 @@ function Editor_B({
             id="link"
             required
             autoComplete="off"
-            value={url}
+            value={_url}
+            onChange={setUrlEvent}
             onBlur={setUrlBlurEvent}
             onKeyPress={setUrlKeyboardEvent}
           />

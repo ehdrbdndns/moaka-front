@@ -34,7 +34,6 @@ export const getSection = async (
       },
     )
     .then(function (response) {
-      console.log(response);
       result.isSuccess = true;
       result.section_list = response.data;
     })
@@ -62,7 +61,6 @@ export const makeSection = async (
       },
     })
     .then(function (response) {
-      console.log(response);
       result.isSuccess = true;
       result.section_no = response.data.section_no;
     })
@@ -95,7 +93,6 @@ export const deleteSection = async (
       },
     )
     .then(function (response) {
-      console.log(response);
       result.isSuccess = true;
     })
     .catch(function (error) {
@@ -122,7 +119,6 @@ export const updateSection = async (
       },
     })
     .then(function (response) {
-      console.log(response);
       result.isSuccess = true;
     })
     .catch(function (error) {
@@ -155,7 +151,6 @@ export const deleteChunk = async (
       },
     )
     .then(function (response) {
-      console.log(response);
       // TODO 해당 청크를 삭제할 권한이 없는 계정인 경우 false
       result.isSuccess = response.data.isSuccess;
     })
