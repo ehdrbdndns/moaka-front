@@ -8,16 +8,24 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { DeleteChunkModal, UpdateChunkModal } from './ChunkModal';
-import { chunkInfo, deleteChunkActionType } from '../../modules/section';
+import {
+  bookmarkActionType,
+  chunkInfo,
+  deleteChunkActionType,
+  likeActionType,
+} from '../../modules/section';
+import { CircularProgress } from '@material-ui/core';
 
 const cardStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -43,36 +51,43 @@ const cardStyles = makeStyles((theme: Theme) => ({
 }));
 
 type chunkFormProps = {
-  no: number;
-  section_no: number;
-  title: string;
-  thumbnail: string;
-  link: string;
-  link_title: string;
-  link_description: string;
-  description: string;
-  regdate: string;
-  chunk_tag_list: string[];
+  chunk_info: chunkInfo;
   section_tag_list: string[];
   deleteChunkRedux: (deleteChunkActionType: deleteChunkActionType) => void;
   updateChunkRedux: (chunkInfo: chunkInfo) => void;
+  setBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
+  deleteBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
+  setLikeRedux: (likeActionType: likeActionType) => void;
+  deleteLikeRedux: (likeActionType: likeActionType) => void;
 };
 
 function ChunkForm({
-  no,
-  section_no,
-  title,
-  thumbnail,
-  link,
-  link_title,
-  link_description,
-  description,
-  regdate,
-  deleteChunkRedux,
-  chunk_tag_list,
+  chunk_info,
   section_tag_list,
+  deleteChunkRedux,
   updateChunkRedux,
+  setBookmarkRedux,
+  deleteBookmarkRedux,
+  setLikeRedux,
+  deleteLikeRedux,
 }: chunkFormProps) {
+  const {
+    no,
+    section_no,
+    title,
+    thumbnail,
+    link,
+    link_title,
+    link_description,
+    description,
+    regdate,
+    tag_list,
+    bookmark_no,
+    bookmark_loading,
+    like_no,
+    like_loading,
+  } = chunk_info;
+
   const classes = cardStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -96,6 +111,46 @@ function ChunkForm({
       chunk_no: no,
       section_no,
     });
+  };
+
+  const setBookmarkEvent = () => {
+    const bookmarkActionType: bookmarkActionType = {
+      bookmark_no: 0,
+      chunk_no: no,
+      section_no: section_no,
+    };
+
+    setBookmarkRedux(bookmarkActionType);
+  };
+
+  const deleteBookmarkEvent = () => {
+    const bookmarkActionType: bookmarkActionType = {
+      bookmark_no: bookmark_no,
+      chunk_no: no,
+      section_no: section_no,
+    };
+
+    deleteBookmarkRedux(bookmarkActionType);
+  };
+
+  const setLikeEvent = () => {
+    const likeActionType: likeActionType = {
+      like_no: 0,
+      chunk_no: no,
+      section_no: section_no,
+    };
+
+    setLikeRedux(likeActionType);
+  };
+
+  const deleteLikeEvent = () => {
+    const likeActionType: likeActionType = {
+      like_no: like_no,
+      chunk_no: no,
+      section_no: section_no,
+    };
+
+    deleteLikeRedux(likeActionType);
   };
 
   const ITEM_HEIGHT = 48;
@@ -132,7 +187,7 @@ function ChunkForm({
                   _url={link}
                   _title={title}
                   _description={description}
-                  chunk_tag_list={chunk_tag_list}
+                  chunk_tag_list={tag_list}
                   section_tag_list={section_tag_list}
                   updateChunkRedux={updateChunkRedux}
                   section_no={section_no}
@@ -161,11 +216,25 @@ function ChunkForm({
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+        {/* REF 좋아요 */}
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          {like_loading ? (
+            <CircularProgress />
+          ) : like_no ? (
+            <FavoriteIcon onClick={deleteLikeEvent} />
+          ) : (
+            <FavoriteBorderIcon onClick={setLikeEvent} />
+          )}
         </IconButton>
+        {/* REF 북마크 */}
         <IconButton aria-label="bookMark">
-          <BookmarkBorderIcon />
+          {bookmark_loading ? (
+            <CircularProgress />
+          ) : bookmark_no ? (
+            <BookmarkIcon onClick={deleteBookmarkEvent} />
+          ) : (
+            <BookmarkBorderIcon onClick={setBookmarkEvent} />
+          )}
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {

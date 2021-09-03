@@ -7,18 +7,34 @@ import {
   makeChunk,
   makeSection,
   updateSection,
+  setBookmark,
+  deleteBookmark,
+  setLike,
 } from './actions';
 import * as sagaType from './types';
 import * as sectionAPI from '../../apis/section/section';
+import * as chunkAPI from '../../apis/chunk/chunk';
+import * as bookmarkAPI from '../../apis/bookmark/bookmark';
+import * as likeAPI from '../../apis/like/like';
 import {
-  deleteChunkResponseByAxios,
   deleteSectionResponseByAxios,
   getSectionResponseByAxios,
-  makeChunkResponseByAxios,
   makeSectionResponseByAxios,
-  updateChunkResponseByAxios,
   updateSectionResponseByAxios,
 } from '../../apis/section/types';
+import {
+  deleteChunkResponseByAxios,
+  makeChunkResponseByAxios,
+  updateChunkResponseByAxios,
+} from '../../apis/chunk/types';
+import {
+  deleteBookmarkResponse,
+  insertBookmarkOfChunkResponse,
+} from '../../apis/bookmark/types';
+import {
+  deleteLikeResponse,
+  insertLikeOfChunkResponse,
+} from '../../apis/like/types';
 
 function* getSectionSaga(action: ReturnType<typeof getSection>) {
   try {
@@ -163,7 +179,7 @@ function* deleteSectionSaga(action: ReturnType<typeof deleteSection>) {
 function* deleteChunkSaga(action: ReturnType<typeof deleteChunk>) {
   try {
     const response: deleteChunkResponseByAxios = yield call(
-      sectionAPI.deleteChunk,
+      chunkAPI.deleteChunk,
       action.payload.chunk_no,
     );
     if (response.isSuccess) {
@@ -204,7 +220,7 @@ function* deleteChunkSaga(action: ReturnType<typeof deleteChunk>) {
 function* makeChunkSaga(action: ReturnType<typeof makeChunk>) {
   try {
     const response: makeChunkResponseByAxios = yield call(
-      sectionAPI.makeChunk,
+      chunkAPI.makeChunk,
       action.payload,
     );
 
@@ -249,7 +265,7 @@ function* makeChunkSaga(action: ReturnType<typeof makeChunk>) {
 function* updateChunkSaga(action: ReturnType<typeof updateChunk>) {
   try {
     const response: updateChunkResponseByAxios = yield call(
-      sectionAPI.updateChunk,
+      chunkAPI.updateChunk,
       action.payload,
     );
 
@@ -280,6 +296,155 @@ function* updateChunkSaga(action: ReturnType<typeof updateChunk>) {
     }
   } catch (error) {
     console.log(error);
+    yield put({
+      type: sagaType.UPDATE_CHUNK_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
+function* setBookmarkSaga(action: ReturnType<typeof setBookmark>) {
+  try {
+    const response: insertBookmarkOfChunkResponse = yield call(
+      bookmarkAPI.insertBookmarkOfChunk,
+      action.payload.chunk_no,
+    );
+
+    if (response.isSuccess) {
+      action.payload.bookmark_no = response.bookmark_no;
+      yield put({
+        type: sagaType.SET_BOORMARK_SUCCESS,
+        payload: action.payload,
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.SET_BOOKMARK_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.SET_BOOKMARK_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
+function* deleteBookmarkSaga(action: ReturnType<typeof deleteBookmark>) {
+  try {
+    const response: deleteBookmarkResponse = yield call(
+      bookmarkAPI.deleteBookmarkOfChunk,
+      action.payload.bookmark_no,
+    );
+
+    if (response.isSuccess) {
+      action.payload.bookmark_no = 0;
+      yield put({
+        type: sagaType.DELETE_BOOKMARK_SUCCESS,
+        payload: action.payload,
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.DELETE_BOOKMARK_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.DELETE_BOOKMARK_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
+function* setLikeSaga(action: ReturnType<typeof setLike>) {
+  try {
+    const response: insertLikeOfChunkResponse = yield call(
+      likeAPI.insertLikeOfChunk,
+      action.payload.chunk_no,
+    );
+
+    if (response.isSuccess) {
+      action.payload.like_no = response.like_no;
+      yield put({
+        type: sagaType.SET_LIKE_SUCCESS,
+        payload: action.payload,
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.SET_LIKE_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.SET_LIKE_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
+function* deleteLikeSaga(action: ReturnType<typeof setLike>) {
+  try {
+    const response: deleteLikeResponse = yield call(
+      likeAPI.deleteLike,
+      action.payload.like_no,
+    );
+
+    if (response.isSuccess) {
+      action.payload.like_no = 0;
+      yield put({
+        type: sagaType.DELETE_LIKE_SUCCESS,
+        payload: action.payload,
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.DELETE_LIKE_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.DELETE_LIKE_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
   }
 }
 
@@ -291,4 +456,8 @@ export function* sectionSaga() {
   yield takeLatest(sagaType.DELETE_CHUNK, deleteChunkSaga);
   yield takeLatest(sagaType.MAKE_CHUNK, makeChunkSaga);
   yield takeLatest(sagaType.UPDATE_CHUNK, updateChunkSaga);
+  yield takeLatest(sagaType.SET_BOOKMARK, setBookmarkSaga);
+  yield takeEvery(sagaType.DELETE_BOOKMARK, deleteBookmarkSaga);
+  yield takeLatest(sagaType.SET_LIKE, setLikeSaga);
+  yield takeLatest(sagaType.DELETE_LIKE, deleteLikeSaga);
 }

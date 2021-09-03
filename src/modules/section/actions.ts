@@ -31,3 +31,19 @@ export const updateChunk = (chunkInfo: sagaType.chunkInfo) => ({
   type: sagaType.UPDATE_CHUNK,
   payload: chunkInfo,
 });
+export const setBookmark = (bookmarkInfo: sagaType.bookmarkActionType) => ({
+  type: sagaType.SET_BOOKMARK,
+  payload: bookmarkInfo,
+});
+export const deleteBookmark = (bookmarkInfo: sagaType.bookmarkActionType) => ({
+  type: sagaType.DELETE_BOOKMARK,
+  payload: bookmarkInfo,
+});
+export const setLike = (likeInfo: sagaType.likeActionType) => ({
+  type: sagaType.SET_LIKE,
+  payload: likeInfo,
+});
+export const deleteLike = (likeInfo: sagaType.likeActionType) => ({
+  type: sagaType.DELETE_LIKE,
+  payload: likeInfo,
+});

@@ -19,6 +19,36 @@ function section(
         data: [...state.data],
         error: null,
       };
+    case type.DELETE_BOOKMARK:
+    case type.SET_BOOKMARK: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.chunk_no,
+      );
+      const _data = [...state.data];
+      _data[section_index].chunk_list[chunk_index].bookmark_loading = true;
+      return {
+        ...state,
+        data: _data,
+      };
+    }
+    case type.DELETE_LIKE:
+    case type.SET_LIKE: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.chunk_no,
+      );
+      const _data = [...state.data];
+      _data[section_index].chunk_list[chunk_index].like_loading = true;
+      return {
+        ...state,
+        data: _data,
+      };
+    }
     case type.UPDATE_SECTION_SUCCESS: {
       const index = state.data.findIndex(
         section => section.no === action.payload.no,
@@ -99,6 +129,44 @@ function section(
         data: _data,
       };
     }
+    case type.DELETE_BOOKMARK_SUCCESS:
+    case type.SET_BOORMARK_SUCCESS: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.chunk_no,
+      );
+
+      const _data = [...state.data];
+      _data[section_index].chunk_list[chunk_index].bookmark_no =
+        action.payload.bookmark_no;
+      _data[section_index].chunk_list[chunk_index].bookmark_loading = false;
+
+      return {
+        ...state,
+        data: _data,
+      };
+    }
+    case type.DELETE_LIKE_SUCCESS:
+    case type.SET_LIKE_SUCCESS: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.chunk_no,
+      );
+
+      const _data = [...state.data];
+      _data[section_index].chunk_list[chunk_index].like_no =
+        action.payload.like_no;
+      _data[section_index].chunk_list[chunk_index].like_loading = false;
+
+      return {
+        ...state,
+        data: _data,
+      };
+    }
     case type.MAKE_SECTION_ERROR:
     case type.DELETE_SECTION_ERROR:
     case type.GET_SECTION_ERROR:
@@ -107,6 +175,7 @@ function section(
     case type.DELETE_CHUNK_NOAUTH:
     case type.MAKE_CHUNK_ERROR:
     case type.MAKE_CHUNK_NOAUTH:
+    case type.SET_BOOKMARK_ERROR:
       return {
         ...state,
         loading: false,

@@ -19,8 +19,10 @@ import {
   UpdateSectionModal,
 } from './SectionModal';
 import {
+  bookmarkActionType,
   chunkInfo,
   deleteChunkActionType,
+  likeActionType,
   sectionInfo,
 } from '../../modules/section';
 import { useEffect } from 'react';
@@ -49,20 +51,28 @@ type sectionFormProps = {
   deleteChunkRedux: (deleteChunkActionType: deleteChunkActionType) => void;
   makeChunkRedux: (chunkInfo: chunkInfo) => void;
   updateChunkRedux: (chunkInfo: chunkInfo) => void;
+  setBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
+  deleteBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
+  setLikeRedux: (likeActionType: likeActionType) => void;
+  deleteLikeRedux: (likeActionType: likeActionType) => void;
 };
 
 function SectionForm({
   loading,
   error,
   archive_no,
+  section_list,
   makeSectionRedux,
   updateSectionRedux,
   deleteSectionRedux,
   getSectionRedux,
-  section_list,
   deleteChunkRedux,
   makeChunkRedux,
   updateChunkRedux,
+  setBookmarkRedux,
+  deleteBookmarkRedux,
+  setLikeRedux,
+  deleteLikeRedux,
 }: sectionFormProps) {
   const barClasses = barStyles();
 
@@ -119,20 +129,16 @@ function SectionForm({
                   {section.chunk_list?.length !== 0 ? (
                     section.chunk_list?.map(chunk => (
                       <Grid key={chunk.no} item lg={3} sm={6} xs={12}>
+                        {/* 청크 카드 */}
                         <ChunkForm
-                          no={chunk.no}
-                          section_no={chunk.section_no}
-                          title={chunk.title}
-                          thumbnail={chunk.thumbnail}
-                          link={chunk.link}
-                          link_title={chunk.link_title}
-                          link_description={chunk.link_description}
-                          description={chunk.description}
-                          regdate={chunk.regdate}
-                          deleteChunkRedux={deleteChunkRedux}
+                          chunk_info={chunk}
                           section_tag_list={section.tag_list}
-                          chunk_tag_list={chunk.tag_list}
+                          deleteChunkRedux={deleteChunkRedux}
                           updateChunkRedux={updateChunkRedux}
+                          setBookmarkRedux={setBookmarkRedux}
+                          deleteBookmarkRedux={deleteBookmarkRedux}
+                          setLikeRedux={setLikeRedux}
+                          deleteLikeRedux={deleteLikeRedux}
                         />
                       </Grid>
                     ))

@@ -37,8 +37,41 @@ export const UPDATE_CHUNK_SUCCESS = 'section/UPDATE_CHUNK_SUCCESS' as const;
 export const UPDATE_CHUNK_ERROR = 'section/UPDATE_CHUNK_ERROR' as const;
 export const UPDATE_CHUNK_NOAUTH = 'section/UPDATE_CHUNK_NOAUTH' as const;
 
+// REF 북마크 생성
+export const SET_BOOKMARK = 'section/SET_BOOKMARK' as const;
+export const SET_BOORMARK_SUCCESS = 'section/SET_BOOKMARK_SUCCESS' as const;
+export const SET_BOOKMARK_ERROR = 'section/SET_BOOKMARK_ERROR' as const;
+
+// REF 북마크 삭제
+export const DELETE_BOOKMARK = 'section/DELETE_BOOKMARK' as const;
+export const DELETE_BOOKMARK_SUCCESS =
+  'section/DELETE_BOOKMARK_SUCCESS' as const;
+export const DELETE_BOOKMARK_ERROR = 'section/DELETE_BOOKMARK_ERROR' as const;
+
+// REF 좋아요 생성
+export const SET_LIKE = 'section/SET_LIKE' as const;
+export const SET_LIKE_SUCCESS = 'section/SET_LIKE_SUCCESS' as const;
+export const SET_LIKE_ERROR = 'section/SET_LIKE_ERROR' as const;
+
+// REF 좋아요 삭제
+export const DELETE_LIKE = 'section/DELETE_LIKE' as const;
+export const DELETE_LIKE_SUCCESS = 'section/DELETE_LIKE_SUCCESS' as const;
+export const DELETE_LIKE_ERROR = 'section/DELETE_LIKE_ERROR' as const;
+
 // REF JWT 토큰 기한 만료
 export const EXPIRE_JWT_TOKEN = 'section/EXPIRE_JWT_TOKEN' as const;
+
+export type likeActionType = {
+  like_no: number;
+  chunk_no: number;
+  section_no: number;
+};
+
+export type bookmarkActionType = {
+  bookmark_no: number;
+  chunk_no: number;
+  section_no: number;
+};
 
 export type deleteChunkActionType = {
   section_no: number;
@@ -56,6 +89,10 @@ export type chunkInfo = {
   description: string;
   regdate: string;
   tag_list: Array<string>;
+  bookmark_no: number;
+  bookmark_loading: boolean;
+  like_no: number;
+  like_loading: boolean;
 };
 
 export type sectionInfo = {

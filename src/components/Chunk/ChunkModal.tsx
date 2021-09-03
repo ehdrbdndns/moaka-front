@@ -199,10 +199,11 @@ function UpdateChunkModal({
         link_title: link_title,
         thumbnail: thumbnail,
         regdate: '',
+        bookmark_no: 0,
+        bookmark_loading: false,
+        like_no: 0,
+        like_loading: false,
       };
-
-      console.log('chunkInfo');
-      console.log(chunkInfo);
 
       updateChunkRedux(chunkInfo);
     }
@@ -306,6 +307,10 @@ function MakeChunkModal({
         link_title: link_title,
         thumbnail: thumbnail,
         regdate: '',
+        bookmark_no: 0,
+        bookmark_loading: false,
+        like_no: 0,
+        like_loading: false,
       };
 
       makeChunkRedux(chunkInfo);
