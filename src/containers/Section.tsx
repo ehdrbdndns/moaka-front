@@ -3,10 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import SectionForm from '../components/Section/SectionForm';
 import { RootState } from '../modules';
 import {
+  bookmarkActionType,
+  chunkInfo,
+  deleteBookmark,
+  deleteChunk,
+  deleteChunkActionType,
+  deleteLike,
   deleteSection,
   getSection,
+  likeActionType,
+  makeChunk,
   makeSection,
   sectionInfo,
+  setBookmark,
+  setLike,
+  updateChunk,
   updateSection,
 } from '../modules/section';
 
@@ -31,6 +42,34 @@ function Section() {
     dispatch(updateSection(sectionInfo));
   }
 
+  function deleteChunkRedux(deleteChunkInfo: deleteChunkActionType) {
+    dispatch(deleteChunk(deleteChunkInfo));
+  }
+
+  function makeChunkRedux(chunkInfo: chunkInfo) {
+    dispatch(makeChunk(chunkInfo));
+  }
+
+  function updateChunkRedux(chunkInfo: chunkInfo) {
+    dispatch(updateChunk(chunkInfo));
+  }
+
+  function setBookmarkRedux(bookmarkActionType: bookmarkActionType) {
+    dispatch(setBookmark(bookmarkActionType));
+  }
+
+  function deleteBookmarkRedux(bookmarkActionType: bookmarkActionType) {
+    dispatch(deleteBookmark(bookmarkActionType));
+  }
+
+  function setLikeRedux(likeActionType: likeActionType) {
+    dispatch(setLike(likeActionType));
+  }
+
+  function deleteLikeRedux(likeActionType: likeActionType) {
+    dispatch(deleteLike(likeActionType));
+  }
+
   return (
     <>
       <SectionForm
@@ -41,6 +80,13 @@ function Section() {
         deleteSectionRedux={deleteSectionRedux}
         getSectionRedux={getSectionRedux}
         updateSectionRedux={updateSectionRedux}
+        deleteChunkRedux={deleteChunkRedux}
+        makeChunkRedux={makeChunkRedux}
+        updateChunkRedux={updateChunkRedux}
+        setBookmarkRedux={setBookmarkRedux}
+        deleteBookmarkRedux={deleteBookmarkRedux}
+        setLikeRedux={setLikeRedux}
+        deleteLikeRedux={deleteLikeRedux}
         // FIXME 아카이브 고유 번호는 추후 디비로부터 가져와야 함
         archive_no={1}
       />

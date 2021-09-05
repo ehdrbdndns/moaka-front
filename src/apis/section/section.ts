@@ -31,7 +31,6 @@ export const getSection = async (
       },
     )
     .then(function (response) {
-      console.log(response);
       result.isSuccess = true;
       result.section_list = response.data;
     })
@@ -59,7 +58,6 @@ export const makeSection = async (
       },
     })
     .then(function (response) {
-      console.log(response);
       result.isSuccess = true;
       result.section_no = response.data.section_no;
     })
@@ -92,7 +90,6 @@ export const deleteSection = async (
       },
     )
     .then(function (response) {
-      console.log(response);
       result.isSuccess = true;
     })
     .catch(function (error) {
@@ -119,7 +116,6 @@ export const updateSection = async (
       },
     })
     .then(function (response) {
-      console.log(response);
       result.isSuccess = true;
     })
     .catch(function (error) {

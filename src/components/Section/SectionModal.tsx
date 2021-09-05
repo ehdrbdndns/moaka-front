@@ -13,7 +13,6 @@ import {
 import SaveIcon from '@material-ui/icons/Save';
 import React, { useRef, useState } from 'react';
 import { sectionInfo } from '../../modules/section/types';
-import * as testAPI from '../../apis/section/section';
 import { useEffect } from 'react';
 
 const sectionBtnStyles = makeStyles((theme: Theme) =>
@@ -87,7 +86,7 @@ type updateSectionModalProps = {
   loading: boolean;
   title_prop: string;
   description_prop: string;
-  tag_list: Array<string>;
+  section_tag_list: Array<string>;
   updateSectionRedux: (sectionInfo: sectionInfo) => void;
 };
 
@@ -155,6 +154,7 @@ export function MakeSectionModal({
       archive_no: archive_no,
       description: description,
       tag_list,
+      chunk_list: [],
       regdate: undefined,
     };
     makeSectionRedux(sectionInfo);
@@ -339,7 +339,7 @@ export function UpdateSectionModal({
   loading,
   title_prop,
   description_prop,
-  tag_list,
+  section_tag_list,
   updateSectionRedux,
 }: updateSectionModalProps) {
   const sectionBtnClasses = sectionBtnStyles();
@@ -361,17 +361,20 @@ export function UpdateSectionModal({
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    for (let i = 0; i < tag_list.length; i++) {
-      setTagList([
+    // TODO 기존 태그 리스트의 내용을 초기화한 후 스토어에 있는 태그 리스트를
+    setTagList([]);
+    for (let i = 0; i < section_tag_list.length; i++) {
+      setTagList(tagList => [
+        ...tagList,
         {
           id: ++tagId.current,
-          tag: tag_list[i],
+          tag: section_tag_list[i],
         },
       ]);
     }
     setTitle(title_prop);
     setDescription(description_prop);
-  }, [tag_list]);
+  }, [section_tag_list, title_prop, description_prop]);
 
   const removeTagListEvent = (tagId: number) => {
     setTagList(tagList?.filter(tagItem => tagItem.id !== tagId));
@@ -403,7 +406,7 @@ export function UpdateSectionModal({
     setDescription(e.target.value);
   };
 
-  const makeSection = () => {
+  const updateSection = () => {
     const tag_list = new Array<string>();
     for (let i = 0; i < tagList.length; i++) {
       tag_list.push(tagList[i].tag);
@@ -414,6 +417,7 @@ export function UpdateSectionModal({
       archive_no: 0,
       description: description,
       tag_list,
+      chunk_list: [],
       regdate: undefined,
     };
     updateSectionRedux(sectionInfo);
@@ -500,7 +504,7 @@ export function UpdateSectionModal({
                     size="large"
                     fullWidth
                     startIcon={<SaveIcon />}
-                    onClick={makeSection}
+                    onClick={updateSection}
                   >
                     저장
                   </Button>

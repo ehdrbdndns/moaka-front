@@ -15,5 +15,35 @@ export const deleteSection = (section_no: number) => ({
 });
 export const updateSection = (sectionInfo: sagaType.sectionInfo) => ({
   type: sagaType.UPDATE_SECTION,
-  playload: sectionInfo,
+  payload: sectionInfo,
+});
+export const deleteChunk = (
+  deleteChunkInfo: sagaType.deleteChunkActionType,
+) => ({
+  type: sagaType.DELETE_CHUNK,
+  payload: deleteChunkInfo,
+});
+export const makeChunk = (chunkInfo: sagaType.chunkInfo) => ({
+  type: sagaType.MAKE_CHUNK,
+  payload: chunkInfo,
+});
+export const updateChunk = (chunkInfo: sagaType.chunkInfo) => ({
+  type: sagaType.UPDATE_CHUNK,
+  payload: chunkInfo,
+});
+export const setBookmark = (bookmarkInfo: sagaType.bookmarkActionType) => ({
+  type: sagaType.SET_BOOKMARK,
+  payload: bookmarkInfo,
+});
+export const deleteBookmark = (bookmarkInfo: sagaType.bookmarkActionType) => ({
+  type: sagaType.DELETE_BOOKMARK,
+  payload: bookmarkInfo,
+});
+export const setLike = (likeInfo: sagaType.likeActionType) => ({
+  type: sagaType.SET_LIKE,
+  payload: likeInfo,
+});
+export const deleteLike = (likeInfo: sagaType.likeActionType) => ({
+  type: sagaType.DELETE_LIKE,
+  payload: likeInfo,
 });

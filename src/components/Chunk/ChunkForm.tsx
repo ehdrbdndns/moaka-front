@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -7,15 +7,25 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Theme } from '@material-ui/core';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { DeleteChunkModal, UpdateChunkModal } from './ChunkModal';
+import {
+  bookmarkActionType,
+  chunkInfo,
+  deleteChunkActionType,
+  likeActionType,
+} from '../../modules/section';
+import { CircularProgress } from '@material-ui/core';
 
 const cardStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -40,7 +50,44 @@ const cardStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-function ChunkForm() {
+type chunkFormProps = {
+  chunk_info: chunkInfo;
+  section_tag_list: string[];
+  deleteChunkRedux: (deleteChunkActionType: deleteChunkActionType) => void;
+  updateChunkRedux: (chunkInfo: chunkInfo) => void;
+  setBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
+  deleteBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
+  setLikeRedux: (likeActionType: likeActionType) => void;
+  deleteLikeRedux: (likeActionType: likeActionType) => void;
+};
+
+function ChunkForm({
+  chunk_info,
+  section_tag_list,
+  deleteChunkRedux,
+  updateChunkRedux,
+  setBookmarkRedux,
+  deleteBookmarkRedux,
+  setLikeRedux,
+  deleteLikeRedux,
+}: chunkFormProps) {
+  const {
+    no,
+    section_no,
+    title,
+    thumbnail,
+    link,
+    link_title,
+    link_description,
+    description,
+    regdate,
+    tag_list,
+    bookmark_no,
+    bookmark_loading,
+    like_no,
+    like_loading,
+  } = chunk_info;
+
   const classes = cardStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -48,40 +95,146 @@ function ChunkForm() {
     setExpanded(!expanded);
   };
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const deleteChunk = () => {
+    deleteChunkRedux({
+      chunk_no: no,
+      section_no,
+    });
+  };
+
+  const setBookmarkEvent = () => {
+    const bookmarkActionType: bookmarkActionType = {
+      bookmark_no: 0,
+      chunk_no: no,
+      section_no: section_no,
+    };
+
+    setBookmarkRedux(bookmarkActionType);
+  };
+
+  const deleteBookmarkEvent = () => {
+    const bookmarkActionType: bookmarkActionType = {
+      bookmark_no: bookmark_no,
+      chunk_no: no,
+      section_no: section_no,
+    };
+
+    deleteBookmarkRedux(bookmarkActionType);
+  };
+
+  const setLikeEvent = () => {
+    const likeActionType: likeActionType = {
+      like_no: 0,
+      chunk_no: no,
+      section_no: section_no,
+    };
+
+    setLikeRedux(likeActionType);
+  };
+
+  const deleteLikeEvent = () => {
+    const likeActionType: likeActionType = {
+      like_no: like_no,
+      chunk_no: no,
+      section_no: section_no,
+    };
+
+    deleteLikeRedux(likeActionType);
+  };
+
+  const ITEM_HEIGHT = 48;
+
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          <>
+            <IconButton
+              aria-label="more"
+              aria-controls="long-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id="long-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5,
+                  width: '15ch',
+                },
+              }}
+            >
+              <MenuItem onClick={handleClose}>
+                <UpdateChunkModal
+                  chunk_no={no}
+                  _url={link}
+                  _title={title}
+                  _description={description}
+                  chunk_tag_list={tag_list}
+                  section_tag_list={section_tag_list}
+                  updateChunkRedux={updateChunkRedux}
+                  section_no={section_no}
+                />
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <DeleteChunkModal deleteChunk={deleteChunk} />
+              </MenuItem>
+            </Menu>
+          </>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={title}
+        subheader={regdate}
       />
       <CardMedia
         className={classes.media}
-        image="./img/moaka_logo.png"
-        title="Paella dish"
+        image={thumbnail}
+        title={link_title}
       />
       <CardContent>
+        <Typography variant="h5" color="textSecondary" component="p">
+          {link_title}
+        </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {link_description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+        {/* REF 좋아요 */}
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          {like_loading ? (
+            <CircularProgress />
+          ) : like_no ? (
+            <FavoriteIcon onClick={deleteLikeEvent} />
+          ) : (
+            <FavoriteBorderIcon onClick={setLikeEvent} />
+          )}
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
+        {/* REF 북마크 */}
+        <IconButton aria-label="bookMark">
+          {bookmark_loading ? (
+            <CircularProgress />
+          ) : bookmark_no ? (
+            <BookmarkIcon onClick={deleteBookmarkEvent} />
+          ) : (
+            <BookmarkBorderIcon onClick={setBookmarkEvent} />
+          )}
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {
@@ -96,12 +249,8 @@ function ChunkForm() {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>댓글 대댓글</Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then
-            serve.
-          </Typography>
+          <Typography paragraph>description</Typography>
+          <Typography>{description}</Typography>
         </CardContent>
       </Collapse>
     </Card>
