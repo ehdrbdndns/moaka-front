@@ -62,7 +62,7 @@ function* getSectionSaga(action: ReturnType<typeof getSection>) {
       });
     }
   } catch (error) {
-    console.log(error.response);
+    console.log(error);
     yield put({
       type: sagaType.GET_SECTION_ERROR,
       error: true,
@@ -167,7 +167,7 @@ function* deleteSectionSaga(action: ReturnType<typeof deleteSection>) {
       });
     }
   } catch (error) {
-    console.log(error.response);
+    console.log(error);
     yield put({
       type: sagaType.DELETE_SECTION_ERROR,
       error: true,
@@ -208,7 +208,7 @@ function* deleteChunkSaga(action: ReturnType<typeof deleteChunk>) {
       });
     }
   } catch (error) {
-    console.log(error.response);
+    console.log(error);
     yield put({
       type: sagaType.DELETE_CHUNK_ERROR,
       error: true,
