@@ -19,41 +19,22 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import { myPageStyles } from './styles';
-import AddContentModal from '../AddContent/AddContentModal';
 import DashboardProps from './types';
 import { Link } from 'react-router-dom';
+import StarIcon from '@material-ui/icons/Star';
+import PersonIcon from '@material-ui/icons/Person';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import AppsIcon from '@material-ui/icons/Apps';
+import UserProfile from '../UserProfile/UserProfile';
+import BookMarkList from '../BookMark/BookMarkList';
 
-export default function Dashboard(props: DashboardProps) {
+export default function Dashboard() {
   const classes = myPageStyles();
   const [open, setOpen] = React.useState(true);
   const [modalOpen, setModalOpen] = React.useState(false);
-  const [contents, setContents] = React.useState(props.contents);
-  const contentList = contents.map(content => (
-    <List className={classes.listRoot}>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="img/moaka_logo.png" />
-        </ListItemAvatar>
-        <ListItemText
-          primary={content.name}
-          secondary={
-            <React.Fragment>
-              <Typography
-                component="span"
-                variant="body2"
-                className={classes.inline}
-                color="textPrimary"
-              >
-                {content.desc}
-              </Typography>
-              #{content.tag}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-    </List>
-  ));
+  const [pageState, setPageState] = React.useState('bookmark');
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -67,7 +48,17 @@ export default function Dashboard(props: DashboardProps) {
   const handleModalClose = () => {
     setModalOpen(false);
   };
+  const handleControl = () => {
+    // if (pageState === 'profile') {
+    //   console.log('hello');
+    //   return <div className={classes.contents}>hi</div>;
+    // }
+    return <h1>hello</h1>;
+  };
 
+  const changePage = (page: string) => {
+    setPageState(page);
+  };
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -116,28 +107,34 @@ export default function Dashboard(props: DashboardProps) {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
         <List>{secondaryListItems}</List>
+        <Divider />
+        <List>
+          <div>
+            <ListItem button>
+              <ListItemIcon>
+                <AppsIcon />
+              </ListItemIcon>
+              <ListItemText primary="내 아카이브" />
+            </ListItem>
+            <ListItem button onClick={() => changePage('bookmark')}>
+              <ListItemIcon>
+                <StarIcon />
+              </ListItemIcon>
+              <ListItemText primary="북마크" />
+            </ListItem>
+            <ListItem button onClick={() => changePage('profile')}>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary="프로필" />
+            </ListItem>
+          </div>
+        </List>
+        <Divider />
       </Drawer>
-      <div className={classes.contents}>
-        {/* #콘텐츠 링크 추가 버튼 */}
-        {/* <Button
-          className={classes.addButton}
-          variant="outlined"
-          onClick={handleModalOpen}
-        >
-          Add Content
-        </Button> */}
-        <Modal
-          open={modalOpen}
-          onClose={handleModalClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <AddContentModal />
-        </Modal>
-        {contentList}
+      <div className={classes.contentsLayout}>
+        {pageState === 'profile' ? <UserProfile /> : <BookMarkList />}
       </div>
     </div>
   );

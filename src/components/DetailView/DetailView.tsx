@@ -4,11 +4,9 @@ import Divider from '@material-ui/core/Divider';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import TagFacesIcon from '@material-ui/icons/TagFaces';
-import Modal from '@material-ui/core/Modal';
 import { detailStyles } from './styles';
 import { detailProps, ChipData } from './types';
 import Button from '@material-ui/core/Button';
-import AddContentModal from '../AddContent/AddContentModal';
 
 export default function DetailView(props: detailProps) {
   const classes = detailStyles();
@@ -44,14 +42,6 @@ export default function DetailView(props: detailProps) {
         >
           Add Content
         </Button>
-        <Modal
-          open={modalOpen}
-          onClose={handleModalClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <AddContentModal />
-        </Modal>
       </div>
       <Divider />
       <div className={classes.contentsTag}>

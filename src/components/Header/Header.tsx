@@ -24,12 +24,16 @@ function Header(props: HeaderProps) {
   const [searchResult, setSearchResult] = React.useState(
     archives.filter(archive => archive.title.includes(searchInput)),
   );
+  const [isSearch, setIsSearch] = useState(false);
+  //if 문 걸고~ useState 검색 버튼 했는지 안했는지
   useEffect(() => {
-    history.push({
-      pathname: '/archive/search',
-      state: { searchResult: searchResult },
-    });
-  }, [searchResult]);
+    if (isSearch) {
+      history.push({
+        pathname: '/archive/search',
+        state: { searchResult: searchResult },
+      });
+    }
+  }, [history, isSearch, searchResult]);
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
   };
@@ -42,9 +46,16 @@ function Header(props: HeaderProps) {
           archive.tag_list.includes(searchInput),
       ),
     );
-    console.log(searchResult);
+    changeIsSearchState();
   };
-
+  const setIsSearchEvent = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === 'Enter') {
+      changeIsSearchState();
+    }
+  };
+  const changeIsSearchState = () => {
+    setIsSearch(!isSearch);
+  };
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
@@ -73,7 +84,7 @@ function Header(props: HeaderProps) {
             />
             <Link
               to={{
-                pathname: '/archive/main',
+                pathname: '/archive/search',
                 state: { searchResult: searchResult },
               }}
             >
@@ -82,6 +93,7 @@ function Header(props: HeaderProps) {
                 className={classes.searchButton}
                 aria-label="search"
                 onClick={handleSearchButton}
+                onKeyPress={setIsSearchEvent}
               >
                 <SearchIcon />
               </IconButton>
@@ -120,6 +132,9 @@ function Header(props: HeaderProps) {
         </Link>
         <Link to={'/archive/detail'} className={classes.toolbarLink}>
           Archive
+        </Link>
+        <Link to={'/test'} className={classes.toolbarLink}>
+          test
         </Link>
       </Toolbar>
       <Divider />

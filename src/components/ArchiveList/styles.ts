@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const archiveListStyles = makeStyles({
+  layout: {},
   root: {
     maxWidth: 700,
   },
