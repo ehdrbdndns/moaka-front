@@ -44,6 +44,7 @@ const myPageStyles = makeStyles(theme => ({
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
+    height: 'fit-content',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -81,8 +82,7 @@ const myPageStyles = makeStyles(theme => ({
   },
   contents: {
     position: 'relative',
-    top: '100px',
-    left: '40px',
+    backgroundColor: 'black',
   },
   addButton: {
     backgroundColor: 'white',
@@ -94,6 +94,12 @@ const myPageStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   inline: { display: 'inline' },
+  contentsLayout: {
+    //backgroundColor: 'white',
+    position: 'relative',
+    top: '69px',
+    width: '-webkit-fill-available',
+  },
 }));
 
 export { myPageStyles };

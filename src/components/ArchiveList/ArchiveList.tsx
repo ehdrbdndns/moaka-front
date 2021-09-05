@@ -12,7 +12,7 @@ export default function ArchiveList(props: archiveListProps) {
   const classes = archiveListStyles();
   const { archiveList } = props;
   return (
-    <div>
+    <div className={classes.layout}>
       {archiveList.map(archive => (
         <Card className={classes.root}>
           <CardActionArea className={classes.cardAction}>
