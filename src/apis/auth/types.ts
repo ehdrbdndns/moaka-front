@@ -3,6 +3,20 @@ export type LoginInfo = {
   pwd: string;
 };
 
+export type googleRegisterInfo = {
+  sub: string;
+  id: string;
+  name: string;
+  profile: string;
+  auth_type: string;
+};
+
+export type RegisterResponseByAxios = {
+  no: number;
+  isSuccess: boolean;
+  error: string | null;
+};
+
 export type LoginResponseByAxios = {
   isLogin: boolean;
   token: string;
@@ -10,16 +24,12 @@ export type LoginResponseByAxios = {
 };
 
 export type JwtDecodeFromUserInfo = {
-  age: string;
-  aud: string;
-  auth_type: string;
-  exp: Number;
-  id: string;
-  iss: string;
+  exp: number;
+  iat: number;
   name: string;
   no: number;
   profile: string;
-  pwd: string;
-  regdate: string;
-  version: string;
+  roles: Array<string>;
+  id: string;
+  sub: string;
 };
