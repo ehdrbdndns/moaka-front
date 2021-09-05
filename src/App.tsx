@@ -30,7 +30,9 @@ function App() {
         <Route path="/mypage">
           <MyPage />
         </Route>
-        <Route path="/archive/search" component={Archive_search}></Route>
+        <Route path="/archive/search">
+          <Archive_search />
+        </Route>
         <Route path="/archive/detail">
           <Archive_detail />
         </Route>
