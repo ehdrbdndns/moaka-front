@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Toolbar from '@material-ui/core/Toolbar';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
@@ -9,11 +11,39 @@ import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { headerStyles } from './styles';
-import { HeaderProps } from './types';
+import { HeaderProps, ArchiveInfo } from './types';
+import archives from '../../archives.json';
+import { useHistory } from 'react-router';
+import { useEffect } from 'react';
 
 function Header(props: HeaderProps) {
+  const history = useHistory();
   const classes = headerStyles();
   const { title, loginStatus } = props;
+  const [searchInput, setSearchInput] = React.useState('');
+  const [searchResult, setSearchResult] = React.useState(
+    archives.filter(archive => archive.title.includes(searchInput)),
+  );
+  useEffect(() => {
+    history.push({
+      pathname: '/archive/search',
+      state: { searchResult: searchResult },
+    });
+  }, [searchResult]);
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+  };
+  const handleSearchButton = () => {
+    setSearchResult(
+      archives.filter(
+        archive =>
+          archive.title.includes(searchInput) ||
+          archive.description.includes(searchInput) ||
+          archive.tag_list.includes(searchInput),
+      ),
+    );
+    console.log(searchResult);
+  };
 
   return (
     <React.Fragment>
@@ -31,9 +61,33 @@ function Header(props: HeaderProps) {
           {title}
         </Typography>
 
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
+        {/* 검색 필드 추가 */}
+
+        <div>
+          <Paper component="form" className={classes.searchRoot}>
+            <InputBase
+              className={classes.searchInput}
+              placeholder="아카이브를 검색해 보세요."
+              inputProps={{ 'aria-label': 'search archives' }}
+              onChange={handleSearchInput}
+            />
+            <Link
+              to={{
+                pathname: '/archive/main',
+                state: { searchResult: searchResult },
+              }}
+            >
+              <IconButton
+                type="submit"
+                className={classes.searchButton}
+                aria-label="search"
+                onClick={handleSearchButton}
+              >
+                <SearchIcon />
+              </IconButton>
+            </Link>
+          </Paper>
+        </div>
         {loginStatus ? (
           <Link to="/mypage">
             <Avatar src="/broken-image.jpg" />
@@ -64,7 +118,7 @@ function Header(props: HeaderProps) {
         <Link to={'/mypage'} className={classes.toolbarLink}>
           Mypage
         </Link>
-        <Link to={'/archive/main'} className={classes.toolbarLink}>
+        <Link to={'/archive/detail'} className={classes.toolbarLink}>
           Archive
         </Link>
       </Toolbar>

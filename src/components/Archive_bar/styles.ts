@@ -5,6 +5,25 @@ const myPageStyles = makeStyles(theme => ({
     display: 'flex',
     position: 'relative',
   },
+  archiveProfile: {
+    backgroundColor: 'white',
+    backgroundImage: 'radial-gradient(#7a84dc 10%, transparent 0%)',
+    backgroundPosition: '0 0, 30px 30px',
+    backgroundSize: '10px 10px',
+    width: '100%',
+    height: '200px',
+    opacity: '0.8',
+    textAlign: 'center',
+  },
+  archiveTitle: {
+    position: 'relative',
+    top: '50px',
+    fontSize: '30px',
+  },
+  archiveDesc: {
+    position: 'relative',
+    top: '50px',
+  },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
     backgroundColor: '#7a84dc',
