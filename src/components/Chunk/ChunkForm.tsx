@@ -153,6 +153,10 @@ function ChunkForm({
     deleteLikeRedux(likeActionType);
   };
 
+  const moveLinkEvent = () => {
+    window.open(link);
+  };
+
   const ITEM_HEIGHT = 48;
 
   return (
@@ -206,6 +210,7 @@ function ChunkForm({
         className={classes.media}
         image={thumbnail}
         title={link_title}
+        onClick={moveLinkEvent}
       />
       <CardContent>
         <Typography variant="h5" color="textSecondary" component="p">

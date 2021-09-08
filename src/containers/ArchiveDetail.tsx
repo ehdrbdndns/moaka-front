@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import SectionForm from '../components/Section/SectionForm';
+import ArchiveDetailForm from '../components/ArchiveDetail/ArchiveDetailForm';
+import ArchiveHeaderForm from '../components/ArchiveHeader/ArchiveHeaderForm';
 import { RootState } from '../modules';
 import {
   bookmarkActionType,
@@ -20,10 +21,12 @@ import {
   updateChunk,
   updateSection,
 } from '../modules/section';
+import Section from './Section';
 
-function Section() {
+function ArchiveDetail() {
   const dispatch = useDispatch();
   const sectionInfo = useSelector((state: RootState) => state.section);
+  const archiveInfo = useSelector((state: RootState) => state.archive);
 
   const makeSectionRedux = useCallback(
     (sectionInfo: sectionInfo) => {
@@ -103,11 +106,16 @@ function Section() {
   );
 
   return (
-    <>
-      <SectionForm
-        loading={sectionInfo.loading}
-        error={sectionInfo.error}
+    <div>
+      <ArchiveHeaderForm />
+      {/* <Section /> */}
+      <ArchiveDetailForm
+        section_loading={sectionInfo.loading}
+        section_error={sectionInfo.error}
         section_list={sectionInfo.data}
+        archive_loading={archiveInfo.loading}
+        archive_error={archiveInfo.error}
+        archive_info={archiveInfo.data}
         makeSectionRedux={makeSectionRedux}
         deleteSectionRedux={deleteSectionRedux}
         getSectionRedux={getSectionRedux}
@@ -119,11 +127,11 @@ function Section() {
         deleteBookmarkRedux={deleteBookmarkRedux}
         setLikeRedux={setLikeRedux}
         deleteLikeRedux={deleteLikeRedux}
-        // FIXME 아카이브 고유 번호는 추후 디비로부터 가져와야 함
-        archive_no={1}
       />
-    </>
+      {/* <ArchiveBar view="detail" /> */}
+      {/* <Section /> */}
+    </div>
   );
 }
 
-export default Section;
+export default ArchiveDetail;

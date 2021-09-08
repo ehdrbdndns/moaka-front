@@ -10,7 +10,8 @@ const archiveListStyles = makeStyles({
     height: 180,
   },
   media: {
-    width: 300,
+    width: '100%',
+    maxwidth: 300,
     height: 170,
   },
   content: {

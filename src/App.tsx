@@ -10,7 +10,7 @@ import MyPage from './containers/MyPage';
 import Section from './containers/Section';
 import Header from './components/Header/Header';
 import Archive_search from './containers/Archive_search';
-import Archive_detail from './containers/Archive_detail';
+import ArchiveDetail from './containers/ArchiveDetail';
 import ArchiveList from './components/ArchiveList/ArchiveList';
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
           <Archive_search />
         </Route>
         <Route path="/archive/detail">
-          <Archive_detail />
+          <ArchiveDetail />
         </Route>
         <Route path="/archive">
           <ArchiveList archiveList={archives} />
