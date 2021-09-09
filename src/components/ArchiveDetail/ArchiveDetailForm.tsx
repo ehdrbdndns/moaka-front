@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react';
-import clsx from 'clsx';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import DetailView from '../DetailView/DetailView';
-import { Box, Button, Container, Grid, makeStyles } from '@material-ui/core';
+import { Box, Grid, makeStyles } from '@material-ui/core';
 import { archiveInfo } from '../../modules/archive';
 import {
   bookmarkActionType,

@@ -13,14 +13,27 @@ function archive(
         data: [...state.data],
         error: null,
       };
-    case type.GET_GROUP_ARCHIVE_LIST_SUCCESS: {
+    case type.GET_ARCHIVE:
+      return {
+        ...state,
+        loading: true,
+        data: [],
+        error: null,
+      };
+    case type.GET_GROUP_ARCHIVE_LIST_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload,
       };
-    }
-    case type.GET_GROUP_ARCHIVE_LIST_ERROR: {
+    case type.GET_ARCHIVE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
+      };
+    case type.GET_GROUP_ARCHIVE_LIST_ERROR:
+    case type.GET_ARCHIVE_ERROR: {
       alert('에러: ' + action.payload);
       return {
         ...state,

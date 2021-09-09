@@ -5,3 +5,9 @@ export type getGroupArchiveListResponse = {
   error: number;
   archive_list: Array<archiveInfo>;
 };
+
+export type getArchiveResponse = {
+  isSuccess: boolean;
+  error: number;
+  archive: archiveInfo;
+};

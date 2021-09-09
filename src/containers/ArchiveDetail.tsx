@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ArchiveDetailForm from '../components/ArchiveDetail/ArchiveDetailForm';
 import ArchiveHeaderForm from '../components/ArchiveHeader/ArchiveHeaderForm';
 import { RootState } from '../modules';
+import { getArchive } from '../modules/archive';
 import {
   bookmarkActionType,
   chunkInfo,
@@ -21,12 +22,18 @@ import {
   updateChunk,
   updateSection,
 } from '../modules/section';
-import Section from './Section';
 
 function ArchiveDetail() {
   const dispatch = useDispatch();
   const sectionInfo = useSelector((state: RootState) => state.section);
   const archiveInfo = useSelector((state: RootState) => state.archive);
+
+  const getArchiveRedux = useCallback(
+    (archive_no: number) => {
+      dispatch(getArchive(archive_no));
+    },
+    [dispatch],
+  );
 
   const makeSectionRedux = useCallback(
     (sectionInfo: sectionInfo) => {
@@ -107,7 +114,12 @@ function ArchiveDetail() {
 
   return (
     <div>
-      <ArchiveHeaderForm />
+      <ArchiveHeaderForm
+        loading={archiveInfo.loading}
+        error={archiveInfo.error}
+        archive_info={archiveInfo.data[0]}
+        getArchiveRedux={getArchiveRedux}
+      />
       {/* <Section /> */}
       <ArchiveDetailForm
         section_loading={sectionInfo.loading}
