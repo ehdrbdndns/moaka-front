@@ -418,6 +418,7 @@ function* deleteLikeSaga(action: ReturnType<typeof setLike>) {
     const response: deleteLikeResponse = yield call(
       likeAPI.deleteLike,
       action.payload.like_no,
+      'chunk',
     );
 
     if (response.isSuccess) {

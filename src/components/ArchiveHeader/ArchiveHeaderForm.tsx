@@ -7,7 +7,12 @@ import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useLocation } from 'react-router';
 import queryString from 'query-string';
-import { archiveInfo } from '../../modules/archive';
+import {
+  archiveBookmarkActionType,
+  archiveInfo,
+  archiveLikeActionType,
+  deleteArchiveLike,
+} from '../../modules/archive';
 
 const archiveHeaderStyles = makeStyles(theme => ({
   archiveProfile: {
@@ -42,13 +47,21 @@ type ArchiveHeaderProps = {
   loading: boolean;
   error: string;
   getArchiveRedux: (archive_no: number) => void;
+  setArchiveLikeRedux: (likeInfo: archiveLikeActionType) => void;
+  deleteArchiveLikeRedux: (likeInfo: archiveLikeActionType) => void;
+  setArchiveBookmarkRedux: (bookmarkInfo: archiveBookmarkActionType) => void;
+  deleteArchiveBookmarkRedux: (bookmarkInfo: archiveBookmarkActionType) => void;
 };
 
 function ArchiveHeaderForm({
-  getArchiveRedux,
   archive_info,
   loading,
   error,
+  getArchiveRedux,
+  setArchiveLikeRedux,
+  deleteArchiveLikeRedux,
+  setArchiveBookmarkRedux,
+  deleteArchiveBookmarkRedux,
 }: ArchiveHeaderProps) {
   const classes = archiveHeaderStyles();
 
@@ -61,6 +74,46 @@ function ArchiveHeaderForm({
     }
   }, [getArchiveRedux, query.no]);
 
+  const setLikeEvent = () => {
+    if (query.no !== null) {
+      const likeInfo: archiveLikeActionType = {
+        archive_no: +query.no,
+        like_no: 0,
+      };
+      setArchiveLikeRedux(likeInfo);
+    }
+  };
+
+  const deleteLikeEvent = () => {
+    if (query.no !== null) {
+      const likeInfo: archiveLikeActionType = {
+        archive_no: +query.no,
+        like_no: archive_info.like_no,
+      };
+      deleteArchiveLikeRedux(likeInfo);
+    }
+  };
+
+  const setBookmarkEvent = () => {
+    if (query.no !== null) {
+      const bookmarkInfo: archiveBookmarkActionType = {
+        archive_no: +query.no,
+        bookmark_no: 0,
+      };
+      setArchiveBookmarkRedux(bookmarkInfo);
+    }
+  };
+
+  const deleteBookmarkEvent = () => {
+    if (query.no !== null) {
+      const bookmarkInfo: archiveBookmarkActionType = {
+        archive_no: +query.no,
+        bookmark_no: archive_info.bookmark_no,
+      };
+      deleteArchiveBookmarkRedux(bookmarkInfo);
+    }
+  };
+
   return (
     <div className={classes.archiveProfile}>
       {archive_info ? (
@@ -68,18 +121,26 @@ function ArchiveHeaderForm({
           <div className={classes.archiveTitle}>{archive_info.title}</div>
           <div className={classes.archiveDesc}>{archive_info.description}</div>
           <div className={classes.archiveBtnBox}>
-            {/* REF 아카이브 삭제 */}
-            <IconButton aria-label="delete">
-              <DeleteIcon />
-            </IconButton>
             {/* REF 아카이브 좋아요 */}
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
-            </IconButton>
+            {archive_info.like_no ? (
+              <IconButton aria-label="favorites" onClick={deleteLikeEvent}>
+                <FavoriteIcon />
+              </IconButton>
+            ) : (
+              <IconButton aria-label="favorites" onClick={setLikeEvent}>
+                <FavoriteBorderIcon />
+              </IconButton>
+            )}
             {/* REF 아카이브 북마크 */}
-            <IconButton aria-label="bookMark">
-              <BookmarkIcon />
-            </IconButton>
+            {archive_info.bookmark_no ? (
+              <IconButton aria-label="bookMark" onClick={deleteBookmarkEvent}>
+                <BookmarkIcon />
+              </IconButton>
+            ) : (
+              <IconButton aria-label="bookMark" onClick={setBookmarkEvent}>
+                <BookmarkBorderIcon />
+              </IconButton>
+            )}
           </div>
         </>
       ) : (

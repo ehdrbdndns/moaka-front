@@ -3,7 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import ArchiveDetailForm from '../components/ArchiveDetail/ArchiveDetailForm';
 import ArchiveHeaderForm from '../components/ArchiveHeader/ArchiveHeaderForm';
 import { RootState } from '../modules';
-import { getArchive } from '../modules/archive';
+import {
+  archiveBookmarkActionType,
+  archiveLikeActionType,
+  deleteArchiveBookmark,
+  deleteArchiveLike,
+  getArchive,
+  setArchiveBookmark,
+  setArchiveLike,
+} from '../modules/archive';
 import {
   bookmarkActionType,
   chunkInfo,
@@ -27,6 +35,34 @@ function ArchiveDetail() {
   const dispatch = useDispatch();
   const sectionInfo = useSelector((state: RootState) => state.section);
   const archiveInfo = useSelector((state: RootState) => state.archive);
+
+  const setArchiveBookmarkRedux = useCallback(
+    (bookmarkInfo: archiveBookmarkActionType) => {
+      dispatch(setArchiveBookmark(bookmarkInfo));
+    },
+    [dispatch],
+  );
+
+  const deleteArchiveBookmarkRedux = useCallback(
+    (bookmarkInfo: archiveBookmarkActionType) => {
+      dispatch(deleteArchiveBookmark(bookmarkInfo));
+    },
+    [dispatch],
+  );
+
+  const deleteArchiveLikeRedux = useCallback(
+    (likeInfo: archiveLikeActionType) => {
+      dispatch(deleteArchiveLike(likeInfo));
+    },
+    [dispatch],
+  );
+
+  const setArchiveLikeRedux = useCallback(
+    (likeInfo: archiveLikeActionType) => {
+      dispatch(setArchiveLike(likeInfo));
+    },
+    [dispatch],
+  );
 
   const getArchiveRedux = useCallback(
     (archive_no: number) => {
@@ -119,6 +155,10 @@ function ArchiveDetail() {
         error={archiveInfo.error}
         archive_info={archiveInfo.data[0]}
         getArchiveRedux={getArchiveRedux}
+        setArchiveLikeRedux={setArchiveLikeRedux}
+        deleteArchiveLikeRedux={deleteArchiveLikeRedux}
+        setArchiveBookmarkRedux={setArchiveBookmarkRedux}
+        deleteArchiveBookmarkRedux={deleteArchiveBookmarkRedux}
       />
       {/* <Section /> */}
       <ArchiveDetailForm

@@ -47,7 +47,9 @@ export const getArchive = async (
       regdate: '',
       tag_list: [],
       bookmark_no: 0,
+      bookmark_loading: false,
       like_no: 0,
+      like_loading: false,
     },
   };
 
