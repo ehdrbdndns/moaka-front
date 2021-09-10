@@ -20,3 +20,6 @@ export const getRegister = (localRegisterInfo: sagaType.localRegisterInfo) => ({
   type: sagaType.GET_REGISTER,
   payload: localRegisterInfo,
 });
+export const setUser = () => ({
+  type: sagaType.SET_USER,
+});

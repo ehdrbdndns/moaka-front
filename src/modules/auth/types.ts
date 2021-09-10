@@ -26,7 +26,15 @@ export const GET_ISLOGIN_ERROR = 'auth/ISLOGIN_ERROR' as const;
 export const GET_REGISTER = 'auth/REGISTER' as const;
 export const GET_REGISTER_SUCCESS = 'auth/REGISTER_SUCCESS' as const;
 export const GET_REGISTER_FAILE = 'auth/REGISTER_FAILE' as const;
-export const GET_REGISTER_ERROR = 'auth/REGISTER_ERROR';
+export const GET_REGISTER_ERROR = 'auth/REGISTER_ERROR' as const;
+
+// REF 토큰으로 사용자 정보 셋텡
+export const SET_USER = 'auth/SET_USER' as const;
+export const SET_USER_SUCCESS = 'auth/SET_USER_SUCCESS' as const;
+export const SET_USER_ERROR = 'auth/SET_USER_ERROR' as const;
+
+// REF JWT 토큰 기한 만료
+export const EXPIRE_JWT_TOKEN = 'auth/EXPIRE_JWT_TOKEN' as const;
 
 // TODO 액션 함수 매개변수 타입
 export type userInfo = {

@@ -1,5 +1,15 @@
-import React, { useEffect } from 'react';
-import { CircularProgress, IconButton, makeStyles } from '@material-ui/core';
+import React, { useState } from 'react';
+import {
+  Backdrop,
+  Button,
+  CircularProgress,
+  createStyles,
+  Fade,
+  IconButton,
+  makeStyles,
+  Modal,
+  Theme,
+} from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
@@ -11,8 +21,8 @@ import {
   archiveBookmarkActionType,
   archiveInfo,
   archiveLikeActionType,
-  deleteArchiveLike,
 } from '../../modules/archive';
+import { userInfo } from '../../modules/auth';
 
 const archiveHeaderStyles = makeStyles(theme => ({
   archiveProfile: {
@@ -40,10 +50,23 @@ const archiveHeaderStyles = makeStyles(theme => ({
     bottom: 0,
     right: 0,
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    width: '350px',
+  },
 }));
 
 type ArchiveHeaderProps = {
   archive_info: archiveInfo;
+  user_info: userInfo;
   loading: boolean;
   error: string;
   getArchiveRedux: (archive_no: number) => void;
@@ -51,10 +74,12 @@ type ArchiveHeaderProps = {
   deleteArchiveLikeRedux: (likeInfo: archiveLikeActionType) => void;
   setArchiveBookmarkRedux: (bookmarkInfo: archiveBookmarkActionType) => void;
   deleteArchiveBookmarkRedux: (bookmarkInfo: archiveBookmarkActionType) => void;
+  setUserRedux: () => void;
 };
 
 function ArchiveHeaderForm({
   archive_info,
+  user_info,
   loading,
   error,
   getArchiveRedux,
@@ -68,11 +93,15 @@ function ArchiveHeaderForm({
   const location = useLocation();
   const query = queryString.parse(location.search);
 
-  useEffect(() => {
-    if (query.no !== null) {
-      getArchiveRedux(+query.no);
-    }
-  }, [getArchiveRedux, query.no]);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const setLikeEvent = () => {
     if (query.no !== null) {
@@ -121,6 +150,43 @@ function ArchiveHeaderForm({
           <div className={classes.archiveTitle}>{archive_info.title}</div>
           <div className={classes.archiveDesc}>{archive_info.description}</div>
           <div className={classes.archiveBtnBox}>
+            {/* REF 아카이브 삭제 */}
+            {archive_info.user_no === user_info.no && (
+              <IconButton aria-label="delete">
+                <DeleteIcon onClick={handleOpen} />
+                <Modal
+                  aria-labelledby="transition-modal-title"
+                  aria-describedby="transition-modal-description"
+                  className={classes.modal}
+                  open={open}
+                  onClose={handleClose}
+                  closeAfterTransition
+                  BackdropComponent={Backdrop}
+                  BackdropProps={{
+                    timeout: 500,
+                  }}
+                >
+                  <Fade in={open}>
+                    <div className={classes.paper}>
+                      <h2 id="transition-modal-title">섹션 삭제</h2>
+                      <p id="transition-modal-description">
+                        정말 저장소를 삭제하시겠습니까?
+                      </p>
+                      <Button variant="contained" color="primary">
+                        예
+                      </Button>
+                      <Button
+                        onClick={handleClose}
+                        variant="contained"
+                        color="secondary"
+                      >
+                        아니요
+                      </Button>
+                    </div>
+                  </Fade>
+                </Modal>
+              </IconButton>
+            )}
             {/* REF 아카이브 좋아요 */}
             {archive_info.like_no ? (
               <IconButton aria-label="favorites" onClick={deleteLikeEvent}>

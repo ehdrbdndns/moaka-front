@@ -1,3 +1,12 @@
+export type setUserResponse = {
+  isSuccess: boolean;
+  error: number;
+  no: number;
+  id: string;
+  name: string;
+  profile: string;
+};
+
 export type LoginInfo = {
   id: string;
   pwd: string;

@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
 import ArchiveDetailForm from '../components/ArchiveDetail/ArchiveDetailForm';
 import ArchiveHeaderForm from '../components/ArchiveHeader/ArchiveHeaderForm';
 import { RootState } from '../modules';
@@ -12,6 +13,7 @@ import {
   setArchiveBookmark,
   setArchiveLike,
 } from '../modules/archive';
+import { setUser } from '../modules/auth';
 import {
   bookmarkActionType,
   chunkInfo,
@@ -30,11 +32,20 @@ import {
   updateChunk,
   updateSection,
 } from '../modules/section';
+import queryString from 'query-string';
 
 function ArchiveDetail() {
   const dispatch = useDispatch();
   const sectionInfo = useSelector((state: RootState) => state.section);
   const archiveInfo = useSelector((state: RootState) => state.archive);
+  const userInfo = useSelector((state: RootState) => state.auth);
+
+  const location = useLocation();
+  const query = queryString.parse(location.search);
+
+  const setUserRedux = useCallback(() => {
+    dispatch(setUser());
+  }, [dispatch]);
 
   const setArchiveBookmarkRedux = useCallback(
     (bookmarkInfo: archiveBookmarkActionType) => {
@@ -67,13 +78,6 @@ function ArchiveDetail() {
   const getArchiveRedux = useCallback(
     (archive_no: number) => {
       dispatch(getArchive(archive_no));
-    },
-    [dispatch],
-  );
-
-  const makeSectionRedux = useCallback(
-    (sectionInfo: sectionInfo) => {
-      dispatch(makeSection(sectionInfo));
     },
     [dispatch],
   );
@@ -148,29 +152,37 @@ function ArchiveDetail() {
     [dispatch],
   );
 
+  useEffect(() => {
+    if (query.no !== null) {
+      getArchiveRedux(+query.no);
+      getSectionRedux(+query.no);
+      setUserRedux();
+    }
+  }, [getArchiveRedux, getSectionRedux, setUserRedux, query.no]);
+
   return (
     <div>
       <ArchiveHeaderForm
         loading={archiveInfo.loading}
         error={archiveInfo.error}
         archive_info={archiveInfo.data[0]}
+        user_info={userInfo.data}
+        setUserRedux={setUserRedux}
         getArchiveRedux={getArchiveRedux}
         setArchiveLikeRedux={setArchiveLikeRedux}
         deleteArchiveLikeRedux={deleteArchiveLikeRedux}
         setArchiveBookmarkRedux={setArchiveBookmarkRedux}
         deleteArchiveBookmarkRedux={deleteArchiveBookmarkRedux}
       />
-      {/* <Section /> */}
       <ArchiveDetailForm
         section_loading={sectionInfo.loading}
         section_error={sectionInfo.error}
         section_list={sectionInfo.data}
         archive_loading={archiveInfo.loading}
         archive_error={archiveInfo.error}
-        archive_info={archiveInfo.data}
-        makeSectionRedux={makeSectionRedux}
+        archive_info={archiveInfo.data[0]}
+        user_info={userInfo.data}
         deleteSectionRedux={deleteSectionRedux}
-        getSectionRedux={getSectionRedux}
         updateSectionRedux={updateSectionRedux}
         deleteChunkRedux={deleteChunkRedux}
         makeChunkRedux={makeChunkRedux}
@@ -180,8 +192,6 @@ function ArchiveDetail() {
         setLikeRedux={setLikeRedux}
         deleteLikeRedux={deleteLikeRedux}
       />
-      {/* <ArchiveBar view="detail" /> */}
-      {/* <Section /> */}
     </div>
   );
 }
