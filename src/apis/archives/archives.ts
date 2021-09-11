@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { BASE_URL } from '../utils';
-import { getArchiveResponse, getGroupArchiveListResponse } from './types';
+import {
+  deleteArchiveResponse,
+  getArchiveResponse,
+  getGroupArchiveListResponse,
+} from './types';
 
 export const getGroupArchiveList =
   async (): Promise<getGroupArchiveListResponse> => {
@@ -29,6 +33,36 @@ export const getGroupArchiveList =
 
     return result;
   };
+
+export const deleteArchive = async (
+  archive_no: number,
+): Promise<deleteArchiveResponse> => {
+  const result: deleteArchiveResponse = {
+    isSuccess: false,
+    error: 0,
+  };
+
+  const token = localStorage.getItem('token');
+  await axios
+    .post(BASE_URL + '/user/deleteArchiveFromArchiveNo', null, {
+      params: {
+        archive_no,
+      },
+      headers: {
+        Bearer: token,
+      },
+    })
+    .then(function (response) {
+      result.isSuccess = response.data.isSuccess;
+    })
+    .catch(function (error) {
+      console.log(error.response);
+      result.isSuccess = false;
+      result.error = error.response.status;
+    });
+
+  return result;
+};
 
 export const getArchive = async (
   archive_no: number,

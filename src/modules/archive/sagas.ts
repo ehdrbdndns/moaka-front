@@ -1,5 +1,6 @@
 import { put, call, takeLatest, takeEvery } from 'redux-saga/effects';
 import {
+  deleteArchiveResponse,
   getArchiveResponse,
   getGroupArchiveListResponse,
 } from '../../apis/archives/types';
@@ -9,6 +10,7 @@ import * as likeAPI from '../../apis/like/like';
 import * as bookmarkAPI from '../../apis/bookmark/bookmark';
 import {
   archiveInfo,
+  deleteArchive,
   deleteArchiveBookmark,
   deleteArchiveLike,
   getArchive,
@@ -84,6 +86,40 @@ function* getArchiveSaga(action: ReturnType<typeof getArchive>) {
     console.log(error);
     yield put({
       type: sagaType.GET_ARCHIVE_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
+function* deleteArchiveSaga(action: ReturnType<typeof deleteArchive>) {
+  try {
+    const response: deleteArchiveResponse = yield call(
+      archiveAPI.deleteArchive,
+      action.payload,
+    );
+    if (response.isSuccess) {
+      yield put({
+        type: sagaType.DELETE_ARCHIVE_SUCCESS,
+        payload: action.payload,
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.DELETE_ARCHIVE_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.DELETE_ARCHIVE_ERROR,
       error: true,
       payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
     });
@@ -241,4 +277,5 @@ export function* archiveSaga() {
   yield takeLatest(sagaType.DELETE_LIKE, deleteLikeSaga);
   yield takeLatest(sagaType.SET_BOOKMARK, setBookmarkSaga);
   yield takeLatest(sagaType.DELETE_BOOKMARK, deleteBookmarkSaga);
+  yield takeLatest(sagaType.DELETE_ARCHIVE, deleteArchiveSaga);
 }

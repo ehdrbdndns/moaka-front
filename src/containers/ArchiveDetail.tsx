@@ -1,12 +1,13 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import ArchiveDetailForm from '../components/ArchiveDetail/ArchiveDetailForm';
 import ArchiveHeaderForm from '../components/ArchiveHeader/ArchiveHeaderForm';
 import { RootState } from '../modules';
 import {
   archiveBookmarkActionType,
   archiveLikeActionType,
+  deleteArchive,
   deleteArchiveBookmark,
   deleteArchiveLike,
   getArchive,
@@ -43,9 +44,18 @@ function ArchiveDetail() {
   const location = useLocation();
   const query = queryString.parse(location.search);
 
+  const { push } = useHistory();
+
   const setUserRedux = useCallback(() => {
     dispatch(setUser());
   }, [dispatch]);
+
+  const deleteArchiveRedux = useCallback(
+    (archive_no: number) => {
+      dispatch(deleteArchive(archive_no));
+    },
+    [dispatch],
+  );
 
   const setArchiveBookmarkRedux = useCallback(
     (bookmarkInfo: archiveBookmarkActionType) => {
@@ -78,6 +88,13 @@ function ArchiveDetail() {
   const getArchiveRedux = useCallback(
     (archive_no: number) => {
       dispatch(getArchive(archive_no));
+    },
+    [dispatch],
+  );
+
+  const makeSectionRedux = useCallback(
+    (sectionInfo: sectionInfo) => {
+      dispatch(makeSection(sectionInfo));
     },
     [dispatch],
   );
@@ -160,6 +177,16 @@ function ArchiveDetail() {
     }
   }, [getArchiveRedux, getSectionRedux, setUserRedux, query.no]);
 
+  // TODO 아카이브 삭제시 실행되는 로직
+  const archivePrevLoading = useRef<boolean>(false);
+  useEffect(() => {
+    if (!archiveInfo.loading && archivePrevLoading.current) {
+      archiveInfo.data[0] || push('/');
+    } else {
+      archivePrevLoading.current = archiveInfo.loading;
+    }
+  }, [archiveInfo.loading, archiveInfo.data, push]);
+
   return (
     <div>
       <ArchiveHeaderForm
@@ -173,6 +200,7 @@ function ArchiveDetail() {
         deleteArchiveLikeRedux={deleteArchiveLikeRedux}
         setArchiveBookmarkRedux={setArchiveBookmarkRedux}
         deleteArchiveBookmarkRedux={deleteArchiveBookmarkRedux}
+        deleteArchiveRedux={deleteArchiveRedux}
       />
       <ArchiveDetailForm
         section_loading={sectionInfo.loading}
@@ -184,6 +212,7 @@ function ArchiveDetail() {
         user_info={userInfo.data}
         deleteSectionRedux={deleteSectionRedux}
         updateSectionRedux={updateSectionRedux}
+        makeSectionRedux={makeSectionRedux}
         deleteChunkRedux={deleteChunkRedux}
         makeChunkRedux={makeChunkRedux}
         updateChunkRedux={updateChunkRedux}

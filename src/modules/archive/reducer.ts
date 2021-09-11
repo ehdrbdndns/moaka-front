@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux';
+import { isDoStatement } from 'typescript';
 import * as type from './types';
 
 function archive(
@@ -18,6 +19,13 @@ function archive(
         ...state,
         loading: true,
         data: [],
+        error: null,
+      };
+    case type.DELETE_ARCHIVE:
+      return {
+        ...state,
+        loading: true,
+        data: [...state.data],
         error: null,
       };
     case type.SET_LIKE:
@@ -60,6 +68,12 @@ function archive(
         loading: false,
         data: action.payload,
       };
+    case type.DELETE_ARCHIVE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: [...state.data.filter(archive => archive.no !== action.payload)],
+      };
     case type.SET_LIKE_SUCCESS:
     case type.DELETE_LIKE_SUCCESS: {
       const archive_index = state.data.findIndex(
@@ -92,15 +106,14 @@ function archive(
     }
     case type.GET_GROUP_ARCHIVE_LIST_ERROR:
     case type.GET_ARCHIVE_ERROR:
+    case type.DELETE_ARCHIVE_ERROR:
     case type.SET_LIKE_ERROR:
-    case type.DELETE_LIKE_ERROR: {
-      alert('에러: ' + action.payload);
+    case type.DELETE_LIKE_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    }
     case type.EXPIRE_JWT_TOKEN: {
       return {
         ...state,

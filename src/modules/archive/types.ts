@@ -11,6 +11,11 @@ export const GET_ARCHIVE = 'archive/GET_ARCHIVE' as const;
 export const GET_ARCHIVE_SUCCESS = 'archive/GET_ARCHIVE_SUCCESS' as const;
 export const GET_ARCHIVE_ERROR = 'archvie/GET_ARCHIVE_ERROR' as const;
 
+// REF 아카이브 삭제
+export const DELETE_ARCHIVE = 'archive/DELETE_ARCHIVE' as const;
+export const DELETE_ARCHIVE_SUCCESS = 'archive/DELETE_ARCHIVE_SUCCESS' as const;
+export const DELETE_ARCHIVE_ERROR = 'archive/DELETE_ARCHIVE_ERROR' as const;
+
 // REF 아카이브 좋아요 생성
 export const SET_LIKE = 'archive/SET_LIKE' as const;
 export const SET_LIKE_SUCCESS = 'archive/SET_LIKE_SUCCESS' as const;

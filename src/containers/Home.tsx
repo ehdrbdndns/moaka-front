@@ -1,4 +1,3 @@
-import { LoopTwoTone } from '@material-ui/icons';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import BannerForm from '../components/Banner/BannerForm';

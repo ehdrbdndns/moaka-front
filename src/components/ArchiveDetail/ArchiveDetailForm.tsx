@@ -13,6 +13,7 @@ import {
 } from '../../modules/section';
 import {
   DeleteSectionModal,
+  MakeSectionModal,
   UpdateSectionModal,
 } from '../Section/SectionModal';
 import { MakeChunkModal } from '../Chunk/ChunkModal';
@@ -46,6 +47,7 @@ type ArchiveDetailProps = {
   archive_error: string;
   archive_info: archiveInfo;
   user_info: userInfo;
+  makeSectionRedux: (sectionInfo: sectionInfo) => void;
   deleteSectionRedux: (section_no: number) => void;
   updateSectionRedux: (sectionInfo: sectionInfo) => void;
   deleteChunkRedux: (deleteChunkActionType: deleteChunkActionType) => void;
@@ -65,6 +67,7 @@ function ArchiveDetailForm({
   archive_loading,
   archive_error,
   user_info,
+  makeSectionRedux,
   updateSectionRedux,
   deleteSectionRedux,
   deleteChunkRedux,
@@ -79,6 +82,13 @@ function ArchiveDetailForm({
 
   return (
     <>
+      {archive_info && archive_info.user_no === user_info.no && (
+        <MakeSectionModal
+          makeSectionRedux={makeSectionRedux}
+          archive_no={archive_info.no}
+          loading={section_loading}
+        />
+      )}
       {archive_info ? (
         section_list.map(section => (
           <>

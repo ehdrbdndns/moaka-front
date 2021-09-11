@@ -11,3 +11,8 @@ export type getArchiveResponse = {
   error: number;
   archive: archiveInfo;
 };
+
+export type deleteArchiveResponse = {
+  isSuccess: boolean;
+  error: number;
+};

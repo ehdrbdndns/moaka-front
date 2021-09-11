@@ -15,7 +15,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import queryString from 'query-string';
 import {
   archiveBookmarkActionType,
@@ -75,6 +75,7 @@ type ArchiveHeaderProps = {
   setArchiveBookmarkRedux: (bookmarkInfo: archiveBookmarkActionType) => void;
   deleteArchiveBookmarkRedux: (bookmarkInfo: archiveBookmarkActionType) => void;
   setUserRedux: () => void;
+  deleteArchiveRedux: (archive_no: number) => void;
 };
 
 function ArchiveHeaderForm({
@@ -87,6 +88,7 @@ function ArchiveHeaderForm({
   deleteArchiveLikeRedux,
   setArchiveBookmarkRedux,
   deleteArchiveBookmarkRedux,
+  deleteArchiveRedux,
 }: ArchiveHeaderProps) {
   const classes = archiveHeaderStyles();
 
@@ -101,6 +103,12 @@ function ArchiveHeaderForm({
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const deleteArchiveEvent = () => {
+    if (query.no !== null) {
+      deleteArchiveRedux(+query.no);
+    }
   };
 
   const setLikeEvent = () => {
@@ -172,7 +180,11 @@ function ArchiveHeaderForm({
                       <p id="transition-modal-description">
                         정말 저장소를 삭제하시겠습니까?
                       </p>
-                      <Button variant="contained" color="primary">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={deleteArchiveEvent}
+                      >
                         예
                       </Button>
                       <Button

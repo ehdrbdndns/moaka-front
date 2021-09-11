@@ -8,6 +8,10 @@ export const getArchive = (archive_no: number) => ({
   type: sagaType.GET_ARCHIVE,
   payload: archive_no,
 });
+export const deleteArchive = (archive_no: number) => ({
+  type: sagaType.DELETE_ARCHIVE,
+  payload: archive_no,
+});
 export const setArchiveLike = (likeInfo: sagaType.archiveLikeActionType) => ({
   type: sagaType.SET_LIKE,
   payload: likeInfo,
