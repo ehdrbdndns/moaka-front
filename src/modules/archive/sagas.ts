@@ -3,6 +3,7 @@ import {
   deleteArchiveResponse,
   getArchiveResponse,
   getGroupArchiveListResponse,
+  insertArchiveResponse,
 } from '../../apis/archives/types';
 import * as sagaType from './types';
 import * as archiveAPI from '../../apis/archives/archives';
@@ -14,6 +15,7 @@ import {
   deleteArchiveBookmark,
   deleteArchiveLike,
   getArchive,
+  insertArchive,
   setArchiveBookmark,
   setArchiveLike,
 } from '.';
@@ -53,6 +55,40 @@ function* getGroupArchiveListSaga() {
     console.log(error);
     yield put({
       type: sagaType.GET_GROUP_ARCHIVE_LIST_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
+function* insertArchiveSaga(action: ReturnType<typeof insertArchive>) {
+  try {
+    const response: insertArchiveResponse = yield call(
+      archiveAPI.insertArchive,
+      action.payload,
+    );
+    if (response.isSuccess) {
+      yield put({
+        type: sagaType.INSERT_ARCHIVE_SUCCESS,
+        payload: response.archive,
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.INSERT_ARCHIVE_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.INSERT_ARCHIVE_ERROR,
       error: true,
       payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
     });
@@ -278,4 +314,5 @@ export function* archiveSaga() {
   yield takeLatest(sagaType.SET_BOOKMARK, setBookmarkSaga);
   yield takeLatest(sagaType.DELETE_BOOKMARK, deleteBookmarkSaga);
   yield takeLatest(sagaType.DELETE_ARCHIVE, deleteArchiveSaga);
+  yield takeLatest(sagaType.INSERT_ARCHIVE, insertArchiveSaga);
 }

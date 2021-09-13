@@ -16,3 +16,20 @@ export type deleteArchiveResponse = {
   isSuccess: boolean;
   error: number;
 };
+
+export type insertArchiveResponse = {
+  isSuccess: boolean;
+  archive: archiveInfo;
+  error: number;
+};
+
+export type insertArchiveRequest = {
+  info: {
+    title: string;
+    description: string;
+    tag_list: string[];
+    privacy_type: string;
+    group_no_list: number[];
+  };
+  thumbnailFile: File;
+};

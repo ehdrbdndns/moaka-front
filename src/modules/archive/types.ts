@@ -11,6 +11,11 @@ export const GET_ARCHIVE = 'archive/GET_ARCHIVE' as const;
 export const GET_ARCHIVE_SUCCESS = 'archive/GET_ARCHIVE_SUCCESS' as const;
 export const GET_ARCHIVE_ERROR = 'archvie/GET_ARCHIVE_ERROR' as const;
 
+// REF 아카이브 생성
+export const INSERT_ARCHIVE = 'archive/INSERT_ARCHIVE' as const;
+export const INSERT_ARCHIVE_SUCCESS = 'archive/INSERT_ARCHIVE_SUCCESS' as const;
+export const INSERT_ARCHIVE_ERROR = 'archive/INSERT_ARCHIVE_ERROR' as const;
+
 // REF 아카이브 삭제
 export const DELETE_ARCHIVE = 'archive/DELETE_ARCHIVE' as const;
 export const DELETE_ARCHIVE_SUCCESS = 'archive/DELETE_ARCHIVE_SUCCESS' as const;

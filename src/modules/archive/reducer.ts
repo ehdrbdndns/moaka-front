@@ -22,6 +22,7 @@ function archive(
         error: null,
       };
     case type.DELETE_ARCHIVE:
+    case type.INSERT_ARCHIVE:
       return {
         ...state,
         loading: true,
@@ -61,6 +62,12 @@ function archive(
         ...state,
         loading: false,
         data: action.payload,
+      };
+    case type.INSERT_ARCHIVE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: [...state.data, action.payload],
       };
     case type.GET_ARCHIVE_SUCCESS:
       return {
