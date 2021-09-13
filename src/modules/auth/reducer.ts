@@ -209,6 +209,23 @@ function auth(
         loading: false,
         error: action.payload,
       };
+    case type.SET_USER:
+      return {
+        ...state,
+        loading: true,
+      };
+    case type.SET_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
+      };
+    case type.SET_USER_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

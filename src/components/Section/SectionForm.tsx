@@ -78,85 +78,79 @@ function SectionForm({
 
   useEffect(() => {
     getSectionRedux(archive_no);
-  }, [archive_no]);
+  }, [archive_no, getSectionRedux]);
 
   return (
     <>
-      <Container maxWidth="lg">
-        <MakeSectionModal
-          makeSectionRedux={makeSectionRedux}
-          archive_no={archive_no}
-          loading={loading}
-        />
-        {section_list.map(section => (
-          <>
-            <AppBar position="static" key={section.no}>
-              <Toolbar variant="dense">
-                <IconButton
-                  edge="start"
-                  className={barClasses.menuButton}
-                  color="inherit"
-                  aria-label="menu"
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" color="inherit">
-                  {section.title}
-                </Typography>
-                <DeleteSectionModal
-                  section_no={section.no || 0}
-                  deleteSectionRedux={deleteSectionRedux}
-                  loading={loading}
-                />
-                <UpdateSectionModal
-                  section_no={section.no || 0}
-                  updateSectionRedux={updateSectionRedux}
-                  loading={loading}
-                  description_prop={section.description}
-                  title_prop={section.title}
-                  section_tag_list={section.tag_list}
-                />
-              </Toolbar>
-            </AppBar>
-            <Container>
-              <MakeChunkModal
+      <MakeSectionModal
+        makeSectionRedux={makeSectionRedux}
+        archive_no={archive_no}
+        loading={loading}
+      />
+      {section_list.map(section => (
+        <>
+          <AppBar position="static" key={section.no}>
+            <Toolbar variant="dense">
+              <IconButton
+                edge="start"
+                className={barClasses.menuButton}
+                color="inherit"
+                aria-label="menu"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" color="inherit">
+                {section.title}
+              </Typography>
+              <DeleteSectionModal
                 section_no={section.no || 0}
-                section_tag_list={section.tag_list}
-                makeChunkRedux={makeChunkRedux}
+                deleteSectionRedux={deleteSectionRedux}
+                loading={loading}
               />
-              <Box my={2}>
-                <Grid container spacing={3}>
-                  {section.chunk_list?.length !== 0 ? (
-                    section.chunk_list?.map(chunk => (
-                      <Grid key={chunk.no} item lg={3} sm={6} xs={12}>
-                        {/* 청크 카드 */}
-                        <ChunkForm
-                          chunk_info={chunk}
-                          section_tag_list={section.tag_list}
-                          deleteChunkRedux={deleteChunkRedux}
-                          updateChunkRedux={updateChunkRedux}
-                          setBookmarkRedux={setBookmarkRedux}
-                          deleteBookmarkRedux={deleteBookmarkRedux}
-                          setLikeRedux={setLikeRedux}
-                          deleteLikeRedux={deleteLikeRedux}
-                        />
-                      </Grid>
-                    ))
-                  ) : (
-                    <Typography
-                      variant="h1"
-                      color="textSecondary"
-                      align="center"
-                    >
-                      정보가 존재하지 않습니다.
-                    </Typography>
-                  )}
-                </Grid>
-              </Box>
-            </Container>
-          </>
-        ))}
-      </Container>
+              <UpdateSectionModal
+                section_no={section.no || 0}
+                updateSectionRedux={updateSectionRedux}
+                loading={loading}
+                description_prop={section.description}
+                title_prop={section.title}
+                section_tag_list={section.tag_list}
+              />
+            </Toolbar>
+          </AppBar>
+          <Container>
+            <MakeChunkModal
+              section_no={section.no || 0}
+              section_tag_list={section.tag_list}
+              makeChunkRedux={makeChunkRedux}
+            />
+            <Box my={2}>
+              <Grid container spacing={3}>
+                {section.chunk_list?.length !== 0 ? (
+                  section.chunk_list?.map(chunk => (
+                    <Grid key={chunk.no} item lg={3} sm={6} xs={12}>
+                      {/* 청크 카드 */}
+                      <ChunkForm
+                        chunk_info={chunk}
+                        section_tag_list={section.tag_list}
+                        deleteChunkRedux={deleteChunkRedux}
+                        updateChunkRedux={updateChunkRedux}
+                        setBookmarkRedux={setBookmarkRedux}
+                        deleteBookmarkRedux={deleteBookmarkRedux}
+                        setLikeRedux={setLikeRedux}
+                        deleteLikeRedux={deleteLikeRedux}
+                      />
+                    </Grid>
+                  ))
+                ) : (
+                  <Typography variant="h1" color="textSecondary" align="center">
+                    정보가 존재하지 않습니다.
+                  </Typography>
+                )}
+              </Grid>
+            </Box>
+          </Container>
+        </>
+      ))}
     </>
   );
 }

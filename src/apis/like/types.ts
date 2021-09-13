@@ -1,3 +1,9 @@
+export type insertLikeOfArchiveResponse = {
+  isSuccess: boolean;
+  error: number;
+  like_no: number;
+};
+
 export type insertLikeOfChunkResponse = {
   isSuccess: boolean;
   error: number;

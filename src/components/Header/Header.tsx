@@ -130,9 +130,6 @@ function Header(props: HeaderProps) {
         <Link to={'/mypage'} className={classes.toolbarLink}>
           Mypage
         </Link>
-        <Link to={'/archive/detail'} className={classes.toolbarLink}>
-          Archive
-        </Link>
         <Link to={'/test'} className={classes.toolbarLink}>
           test
         </Link>

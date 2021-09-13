@@ -39,12 +39,11 @@ const sectionBtnStyles = makeStyles((theme: Theme) =>
       justifyContent: 'flex-end',
     },
     btn: {
-      background: 'none',
-      outline: 'none',
-      border: '1px solid black',
-      padding: '10px 20px',
-      marginBottom: '12px',
-      cursor: 'pointer',
+      backgroundColor: 'white',
+      color: '#7a84dc',
+      fontSize: '14px',
+      width: '138px',
+      height: '34px',
     },
     form: {
       display: 'flex',
@@ -319,13 +318,15 @@ function MakeChunkModal({
 
   return (
     <>
-      <button
-        type="button"
-        onClick={handleOpen}
-        className={sectionBtnClasses.btn}
-      >
-        링크 추가
-      </button>
+      <div className={sectionBtnClasses.btn__box}>
+        <Button
+          onClick={handleOpen}
+          className={sectionBtnClasses.btn}
+          variant="outlined"
+        >
+          컨텐츠 추가
+        </Button>
+      </div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

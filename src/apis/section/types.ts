@@ -1,4 +1,4 @@
-import { chunkInfo, sectionInfo } from '../../modules/section';
+import { sectionInfo } from '../../modules/section';
 
 export type getSectionResponseByAxios = {
   isSuccess: boolean;

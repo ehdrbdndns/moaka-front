@@ -42,6 +42,7 @@ function* getSectionSaga(action: ReturnType<typeof getSection>) {
       sectionAPI.getSection,
       action.payload,
     );
+
     if (response.isSuccess) {
       yield put({
         type: sagaType.GET_SECTION_SUCCESS,
@@ -132,7 +133,7 @@ function* makeSectionSaga(action: ReturnType<typeof makeSection>) {
       });
     }
   } catch (error) {
-    console.log(error.response);
+    console.log(error);
     yield put({
       type: sagaType.MAKE_SECTION_ERROR,
       error: true,
@@ -417,6 +418,7 @@ function* deleteLikeSaga(action: ReturnType<typeof setLike>) {
     const response: deleteLikeResponse = yield call(
       likeAPI.deleteLike,
       action.payload.like_no,
+      'chunk',
     );
 
     if (response.isSuccess) {
