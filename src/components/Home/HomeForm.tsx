@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ArchiveCardForm from '../ArchiveCard/ArchiveCardForm';
+import ArchiveCardForm from '../Archive/ArchiveCardForm';
 import { Box, CircularProgress, Grid } from '@material-ui/core';
 import { archiveInfo } from '../../modules/archive/types';
 import { useHistory } from 'react-router';

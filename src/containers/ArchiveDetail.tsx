@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
-import ArchiveDetailForm from '../components/ArchiveDetail/ArchiveDetailForm';
-import ArchiveHeaderForm from '../components/ArchiveHeader/ArchiveHeaderForm';
+import ArchiveDetailForm from '../components/Archive/ArchiveDetailForm';
+import ArchiveHeaderForm from '../components/Archive/ArchiveHeaderForm';
 import { RootState } from '../modules';
 import {
   archiveBookmarkActionType,

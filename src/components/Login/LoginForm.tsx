@@ -69,8 +69,6 @@ function LoginForm({
   };
 
   const successGoogleEvent = (response: any) => {
-    console.log('success');
-    console.log(response);
     const user = response.profileObj;
     const googleUserInfo: googleUserInfo = {
       no: 0,

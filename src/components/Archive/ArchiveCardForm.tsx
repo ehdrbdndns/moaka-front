@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Chip } from '@material-ui/core';
-import DoneIcon from '@material-ui/icons/Done';
 import { archiveInfo } from '../../modules/archive';
 import { useHistory } from 'react-router';
 

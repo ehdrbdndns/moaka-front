@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { insertArchiveRequest } from '../apis/archives/types';
-import { MakeArchiveModal } from '../components/ArchiveModal/ArchiveModal';
+import { MakeArchiveModal } from '../components/Archive/ArchiveModal';
 import { RootState } from '../modules';
 import { insertArchive } from '../modules/archive';
 import { searchUserList } from '../modules/userList';

@@ -128,11 +128,17 @@ function* localRegisterSaga(action: ReturnType<typeof getRegister>) {
       yield put({
         type: sagaType.GET_REGISTER_SUCCESS,
       });
-    } else {
+    } else if (!registerResponseByAxios.isSuccess) {
       // TODO 회원가입 실패 ex) 이미 존재하는 회원
       yield put({
         type: sagaType.GET_REGISTER_FAILE,
         payload: '이미 존재하는 이메일 입니다.',
+      });
+    } else {
+      yield put({
+        type: sagaType.GET_REGISTER_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
       });
     }
   } catch (error) {

@@ -1,12 +1,7 @@
 import React from 'react';
-import Dashboard from '../components/MyPage/Dashboard';
 
 function MyPage() {
-  return (
-    <div>
-      <Dashboard />
-    </div>
-  );
+  return <div>하이</div>;
 }
 
 export default MyPage;
