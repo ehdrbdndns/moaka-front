@@ -23,12 +23,9 @@ import {
   ListItemSecondaryAction,
   IconButton,
 } from '@material-ui/core';
-import FolderIcon from '@material-ui/icons/Folder';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
-import { userInfo } from '../../modules/auth';
 import { userListType } from '../../apis/user/types';
-import { archiveInfo } from '../../modules/archive';
 import { insertArchiveRequest } from '../../apis/archives/types';
 
 const ArchiveBtnStyles = makeStyles((theme: Theme) =>
@@ -127,7 +124,10 @@ function MakeArchiveModal({
   useEffect(() => {
     search_user_list &&
       search_user_list.map(search_user => {
-        setGroupUserList(groupUserList => [...groupUserList, search_user]);
+        return setGroupUserList(groupUserList => [
+          ...groupUserList,
+          search_user,
+        ]);
       });
   }, [search_user_list]);
 
@@ -207,11 +207,11 @@ function MakeArchiveModal({
   const insertArchiveEvent = () => {
     const tag_list: string[] = [];
     tagList.map(tag => {
-      tag_list.push(tag.tag);
+      return tag_list.push(tag.tag);
     });
     const group_list: number[] = [];
     groupUserList.map(user => {
-      group_list.push(user.no);
+      return group_list.push(user.no);
     });
     if (thumbnailFile != null) {
       const insertArchiveRequest: insertArchiveRequest = {

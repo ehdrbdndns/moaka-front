@@ -8,7 +8,6 @@ import {
   Theme,
 } from '@material-ui/core';
 import React, { useState } from 'react';
-import { Editor_A as EditorAComponent } from '../Editor/Editor_A';
 import { Editor_B as EditorBComponent } from '../Editor/Editor_B';
 import { closeTagEvent, Tag_A as TagAComponent } from '../Tag/Tag_A';
 import '../../styles/main.scss';

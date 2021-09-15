@@ -27,7 +27,7 @@ function Header(props: HeaderProps) {
           noWrap
           className={classes.toolbarTitle}
         >
-          제목
+          모아카
         </Typography>
 
         {/* 검색 필드 추가 */}

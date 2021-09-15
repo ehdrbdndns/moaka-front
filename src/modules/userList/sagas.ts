@@ -1,4 +1,4 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { searchUserListResponse } from '../../apis/user/types';
 import * as sagaType from './types';
 import * as userAPI from '../../apis/user/user';

@@ -3,19 +3,17 @@ import {
   Backdrop,
   Button,
   CircularProgress,
-  createStyles,
   Fade,
   IconButton,
   makeStyles,
   Modal,
-  Theme,
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useHistory, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import queryString from 'query-string';
 import {
   archiveBookmarkActionType,
