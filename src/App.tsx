@@ -6,14 +6,15 @@ import Home from './containers/Home';
 import Login from './containers/Login';
 import Register from './containers/Register';
 import MyPage from './containers/MyPage';
-import Header from './components/Header/Header';
 import ArchiveDetail from './containers/ArchiveDetail';
 import TEST from './containers/TEST';
+import Footer from './components/Footer/Footer';
+import Header from './containers/Header';
 
 function App() {
   return (
     <div>
-      <Header title="모아카" loginStatus={false} />
+      <Header />
       <Switch>
         <Route path="/test">
           <TEST />
@@ -34,6 +35,10 @@ function App() {
           <Home />
         </Route>
       </Switch>
+      <Footer
+        title="모두가 함께하는 아카이브 모아카"
+        description="서로 다른 mbti들의 모임"
+      />
     </div>
   );
 }

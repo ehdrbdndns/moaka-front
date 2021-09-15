@@ -1,5 +1,4 @@
 import { AnyAction } from 'redux';
-import { isDoStatement } from 'typescript';
 import * as type from './types';
 
 function archive(

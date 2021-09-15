@@ -2,13 +2,15 @@ import { makeStyles } from '@material-ui/core';
 
 const headerStyles = makeStyles(theme => ({
   toolbar: {
+    display: 'flex',
+    justifyContent: 'spaceAround',
     borderBottom: `1px solid ${theme.palette.divider}`,
     height: '60px',
   },
   toolbarTitle: {
     flex: 1,
     position: 'relative',
-    marginLeft: '486px',
+    cursor: 'pointer',
   },
   toolbarSecondary: {
     height: '60px',
