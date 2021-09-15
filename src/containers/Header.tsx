@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { insertArchiveRequest } from '../apis/archives/types';
-import { MakeArchiveModal } from '../components/Archive/ArchiveModal';
+import HeaderForm from '../components/Header/HeaderForm';
 import { RootState } from '../modules';
 import { insertArchive } from '../modules/archive';
 import { searchUserList } from '../modules/userList';
 
-function TEST() {
+function Header() {
   const dispatch = useDispatch();
   const userListInfo = useSelector((state: RootState) => state.userList);
 
@@ -19,15 +19,12 @@ function TEST() {
   };
 
   return (
-    <>
-      <MakeArchiveModal
-        search_user_loading={userListInfo.loading}
-        search_user_list={userListInfo.data}
-        searchUserListRedux={searchUserListRedux}
-        insertArchiveRedux={insertArchiveRedux}
-      />
-    </>
+    <HeaderForm
+      userListInfo={userListInfo}
+      searchUserListRedux={searchUserListRedux}
+      insertArchiveRedux={insertArchiveRedux}
+    />
   );
 }
 
-export default TEST;
+export default Header;

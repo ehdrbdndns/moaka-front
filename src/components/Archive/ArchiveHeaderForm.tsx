@@ -24,12 +24,11 @@ import { userInfo } from '../../modules/auth';
 
 const archiveHeaderStyles = makeStyles(theme => ({
   archiveProfile: {
-    backgroundColor: 'white',
-    backgroundImage: 'radial-gradient(#7a84dc 10%, transparent 0%)',
-    backgroundPosition: '0 0, 30px 30px',
-    backgroundSize: '10px 10px',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: '50% 50%',
     width: '100%',
-    height: '200px',
+    height: '250px',
     opacity: '0.8',
     textAlign: 'center',
     position: 'relative',
@@ -150,79 +149,89 @@ function ArchiveHeaderForm({
   };
 
   return (
-    <div className={classes.archiveProfile}>
+    <>
       {archive_info ? (
-        <>
-          <div className={classes.archiveTitle}>{archive_info.title}</div>
-          <div className={classes.archiveDesc}>{archive_info.description}</div>
-          <div className={classes.archiveBtnBox}>
-            {/* REF 아카이브 삭제 */}
-            {archive_info.user_no === user_info.no && (
-              <IconButton aria-label="delete">
-                <DeleteIcon onClick={handleOpen} />
-                <Modal
-                  aria-labelledby="transition-modal-title"
-                  aria-describedby="transition-modal-description"
-                  className={classes.modal}
-                  open={open}
-                  onClose={handleClose}
-                  closeAfterTransition
-                  BackdropComponent={Backdrop}
-                  BackdropProps={{
-                    timeout: 500,
-                  }}
-                >
-                  <Fade in={open}>
-                    <div className={classes.paper}>
-                      <h2 id="transition-modal-title">섹션 삭제</h2>
-                      <p id="transition-modal-description">
-                        정말 저장소를 삭제하시겠습니까?
-                      </p>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={deleteArchiveEvent}
-                      >
-                        예
-                      </Button>
-                      <Button
-                        onClick={handleClose}
-                        variant="contained"
-                        color="secondary"
-                      >
-                        아니요
-                      </Button>
-                    </div>
-                  </Fade>
-                </Modal>
-              </IconButton>
-            )}
-            {/* REF 아카이브 좋아요 */}
-            {archive_info.like_no ? (
-              <IconButton aria-label="favorites" onClick={deleteLikeEvent}>
-                <FavoriteIcon />
-              </IconButton>
-            ) : (
-              <IconButton aria-label="favorites" onClick={setLikeEvent}>
-                <FavoriteBorderIcon />
-              </IconButton>
-            )}
-            {/* REF 아카이브 북마크 */}
-            {archive_info.bookmark_no ? (
-              <IconButton aria-label="bookMark" onClick={deleteBookmarkEvent}>
-                <BookmarkIcon />
-              </IconButton>
-            ) : (
-              <IconButton aria-label="bookMark" onClick={setBookmarkEvent}>
-                <BookmarkBorderIcon />
-              </IconButton>
-            )}
-          </div>
-        </>
+        <div
+          className={classes.archiveProfile}
+          style={{
+            backgroundImage: `url(${archive_info.thumbnail})`,
+          }}
+        >
+          <img src="" alt="" />
+          <>
+            <div className={classes.archiveTitle}>{archive_info.title}</div>
+            <div className={classes.archiveDesc}>
+              {archive_info.description}
+            </div>
+            <div className={classes.archiveBtnBox}>
+              {/* REF 아카이브 삭제 */}
+              {archive_info.user_no === user_info.no && (
+                <IconButton aria-label="delete">
+                  <DeleteIcon onClick={handleOpen} />
+                  <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={open}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                      timeout: 500,
+                    }}
+                  >
+                    <Fade in={open}>
+                      <div className={classes.paper}>
+                        <h2 id="transition-modal-title">섹션 삭제</h2>
+                        <p id="transition-modal-description">
+                          정말 저장소를 삭제하시겠습니까?
+                        </p>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={deleteArchiveEvent}
+                        >
+                          예
+                        </Button>
+                        <Button
+                          onClick={handleClose}
+                          variant="contained"
+                          color="secondary"
+                        >
+                          아니요
+                        </Button>
+                      </div>
+                    </Fade>
+                  </Modal>
+                </IconButton>
+              )}
+              {/* REF 아카이브 좋아요 */}
+              {archive_info.like_no ? (
+                <IconButton aria-label="favorites" onClick={deleteLikeEvent}>
+                  <FavoriteIcon />
+                </IconButton>
+              ) : (
+                <IconButton aria-label="favorites" onClick={setLikeEvent}>
+                  <FavoriteBorderIcon />
+                </IconButton>
+              )}
+              {/* REF 아카이브 북마크 */}
+              {archive_info.bookmark_no ? (
+                <IconButton aria-label="bookMark" onClick={deleteBookmarkEvent}>
+                  <BookmarkIcon />
+                </IconButton>
+              ) : (
+                <IconButton aria-label="bookMark" onClick={setBookmarkEvent}>
+                  <BookmarkBorderIcon />
+                </IconButton>
+              )}
+            </div>
+          </>
+        </div>
       ) : (
         <CircularProgress />
       )}
-    </div>
+    </>
   );
 }
 

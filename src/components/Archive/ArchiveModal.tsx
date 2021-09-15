@@ -88,7 +88,6 @@ type tagType = {
 type MakeArchiveModalProps = {
   search_user_loading: boolean;
   search_user_list: Array<userListType>;
-  search_user_error: string;
   searchUserListRedux: (id: string) => void;
   insertArchiveRedux: (insertArchiveRequest: insertArchiveRequest) => void;
 };
@@ -96,7 +95,6 @@ type MakeArchiveModalProps = {
 function MakeArchiveModal({
   search_user_loading,
   search_user_list,
-  search_user_error,
   searchUserListRedux,
   insertArchiveRedux,
 }: MakeArchiveModalProps) {
