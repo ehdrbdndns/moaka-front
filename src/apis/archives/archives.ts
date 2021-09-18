@@ -32,8 +32,6 @@ export const insertArchive = async (
   };
 
   const formData = new FormData();
-  console.log('test');
-  console.log(JSON.stringify(insertArchiveRequest.info));
 
   formData.append('thumbnailFile', insertArchiveRequest.thumbnailFile);
   formData.append(

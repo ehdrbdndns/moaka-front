@@ -3,8 +3,16 @@ import PropTypes from 'prop-types';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import { footerStyles } from './styles';
-import { FooterProps } from './types';
+import { makeStyles } from '@material-ui/core';
+
+const footerStyles = makeStyles(theme => ({
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6, 0),
+    width: '100%',
+    bottom: 0,
+  },
+}));
 
 function Copyright() {
   return (
@@ -19,15 +27,14 @@ function Copyright() {
   );
 }
 
-export default function Footer(props: FooterProps) {
+export default function Footer() {
   const classes = footerStyles();
-  const { description, title } = props;
 
   return (
     <footer className={classes.footer}>
       <Container maxWidth="lg">
         <Typography variant="h6" align="center" gutterBottom>
-          {title}
+          모두가 함께하는 아카이브 모아카
         </Typography>
         <Typography
           variant="subtitle1"
@@ -35,7 +42,7 @@ export default function Footer(props: FooterProps) {
           color="textSecondary"
           component="p"
         >
-          {description}
+          서로 다른 mbti들의 모임
         </Typography>
         <Copyright />
       </Container>

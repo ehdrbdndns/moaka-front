@@ -35,10 +35,7 @@ function App() {
           <Home />
         </Route>
       </Switch>
-      <Footer
-        title="모두가 함께하는 아카이브 모아카"
-        description="서로 다른 mbti들의 모임"
-      />
+      <Footer />
     </div>
   );
 }
