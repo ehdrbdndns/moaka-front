@@ -41,8 +41,8 @@ const sectionBtnStyles = makeStyles((theme: Theme) =>
       backgroundColor: 'white',
       color: '#7a84dc',
       fontSize: '14px',
-      width: '138px',
-      height: '34px',
+      // width: '138px',
+      // height: '34px',
     },
     form: {
       display: 'flex',
@@ -370,4 +370,77 @@ function MakeChunkModal({
   );
 }
 
-export { DeleteChunkModal, UpdateChunkModal, MakeChunkModal };
+function MakeRelativeChunkModal() {
+  const sectionBtnClasses = sectionBtnStyles();
+
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [url, setUrl] = useState('');
+  const [description, setDescription] = useState('');
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const makeChunkSubmitEvent = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
+  return (
+    <>
+      <div className={sectionBtnClasses.btn__box}>
+        <Button
+          onClick={handleOpen}
+          className={sectionBtnClasses.btn}
+          variant="outlined"
+        >
+          관련 컨텐츠 추가
+        </Button>
+      </div>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={sectionBtnClasses.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className="popup-bookmark" onClick={closeTagEvent}>
+            <form onSubmit={makeChunkSubmitEvent}>
+              <header className="popup-bookmark__header"></header>
+              <main>
+                <section>
+                  <EditorBComponent
+                    profile="./img/moaka_logo.png"
+                    url={url}
+                    title={title}
+                    description={description}
+                    setTitle={setTitle}
+                    setUrl={setUrl}
+                    setDescription={setDescription}
+                  />
+                </section>
+              </main>
+            </form>
+          </div>
+        </Fade>
+      </Modal>
+    </>
+  );
+}
+
+export {
+  DeleteChunkModal,
+  UpdateChunkModal,
+  MakeChunkModal,
+  MakeRelativeChunkModal,
+};

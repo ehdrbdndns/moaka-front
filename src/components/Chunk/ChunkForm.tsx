@@ -18,14 +18,19 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { DeleteChunkModal, UpdateChunkModal } from './ChunkModal';
+import ChatIcon from '@material-ui/icons/Chat';
+import {
+  DeleteChunkModal,
+  MakeRelativeChunkModal,
+  UpdateChunkModal,
+} from './ChunkModal';
 import {
   bookmarkActionType,
   chunkInfo,
   deleteChunkActionType,
   likeActionType,
 } from '../../modules/section';
-import { CircularProgress } from '@material-ui/core';
+import { Avatar, Box, CircularProgress } from '@material-ui/core';
 
 const cardStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -47,6 +52,47 @@ const cardStyles = makeStyles((theme: Theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
+  },
+  linkBox: {},
+  linkBox__link: {
+    width: '100%',
+    paddingTop: '56.25%',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    cursor: 'pointer',
+  },
+  commentBox: {
+    width: '100%',
+    position: 'relative',
+    marginTop: '1rem',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  c_commentBox: {
+    width: '100%',
+    marginTop: '0.3rem',
+    paddingLeft: '2rem',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  commentIcon: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+    cursor: 'pointer',
+  },
+  commentAvatar: {
+    marginRight: '1rem',
+    display: 'inline-block',
+  },
+  commentInput: {
+    width: '100%',
+    outline: 'none',
+    border: 'none',
+    borderBottom: '1px solid black',
+    marginTop: '30px',
+    padding: '5px 0',
   },
 }));
 
@@ -254,8 +300,69 @@ function ChunkForm({
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>description</Typography>
-          <Typography>{description}</Typography>
+          <MakeRelativeChunkModal />
+          {description === '' || (
+            <>
+              <Typography paragraph> - 설명 - </Typography>
+              <Typography>{description}</Typography>
+            </>
+          )}
+          {/* 관련 링크 형태 */}
+          <Typography paragraph> - 관련 링크 - </Typography>
+          <Box className={classes.linkBox}>
+            <div
+              className={classes.linkBox__link}
+              style={{
+                backgroundImage: `url(
+                  https://moaka-s3.s3.ap-northeast-2.amazonaws.com/logo/moaka_logo.png
+                )`,
+              }}
+            />
+            <Typography variant="h6" color="textSecondary" component="div">
+              title
+            </Typography>
+            <Typography variant="h6" color="textSecondary" component="div">
+              description
+            </Typography>
+          </Box>
+          {/* 댓글 대댓글 형태 */}
+          <Typography paragraph> - 댓글 대댓글 형태 - </Typography>
+          {/* 댓글 */}
+          <Box className={classes.commentBox}>
+            <Avatar
+              src="https://moaka-s3.s3.ap-northeast-2.amazonaws.com/logo/moaka_logo.png"
+              className={classes.commentAvatar}
+            />
+            <Typography variant="h6" color="textSecondary" component="span">
+              1234
+            </Typography>
+            <Box className={classes.commentIcon}>
+              <ChatIcon />
+            </Box>
+          </Box>
+          {/* 대댓글 */}
+          <Box className={classes.c_commentBox}>
+            <Avatar
+              src="https://moaka-s3.s3.ap-northeast-2.amazonaws.com/logo/moaka_logo.png"
+              className={classes.commentAvatar}
+            />
+            <Typography variant="h6" color="textSecondary" component="span">
+              4444444444
+            </Typography>
+          </Box>
+          <input
+            type="text"
+            name="comment"
+            className={classes.commentInput}
+            placeholder="대댓글을 입력해주세요."
+          />
+          {/* 댓글 입력 창 */}
+          <input
+            type="text"
+            name="comment"
+            className={classes.commentInput}
+            placeholder="댓글을 입력해주세요."
+          />
         </CardContent>
       </Collapse>
     </Card>
