@@ -78,6 +78,18 @@ export type deleteChunkActionType = {
   chunk_no: number;
 };
 
+export type relativeChunkInfo = {
+  no: number;
+  section_no: number;
+  title: string;
+  thumbnail: string;
+  link: string;
+  link_title: string;
+  link_description: string;
+  description: string;
+  regdate: string;
+};
+
 export type chunkInfo = {
   no: number;
   section_no: number;
@@ -93,6 +105,7 @@ export type chunkInfo = {
   bookmark_loading: boolean;
   like_no: number;
   like_loading: boolean;
+  relative_chunk_list: Array<relativeChunkInfo>;
 };
 
 export type sectionInfo = {

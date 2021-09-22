@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import { Editor_B as EditorBComponent } from '../Editor/Editor_B';
 import { closeTagEvent, Tag_A as TagAComponent } from '../Tag/Tag_A';
 import '../../styles/main.scss';
-import { chunkInfo } from '../../modules/section';
+import { chunkInfo, relativeChunkInfo } from '../../modules/section';
 import { useEffect } from 'react';
 
 const sectionBtnStyles = makeStyles((theme: Theme) =>
@@ -72,9 +72,13 @@ type updateChunkModalProps = {
   _title: string;
   _description: string;
   _url: string;
+  relative_chunk_list: relativeChunkInfo[];
   chunk_tag_list: string[];
   section_tag_list: string[];
   section_no: number;
+  bookmark_no: number;
+  like_no: number;
+  regdate: string;
   updateChunkRedux: (chunkInfo: chunkInfo) => void;
 };
 
@@ -140,10 +144,14 @@ function UpdateChunkModal({
   _title,
   _description,
   _url,
+  relative_chunk_list,
   chunk_tag_list,
   section_tag_list,
   section_no,
   updateChunkRedux,
+  bookmark_no,
+  like_no,
+  regdate,
 }: updateChunkModalProps) {
   const sectionBtnClasses = sectionBtnStyles();
 
@@ -196,11 +204,12 @@ function UpdateChunkModal({
         link_description: link_description ? link_description : '',
         link_title: link_title,
         thumbnail: thumbnail,
-        regdate: '',
-        bookmark_no: 0,
+        regdate: regdate,
+        bookmark_no: bookmark_no,
         bookmark_loading: false,
-        like_no: 0,
+        like_no: like_no,
         like_loading: false,
+        relative_chunk_list: relative_chunk_list,
       };
 
       updateChunkRedux(chunkInfo);
@@ -309,6 +318,7 @@ function MakeChunkModal({
         bookmark_loading: false,
         like_no: 0,
         like_loading: false,
+        relative_chunk_list: [],
       };
 
       makeChunkRedux(chunkInfo);

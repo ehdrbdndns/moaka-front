@@ -132,6 +132,7 @@ function ChunkForm({
     bookmark_loading,
     like_no,
     like_loading,
+    relative_chunk_list,
   } = chunk_info;
 
   const classes = cardStyles();
@@ -237,10 +238,14 @@ function ChunkForm({
                   _url={link}
                   _title={title}
                   _description={description}
+                  relative_chunk_list={relative_chunk_list}
                   chunk_tag_list={tag_list}
                   section_tag_list={section_tag_list}
                   updateChunkRedux={updateChunkRedux}
                   section_no={section_no}
+                  bookmark_no={bookmark_no}
+                  like_no={like_no}
+                  regdate={regdate}
                 />
               </MenuItem>
               <MenuItem onClick={handleClose}>
