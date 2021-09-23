@@ -21,6 +21,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ChatIcon from '@material-ui/icons/Chat';
 import {
   DeleteChunkModal,
+  DeleteRelativeChunkModal,
   MakeRelativeChunkModal,
   UpdateChunkModal,
 } from './ChunkModal';
@@ -28,7 +29,9 @@ import {
   bookmarkActionType,
   chunkInfo,
   deleteChunkActionType,
+  deleteRelativeChunkActionType,
   likeActionType,
+  relativeChunkInfo,
 } from '../../modules/section';
 import { Avatar, Box, CircularProgress } from '@material-ui/core';
 
@@ -105,6 +108,10 @@ type chunkFormProps = {
   deleteBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
   setLikeRedux: (likeActionType: likeActionType) => void;
   deleteLikeRedux: (likeActionType: likeActionType) => void;
+  makeRelativeChunkRedux: (relativeChunkInfo: relativeChunkInfo) => void;
+  deleteRelativeChunkRedux: (
+    deleteRelativeChunkActionType: deleteRelativeChunkActionType,
+  ) => void;
 };
 
 function ChunkForm({
@@ -116,6 +123,8 @@ function ChunkForm({
   deleteBookmarkRedux,
   setLikeRedux,
   deleteLikeRedux,
+  makeRelativeChunkRedux,
+  deleteRelativeChunkRedux,
 }: chunkFormProps) {
   const {
     no,
@@ -200,9 +209,12 @@ function ChunkForm({
     deleteLikeRedux(likeActionType);
   };
 
-  const moveLinkEvent = () => {
-    window.open(link);
-  };
+  function windowOpen(url: string) {
+    if (!url.match(/^https?:\/\//i)) {
+      url = 'https://' + url;
+    }
+    return window.open(url);
+  }
 
   const ITEM_HEIGHT = 48;
 
@@ -233,6 +245,7 @@ function ChunkForm({
               }}
             >
               <MenuItem onClick={handleClose}>
+                {/* REF 청크 업데이트 버튼 */}
                 <UpdateChunkModal
                   chunk_no={no}
                   _url={link}
@@ -249,6 +262,7 @@ function ChunkForm({
                 />
               </MenuItem>
               <MenuItem onClick={handleClose}>
+                {/* REF 청크 삭제 버튼 */}
                 <DeleteChunkModal deleteChunk={deleteChunk} />
               </MenuItem>
             </Menu>
@@ -261,7 +275,7 @@ function ChunkForm({
         className={classes.media}
         image={thumbnail}
         title={link_title}
-        onClick={moveLinkEvent}
+        onClick={() => windowOpen(link)}
       />
       <CardContent>
         <Typography variant="h5" color="textSecondary" component="p">
@@ -305,34 +319,56 @@ function ChunkForm({
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <MakeRelativeChunkModal />
+          {/* REF 관련 링크 추가 버튼 */}
+          <MakeRelativeChunkModal
+            chunk_no={no}
+            section_no={section_no}
+            makeRelativeChunkRedux={makeRelativeChunkRedux}
+          />
           {description === '' || (
             <>
               <Typography paragraph> - 설명 - </Typography>
               <Typography>{description}</Typography>
+              <hr />
             </>
           )}
-          {/* 관련 링크 형태 */}
-          <Typography paragraph> - 관련 링크 - </Typography>
-          <Box className={classes.linkBox}>
-            <div
-              className={classes.linkBox__link}
-              style={{
-                backgroundImage: `url(
-                  https://moaka-s3.s3.ap-northeast-2.amazonaws.com/logo/moaka_logo.png
+          {/* REF 관련 링크 형태 */}
+          {relative_chunk_list[0] !== undefined && (
+            <Typography paragraph> - 관련 링크 - </Typography>
+          )}
+          {relative_chunk_list.map(relative_chunk => (
+            <Box
+              key={relative_chunk.no}
+              className={classes.linkBox}
+              onClick={() => windowOpen(relative_chunk.link)}
+            >
+              <div
+                className={classes.linkBox__link}
+                style={{
+                  backgroundImage: `url(
+                  ${relative_chunk.thumbnail}
                 )`,
-              }}
-            />
-            <Typography variant="h6" color="textSecondary" component="div">
-              title
-            </Typography>
-            <Typography variant="h6" color="textSecondary" component="div">
-              description
-            </Typography>
-          </Box>
-          {/* 댓글 대댓글 형태 */}
+                }}
+              />
+              <Typography variant="h6" color="textSecondary" component="div">
+                제목: {relative_chunk.title}
+              </Typography>
+              <Typography variant="h6" color="textSecondary" component="div">
+                설명: {relative_chunk.description}
+              </Typography>
+              {/* REF 관련 청크 삭제 버튼 */}
+              <DeleteRelativeChunkModal
+                chunk_no={relative_chunk.no}
+                section_no={section_no}
+                group_num={no}
+                deleteRelativeChunkRedux={deleteRelativeChunkRedux}
+              />
+              <hr />
+            </Box>
+          ))}
+          {/* REF 댓글 대댓글 형태 */}
           <Typography paragraph> - 댓글 대댓글 형태 - </Typography>
-          {/* 댓글 */}
+          {/* REF 댓글 */}
           <Box className={classes.commentBox}>
             <Avatar
               src="https://moaka-s3.s3.ap-northeast-2.amazonaws.com/logo/moaka_logo.png"
@@ -345,7 +381,7 @@ function ChunkForm({
               <ChatIcon />
             </Box>
           </Box>
-          {/* 대댓글 */}
+          {/* REF 대댓글 */}
           <Box className={classes.c_commentBox}>
             <Avatar
               src="https://moaka-s3.s3.ap-northeast-2.amazonaws.com/logo/moaka_logo.png"
@@ -361,7 +397,7 @@ function ChunkForm({
             className={classes.commentInput}
             placeholder="대댓글을 입력해주세요."
           />
-          {/* 댓글 입력 창 */}
+          {/* REF 댓글 입력 창 */}
           <input
             type="text"
             name="comment"
