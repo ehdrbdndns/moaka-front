@@ -5,6 +5,7 @@ import {
   updateChunk,
   getSection,
   makeChunk,
+  makeRelativeChunk,
   makeSection,
   updateSection,
   setBookmark,
@@ -23,9 +24,10 @@ import {
   updateSectionResponseByAxios,
 } from '../../apis/section/types';
 import {
-  deleteChunkResponseByAxios,
-  makeChunkResponseByAxios,
-  updateChunkResponseByAxios,
+  deleteChunkResponse,
+  makeChunkResponse,
+  makeRelativeChunkResponse,
+  updateChunkResponse,
 } from '../../apis/chunk/types';
 import {
   deleteBookmarkResponse,
@@ -35,6 +37,7 @@ import {
   deleteLikeResponse,
   insertLikeOfChunkResponse,
 } from '../../apis/like/types';
+import { deleteRelativeChunk } from '.';
 
 function* getSectionSaga(action: ReturnType<typeof getSection>) {
   try {
@@ -179,7 +182,7 @@ function* deleteSectionSaga(action: ReturnType<typeof deleteSection>) {
 
 function* deleteChunkSaga(action: ReturnType<typeof deleteChunk>) {
   try {
-    const response: deleteChunkResponseByAxios = yield call(
+    const response: deleteChunkResponse = yield call(
       chunkAPI.deleteChunk,
       action.payload.chunk_no,
     );
@@ -218,9 +221,52 @@ function* deleteChunkSaga(action: ReturnType<typeof deleteChunk>) {
   }
 }
 
+function* deleteRelativeChunkSaga(
+  action: ReturnType<typeof deleteRelativeChunk>,
+) {
+  try {
+    const response: deleteChunkResponse = yield call(
+      chunkAPI.deleteChunk,
+      action.payload.chunk_no,
+    );
+    if (response.isSuccess) {
+      yield put({
+        type: sagaType.DELETE_RELATIVE_CHUNK_SUCCESS,
+        payload: action.payload,
+      });
+    } else if (response.error === 0) {
+      // TODO 해당 링크를 삭제할 권한이 있는 아이디가 아님
+      yield put({
+        type: sagaType.DELETE_RELATIVE_CHUNK_NOAUTH,
+        error: true,
+        payload: '해당 링크를 삭제할 권한이 없습니다.',
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.DELETE_RELATIVE_CHUNK_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.DELETE_RELATIVE_CHUNK_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
 function* makeChunkSaga(action: ReturnType<typeof makeChunk>) {
   try {
-    const response: makeChunkResponseByAxios = yield call(
+    const response: makeChunkResponse = yield call(
       chunkAPI.makeChunk,
       action.payload,
     );
@@ -263,9 +309,54 @@ function* makeChunkSaga(action: ReturnType<typeof makeChunk>) {
   }
 }
 
+function* makeRelativeChunkSaga(action: ReturnType<typeof makeRelativeChunk>) {
+  try {
+    const response: makeRelativeChunkResponse = yield call(
+      chunkAPI.makeRelativeChunk,
+      action.payload,
+    );
+
+    if (response.isSuccess) {
+      action.payload.no = response.no;
+      action.payload.regdate = response.regdate;
+
+      yield put({
+        type: sagaType.MAKE_RELATIVE_CHUNK_SUCCESS,
+        payload: action.payload,
+      });
+    } else if (response.error === 0) {
+      // TODO 관련 링크를 생성할 권한이 없음
+      yield put({
+        type: sagaType.MAKE_RELATIVE_CHUNK_NOAUTH,
+        error: true,
+        payload: action.payload,
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: action.payload,
+      });
+    } else {
+      yield put({
+        type: sagaType.MAKE_RELATIVE_CHUNK_ERROR,
+        error: true,
+        payload: action.payload,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.MAKE_RELATIVE_CHUNK_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
 function* updateChunkSaga(action: ReturnType<typeof updateChunk>) {
   try {
-    const response: updateChunkResponseByAxios = yield call(
+    const response: updateChunkResponse = yield call(
       chunkAPI.updateChunk,
       action.payload,
     );
@@ -462,4 +553,6 @@ export function* sectionSaga() {
   yield takeEvery(sagaType.DELETE_BOOKMARK, deleteBookmarkSaga);
   yield takeLatest(sagaType.SET_LIKE, setLikeSaga);
   yield takeLatest(sagaType.DELETE_LIKE, deleteLikeSaga);
+  yield takeLatest(sagaType.MAKE_RELATIVE_CHUNK, makeRelativeChunkSaga);
+  yield takeEvery(sagaType.DELETE_RELATIVE_CHUNK, deleteRelativeChunkSaga);
 }

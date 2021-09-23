@@ -31,6 +31,18 @@ export const updateChunk = (chunkInfo: sagaType.chunkInfo) => ({
   type: sagaType.UPDATE_CHUNK,
   payload: chunkInfo,
 });
+export const makeRelativeChunk = (
+  relativeChunkInfo: sagaType.relativeChunkInfo,
+) => ({
+  type: sagaType.MAKE_RELATIVE_CHUNK,
+  payload: relativeChunkInfo,
+});
+export const deleteRelativeChunk = (
+  deleteRelativeChunkActionType: sagaType.deleteRelativeChunkActionType,
+) => ({
+  type: sagaType.DELETE_RELATIVE_CHUNK,
+  payload: deleteRelativeChunkActionType,
+});
 export const setBookmark = (bookmarkInfo: sagaType.bookmarkActionType) => ({
   type: sagaType.SET_BOOKMARK,
   payload: bookmarkInfo,

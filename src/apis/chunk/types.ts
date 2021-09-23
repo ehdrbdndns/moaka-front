@@ -1,14 +1,20 @@
-export type deleteChunkResponseByAxios = {
+export type deleteChunkResponse = {
   isSuccess: boolean;
   error: number;
 };
-export type makeChunkResponseByAxios = {
+export type makeChunkResponse = {
   isSuccess: boolean;
   error: number;
   no: number;
   regdate: string;
 };
-export type updateChunkResponseByAxios = {
+export type makeRelativeChunkResponse = {
+  isSuccess: boolean;
+  error: number;
+  no: number;
+  regdate: string;
+};
+export type updateChunkResponse = {
   isSuccess: boolean;
   error: number;
 };

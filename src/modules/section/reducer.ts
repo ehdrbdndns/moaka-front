@@ -19,6 +19,30 @@ function section(
         data: [...state.data],
         error: null,
       };
+    case type.MAKE_RELATIVE_CHUNK: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.group_num,
+      );
+
+      const _data = [...state.data];
+      console.log(_data[section_index].chunk_list[chunk_index]);
+
+      _data[section_index].chunk_list[chunk_index].relative_chunk_loading =
+        true;
+
+      return {
+        ...state,
+        data: _data,
+      };
+    }
+    case type.DELETE_RELATIVE_CHUNK:
+      return {
+        ...state,
+        error: null,
+      };
     case type.DELETE_BOOKMARK:
     case type.SET_BOOKMARK: {
       const section_index = state.data.findIndex(
@@ -70,6 +94,26 @@ function section(
         data: [...state.data, action.payload],
         loading: false,
       };
+    case type.DELETE_RELATIVE_CHUNK_SUCCESS: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.group_num,
+      );
+
+      const _data = [...state.data];
+      _data[section_index].chunk_list[chunk_index].relative_chunk_list = _data[
+        section_index
+      ].chunk_list[chunk_index].relative_chunk_list.filter(
+        relative_chunk => relative_chunk.no !== action.payload.chunk_no,
+      );
+
+      return {
+        ...state,
+        data: _data,
+      };
+    }
     case type.DELETE_SECTION_SUCCESS:
       return {
         ...state,
@@ -103,6 +147,27 @@ function section(
       return {
         ...state,
         loading: false,
+        data: _data,
+      };
+    }
+    case type.MAKE_RELATIVE_CHUNK_SUCCESS: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.group_num,
+      );
+
+      const _data = [...state.data];
+      _data[section_index].chunk_list[chunk_index].relative_chunk_loading =
+        false;
+      _data[section_index].chunk_list[chunk_index].relative_chunk_list = [
+        ..._data[section_index].chunk_list[chunk_index].relative_chunk_list,
+        action.payload,
+      ];
+
+      return {
+        ...state,
         data: _data,
       };
     }
@@ -173,8 +238,12 @@ function section(
     case type.UPDATE_SECTION_ERROR:
     case type.DELETE_CHUNK_ERROR:
     case type.DELETE_CHUNK_NOAUTH:
+    case type.DELETE_RELATIVE_CHUNK_ERROR:
+    case type.DELETE_RELATIVE_CHUNK_NOAUTH:
     case type.MAKE_CHUNK_ERROR:
     case type.MAKE_CHUNK_NOAUTH:
+    case type.MAKE_RELATIVE_CHUNK_ERROR:
+    case type.MAKE_RELATIVE_CHUNK_NOAUTH:
     case type.SET_BOOKMARK_ERROR:
       return {
         ...state,

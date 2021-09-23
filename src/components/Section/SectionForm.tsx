@@ -22,7 +22,9 @@ import {
   bookmarkActionType,
   chunkInfo,
   deleteChunkActionType,
+  deleteRelativeChunkActionType,
   likeActionType,
+  relativeChunkInfo,
   sectionInfo,
 } from '../../modules/section';
 import { useEffect } from 'react';
@@ -55,6 +57,10 @@ type sectionFormProps = {
   deleteBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
   setLikeRedux: (likeActionType: likeActionType) => void;
   deleteLikeRedux: (likeActionType: likeActionType) => void;
+  makeRelativeChunkRedux: (relativeChunkInfo: relativeChunkInfo) => void;
+  deleteRelativeChunkRedux: (
+    deleteRelativeChunkActionType: deleteRelativeChunkActionType,
+  ) => void;
 };
 
 function SectionForm({
@@ -73,6 +79,8 @@ function SectionForm({
   deleteBookmarkRedux,
   setLikeRedux,
   deleteLikeRedux,
+  makeRelativeChunkRedux,
+  deleteRelativeChunkRedux,
 }: sectionFormProps) {
   const barClasses = barStyles();
 
@@ -138,6 +146,8 @@ function SectionForm({
                         deleteBookmarkRedux={deleteBookmarkRedux}
                         setLikeRedux={setLikeRedux}
                         deleteLikeRedux={deleteLikeRedux}
+                        makeRelativeChunkRedux={makeRelativeChunkRedux}
+                        deleteRelativeChunkRedux={deleteRelativeChunkRedux}
                       />
                     </Grid>
                   ))

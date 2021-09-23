@@ -37,6 +37,24 @@ export const UPDATE_CHUNK_SUCCESS = 'section/UPDATE_CHUNK_SUCCESS' as const;
 export const UPDATE_CHUNK_ERROR = 'section/UPDATE_CHUNK_ERROR' as const;
 export const UPDATE_CHUNK_NOAUTH = 'section/UPDATE_CHUNK_NOAUTH' as const;
 
+// REF 관련 청크 생성
+export const MAKE_RELATIVE_CHUNK = 'section/MAKE_RELATIVE_CHUNK' as const;
+export const MAKE_RELATIVE_CHUNK_SUCCESS =
+  'section/MAKE_RELATIVE_CHUNK_SUCCESS' as const;
+export const MAKE_RELATIVE_CHUNK_ERROR =
+  'section/MAKE_RELATIVE_CHUNK_ERROR' as const;
+export const MAKE_RELATIVE_CHUNK_NOAUTH =
+  'section/MAKE_RELATIVE_CHUNK_NOAUTH' as const;
+
+// REF 관련 청크 삭제
+export const DELETE_RELATIVE_CHUNK = 'section/DELETE_RELATIVE_CHUNK' as const;
+export const DELETE_RELATIVE_CHUNK_SUCCESS =
+  'section/DELETE_RELATIVE_CHUNK_SUCCESS' as const;
+export const DELETE_RELATIVE_CHUNK_ERROR =
+  'section/DELETE_RELATIVE_CHUNK_ERROR' as const;
+export const DELETE_RELATIVE_CHUNK_NOAUTH =
+  'section/DELETE_RELATIVE_CHUNK_NOAUTH' as const;
+
 // REF 북마크 생성
 export const SET_BOOKMARK = 'section/SET_BOOKMARK' as const;
 export const SET_BOORMARK_SUCCESS = 'section/SET_BOOKMARK_SUCCESS' as const;
@@ -78,6 +96,25 @@ export type deleteChunkActionType = {
   chunk_no: number;
 };
 
+export type deleteRelativeChunkActionType = {
+  section_no: number;
+  chunk_no: number;
+  group_num: number;
+};
+
+export type relativeChunkInfo = {
+  no: number;
+  group_num: number;
+  section_no: number;
+  title: string;
+  thumbnail: string;
+  link: string;
+  link_title: string;
+  link_description: string;
+  description: string;
+  regdate: string;
+};
+
 export type chunkInfo = {
   no: number;
   section_no: number;
@@ -93,6 +130,8 @@ export type chunkInfo = {
   bookmark_loading: boolean;
   like_no: number;
   like_loading: boolean;
+  relative_chunk_list: Array<relativeChunkInfo>;
+  relative_chunk_loading: boolean;
 };
 
 export type sectionInfo = {

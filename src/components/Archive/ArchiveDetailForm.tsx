@@ -8,7 +8,9 @@ import {
   bookmarkActionType,
   chunkInfo,
   deleteChunkActionType,
+  deleteRelativeChunkActionType,
   likeActionType,
+  relativeChunkInfo,
   sectionInfo,
 } from '../../modules/section';
 import {
@@ -57,6 +59,10 @@ type ArchiveDetailProps = {
   deleteBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
   setLikeRedux: (likeActionType: likeActionType) => void;
   deleteLikeRedux: (likeActionType: likeActionType) => void;
+  makeRelativeChunkRedux: (relativeChunkInfo: relativeChunkInfo) => void;
+  deleteRelativeChunkRedux: (
+    deleteRelativeChunkActionType: deleteRelativeChunkActionType,
+  ) => void;
 };
 
 function ArchiveDetailForm({
@@ -77,6 +83,8 @@ function ArchiveDetailForm({
   deleteBookmarkRedux,
   setLikeRedux,
   deleteLikeRedux,
+  makeRelativeChunkRedux,
+  deleteRelativeChunkRedux,
 }: ArchiveDetailProps) {
   const classes = archiveDetailStyles();
 
@@ -91,8 +99,8 @@ function ArchiveDetailForm({
       )}
       {archive_info ? (
         section_list.map(section => (
-          <>
-            <AppBar position="static" key={section.no}>
+          <div key={section.no}>
+            <AppBar position="static">
               <Toolbar variant="dense" className={classes.toolbar}>
                 <Typography
                   component="h1"
@@ -142,6 +150,8 @@ function ArchiveDetailForm({
                         deleteBookmarkRedux={deleteBookmarkRedux}
                         setLikeRedux={setLikeRedux}
                         deleteLikeRedux={deleteLikeRedux}
+                        makeRelativeChunkRedux={makeRelativeChunkRedux}
+                        deleteRelativeChunkRedux={deleteRelativeChunkRedux}
                       />
                     </Grid>
                   ))
@@ -152,7 +162,7 @@ function ArchiveDetailForm({
                 )}
               </Grid>
             </Box>
-          </>
+          </div>
         ))
       ) : (
         <CircularProgress />

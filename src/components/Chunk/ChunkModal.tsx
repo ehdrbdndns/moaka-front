@@ -11,7 +11,11 @@ import React, { useState } from 'react';
 import { Editor_B as EditorBComponent } from '../Editor/Editor_B';
 import { closeTagEvent, Tag_A as TagAComponent } from '../Tag/Tag_A';
 import '../../styles/main.scss';
-import { chunkInfo } from '../../modules/section';
+import {
+  chunkInfo,
+  deleteRelativeChunkActionType,
+  relativeChunkInfo,
+} from '../../modules/section';
 import { useEffect } from 'react';
 
 const sectionBtnStyles = makeStyles((theme: Theme) =>
@@ -41,8 +45,8 @@ const sectionBtnStyles = makeStyles((theme: Theme) =>
       backgroundColor: 'white',
       color: '#7a84dc',
       fontSize: '14px',
-      width: '138px',
-      height: '34px',
+      // width: '138px',
+      // height: '34px',
     },
     form: {
       display: 'flex',
@@ -72,9 +76,13 @@ type updateChunkModalProps = {
   _title: string;
   _description: string;
   _url: string;
+  relative_chunk_list: relativeChunkInfo[];
   chunk_tag_list: string[];
   section_tag_list: string[];
   section_no: number;
+  bookmark_no: number;
+  like_no: number;
+  regdate: string;
   updateChunkRedux: (chunkInfo: chunkInfo) => void;
 };
 
@@ -82,10 +90,25 @@ type deleteChunkModalProps = {
   deleteChunk: () => void;
 };
 
+type deleteRelativeChunkModalProps = {
+  chunk_no: number;
+  section_no: number;
+  group_num: number;
+  deleteRelativeChunkRedux: (
+    deleteRelativeChunkActionType: deleteRelativeChunkActionType,
+  ) => void;
+};
+
 type makeChunkModalProps = {
   section_no: number;
   section_tag_list: string[];
   makeChunkRedux: (chunkInfo: chunkInfo) => void;
+};
+
+type makeRelativeChunkModalProps = {
+  chunk_no: number;
+  section_no: number;
+  makeRelativeChunkRedux: (relativeChunkInfo: relativeChunkInfo) => void;
 };
 
 function DeleteChunkModal({ deleteChunk }: deleteChunkModalProps) {
@@ -140,10 +163,14 @@ function UpdateChunkModal({
   _title,
   _description,
   _url,
+  relative_chunk_list,
   chunk_tag_list,
   section_tag_list,
   section_no,
   updateChunkRedux,
+  bookmark_no,
+  like_no,
+  regdate,
 }: updateChunkModalProps) {
   const sectionBtnClasses = sectionBtnStyles();
 
@@ -196,11 +223,13 @@ function UpdateChunkModal({
         link_description: link_description ? link_description : '',
         link_title: link_title,
         thumbnail: thumbnail,
-        regdate: '',
-        bookmark_no: 0,
+        regdate: regdate,
+        bookmark_no: bookmark_no,
         bookmark_loading: false,
-        like_no: 0,
+        like_no: like_no,
         like_loading: false,
+        relative_chunk_list: relative_chunk_list,
+        relative_chunk_loading: false,
       };
 
       updateChunkRedux(chunkInfo);
@@ -309,6 +338,8 @@ function MakeChunkModal({
         bookmark_loading: false,
         like_no: 0,
         like_loading: false,
+        relative_chunk_list: [],
+        relative_chunk_loading: false,
       };
 
       makeChunkRedux(chunkInfo);
@@ -370,4 +401,182 @@ function MakeChunkModal({
   );
 }
 
-export { DeleteChunkModal, UpdateChunkModal, MakeChunkModal };
+function MakeRelativeChunkModal({
+  chunk_no,
+  section_no,
+  makeRelativeChunkRedux,
+}: makeRelativeChunkModalProps) {
+  const sectionBtnClasses = sectionBtnStyles();
+
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [url, setUrl] = useState('');
+  const [description, setDescription] = useState('');
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const makeChunkSubmitEvent = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // LINK PREVIEW에게 가지고 온 정보
+    const link_title: string = (
+      document.getElementsByClassName('Title')[0] as HTMLElement
+    )?.innerText;
+
+    // TODO LINK PREVIEW가 업데이트 됐는지 확인
+    if (link_title !== undefined) {
+      const link_description: string = (
+        document.getElementsByClassName('Description')[0] as HTMLElement
+      )?.innerText;
+      const backgroundImage = (
+        document.getElementsByClassName('Image')[0] as HTMLElement
+      )?.style.backgroundImage;
+      const thumbnail = backgroundImage
+        ? backgroundImage.slice(4, -1).replace(/["']/g, '')
+        : '';
+
+      const relativeChunkInfo: relativeChunkInfo = {
+        no: chunk_no,
+        group_num: chunk_no,
+        section_no: section_no,
+        title: title,
+        thumbnail: thumbnail,
+        link: url,
+        link_title: link_title,
+        link_description: link_description,
+        description: description,
+        regdate: '',
+      };
+
+      makeRelativeChunkRedux(relativeChunkInfo);
+    }
+  };
+
+  return (
+    <>
+      <div className={sectionBtnClasses.btn__box}>
+        <Button
+          onClick={handleOpen}
+          className={sectionBtnClasses.btn}
+          variant="outlined"
+        >
+          관련 컨텐츠 추가
+        </Button>
+      </div>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={sectionBtnClasses.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className="popup-bookmark" onClick={closeTagEvent}>
+            <form onSubmit={makeChunkSubmitEvent}>
+              <header className="popup-bookmark__header"></header>
+              <main>
+                <section>
+                  <EditorBComponent
+                    profile="./img/moaka_logo.png"
+                    url={url}
+                    title={title}
+                    description={description}
+                    setTitle={setTitle}
+                    setUrl={setUrl}
+                    setDescription={setDescription}
+                  />
+                </section>
+              </main>
+            </form>
+          </div>
+        </Fade>
+      </Modal>
+    </>
+  );
+}
+
+function DeleteRelativeChunkModal({
+  chunk_no,
+  section_no,
+  group_num,
+  deleteRelativeChunkRedux,
+}: deleteRelativeChunkModalProps) {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const sectionBtnClasses = sectionBtnStyles();
+
+  const deleteChunk = () => {
+    deleteRelativeChunkRedux({
+      chunk_no: chunk_no,
+      group_num: group_num,
+      section_no: section_no,
+    });
+  };
+
+  return (
+    <>
+      <div className={sectionBtnClasses.btn__box}>
+        <Button
+          onClick={handleOpen}
+          className={sectionBtnClasses.btn}
+          variant="outlined"
+        >
+          삭제
+        </Button>
+      </div>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={sectionBtnClasses.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className={sectionBtnClasses.paper}>
+            <h2 id="transition-modal-title">링크 삭제</h2>
+            <p id="transition-modal-description">
+              정말 링크를 삭제하시겠습니까?
+            </p>
+            <Button variant="contained" color="primary" onClick={deleteChunk}>
+              예
+            </Button>
+            <Button onClick={handleClose} variant="contained" color="secondary">
+              아니요
+            </Button>
+          </div>
+        </Fade>
+      </Modal>
+    </>
+  );
+}
+
+export {
+  DeleteChunkModal,
+  UpdateChunkModal,
+  MakeChunkModal,
+  MakeRelativeChunkModal,
+  DeleteRelativeChunkModal,
+};

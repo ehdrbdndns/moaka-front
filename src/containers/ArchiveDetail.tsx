@@ -22,11 +22,15 @@ import {
   deleteChunk,
   deleteChunkActionType,
   deleteLike,
+  deleteRelativeChunk,
+  deleteRelativeChunkActionType,
   deleteSection,
   getSection,
   likeActionType,
   makeChunk,
+  makeRelativeChunk,
   makeSection,
+  relativeChunkInfo,
   sectionInfo,
   setBookmark,
   setLike,
@@ -134,6 +138,20 @@ function ArchiveDetail() {
     [dispatch],
   );
 
+  const makeRelativeChunkRedux = useCallback(
+    (relativeChunkInfo: relativeChunkInfo) => {
+      dispatch(makeRelativeChunk(relativeChunkInfo));
+    },
+    [dispatch],
+  );
+
+  const deleteRelativeChunkRedux = useCallback(
+    (deleteRelativeChunkActionType: deleteRelativeChunkActionType) => {
+      dispatch(deleteRelativeChunk(deleteRelativeChunkActionType));
+    },
+    [dispatch],
+  );
+
   const updateChunkRedux = useCallback(
     (chunkInfo: chunkInfo) => {
       dispatch(updateChunk(chunkInfo));
@@ -220,6 +238,8 @@ function ArchiveDetail() {
         deleteBookmarkRedux={deleteBookmarkRedux}
         setLikeRedux={setLikeRedux}
         deleteLikeRedux={deleteLikeRedux}
+        makeRelativeChunkRedux={makeRelativeChunkRedux}
+        deleteRelativeChunkRedux={deleteRelativeChunkRedux}
       />
     </div>
   );

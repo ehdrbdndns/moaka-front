@@ -18,14 +18,22 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { DeleteChunkModal, UpdateChunkModal } from './ChunkModal';
+import ChatIcon from '@material-ui/icons/Chat';
+import {
+  DeleteChunkModal,
+  DeleteRelativeChunkModal,
+  MakeRelativeChunkModal,
+  UpdateChunkModal,
+} from './ChunkModal';
 import {
   bookmarkActionType,
   chunkInfo,
   deleteChunkActionType,
+  deleteRelativeChunkActionType,
   likeActionType,
+  relativeChunkInfo,
 } from '../../modules/section';
-import { CircularProgress } from '@material-ui/core';
+import { Avatar, Box, CircularProgress } from '@material-ui/core';
 
 const cardStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -48,6 +56,47 @@ const cardStyles = makeStyles((theme: Theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  linkBox: {},
+  linkBox__link: {
+    width: '100%',
+    paddingTop: '56.25%',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    cursor: 'pointer',
+  },
+  commentBox: {
+    width: '100%',
+    position: 'relative',
+    marginTop: '1rem',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  c_commentBox: {
+    width: '100%',
+    marginTop: '0.3rem',
+    paddingLeft: '2rem',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  commentIcon: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+    cursor: 'pointer',
+  },
+  commentAvatar: {
+    marginRight: '1rem',
+    display: 'inline-block',
+  },
+  commentInput: {
+    width: '100%',
+    outline: 'none',
+    border: 'none',
+    borderBottom: '1px solid black',
+    marginTop: '30px',
+    padding: '5px 0',
+  },
 }));
 
 type chunkFormProps = {
@@ -59,6 +108,10 @@ type chunkFormProps = {
   deleteBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
   setLikeRedux: (likeActionType: likeActionType) => void;
   deleteLikeRedux: (likeActionType: likeActionType) => void;
+  makeRelativeChunkRedux: (relativeChunkInfo: relativeChunkInfo) => void;
+  deleteRelativeChunkRedux: (
+    deleteRelativeChunkActionType: deleteRelativeChunkActionType,
+  ) => void;
 };
 
 function ChunkForm({
@@ -70,6 +123,8 @@ function ChunkForm({
   deleteBookmarkRedux,
   setLikeRedux,
   deleteLikeRedux,
+  makeRelativeChunkRedux,
+  deleteRelativeChunkRedux,
 }: chunkFormProps) {
   const {
     no,
@@ -86,6 +141,7 @@ function ChunkForm({
     bookmark_loading,
     like_no,
     like_loading,
+    relative_chunk_list,
   } = chunk_info;
 
   const classes = cardStyles();
@@ -153,9 +209,12 @@ function ChunkForm({
     deleteLikeRedux(likeActionType);
   };
 
-  const moveLinkEvent = () => {
-    window.open(link);
-  };
+  function windowOpen(url: string) {
+    if (!url.match(/^https?:\/\//i)) {
+      url = 'https://' + url;
+    }
+    return window.open(url);
+  }
 
   const ITEM_HEIGHT = 48;
 
@@ -186,18 +245,24 @@ function ChunkForm({
               }}
             >
               <MenuItem onClick={handleClose}>
+                {/* REF 청크 업데이트 버튼 */}
                 <UpdateChunkModal
                   chunk_no={no}
                   _url={link}
                   _title={title}
                   _description={description}
+                  relative_chunk_list={relative_chunk_list}
                   chunk_tag_list={tag_list}
                   section_tag_list={section_tag_list}
                   updateChunkRedux={updateChunkRedux}
                   section_no={section_no}
+                  bookmark_no={bookmark_no}
+                  like_no={like_no}
+                  regdate={regdate}
                 />
               </MenuItem>
               <MenuItem onClick={handleClose}>
+                {/* REF 청크 삭제 버튼 */}
                 <DeleteChunkModal deleteChunk={deleteChunk} />
               </MenuItem>
             </Menu>
@@ -210,7 +275,7 @@ function ChunkForm({
         className={classes.media}
         image={thumbnail}
         title={link_title}
-        onClick={moveLinkEvent}
+        onClick={() => windowOpen(link)}
       />
       <CardContent>
         <Typography variant="h5" color="textSecondary" component="p">
@@ -254,8 +319,91 @@ function ChunkForm({
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>description</Typography>
-          <Typography>{description}</Typography>
+          {/* REF 관련 링크 추가 버튼 */}
+          <MakeRelativeChunkModal
+            chunk_no={no}
+            section_no={section_no}
+            makeRelativeChunkRedux={makeRelativeChunkRedux}
+          />
+          {description === '' || (
+            <>
+              <Typography paragraph> - 설명 - </Typography>
+              <Typography>{description}</Typography>
+              <hr />
+            </>
+          )}
+          {/* REF 관련 링크 형태 */}
+          {relative_chunk_list[0] !== undefined && (
+            <Typography paragraph> - 관련 링크 - </Typography>
+          )}
+          {relative_chunk_list.map(relative_chunk => (
+            <Box
+              key={relative_chunk.no}
+              className={classes.linkBox}
+              onClick={() => windowOpen(relative_chunk.link)}
+            >
+              <div
+                className={classes.linkBox__link}
+                style={{
+                  backgroundImage: `url(
+                  ${relative_chunk.thumbnail}
+                )`,
+                }}
+              />
+              <Typography variant="h6" color="textSecondary" component="div">
+                제목: {relative_chunk.title}
+              </Typography>
+              <Typography variant="h6" color="textSecondary" component="div">
+                설명: {relative_chunk.description}
+              </Typography>
+              {/* REF 관련 청크 삭제 버튼 */}
+              <DeleteRelativeChunkModal
+                chunk_no={relative_chunk.no}
+                section_no={section_no}
+                group_num={no}
+                deleteRelativeChunkRedux={deleteRelativeChunkRedux}
+              />
+              <hr />
+            </Box>
+          ))}
+          {/* REF 댓글 대댓글 형태 */}
+          <Typography paragraph> - 댓글 대댓글 형태 - </Typography>
+          {/* REF 댓글 */}
+          <Box className={classes.commentBox}>
+            <Avatar
+              src="https://moaka-s3.s3.ap-northeast-2.amazonaws.com/logo/moaka_logo.png"
+              className={classes.commentAvatar}
+            />
+            <Typography variant="h6" color="textSecondary" component="span">
+              1234
+            </Typography>
+            <Box className={classes.commentIcon}>
+              <ChatIcon />
+            </Box>
+          </Box>
+          {/* REF 대댓글 */}
+          <Box className={classes.c_commentBox}>
+            <Avatar
+              src="https://moaka-s3.s3.ap-northeast-2.amazonaws.com/logo/moaka_logo.png"
+              className={classes.commentAvatar}
+            />
+            <Typography variant="h6" color="textSecondary" component="span">
+              4444444444
+            </Typography>
+          </Box>
+          <input
+            type="text"
+            name="comment"
+            className={classes.commentInput}
+            placeholder="대댓글을 입력해주세요."
+          />
+          {/* REF 댓글 입력 창 */}
+          <input
+            type="text"
+            name="comment"
+            className={classes.commentInput}
+            placeholder="댓글을 입력해주세요."
+          />
         </CardContent>
       </Collapse>
     </Card>
