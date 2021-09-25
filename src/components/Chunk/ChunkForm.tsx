@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -18,9 +18,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import ChatIcon from '@material-ui/icons/Chat';
 import {
   DeleteChunkModal,
+  DeleteCommentOfChunkModal,
   DeleteRelativeChunkModal,
   MakeRelativeChunkModal,
   UpdateChunkModal,
@@ -29,11 +29,13 @@ import {
   bookmarkActionType,
   chunkInfo,
   deleteChunkActionType,
+  deleteCommentActionType,
   deleteRelativeChunkActionType,
   likeActionType,
   relativeChunkInfo,
 } from '../../modules/section';
 import { Avatar, Box, CircularProgress } from '@material-ui/core';
+import { insertCommentOfChunkRequest } from '../../apis/comment/types';
 
 const cardStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -71,13 +73,18 @@ const cardStyles = makeStyles((theme: Theme) => ({
     marginTop: '1rem',
     display: 'flex',
     alignItems: 'center',
+    overflow: 'hidden',
+    wordBreak: 'break-word',
   },
   c_commentBox: {
     width: '100%',
+    position: 'relative',
     marginTop: '0.3rem',
     paddingLeft: '2rem',
     display: 'flex',
     alignItems: 'center',
+    overflow: 'hidden',
+    wordBreak: 'break-word',
   },
   commentIcon: {
     position: 'absolute',
@@ -112,6 +119,10 @@ type chunkFormProps = {
   deleteRelativeChunkRedux: (
     deleteRelativeChunkActionType: deleteRelativeChunkActionType,
   ) => void;
+  setCommentRedux: (commentInfo: insertCommentOfChunkRequest) => void;
+  deleteCommentRedux: (
+    deleteCommentActionType: deleteCommentActionType,
+  ) => void;
 };
 
 function ChunkForm({
@@ -125,6 +136,8 @@ function ChunkForm({
   deleteLikeRedux,
   makeRelativeChunkRedux,
   deleteRelativeChunkRedux,
+  setCommentRedux,
+  deleteCommentRedux,
 }: chunkFormProps) {
   const {
     no,
@@ -142,16 +155,20 @@ function ChunkForm({
     like_no,
     like_loading,
     relative_chunk_list,
+    comment_list,
+    comment_loading,
   } = chunk_info;
 
   const classes = cardStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  const [comment, setComment] = useState<string>('');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -209,12 +226,51 @@ function ChunkForm({
     deleteLikeRedux(likeActionType);
   };
 
-  function windowOpen(url: string) {
+  const setCommentEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(e.target.value);
+  };
+
+  const setMainCommentEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const commentInfo: insertCommentOfChunkRequest = {
+        chunk_no: no,
+        section_no: section_no,
+        group_num: 0,
+        content: comment,
+        layer: 0,
+      };
+
+      setCommentRedux(commentInfo);
+
+      setComment('');
+    }
+  };
+
+  const setSubCommentEvent = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    group_num: number,
+  ) => {
+    if (e.key === 'Enter') {
+      const commentInfo: insertCommentOfChunkRequest = {
+        chunk_no: no,
+        section_no: section_no,
+        group_num: group_num,
+        content: comment,
+        layer: 1,
+      };
+
+      setCommentRedux(commentInfo);
+
+      setComment('');
+    }
+  };
+
+  const windowOpen = (url: string) => {
     if (!url.match(/^https?:\/\//i)) {
       url = 'https://' + url;
     }
     return window.open(url);
-  }
+  };
 
   const ITEM_HEIGHT = 48;
 
@@ -337,13 +393,10 @@ function ChunkForm({
             <Typography paragraph> - 관련 링크 - </Typography>
           )}
           {relative_chunk_list.map(relative_chunk => (
-            <Box
-              key={relative_chunk.no}
-              className={classes.linkBox}
-              onClick={() => windowOpen(relative_chunk.link)}
-            >
+            <Box key={relative_chunk.no} className={classes.linkBox}>
               <div
                 className={classes.linkBox__link}
+                onClick={() => windowOpen(relative_chunk.link)}
                 style={{
                   backgroundImage: `url(
                   ${relative_chunk.thumbnail}
@@ -367,43 +420,84 @@ function ChunkForm({
             </Box>
           ))}
           {/* REF 댓글 대댓글 형태 */}
-          <Typography paragraph> - 댓글 대댓글 형태 - </Typography>
-          {/* REF 댓글 */}
-          <Box className={classes.commentBox}>
-            <Avatar
-              src="https://moaka-s3.s3.ap-northeast-2.amazonaws.com/logo/moaka_logo.png"
-              className={classes.commentAvatar}
-            />
-            <Typography variant="h6" color="textSecondary" component="span">
-              1234
-            </Typography>
-            <Box className={classes.commentIcon}>
-              <ChatIcon />
-            </Box>
-          </Box>
-          {/* REF 대댓글 */}
-          <Box className={classes.c_commentBox}>
-            <Avatar
-              src="https://moaka-s3.s3.ap-northeast-2.amazonaws.com/logo/moaka_logo.png"
-              className={classes.commentAvatar}
-            />
-            <Typography variant="h6" color="textSecondary" component="span">
-              4444444444
-            </Typography>
-          </Box>
-          <input
-            type="text"
-            name="comment"
-            className={classes.commentInput}
-            placeholder="대댓글을 입력해주세요."
-          />
+          {comment_list[0] !== undefined && (
+            <Typography paragraph> - 댓글 대댓글 형태 - </Typography>
+          )}
+          {comment_list.map(comment =>
+            comment.layer === 0 ? (
+              // REF 댓글
+              <div key={comment.no}>
+                <Box className={classes.commentBox}>
+                  <Avatar
+                    src={comment.profile}
+                    className={classes.commentAvatar}
+                  />
+                  <Typography
+                    variant="h6"
+                    color="textSecondary"
+                    component="span"
+                  >
+                    {comment.content} - {comment.name}
+                  </Typography>
+                  {/* 댓글 삭제 */}
+                  <DeleteCommentOfChunkModal
+                    section_no={section_no}
+                    chunk_no={no}
+                    comment_no={comment.no}
+                    deleteCommentRedux={deleteCommentRedux}
+                    layer={0}
+                  />
+                </Box>
+                <input
+                  type="text"
+                  name="comment"
+                  onKeyPress={e => setSubCommentEvent(e, comment.group_num)}
+                  onChange={setCommentEvent}
+                  className={classes.commentInput}
+                  placeholder="대댓글을 입력해주세요."
+                />
+              </div>
+            ) : (
+              // REF 대댓글
+              <div key={comment.no}>
+                <Box className={classes.c_commentBox}>
+                  <Avatar
+                    src={comment.profile}
+                    className={classes.commentAvatar}
+                  />
+                  <Typography
+                    variant="h6"
+                    color="textSecondary"
+                    component="span"
+                  >
+                    {comment.content} - {comment.name}
+                  </Typography>
+                  {/* 대댓글 삭제 */}
+                  <DeleteCommentOfChunkModal
+                    section_no={section_no}
+                    chunk_no={no}
+                    comment_no={comment.no}
+                    layer={1}
+                    deleteCommentRedux={deleteCommentRedux}
+                  />
+                </Box>
+              </div>
+            ),
+          )}
           {/* REF 댓글 입력 창 */}
-          <input
-            type="text"
-            name="comment"
-            className={classes.commentInput}
-            placeholder="댓글을 입력해주세요."
-          />
+          {comment_loading ? (
+            <CircularProgress />
+          ) : (
+            <input
+              type="text"
+              name="comment"
+              id="comment"
+              onChange={setCommentEvent}
+              onKeyPress={setMainCommentEvent}
+              className={classes.commentInput}
+              placeholder="댓글을 입력해주세요."
+            />
+          )}
         </CardContent>
       </Collapse>
     </Card>

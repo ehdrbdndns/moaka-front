@@ -68,11 +68,31 @@ function section(
       );
       const _data = [...state.data];
       _data[section_index].chunk_list[chunk_index].like_loading = true;
+
       return {
         ...state,
         data: _data,
       };
     }
+    case type.SET_COMMENT: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.chunk_no,
+      );
+      const _data = [...state.data];
+      _data[section_index].chunk_list[chunk_index].comment_loading = true;
+
+      return {
+        ...state,
+        data: _data,
+      };
+    }
+    case type.DELETE_COMMENT:
+      return {
+        ...state,
+      };
     case type.UPDATE_SECTION_SUCCESS: {
       const index = state.data.findIndex(
         section => section.no === action.payload.no,
@@ -232,6 +252,64 @@ function section(
         data: _data,
       };
     }
+    case type.SET_COMMENT_SUCCESS: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.chunk_no,
+      );
+      const comment_index =
+        state.data[section_index].chunk_list[
+          chunk_index
+        ].comment_list.findIndex(
+          comment => comment.no === action.payload.group_num,
+        ) + 1;
+
+      const _data = [...state.data];
+      _data[section_index].chunk_list[chunk_index].comment_loading = false;
+      _data[section_index].chunk_list[chunk_index].comment_list.splice(
+        comment_index,
+        0,
+        action.payload,
+      );
+
+      return {
+        ...state,
+        data: _data,
+      };
+    }
+    case type.DELETE_COMMENT_SUCCESS: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.chunk_no,
+      );
+
+      const _data = [...state.data];
+
+      if (action.payload.layer === 0) {
+        // 댓글
+        _data[section_index].chunk_list[chunk_index].comment_list = _data[
+          section_index
+        ].chunk_list[chunk_index].comment_list.filter(
+          comment => comment.group_num !== action.payload.comment_no,
+        );
+      } else {
+        // 대댓글
+        _data[section_index].chunk_list[chunk_index].comment_list = _data[
+          section_index
+        ].chunk_list[chunk_index].comment_list.filter(
+          comment => comment.no !== action.payload.comment_no,
+        );
+      }
+
+      return {
+        ...state,
+        data: _data,
+      };
+    }
     case type.MAKE_SECTION_ERROR:
     case type.DELETE_SECTION_ERROR:
     case type.GET_SECTION_ERROR:
@@ -245,6 +323,8 @@ function section(
     case type.MAKE_RELATIVE_CHUNK_ERROR:
     case type.MAKE_RELATIVE_CHUNK_NOAUTH:
     case type.SET_BOOKMARK_ERROR:
+    case type.SET_COMMENT_ERROR:
+    case type.DELETE_COMMENT_ERROR:
       return {
         ...state,
         loading: false,

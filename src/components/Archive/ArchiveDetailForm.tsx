@@ -8,6 +8,7 @@ import {
   bookmarkActionType,
   chunkInfo,
   deleteChunkActionType,
+  deleteCommentActionType,
   deleteRelativeChunkActionType,
   likeActionType,
   relativeChunkInfo,
@@ -21,6 +22,7 @@ import {
 import { MakeChunkModal } from '../Chunk/ChunkModal';
 import ChunkForm from '../Chunk/ChunkForm';
 import { userInfo } from '../../modules/auth';
+import { insertCommentOfChunkRequest } from '../../apis/comment/types';
 
 const archiveDetailStyles = makeStyles(theme => ({
   toolbar: {
@@ -63,6 +65,10 @@ type ArchiveDetailProps = {
   deleteRelativeChunkRedux: (
     deleteRelativeChunkActionType: deleteRelativeChunkActionType,
   ) => void;
+  setCommentRedux: (commentInfo: insertCommentOfChunkRequest) => void;
+  deleteCommentRedux: (
+    deleteCommentActionType: deleteCommentActionType,
+  ) => void;
 };
 
 function ArchiveDetailForm({
@@ -85,6 +91,8 @@ function ArchiveDetailForm({
   deleteLikeRedux,
   makeRelativeChunkRedux,
   deleteRelativeChunkRedux,
+  setCommentRedux,
+  deleteCommentRedux,
 }: ArchiveDetailProps) {
   const classes = archiveDetailStyles();
 
@@ -152,6 +160,8 @@ function ArchiveDetailForm({
                         deleteLikeRedux={deleteLikeRedux}
                         makeRelativeChunkRedux={makeRelativeChunkRedux}
                         deleteRelativeChunkRedux={deleteRelativeChunkRedux}
+                        setCommentRedux={setCommentRedux}
+                        deleteCommentRedux={deleteCommentRedux}
                       />
                     </Grid>
                   ))
