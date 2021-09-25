@@ -13,10 +13,12 @@ import { closeTagEvent, Tag_A as TagAComponent } from '../Tag/Tag_A';
 import '../../styles/main.scss';
 import {
   chunkInfo,
+  deleteCommentActionType,
   deleteRelativeChunkActionType,
   relativeChunkInfo,
 } from '../../modules/section';
 import { useEffect } from 'react';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 const sectionBtnStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,6 +72,16 @@ const sectionBtnStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+
+type deleteCommentOfChunkModalProps = {
+  section_no: number;
+  chunk_no: number;
+  comment_no: number;
+  layer: number;
+  deleteCommentRedux: (
+    deleteCommentActionType: deleteCommentActionType,
+  ) => void;
+};
 
 type updateChunkModalProps = {
   chunk_no: number;
@@ -230,6 +242,8 @@ function UpdateChunkModal({
         like_loading: false,
         relative_chunk_list: relative_chunk_list,
         relative_chunk_loading: false,
+        comment_list: [],
+        comment_loading: false,
       };
 
       updateChunkRedux(chunkInfo);
@@ -340,6 +354,8 @@ function MakeChunkModal({
         like_loading: false,
         relative_chunk_list: [],
         relative_chunk_loading: false,
+        comment_list: [],
+        comment_loading: false,
       };
 
       makeChunkRedux(chunkInfo);
@@ -573,10 +589,78 @@ function DeleteRelativeChunkModal({
   );
 }
 
+function DeleteCommentOfChunkModal({
+  section_no,
+  chunk_no,
+  comment_no,
+  deleteCommentRedux,
+  layer,
+}: deleteCommentOfChunkModalProps) {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const sectionBtnClasses = sectionBtnStyles();
+
+  const deleteChunk = () => {
+    const deleteCommentActionType: deleteCommentActionType = {
+      chunk_no,
+      section_no,
+      comment_no,
+      layer,
+    };
+
+    deleteCommentRedux(deleteCommentActionType);
+    handleClose();
+  };
+
+  return (
+    <>
+      <div onClick={handleOpen} className={sectionBtnClasses.btn__box}>
+        <DeleteOutlineIcon />
+      </div>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={sectionBtnClasses.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className={sectionBtnClasses.paper}>
+            <h2 id="transition-modal-title">댓글 삭제</h2>
+            <p id="transition-modal-description">
+              정말 댓글을 삭제하시겠습니까?
+            </p>
+            <Button variant="contained" color="primary" onClick={deleteChunk}>
+              예
+            </Button>
+            <Button onClick={handleClose} variant="contained" color="secondary">
+              아니요
+            </Button>
+          </div>
+        </Fade>
+      </Modal>
+    </>
+  );
+}
+
 export {
   DeleteChunkModal,
   UpdateChunkModal,
   MakeChunkModal,
   MakeRelativeChunkModal,
   DeleteRelativeChunkModal,
+  DeleteCommentOfChunkModal,
 };

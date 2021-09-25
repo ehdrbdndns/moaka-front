@@ -21,6 +21,8 @@ import {
   deleteBookmark,
   deleteChunk,
   deleteChunkActionType,
+  deleteComment,
+  deleteCommentActionType,
   deleteLike,
   deleteRelativeChunk,
   deleteRelativeChunkActionType,
@@ -33,11 +35,13 @@ import {
   relativeChunkInfo,
   sectionInfo,
   setBookmark,
+  setComment,
   setLike,
   updateChunk,
   updateSection,
 } from '../modules/section';
 import queryString from 'query-string';
+import { insertCommentOfChunkRequest } from '../apis/comment/types';
 
 function ArchiveDetail() {
   const dispatch = useDispatch();
@@ -187,6 +191,20 @@ function ArchiveDetail() {
     [dispatch],
   );
 
+  const setCommentRedux = useCallback(
+    (commentInfo: insertCommentOfChunkRequest) => {
+      dispatch(setComment(commentInfo));
+    },
+    [dispatch],
+  );
+
+  const deleteCommentRedux = useCallback(
+    (deleteCommentActionType: deleteCommentActionType) => {
+      dispatch(deleteComment(deleteCommentActionType));
+    },
+    [dispatch],
+  );
+
   useEffect(() => {
     if (query.no !== null) {
       getArchiveRedux(+query.no);
@@ -240,6 +258,8 @@ function ArchiveDetail() {
         deleteLikeRedux={deleteLikeRedux}
         makeRelativeChunkRedux={makeRelativeChunkRedux}
         deleteRelativeChunkRedux={deleteRelativeChunkRedux}
+        setCommentRedux={setCommentRedux}
+        deleteCommentRedux={deleteCommentRedux}
       />
     </div>
   );

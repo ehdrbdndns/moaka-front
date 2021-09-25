@@ -76,8 +76,25 @@ export const DELETE_LIKE = 'section/DELETE_LIKE' as const;
 export const DELETE_LIKE_SUCCESS = 'section/DELETE_LIKE_SUCCESS' as const;
 export const DELETE_LIKE_ERROR = 'section/DELETE_LIKE_ERROR' as const;
 
+// REF 댓글 생성
+export const SET_COMMENT = 'section/SET_COMMENT' as const;
+export const SET_COMMENT_SUCCESS = 'section/SET_COMMENT_SUCCESS' as const;
+export const SET_COMMENT_ERROR = 'section/SET_COMMENT_ERROR' as const;
+
+// REF 댓글 삭제
+export const DELETE_COMMENT = 'section/DELETE_COMMENT' as const;
+export const DELETE_COMMENT_SUCCESS = 'section/DELETE_COMMENT_SUCCESS' as const;
+export const DELETE_COMMENT_ERROR = 'section/DELETE_COMMENT_ERROR' as const;
+
 // REF JWT 토큰 기한 만료
 export const EXPIRE_JWT_TOKEN = 'section/EXPIRE_JWT_TOKEN' as const;
+
+export type deleteCommentActionType = {
+  section_no: number;
+  chunk_no: number;
+  comment_no: number;
+  layer: number; // 0: 부모 댓글, 1: 자식 댓글
+};
 
 export type likeActionType = {
   like_no: number;
@@ -100,6 +117,20 @@ export type deleteRelativeChunkActionType = {
   section_no: number;
   chunk_no: number;
   group_num: number;
+};
+
+export type commentInfo = {
+  no: number;
+  section_no: number;
+  chunk_no: number;
+  user_no: number;
+  content: string;
+  content_order: number;
+  layer: number;
+  group_num: number;
+  profile: string;
+  name: string;
+  regdate: string;
 };
 
 export type relativeChunkInfo = {
@@ -132,6 +163,8 @@ export type chunkInfo = {
   like_loading: boolean;
   relative_chunk_list: Array<relativeChunkInfo>;
   relative_chunk_loading: boolean;
+  comment_list: Array<commentInfo>;
+  comment_loading: boolean;
 };
 
 export type sectionInfo = {

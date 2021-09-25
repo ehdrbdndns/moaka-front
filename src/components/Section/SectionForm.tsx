@@ -22,6 +22,7 @@ import {
   bookmarkActionType,
   chunkInfo,
   deleteChunkActionType,
+  deleteCommentActionType,
   deleteRelativeChunkActionType,
   likeActionType,
   relativeChunkInfo,
@@ -29,6 +30,7 @@ import {
 } from '../../modules/section';
 import { useEffect } from 'react';
 import { MakeChunkModal } from '../Chunk/ChunkModal';
+import { insertCommentOfChunkRequest } from '../../apis/comment/types';
 
 const barStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,6 +63,10 @@ type sectionFormProps = {
   deleteRelativeChunkRedux: (
     deleteRelativeChunkActionType: deleteRelativeChunkActionType,
   ) => void;
+  setCommentRedux: (commentInfo: insertCommentOfChunkRequest) => void;
+  deleteCommentRedux: (
+    deleteCommentActionType: deleteCommentActionType,
+  ) => void;
 };
 
 function SectionForm({
@@ -81,6 +87,8 @@ function SectionForm({
   deleteLikeRedux,
   makeRelativeChunkRedux,
   deleteRelativeChunkRedux,
+  setCommentRedux,
+  deleteCommentRedux,
 }: sectionFormProps) {
   const barClasses = barStyles();
 
@@ -148,6 +156,8 @@ function SectionForm({
                         deleteLikeRedux={deleteLikeRedux}
                         makeRelativeChunkRedux={makeRelativeChunkRedux}
                         deleteRelativeChunkRedux={deleteRelativeChunkRedux}
+                        setCommentRedux={setCommentRedux}
+                        deleteCommentRedux={deleteCommentRedux}
                       />
                     </Grid>
                   ))

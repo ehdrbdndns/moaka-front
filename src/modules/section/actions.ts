@@ -1,3 +1,5 @@
+import { deleteCommentActionType } from '.';
+import { insertCommentOfChunkRequest } from '../../apis/comment/types';
 import * as sagaType from './types';
 
 // TODO 액션 함수
@@ -58,4 +60,14 @@ export const setLike = (likeInfo: sagaType.likeActionType) => ({
 export const deleteLike = (likeInfo: sagaType.likeActionType) => ({
   type: sagaType.DELETE_LIKE,
   payload: likeInfo,
+});
+export const setComment = (commentInfo: insertCommentOfChunkRequest) => ({
+  type: sagaType.SET_COMMENT,
+  payload: commentInfo,
+});
+export const deleteComment = (
+  deleteCommentActionType: deleteCommentActionType,
+) => ({
+  type: sagaType.DELETE_COMMENT,
+  payload: deleteCommentActionType,
 });
