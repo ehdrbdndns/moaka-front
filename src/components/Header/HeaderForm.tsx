@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -27,6 +27,24 @@ function HeaderForm({
 }: MakeArchiveModalProps) {
   const classes = headerStyles();
   const { push } = useHistory();
+
+  const [search, setSearch] = useState('');
+
+  const setSearchEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const onKeyPressOfSearchBarEvent = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (e.key === 'Enter') {
+      push({
+        pathname: '/archive/search',
+        search: '?p=' + search,
+        state: { search: search },
+      });
+    }
+  };
 
   const moveHomeEvent = () => {
     push('/');
@@ -67,26 +85,22 @@ function HeaderForm({
         className={classes.toolbarSecondary}
       >
         {/* 검색 필드 추가 */}
-        <Paper component="form" className={classes.searchRoot}>
+        <Paper className={classes.searchRoot}>
           <InputBase
             className={classes.searchInput}
             placeholder="아카이브를 검색해 보세요."
+            value={search}
+            onChange={setSearchEvent}
+            onKeyPress={onKeyPressOfSearchBarEvent}
             inputProps={{ 'aria-label': 'search archives' }}
           />
-          <Link
-            to={{
-              pathname: '/archive/search',
-              state: {},
-            }}
+          <IconButton
+            id="search_icon"
+            className={classes.searchButton}
+            aria-label="search"
           >
-            <IconButton
-              type="submit"
-              className={classes.searchButton}
-              aria-label="search"
-            >
-              <SearchIcon />
-            </IconButton>
-          </Link>
+            <SearchIcon />
+          </IconButton>
         </Paper>
         {/* 아카이브 생성 */}
         <MakeArchiveModal

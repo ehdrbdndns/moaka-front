@@ -66,7 +66,9 @@ function ArchiveCardForm({ archive_info }: ArchiveCardProps) {
           </Typography>
         </CardContent>
         <div className={classes.controls}>
-          <Chip color="primary" label="123" size="small" clickable />
+          {archive_info.tag_list.map(tag => (
+            <Chip color="primary" label={tag} size="small" clickable />
+          ))}
         </div>
       </div>
       <CardMedia

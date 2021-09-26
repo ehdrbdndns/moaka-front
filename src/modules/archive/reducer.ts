@@ -14,6 +14,7 @@ function archive(
         error: null,
       };
     case type.GET_ARCHIVE:
+    case type.SEARCH_ARCHIVE:
       return {
         ...state,
         loading: true,
@@ -69,6 +70,7 @@ function archive(
         data: [...state.data, action.payload],
       };
     case type.GET_ARCHIVE_SUCCESS:
+    case type.SEARCH_ARCHIVE_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -115,6 +117,7 @@ function archive(
     case type.DELETE_ARCHIVE_ERROR:
     case type.SET_LIKE_ERROR:
     case type.DELETE_LIKE_ERROR:
+    case type.SEARCH_ARCHIVE_ERROR:
       return {
         ...state,
         loading: false,

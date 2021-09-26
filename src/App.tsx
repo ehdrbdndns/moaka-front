@@ -10,6 +10,7 @@ import ArchiveDetail from './containers/ArchiveDetail';
 import TEST from './containers/TEST';
 import Footer from './components/Footer/Footer';
 import Header from './containers/Header';
+import Search from './containers/Search';
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
         </Route>
         <Route path="/archive/detail">
           <ArchiveDetail />
+        </Route>
+        <Route path="/archive/search">
+          <Search />
         </Route>
         <Route path="/">
           <Home />

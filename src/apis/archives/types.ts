@@ -33,3 +33,9 @@ export type insertArchiveRequest = {
   };
   thumbnailFile: File;
 };
+
+export type retrieveArchiveBySearchResponse = {
+  isSuccess: boolean;
+  error: number;
+  archive_list: Array<archiveInfo>;
+};
