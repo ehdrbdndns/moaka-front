@@ -6,6 +6,7 @@ import {
   getGroupArchiveListResponse,
   insertArchiveRequest,
   insertArchiveResponse,
+  retrieveArchiveBySearchResponse,
 } from './types';
 
 export const insertArchive = async (
@@ -156,6 +157,38 @@ export const getArchive = async (
     .then(function (response) {
       result.isSuccess = true;
       result.archive = response.data.archive;
+    })
+    .catch(function (error) {
+      console.log(error.response);
+      result.isSuccess = false;
+      result.error = error.response.status;
+    });
+
+  return result;
+};
+
+export const retrieveArchiveBySearch = async (
+  param: string,
+): Promise<retrieveArchiveBySearchResponse> => {
+  const result: retrieveArchiveBySearchResponse = {
+    isSuccess: false,
+    error: 0,
+    archive_list: [],
+  };
+
+  const formData = new FormData();
+  formData.append('p', '%' + param + '%');
+
+  const token = localStorage.getItem('token');
+  await axios
+    .post(BASE_URL + '/retrieveArchiveBySearch', formData, {
+      headers: {
+        Bearer: token,
+      },
+    })
+    .then(function (response) {
+      result.isSuccess = response.data.isSuccess;
+      result.archive_list = response.data.archive_list;
     })
     .catch(function (error) {
       console.log(error.response);
