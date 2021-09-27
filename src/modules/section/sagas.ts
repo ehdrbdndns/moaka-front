@@ -26,6 +26,7 @@ import {
 } from '../../apis/section/types';
 import {
   deleteChunkResponse,
+  getChunkOfBookmarkResponse,
   makeChunkResponse,
   makeRelativeChunkResponse,
   updateChunkResponse,
@@ -38,7 +39,7 @@ import {
   deleteLikeResponse,
   insertLikeOfChunkResponse,
 } from '../../apis/like/types';
-import { deleteComment, deleteRelativeChunk, setComment } from '.';
+import { deleteComment, deleteRelativeChunk, sectionInfo, setComment } from '.';
 import {
   deleteCommentOfChunkResponse,
   insertCommentOfChunkResponse,
@@ -179,6 +180,35 @@ function* deleteSectionSaga(action: ReturnType<typeof deleteSection>) {
     console.log(error);
     yield put({
       type: sagaType.DELETE_SECTION_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
+function* getBookmarkChunkSaga() {
+  try {
+    const response: getChunkOfBookmarkResponse = yield call(
+      chunkAPI.getChunkOfBookmark,
+    );
+    const sectionInfo: sectionInfo = {
+      no: 0,
+      archive_no: 0,
+      title: '내 북마크 컨텐츠',
+      description: '',
+      tag_list: [],
+      chunk_list: response.chunk_list,
+      regdate: undefined,
+    };
+
+    yield put({
+      type: sagaType.GET_BOOKMARK_CHUNK_SUCCESS,
+      payload: sectionInfo,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.GET_BOOKMARK_CHUNK_ERROR,
       error: true,
       payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
     });
@@ -585,10 +615,6 @@ function* setCommentSaga(action: ReturnType<typeof setComment>) {
 
 function* deleteCommentSaga(action: ReturnType<typeof deleteComment>) {
   try {
-    console.log('payload');
-
-    console.log(action.payload);
-
     const response: deleteCommentOfChunkResponse = yield call(
       commentAPI.deleteCommentOfChunk,
       action.payload.comment_no,
@@ -644,4 +670,5 @@ export function* sectionSaga() {
   yield takeEvery(sagaType.DELETE_RELATIVE_CHUNK, deleteRelativeChunkSaga);
   yield takeLatest(sagaType.SET_COMMENT, setCommentSaga);
   yield takeEvery(sagaType.DELETE_COMMENT, deleteCommentSaga);
+  yield takeEvery(sagaType.GET_BOOKMARK_CHUNK, getBookmarkChunkSaga);
 }

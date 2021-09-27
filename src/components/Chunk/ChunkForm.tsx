@@ -107,6 +107,7 @@ const cardStyles = makeStyles((theme: Theme) => ({
 }));
 
 type chunkFormProps = {
+  section_no: number;
   chunk_info: chunkInfo;
   section_tag_list: string[];
   deleteChunkRedux: (deleteChunkActionType: deleteChunkActionType) => void;
@@ -126,6 +127,7 @@ type chunkFormProps = {
 };
 
 function ChunkForm({
+  section_no,
   chunk_info,
   section_tag_list,
   deleteChunkRedux,
@@ -141,7 +143,6 @@ function ChunkForm({
 }: chunkFormProps) {
   const {
     no,
-    section_no,
     title,
     thumbnail,
     link,

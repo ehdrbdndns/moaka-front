@@ -1,3 +1,11 @@
+import { chunkInfo } from '../../modules/section';
+
+export type getChunkOfBookmarkResponse = {
+  isSuccess: boolean;
+  error: number;
+  chunk_list: Array<chunkInfo>;
+};
+
 export type deleteChunkResponse = {
   isSuccess: boolean;
   error: number;

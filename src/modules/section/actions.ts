@@ -19,6 +19,9 @@ export const updateSection = (sectionInfo: sagaType.sectionInfo) => ({
   type: sagaType.UPDATE_SECTION,
   payload: sectionInfo,
 });
+export const getBookmarkChunk = () => ({
+  type: sagaType.GET_BOOKMARK_CHUNK,
+});
 export const deleteChunk = (
   deleteChunkInfo: sagaType.deleteChunkActionType,
 ) => ({

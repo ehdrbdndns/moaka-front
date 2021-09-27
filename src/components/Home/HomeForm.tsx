@@ -3,12 +3,22 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import ArchiveCardForm from '../Archive/ArchiveCardForm';
 import { Box, CircularProgress, Grid } from '@material-ui/core';
 import { archiveInfo } from '../../modules/archive/types';
 import { useHistory } from 'react-router';
+import {
+  bookmarkActionType,
+  chunkInfo,
+  deleteChunkActionType,
+  deleteCommentActionType,
+  deleteRelativeChunkActionType,
+  likeActionType,
+  relativeChunkInfo,
+  sectionInfo,
+} from '../../modules/section';
+import { insertCommentOfChunkRequest } from '../../apis/comment/types';
+import ChunkForm from '../Chunk/ChunkForm';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,22 +35,44 @@ type HomeFromProps = {
   loading: boolean;
   error: string | null;
   archive_info_data: Array<archiveInfo>;
-  getHomeArchievListRedux: () => void;
+  section_list: Array<sectionInfo>;
+  section_loading: boolean;
+  deleteChunkRedux: (deleteChunkActionType: deleteChunkActionType) => void;
+  updateChunkRedux: (chunkInfo: chunkInfo) => void;
+  setBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
+  deleteBookmarkRedux: (bookmarkActionType: bookmarkActionType) => void;
+  setLikeRedux: (likeActionType: likeActionType) => void;
+  deleteLikeRedux: (likeActionType: likeActionType) => void;
+  makeRelativeChunkRedux: (relativeChunkInfo: relativeChunkInfo) => void;
+  deleteRelativeChunkRedux: (
+    deleteRelativeChunkActionType: deleteRelativeChunkActionType,
+  ) => void;
+  setCommentRedux: (commentInfo: insertCommentOfChunkRequest) => void;
+  deleteCommentRedux: (
+    deleteCommentActionType: deleteCommentActionType,
+  ) => void;
 };
 
 function HomeForm({
   loading,
   error,
   archive_info_data,
-  getHomeArchievListRedux,
+  section_loading,
+  section_list,
+  deleteChunkRedux,
+  updateChunkRedux,
+  setBookmarkRedux,
+  deleteBookmarkRedux,
+  setLikeRedux,
+  deleteLikeRedux,
+  makeRelativeChunkRedux,
+  deleteRelativeChunkRedux,
+  setCommentRedux,
+  deleteCommentRedux,
 }: HomeFromProps) {
   const classes = useStyles();
 
   const { push } = useHistory();
-
-  useEffect(() => {
-    getHomeArchievListRedux();
-  }, [getHomeArchievListRedux]);
 
   useEffect(() => {
     if (error === '404') {
@@ -53,14 +85,6 @@ function HomeForm({
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar variant="dense">
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" color="inherit">
             TOP 3 추천 아카이브
           </Typography>
@@ -84,14 +108,6 @@ function HomeForm({
       </Box>
       <AppBar position="static">
         <Toolbar variant="dense">
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" color="inherit">
             내 북마크 아카이브
           </Typography>
@@ -115,14 +131,6 @@ function HomeForm({
       </Box>
       <AppBar position="static">
         <Toolbar variant="dense">
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" color="inherit">
             내 소속 관련 아카이브
           </Typography>
@@ -144,21 +152,48 @@ function HomeForm({
           </Grid>
         )}
       </Box>
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" color="inherit">
-            내 북마크 콘텐츠
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      {section_loading ||
+        section_list.map(section => (
+          <div key={section.no}>
+            <AppBar position="static">
+              <Toolbar variant="dense">
+                <Typography variant="h6" color="inherit">
+                  {section.title}
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <Box my={2}>
+              <Grid container spacing={2}>
+                {section.chunk_list?.length !== 0 ? (
+                  section.chunk_list?.map(chunk => (
+                    <Grid key={chunk.no} item lg={2} md={3} sm={4} xs={6}>
+                      {/* 청크 카드 */}
+                      <ChunkForm
+                        chunk_info={chunk}
+                        section_no={section.no || 0}
+                        section_tag_list={section.tag_list}
+                        deleteChunkRedux={deleteChunkRedux}
+                        updateChunkRedux={updateChunkRedux}
+                        setBookmarkRedux={setBookmarkRedux}
+                        deleteBookmarkRedux={deleteBookmarkRedux}
+                        setLikeRedux={setLikeRedux}
+                        deleteLikeRedux={deleteLikeRedux}
+                        makeRelativeChunkRedux={makeRelativeChunkRedux}
+                        deleteRelativeChunkRedux={deleteRelativeChunkRedux}
+                        setCommentRedux={setCommentRedux}
+                        deleteCommentRedux={deleteCommentRedux}
+                      />
+                    </Grid>
+                  ))
+                ) : (
+                  <Typography variant="h1" color="textSecondary" align="center">
+                    정보가 존재하지 않습니다.
+                  </Typography>
+                )}
+              </Grid>
+            </Box>
+          </div>
+        ))}
     </div>
   );
 }
