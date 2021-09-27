@@ -6,6 +6,18 @@ export type getGroupArchiveListResponse = {
   archive_list: Array<archiveInfo>;
 };
 
+export type getBookmarkArchiveListResponse = {
+  isSuccess: boolean;
+  error: number;
+  archive_list: Array<archiveInfo>;
+};
+
+export type getTopArchiveListResponse = {
+  isSuccess: boolean;
+  error: number;
+  archive_list: Array<archiveInfo>;
+};
+
 export type getArchiveResponse = {
   isSuccess: boolean;
   error: number;

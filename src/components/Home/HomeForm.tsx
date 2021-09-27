@@ -25,22 +25,22 @@ type HomeFromProps = {
   loading: boolean;
   error: string | null;
   archive_info_data: Array<archiveInfo>;
-  getGroupArchiveListRedux: () => void;
+  getHomeArchievListRedux: () => void;
 };
 
 function HomeForm({
   loading,
   error,
   archive_info_data,
-  getGroupArchiveListRedux,
+  getHomeArchievListRedux,
 }: HomeFromProps) {
   const classes = useStyles();
 
   const { push } = useHistory();
 
   useEffect(() => {
-    getGroupArchiveListRedux();
-  }, [getGroupArchiveListRedux]);
+    getHomeArchievListRedux();
+  }, [getHomeArchievListRedux]);
 
   useEffect(() => {
     if (error === '404') {
@@ -62,6 +62,68 @@ function HomeForm({
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit">
+            TOP 3 추천 아카이브
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box my={2}>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <Grid container spacing={3}>
+            {archive_info_data.map(
+              archive =>
+                archive.type === 'top' && (
+                  <Grid key={archive.no} item lg={3} sm={6} xs={12}>
+                    <ArchiveCardForm archive_info={archive} />
+                  </Grid>
+                ),
+            )}
+          </Grid>
+        )}
+      </Box>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" color="inherit">
+            내 북마크 아카이브
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box my={2}>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <Grid container spacing={3}>
+            {archive_info_data.map(
+              archive =>
+                archive.type === 'bookmark' && (
+                  <Grid key={archive.no} item lg={3} sm={6} xs={12}>
+                    <ArchiveCardForm archive_info={archive} />
+                  </Grid>
+                ),
+            )}
+          </Grid>
+        )}
+      </Box>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" color="inherit">
             내 소속 관련 아카이브
           </Typography>
         </Toolbar>
@@ -71,14 +133,32 @@ function HomeForm({
           <CircularProgress />
         ) : (
           <Grid container spacing={3}>
-            {archive_info_data.map(archive => (
-              <Grid key={archive.no} item lg={3} sm={6} xs={12}>
-                <ArchiveCardForm archive_info={archive} />
-              </Grid>
-            ))}
+            {archive_info_data.map(
+              archive =>
+                archive.type === 'group' && (
+                  <Grid key={archive.no} item lg={3} sm={6} xs={12}>
+                    <ArchiveCardForm archive_info={archive} />
+                  </Grid>
+                ),
+            )}
           </Grid>
         )}
       </Box>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" color="inherit">
+            내 북마크 콘텐츠
+          </Typography>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }

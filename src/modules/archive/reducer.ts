@@ -13,6 +13,13 @@ function archive(
         data: [...state.data],
         error: null,
       };
+    case type.GET_HOME_ARCHIVE_LIST:
+      return {
+        ...state,
+        loading: true,
+        data: [],
+        error: null,
+      };
     case type.GET_ARCHIVE:
     case type.SEARCH_ARCHIVE:
       return {
@@ -57,6 +64,7 @@ function archive(
         data: _data,
       };
     }
+    case type.GET_HOME_ARCHIVE_LIST_SUCCESS:
     case type.GET_GROUP_ARCHIVE_LIST_SUCCESS:
       return {
         ...state,
@@ -112,6 +120,7 @@ function archive(
         data: _data,
       };
     }
+    case type.GET_HOME_ARCHIVE_LIST_ERROR:
     case type.GET_GROUP_ARCHIVE_LIST_ERROR:
     case type.GET_ARCHIVE_ERROR:
     case type.DELETE_ARCHIVE_ERROR:

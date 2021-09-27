@@ -9,6 +9,9 @@ export const insertArchive = (insertArchive: insertArchiveRequest) => ({
 export const getGroupArchiveList = () => ({
   type: sagaType.GET_GROUP_ARCHIVE_LIST,
 });
+export const getHomeArchiveList = () => ({
+  type: sagaType.GET_HOME_ARCHIVE_LIST,
+});
 export const getArchive = (archive_no: number) => ({
   type: sagaType.GET_ARCHIVE,
   payload: archive_no,

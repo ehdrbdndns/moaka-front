@@ -3,7 +3,9 @@ import { BASE_URL } from '../utils';
 import {
   deleteArchiveResponse,
   getArchiveResponse,
+  getBookmarkArchiveListResponse,
   getGroupArchiveListResponse,
+  getTopArchiveListResponse,
   insertArchiveRequest,
   insertArchiveResponse,
   retrieveArchiveBySearchResponse,
@@ -29,6 +31,7 @@ export const insertArchive = async (
       bookmark_loading: false,
       like_no: 0,
       like_loading: false,
+      type: '',
     },
   };
 
@@ -73,7 +76,7 @@ export const getGroupArchiveList =
 
     const token = localStorage.getItem('token');
     await axios
-      .post(BASE_URL + '/user/retrieveArchiveFromGroup', null, {
+      .post(BASE_URL + '/user/retrieveArchiveOfGroupByUserNo', null, {
         headers: {
           Bearer: token,
         },
@@ -90,6 +93,94 @@ export const getGroupArchiveList =
 
     return result;
   };
+
+export const getBookmarkArchiveList =
+  async (): Promise<getBookmarkArchiveListResponse> => {
+    const result: getBookmarkArchiveListResponse = {
+      isSuccess: false,
+      error: 0,
+      archive_list: [],
+    };
+
+    const token = localStorage.getItem('token');
+    await axios
+      .post(BASE_URL + '/user/retrieveArchiveOfBookmarkByUserNo', null, {
+        headers: {
+          Bearer: token,
+        },
+      })
+      .then(function (response) {
+        result.isSuccess = true;
+        result.archive_list = response.data.archive_list;
+      })
+      .catch(function (error) {
+        console.log(error.response);
+        result.isSuccess = false;
+        result.error = error.response.status;
+      });
+
+    return result;
+  };
+
+export const getTopArchiveList =
+  async (): Promise<getTopArchiveListResponse> => {
+    const result: getTopArchiveListResponse = {
+      isSuccess: false,
+      error: 0,
+      archive_list: [],
+    };
+
+    const token = localStorage.getItem('token');
+    await axios
+      .post(BASE_URL + '/retrieveArchiveOfTop', null, {
+        headers: {
+          Bearer: token,
+        },
+      })
+      .then(function (response) {
+        result.isSuccess = true;
+        result.archive_list = response.data.archive_list;
+      })
+      .catch(function (error) {
+        console.log(error.response);
+        result.isSuccess = false;
+        result.error = error.response.status;
+      });
+
+    return result;
+  };
+
+export const retrieveArchiveBySearch = async (
+  param: string,
+): Promise<retrieveArchiveBySearchResponse> => {
+  const result: retrieveArchiveBySearchResponse = {
+    isSuccess: false,
+    error: 0,
+    archive_list: [],
+  };
+
+  const formData = new FormData();
+  formData.append('p', '%' + param + '%');
+
+  const token = localStorage.getItem('token');
+  await axios
+    .post(BASE_URL + '/retrieveArchiveBySearch', formData, {
+      headers: {
+        Bearer: token,
+      },
+    })
+    .then(function (response) {
+      result.isSuccess = response.data.isSuccess;
+      result.archive_list = response.data.archive_list;
+    })
+    .catch(function (error) {
+      console.log(error.response);
+      result.isSuccess = false;
+      result.error = error.response.status;
+    });
+
+  return result;
+};
 
 export const deleteArchive = async (
   archive_no: number,
@@ -141,6 +232,7 @@ export const getArchive = async (
       bookmark_loading: false,
       like_no: 0,
       like_loading: false,
+      type: '',
     },
   };
 
@@ -157,38 +249,6 @@ export const getArchive = async (
     .then(function (response) {
       result.isSuccess = true;
       result.archive = response.data.archive;
-    })
-    .catch(function (error) {
-      console.log(error.response);
-      result.isSuccess = false;
-      result.error = error.response.status;
-    });
-
-  return result;
-};
-
-export const retrieveArchiveBySearch = async (
-  param: string,
-): Promise<retrieveArchiveBySearchResponse> => {
-  const result: retrieveArchiveBySearchResponse = {
-    isSuccess: false,
-    error: 0,
-    archive_list: [],
-  };
-
-  const formData = new FormData();
-  formData.append('p', '%' + param + '%');
-
-  const token = localStorage.getItem('token');
-  await axios
-    .post(BASE_URL + '/retrieveArchiveBySearch', formData, {
-      headers: {
-        Bearer: token,
-      },
-    })
-    .then(function (response) {
-      result.isSuccess = response.data.isSuccess;
-      result.archive_list = response.data.archive_list;
     })
     .catch(function (error) {
       console.log(error.response);

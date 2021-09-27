@@ -2,7 +2,9 @@ import { put, call, takeLatest, takeEvery } from 'redux-saga/effects';
 import {
   deleteArchiveResponse,
   getArchiveResponse,
+  getBookmarkArchiveListResponse,
   getGroupArchiveListResponse,
+  getTopArchiveListResponse,
   insertArchiveResponse,
   retrieveArchiveBySearchResponse,
 } from '../../apis/archives/types';
@@ -57,6 +59,41 @@ function* getGroupArchiveListSaga() {
     console.log(error);
     yield put({
       type: sagaType.GET_GROUP_ARCHIVE_LIST_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
+function* getHomeArchiveListSaga() {
+  try {
+    let archive_list: archiveInfo[] = [];
+
+    // Group Archive List 가져오기
+    const group_archive_response: getGroupArchiveListResponse = yield call(
+      archiveAPI.getGroupArchiveList,
+    );
+    archive_list = archive_list.concat(group_archive_response.archive_list);
+
+    // TOP Archive List 가져오기
+    const top_archive_response: getTopArchiveListResponse = yield call(
+      archiveAPI.getTopArchiveList,
+    );
+    archive_list = archive_list.concat(top_archive_response.archive_list);
+
+    // Bookmark Archive List 가져오기
+    const bookmark_archive_response: getBookmarkArchiveListResponse =
+      yield call(archiveAPI.getBookmarkArchiveList);
+    archive_list = archive_list.concat(bookmark_archive_response.archive_list);
+
+    yield put({
+      type: sagaType.GET_HOME_ARCHIVE_LIST_SUCCESS,
+      payload: archive_list,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.GET_HOME_ARCHIVE_LIST_ERROR,
       error: true,
       payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
     });
@@ -346,4 +383,5 @@ export function* archiveSaga() {
   yield takeLatest(sagaType.DELETE_ARCHIVE, deleteArchiveSaga);
   yield takeLatest(sagaType.INSERT_ARCHIVE, insertArchiveSaga);
   yield takeEvery(sagaType.SEARCH_ARCHIVE, searchArchiveSaga);
+  yield takeEvery(sagaType.GET_HOME_ARCHIVE_LIST, getHomeArchiveListSaga);
 }

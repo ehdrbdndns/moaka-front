@@ -1,4 +1,11 @@
 // TODO 액션 타입 설정
+// REF 홈 페이지 아카이브 리스트
+export const GET_HOME_ARCHIVE_LIST = 'archive/GET_HOME_ARCHIVE_LIST' as const;
+export const GET_HOME_ARCHIVE_LIST_SUCCESS =
+  'archive/GET_HOME_ARCHIVE_LIST_SUCCESS' as const;
+export const GET_HOME_ARCHIVE_LIST_ERROR =
+  'archive/GET_HOME_ARCHIVE_LIST_ERROR' as const;
+
 //  REF 소속 아카이브 리스트
 export const GET_GROUP_ARCHIVE_LIST = 'archive/GET_GROUP_ARCHIVE_LIST' as const;
 export const GET_GROUP_ARCHIVE_LIST_SUCCESS =
@@ -74,6 +81,7 @@ export type archiveInfo = {
   bookmark_loading: boolean;
   like_no: number;
   like_loading: boolean;
+  type: string; // 인기, 그룹, 북마크, 관심사의 아카이브
 };
 
 export type initialState = {
