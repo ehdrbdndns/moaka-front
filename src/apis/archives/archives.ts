@@ -56,6 +56,7 @@ export const insertArchive = async (
     .then(function (response) {
       result.isSuccess = response.data.isSuccess;
       result.archive = response.data.archive;
+      result.archive.type = 'group';
     })
     .catch(function (error) {
       console.log(error.response);

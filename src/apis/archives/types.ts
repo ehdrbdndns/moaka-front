@@ -42,6 +42,7 @@ export type insertArchiveRequest = {
     tag_list: string[];
     privacy_type: string;
     group_no_list: number[];
+    category: string;
   };
   thumbnailFile: File;
 };

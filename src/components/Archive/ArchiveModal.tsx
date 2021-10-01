@@ -22,11 +22,13 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   IconButton,
+  MenuItem,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import { userListType } from '../../apis/user/types';
 import { insertArchiveRequest } from '../../apis/archives/types';
+import { InputLabel, Select, SelectChangeEvent } from '@mui/material';
 
 const ArchiveBtnStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -105,6 +107,7 @@ function MakeArchiveModal({
 
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [category, setCategory] = useState<string>('개발');
   const [thumbnailFile, setThumbnailFile] = useState<File>();
   // 아카이브 태그
   const tagId = useRef<number>(0);
@@ -118,6 +121,8 @@ function MakeArchiveModal({
   const [groupUserList, setGroupUserList] = useState<Array<userListType>>([]);
   // 이미 그룹에 초대되어있는지 확인
   const isExistUser = useRef<boolean>(false);
+
+  const categoryList = ['개발', '기획', '디자인', '마케팅', '스타트업'];
 
   useEffect(() => {
     search_user_list &&
@@ -135,6 +140,10 @@ function MakeArchiveModal({
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const setCategoryEvent = (e: SelectChangeEvent) => {
+    setCategory(e.target.value as string);
   };
 
   const setTitleEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -221,22 +230,23 @@ function MakeArchiveModal({
           tag_list: tag_list,
           group_no_list: group_list,
           privacy_type: privacy,
+          category: category,
         },
         thumbnailFile: thumbnailFile,
       };
 
       insertArchiveRedux(insertArchiveRequest);
+
+      handleClose();
+
+      setTitle('');
+      setDescription('');
+      setTagList([]);
+      setGroupUserList([]);
+      setThumbnailFile(undefined);
     } else {
       alert('저장소 이미지를 설정해주세요.');
     }
-
-    setTitle('');
-    setDescription('');
-    setTagList([]);
-    setGroupUserList([]);
-    setThumbnailFile(undefined);
-
-    handleClose();
   };
 
   return (
@@ -300,6 +310,20 @@ function MakeArchiveModal({
                     </Box>
                   ))}
               </Box>
+              <FormControl fullWidth className={archiveBtnClasses.input}>
+                <InputLabel id="demo-simple-select-label">카테고리</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={category}
+                  label="카테고리"
+                  onChange={setCategoryEvent}
+                >
+                  {categoryList.map(category => (
+                    <MenuItem value={category}>{category}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               <TextField
                 label="태그"
                 variant="outlined"

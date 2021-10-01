@@ -106,6 +106,10 @@ function* insertArchiveSaga(action: ReturnType<typeof insertArchive>) {
       archiveAPI.insertArchive,
       action.payload,
     );
+
+    console.log('response');
+    console.log(response);
+
     if (response.isSuccess) {
       yield put({
         type: sagaType.INSERT_ARCHIVE_SUCCESS,
