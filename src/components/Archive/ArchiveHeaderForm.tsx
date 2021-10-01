@@ -64,23 +64,16 @@ const archiveHeaderStyles = makeStyles(theme => ({
 type ArchiveHeaderProps = {
   archive_info: archiveInfo;
   user_info: userInfo;
-  loading: boolean;
-  error: string;
-  getArchiveRedux: (archive_no: number) => void;
   setArchiveLikeRedux: (likeInfo: archiveLikeActionType) => void;
   deleteArchiveLikeRedux: (likeInfo: archiveLikeActionType) => void;
   setArchiveBookmarkRedux: (bookmarkInfo: archiveBookmarkActionType) => void;
   deleteArchiveBookmarkRedux: (bookmarkInfo: archiveBookmarkActionType) => void;
-  setUserRedux: () => void;
   deleteArchiveRedux: (archive_no: number) => void;
 };
 
 function ArchiveHeaderForm({
   archive_info,
   user_info,
-  loading,
-  error,
-  getArchiveRedux,
   setArchiveLikeRedux,
   deleteArchiveLikeRedux,
   setArchiveBookmarkRedux,

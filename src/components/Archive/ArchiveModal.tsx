@@ -197,7 +197,9 @@ function MakeArchiveModal({
     );
   };
 
-  const setThunmbnailFile = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const setThumbnailFileEvent = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
     const files = e.target.files && Array.from(e.target.files)[0];
     files && setThumbnailFile(files);
   };
@@ -311,7 +313,7 @@ function MakeArchiveModal({
                 <input
                   type="file"
                   id="thumbnailFile"
-                  onChange={setThunmbnailFile}
+                  onChange={setThumbnailFileEvent}
                   className="px-mb-12"
                 />
               </Box>

@@ -14,7 +14,6 @@ import {
   setArchiveBookmark,
   setArchiveLike,
 } from '../modules/archive';
-import { setUser } from '../modules/auth';
 import {
   bookmarkActionType,
   chunkInfo,
@@ -53,10 +52,6 @@ function ArchiveDetail() {
   const query = queryString.parse(location.search);
 
   const { push } = useHistory();
-
-  const setUserRedux = useCallback(() => {
-    dispatch(setUser());
-  }, [dispatch]);
 
   const deleteArchiveRedux = useCallback(
     (archive_no: number) => {
@@ -209,9 +204,8 @@ function ArchiveDetail() {
     if (query.no !== null) {
       getArchiveRedux(+query.no);
       getSectionRedux(+query.no);
-      setUserRedux();
     }
-  }, [getArchiveRedux, getSectionRedux, setUserRedux, query.no]);
+  }, [getArchiveRedux, getSectionRedux, query.no]);
 
   // TODO 아카이브 삭제시 실행되는 로직
   const archivePrevLoading = useRef<boolean>(false);
@@ -226,12 +220,8 @@ function ArchiveDetail() {
   return (
     <div>
       <ArchiveHeaderForm
-        loading={archiveInfo.loading}
-        error={archiveInfo.error}
         archive_info={archiveInfo.data[0]}
         user_info={userInfo.data}
-        setUserRedux={setUserRedux}
-        getArchiveRedux={getArchiveRedux}
         setArchiveLikeRedux={setArchiveLikeRedux}
         deleteArchiveLikeRedux={deleteArchiveLikeRedux}
         setArchiveBookmarkRedux={setArchiveBookmarkRedux}

@@ -31,6 +31,7 @@ function auth(
           name: action.payload.name,
           profile: action.payload.profile,
           auth_type: action.payload.auth_type,
+          category: action.payload.category,
           isLogin: true,
         },
         error: null,
@@ -45,6 +46,7 @@ function auth(
           name: '',
           profile: '',
           auth_type: '',
+          category: [],
           isLogin: false,
         },
         error: '아이디 혹은 비밀번호가 올바르지 않습니다.',
@@ -59,6 +61,7 @@ function auth(
           name: '',
           profile: '',
           auth_type: '',
+          category: [],
           isLogin: false,
         },
         error: action.payload,
@@ -73,6 +76,7 @@ function auth(
           name: '',
           profile: '',
           auth_type: '',
+          category: [],
           isLogin: false,
         },
         error: null,
@@ -87,6 +91,7 @@ function auth(
           name: action.payload.name,
           profile: action.payload.profile,
           auth_type: action.payload.auth_type,
+          category: action.payload.category,
           isLogin: true,
         },
         error: null,
@@ -101,6 +106,7 @@ function auth(
           name: '',
           profile: '',
           auth_type: '',
+          category: [],
           isLogin: false,
         },
         error: '회원가입을 먼저 해주세요.',
@@ -115,6 +121,7 @@ function auth(
           name: '',
           profile: '',
           auth_type: '',
+          category: [],
           isLogin: false,
         },
         error: action.payload,
@@ -138,6 +145,7 @@ function auth(
           name: '',
           profile: '',
           auth_type: '',
+          category: [],
           isLogin: false,
         },
         error: action.payload,
@@ -156,6 +164,7 @@ function auth(
           name: action.payload.name,
           profile: action.payload.profile,
           auth_type: action.payload.auth_type,
+          category: action.payload.category,
           isLogin: true,
         },
         error: null,
@@ -174,6 +183,7 @@ function auth(
           name: '',
           profile: '',
           auth_type: '',
+          category: [],
           isLogin: false,
         },
         error: action.payload,
@@ -188,6 +198,7 @@ function auth(
           name: '',
           profile: '',
           auth_type: '',
+          category: [],
           isLogin: false,
         },
         error: null,
@@ -220,7 +231,26 @@ function auth(
         loading: false,
         data: action.payload,
       };
+    case type.UPDATE_USER:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case type.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: {
+          ...state.data,
+          name: action.payload.info.name,
+          profile: action.payload.info.profile,
+          category: action.payload.info.categoryList,
+        },
+      };
+    case type.UPDATE_USER_ERROR:
     case type.SET_USER_ERROR:
+    case type.EXPIRE_JWT_TOKEN:
       return {
         ...state,
         loading: false,
