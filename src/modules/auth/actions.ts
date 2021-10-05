@@ -1,4 +1,4 @@
-import { LoginInfo } from '../../apis/auth/types';
+import { LoginInfo, updateUserRequest } from '../../apis/auth/types';
 import * as sagaType from './types';
 
 // TODO 액션 함수
@@ -22,4 +22,8 @@ export const getRegister = (localRegisterInfo: sagaType.localRegisterInfo) => ({
 });
 export const setUser = () => ({
   type: sagaType.SET_USER,
+});
+export const updateUser = (userInfo: updateUserRequest) => ({
+  type: sagaType.UPDATE_USER,
+  payload: userInfo,
 });

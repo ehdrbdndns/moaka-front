@@ -8,22 +8,80 @@ import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
-import { headerStyles } from './styles';
 import { useHistory } from 'react-router';
 import { MakeArchiveModal } from '../Archive/ArchiveModal';
 import { insertArchiveRequest } from '../../apis/archives/types';
 import { initialState as userListInfo } from '../../modules/userList';
+import { initialState as authInfo } from '../../modules/auth';
+import { CircularProgress, makeStyles } from '@material-ui/core';
+import MypageModal from '../MyPage/MyPageModal';
+import { updateUserRequest } from '../../apis/auth/types';
+
+const headerStyles = makeStyles(theme => ({
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'spaceAround',
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    height: '60px',
+  },
+  avatar: {
+    cursor: 'Pointer',
+  },
+  toolbarTitle: {
+    flex: 1,
+    position: 'relative',
+    cursor: 'pointer',
+  },
+  toolbarSecondary: {
+    height: '60px',
+    justifyContent: 'center',
+    // overflowX: '50px',
+  },
+  toolbarLink: {
+    padding: theme.spacing(1),
+    flexShrink: 0,
+    fontSize: '20px',
+    color: 'inherit',
+    textDecoration: 'none',
+  },
+  signButton: {
+    fontSize: '20px',
+    color: 'inherit',
+    textDecoration: 'none',
+  },
+  searchRoot: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: 400,
+    height: 30,
+  },
+  searchInput: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+    fontSize: '15px',
+  },
+  searchButton: {
+    padding: 10,
+  },
+}));
 
 type MakeArchiveModalProps = {
+  authInfo: authInfo;
   userListInfo: userListInfo;
   searchUserListRedux: (id: string) => void;
   insertArchiveRedux: (insertArchiveRequest: insertArchiveRequest) => void;
+  updateUserRedux: (userInfo: updateUserRequest) => void;
+  logoutRedux: () => void;
 };
 
 function HeaderForm({
+  authInfo,
   userListInfo,
   searchUserListRedux,
   insertArchiveRedux,
+  updateUserRedux,
+  logoutRedux,
 }: MakeArchiveModalProps) {
   const classes = headerStyles();
   const { push } = useHistory();
@@ -54,7 +112,6 @@ function HeaderForm({
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
         <Button size="small">Subscribe</Button>
-
         <Typography
           component="h2"
           variant="h5"
@@ -67,16 +124,28 @@ function HeaderForm({
           모아카
         </Typography>
         <div>
-          <Link to="/register" className={classes.signButton}>
-            <Button variant="outlined" size="small">
-              Sign-up
-            </Button>
-          </Link>
-          <Link to="/login" className={classes.signButton}>
-            <Button variant="outlined" size="small">
-              Sign-in
-            </Button>
-          </Link>
+          {authInfo.loading ? (
+            <CircularProgress />
+          ) : authInfo.data.no !== 0 ? (
+            <MypageModal
+              logoutRedux={logoutRedux}
+              authInfo={authInfo.data}
+              updateUserRedux={updateUserRedux}
+            />
+          ) : (
+            <>
+              <Link to="/register" className={classes.signButton}>
+                <Button variant="outlined" size="small">
+                  Sign-up
+                </Button>
+              </Link>
+              <Link to="/login" className={classes.signButton}>
+                <Button variant="outlined" size="small">
+                  Sign-in
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </Toolbar>
       <Toolbar

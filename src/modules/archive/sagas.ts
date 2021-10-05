@@ -2,9 +2,13 @@ import { put, call, takeLatest, takeEvery } from 'redux-saga/effects';
 import {
   deleteArchiveResponse,
   getArchiveResponse,
+  getBookmarkArchiveListResponse,
   getGroupArchiveListResponse,
+  getTopArchiveListResponse,
   insertArchiveResponse,
-  retrieveArchiveBySearchResponse,
+  getArchiveBySearchResponse,
+  getCategoryArchiveResponse,
+  updateArchiveResponse,
 } from '../../apis/archives/types';
 import * as sagaType from './types';
 import * as archiveAPI from '../../apis/archives/archives';
@@ -20,6 +24,7 @@ import {
   searchArchive,
   setArchiveBookmark,
   setArchiveLike,
+  updateArchive,
 } from '.';
 import {
   deleteLikeResponse,
@@ -63,12 +68,57 @@ function* getGroupArchiveListSaga() {
   }
 }
 
+function* getHomeArchiveListSaga() {
+  try {
+    let archive_list: archiveInfo[] = [];
+
+    // Group Archive List 가져오기
+    const group_archive_response: getGroupArchiveListResponse = yield call(
+      archiveAPI.getGroupArchiveList,
+    );
+    archive_list = archive_list.concat(group_archive_response.archive_list);
+
+    // TOP Archive List 가져오기
+    const top_archive_response: getTopArchiveListResponse = yield call(
+      archiveAPI.getTopArchiveList,
+    );
+    archive_list = archive_list.concat(top_archive_response.archive_list);
+
+    // Bookmark Archive List 가져오기
+    const bookmark_archive_response: getBookmarkArchiveListResponse =
+      yield call(archiveAPI.getBookmarkArchiveList);
+    archive_list = archive_list.concat(bookmark_archive_response.archive_list);
+
+    // Category Archive List 가져오기
+    const category_archive_response: getCategoryArchiveResponse = yield call(
+      archiveAPI.getCategoryArchiveList,
+    );
+    archive_list = archive_list.concat(category_archive_response.archive_list);
+
+    yield put({
+      type: sagaType.GET_HOME_ARCHIVE_LIST_SUCCESS,
+      payload: archive_list,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.GET_HOME_ARCHIVE_LIST_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
 function* insertArchiveSaga(action: ReturnType<typeof insertArchive>) {
   try {
     const response: insertArchiveResponse = yield call(
       archiveAPI.insertArchive,
       action.payload,
     );
+
+    console.log('response');
+    console.log(response);
+
     if (response.isSuccess) {
       yield put({
         type: sagaType.INSERT_ARCHIVE_SUCCESS,
@@ -92,6 +142,39 @@ function* insertArchiveSaga(action: ReturnType<typeof insertArchive>) {
     yield put({
       type: sagaType.INSERT_ARCHIVE_ERROR,
       error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
+function* updateArchiveSaga(action: ReturnType<typeof updateArchive>) {
+  try {
+    const response: updateArchiveResponse = yield call(
+      archiveAPI.updateArchive,
+      action.payload,
+    );
+    if (response.isSuccess) {
+      action.payload.info.thumbnail = response.thumbnail;
+      yield put({
+        type: sagaType.UPDATE_ARCHIVE_SUCCESS,
+        payload: action.payload.info,
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.UPDATE_ARCHIVE_ERROR,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.UPDATE_ARCHIVE_ERROR,
       payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
     });
   }
@@ -310,7 +393,7 @@ function* deleteBookmarkSaga(action: ReturnType<typeof deleteArchiveBookmark>) {
 
 function* searchArchiveSaga(action: ReturnType<typeof searchArchive>) {
   try {
-    const response: retrieveArchiveBySearchResponse = yield call(
+    const response: getArchiveBySearchResponse = yield call(
       archiveAPI.retrieveArchiveBySearch,
       action.payload,
     );
@@ -346,4 +429,6 @@ export function* archiveSaga() {
   yield takeLatest(sagaType.DELETE_ARCHIVE, deleteArchiveSaga);
   yield takeLatest(sagaType.INSERT_ARCHIVE, insertArchiveSaga);
   yield takeEvery(sagaType.SEARCH_ARCHIVE, searchArchiveSaga);
+  yield takeEvery(sagaType.GET_HOME_ARCHIVE_LIST, getHomeArchiveListSaga);
+  yield takeLatest(sagaType.UPDATE_ARCHIVE, updateArchiveSaga);
 }

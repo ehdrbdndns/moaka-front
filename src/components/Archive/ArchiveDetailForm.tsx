@@ -106,74 +106,83 @@ function ArchiveDetailForm({
         />
       )}
       {archive_info ? (
-        section_list.map(section => (
-          <div key={section.no}>
-            <AppBar position="static">
-              <Toolbar variant="dense" className={classes.toolbar}>
-                <Typography
-                  component="h1"
-                  variant="h6"
-                  color="inherit"
-                  noWrap
-                  className={classes.title}
-                >
-                  {section.title}
-                </Typography>
-                {user_info.no === archive_info.user_no && (
-                  <div className={classes.toolbarBtnBox}>
-                    <DeleteSectionModal
-                      section_no={section.no || 0}
-                      deleteSectionRedux={deleteSectionRedux}
-                      loading={section_loading}
-                    />
-                    <UpdateSectionModal
-                      section_no={section.no || 0}
-                      updateSectionRedux={updateSectionRedux}
-                      loading={section_loading}
-                      description_prop={section.description}
-                      title_prop={section.title}
-                      section_tag_list={section.tag_list}
-                    />
-                  </div>
-                )}
-              </Toolbar>
-            </AppBar>
-            <MakeChunkModal
-              section_no={section.no || 0}
-              section_tag_list={section.tag_list}
-              makeChunkRedux={makeChunkRedux}
-            />
-            <Box my={2}>
-              <Grid container spacing={2}>
-                {section.chunk_list?.length !== 0 ? (
-                  section.chunk_list?.map(chunk => (
-                    <Grid key={chunk.no} item lg={2} md={3} sm={4} xs={6}>
-                      {/* 청크 카드 */}
-                      <ChunkForm
-                        chunk_info={chunk}
-                        section_tag_list={section.tag_list}
-                        deleteChunkRedux={deleteChunkRedux}
-                        updateChunkRedux={updateChunkRedux}
-                        setBookmarkRedux={setBookmarkRedux}
-                        deleteBookmarkRedux={deleteBookmarkRedux}
-                        setLikeRedux={setLikeRedux}
-                        deleteLikeRedux={deleteLikeRedux}
-                        makeRelativeChunkRedux={makeRelativeChunkRedux}
-                        deleteRelativeChunkRedux={deleteRelativeChunkRedux}
-                        setCommentRedux={setCommentRedux}
-                        deleteCommentRedux={deleteCommentRedux}
-                      />
-                    </Grid>
-                  ))
-                ) : (
-                  <Typography variant="h1" color="textSecondary" align="center">
-                    정보가 존재하지 않습니다.
+        section_loading ? (
+          <CircularProgress />
+        ) : (
+          section_list.map(section => (
+            <div key={section.no}>
+              <AppBar position="static">
+                <Toolbar variant="dense" className={classes.toolbar}>
+                  <Typography
+                    component="h1"
+                    variant="h6"
+                    color="inherit"
+                    noWrap
+                    className={classes.title}
+                  >
+                    {section.title}
                   </Typography>
-                )}
-              </Grid>
-            </Box>
-          </div>
-        ))
+                  {user_info.no === archive_info.user_no && (
+                    <div className={classes.toolbarBtnBox}>
+                      <DeleteSectionModal
+                        section_no={section.no || 0}
+                        deleteSectionRedux={deleteSectionRedux}
+                        loading={section_loading}
+                      />
+                      <UpdateSectionModal
+                        section_no={section.no || 0}
+                        updateSectionRedux={updateSectionRedux}
+                        loading={section_loading}
+                        description_prop={section.description}
+                        title_prop={section.title}
+                        section_tag_list={section.tag_list}
+                      />
+                    </div>
+                  )}
+                </Toolbar>
+              </AppBar>
+              <MakeChunkModal
+                section_no={section.no || 0}
+                section_tag_list={section.tag_list}
+                makeChunkRedux={makeChunkRedux}
+              />
+              <Box my={2}>
+                <Grid container spacing={2}>
+                  {section.chunk_list?.length !== 0 ? (
+                    section.chunk_list?.map(chunk => (
+                      <Grid key={chunk.no} item lg={2} md={3} sm={4} xs={6}>
+                        {/* 청크 카드 */}
+                        <ChunkForm
+                          section_no={section.no || 0}
+                          chunk_info={chunk}
+                          section_tag_list={section.tag_list}
+                          deleteChunkRedux={deleteChunkRedux}
+                          updateChunkRedux={updateChunkRedux}
+                          setBookmarkRedux={setBookmarkRedux}
+                          deleteBookmarkRedux={deleteBookmarkRedux}
+                          setLikeRedux={setLikeRedux}
+                          deleteLikeRedux={deleteLikeRedux}
+                          makeRelativeChunkRedux={makeRelativeChunkRedux}
+                          deleteRelativeChunkRedux={deleteRelativeChunkRedux}
+                          setCommentRedux={setCommentRedux}
+                          deleteCommentRedux={deleteCommentRedux}
+                        />
+                      </Grid>
+                    ))
+                  ) : (
+                    <Typography
+                      variant="h1"
+                      color="textSecondary"
+                      align="center"
+                    >
+                      정보가 존재하지 않습니다.
+                    </Typography>
+                  )}
+                </Grid>
+              </Box>
+            </div>
+          ))
+        )
       ) : (
         <CircularProgress />
       )}

@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { BASE_URL } from '../utils';
-import { DirectoryResponse, searchUserListResponse } from './types';
+import {
+  DirectoryResponse,
+  retrieveGroupUserOfArchiveByArchiveNoResponse,
+  searchUserListResponse,
+} from './types';
 
 export const getLocalDirectory = async (
   user_no: number,
@@ -42,6 +46,33 @@ export const searchUserList = async (
     .catch(function (error) {
       console.log(error);
       result.isSuccess = false;
+      result.error = error.response.status;
+    });
+
+  return result;
+};
+
+export const retrieveGroupUserOfArchiveByArchiveNo = async (
+  archive_no: number,
+): Promise<retrieveGroupUserOfArchiveByArchiveNoResponse> => {
+  let result: retrieveGroupUserOfArchiveByArchiveNoResponse = {
+    user_list: [],
+    isSuccess: false,
+    error: 0,
+  };
+
+  await axios
+    .post(BASE_URL + '/retrieveGroupUserOfArchiveByArchiveNo', null, {
+      params: {
+        archive_no: archive_no,
+      },
+    })
+    .then(function (response) {
+      result.isSuccess = response.data.isSuccess;
+      result.user_list = response.data.user_list;
+    })
+    .catch(function (error) {
+      console.log(error);
       result.error = error.response.status;
     });
 

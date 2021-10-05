@@ -3,10 +3,40 @@ import { BASE_URL } from '../utils';
 import { chunkInfo, relativeChunkInfo } from '../../modules/section';
 import {
   deleteChunkResponse,
+  getChunkOfBookmarkResponse,
   makeChunkResponse,
   makeRelativeChunkResponse,
   updateChunkResponse,
 } from './types';
+
+export const getChunkOfBookmark =
+  async (): Promise<getChunkOfBookmarkResponse> => {
+    const result: getChunkOfBookmarkResponse = {
+      isSuccess: false,
+      error: 0,
+      chunk_list: [],
+    };
+
+    const token = localStorage.getItem('token');
+    await axios
+      .post(BASE_URL + '/user/retrieveChunkOfBookmarkByUserNo', null, {
+        headers: {
+          Bearer: token,
+        },
+      })
+      .then(function (response) {
+        // TODO 해당 청크를 삭제할 권한이 없는 계정인 경우 false
+        result.isSuccess = response.data.isSuccess;
+        result.chunk_list = response.data.chunk_list;
+      })
+      .catch(function (error) {
+        console.log(error.response);
+        result.isSuccess = false;
+        result.error = error.response.status;
+      });
+
+    return result;
+  };
 
 export const deleteChunk = async (
   chunk_no: number,

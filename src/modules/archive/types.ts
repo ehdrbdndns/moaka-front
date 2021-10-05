@@ -1,4 +1,11 @@
 // TODO 액션 타입 설정
+// REF 홈 페이지 아카이브 리스트
+export const GET_HOME_ARCHIVE_LIST = 'archive/GET_HOME_ARCHIVE_LIST' as const;
+export const GET_HOME_ARCHIVE_LIST_SUCCESS =
+  'archive/GET_HOME_ARCHIVE_LIST_SUCCESS' as const;
+export const GET_HOME_ARCHIVE_LIST_ERROR =
+  'archive/GET_HOME_ARCHIVE_LIST_ERROR' as const;
+
 //  REF 소속 아카이브 리스트
 export const GET_GROUP_ARCHIVE_LIST = 'archive/GET_GROUP_ARCHIVE_LIST' as const;
 export const GET_GROUP_ARCHIVE_LIST_SUCCESS =
@@ -20,6 +27,11 @@ export const SEARCH_ARCHIVE_ERROR = 'archive/SEARCH_ARCHIVE_ERROR' as const;
 export const INSERT_ARCHIVE = 'archive/INSERT_ARCHIVE' as const;
 export const INSERT_ARCHIVE_SUCCESS = 'archive/INSERT_ARCHIVE_SUCCESS' as const;
 export const INSERT_ARCHIVE_ERROR = 'archive/INSERT_ARCHIVE_ERROR' as const;
+
+// REF 아카이브 수정
+export const UPDATE_ARCHIVE = 'archive/UPDATE_ARCHIVE' as const;
+export const UPDATE_ARCHIVE_SUCCESS = 'archive/UPDATE_ARCHIVE_SUCCESS' as const;
+export const UPDATE_ARCHIVE_ERROR = 'archive/UPDATE_ARCHIVE_ERROR' as const;
 
 // REF 아카이브 삭제
 export const DELETE_ARCHIVE = 'archive/DELETE_ARCHIVE' as const;
@@ -74,6 +86,8 @@ export type archiveInfo = {
   bookmark_loading: boolean;
   like_no: number;
   like_loading: boolean;
+  category: string;
+  type: string; // 인기, 그룹, 북마크, 관심사의 아카이브
 };
 
 export type initialState = {

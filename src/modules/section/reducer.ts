@@ -7,6 +7,13 @@ function section(
 ) {
   switch (action.type) {
     case type.GET_SECTION:
+    case type.GET_BOOKMARK_CHUNK:
+      return {
+        ...state,
+        loading: true,
+        data: [],
+        error: null,
+      };
     case type.MAKE_SECTION:
     case type.DELETE_SECTION:
     case type.UPDATE_SECTION:
@@ -19,6 +26,7 @@ function section(
         data: [...state.data],
         error: null,
       };
+
     case type.MAKE_RELATIVE_CHUNK: {
       const section_index = state.data.findIndex(
         section => section.no === action.payload.section_no,
@@ -51,6 +59,7 @@ function section(
       const chunk_index = state.data[section_index].chunk_list.findIndex(
         chunk => chunk.no === action.payload.chunk_no,
       );
+
       const _data = [...state.data];
       _data[section_index].chunk_list[chunk_index].bookmark_loading = true;
       return {
@@ -92,6 +101,12 @@ function section(
     case type.DELETE_COMMENT:
       return {
         ...state,
+      };
+    case type.GET_BOOKMARK_CHUNK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: [action.payload],
       };
     case type.UPDATE_SECTION_SUCCESS: {
       const index = state.data.findIndex(
@@ -325,6 +340,7 @@ function section(
     case type.SET_BOOKMARK_ERROR:
     case type.SET_COMMENT_ERROR:
     case type.DELETE_COMMENT_ERROR:
+    case type.GET_BOOKMARK_CHUNK_ERROR:
       return {
         ...state,
         loading: false,

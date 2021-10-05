@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { Chip } from '@material-ui/core';
 import { archiveInfo } from '../../modules/archive';
 import { useHistory } from 'react-router';
+import { nanoid } from 'nanoid';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,12 +63,18 @@ function ArchiveCardForm({ archive_info }: ArchiveCardProps) {
             {archive_info.title}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            {archive_info.creator_name}
+            생성자: {archive_info.creator_name}
           </Typography>
         </CardContent>
         <div className={classes.controls}>
-          {archive_info.tag_list.map(tag => (
-            <Chip color="primary" label={tag} size="small" clickable />
+          {archive_info.tag_list?.map(tag => (
+            <Chip
+              key={nanoid()}
+              color="primary"
+              label={tag}
+              size="small"
+              clickable
+            />
           ))}
         </div>
       </div>

@@ -13,8 +13,8 @@ import {
   getArchive,
   setArchiveBookmark,
   setArchiveLike,
+  updateArchive,
 } from '../modules/archive';
-import { setUser } from '../modules/auth';
 import {
   bookmarkActionType,
   chunkInfo,
@@ -42,21 +42,31 @@ import {
 } from '../modules/section';
 import queryString from 'query-string';
 import { insertCommentOfChunkRequest } from '../apis/comment/types';
+import { updateArchiveRequest } from '../apis/archives/types';
+import { searchUserList } from '../modules/userList';
 
 function ArchiveDetail() {
   const dispatch = useDispatch();
   const sectionInfo = useSelector((state: RootState) => state.section);
   const archiveInfo = useSelector((state: RootState) => state.archive);
   const userInfo = useSelector((state: RootState) => state.auth);
+  const userList = useSelector((state: RootState) => state.userList);
 
   const location = useLocation();
   const query = queryString.parse(location.search);
 
   const { push } = useHistory();
 
-  const setUserRedux = useCallback(() => {
-    dispatch(setUser());
-  }, [dispatch]);
+  const searchUserListRedux = (id: string) => {
+    dispatch(searchUserList(id));
+  };
+
+  const updateArchiveRedux = useCallback(
+    (updateArchiveRequest: updateArchiveRequest) => {
+      dispatch(updateArchive(updateArchiveRequest));
+    },
+    [dispatch],
+  );
 
   const deleteArchiveRedux = useCallback(
     (archive_no: number) => {
@@ -209,9 +219,8 @@ function ArchiveDetail() {
     if (query.no !== null) {
       getArchiveRedux(+query.no);
       getSectionRedux(+query.no);
-      setUserRedux();
     }
-  }, [getArchiveRedux, getSectionRedux, setUserRedux, query.no]);
+  }, [getArchiveRedux, getSectionRedux, query.no]);
 
   // TODO 아카이브 삭제시 실행되는 로직
   const archivePrevLoading = useRef<boolean>(false);
@@ -226,17 +235,16 @@ function ArchiveDetail() {
   return (
     <div>
       <ArchiveHeaderForm
-        loading={archiveInfo.loading}
-        error={archiveInfo.error}
         archive_info={archiveInfo.data[0]}
         user_info={userInfo.data}
-        setUserRedux={setUserRedux}
-        getArchiveRedux={getArchiveRedux}
+        search_user_list={userList}
+        searchUserListRedux={searchUserListRedux}
         setArchiveLikeRedux={setArchiveLikeRedux}
         deleteArchiveLikeRedux={deleteArchiveLikeRedux}
         setArchiveBookmarkRedux={setArchiveBookmarkRedux}
         deleteArchiveBookmarkRedux={deleteArchiveBookmarkRedux}
         deleteArchiveRedux={deleteArchiveRedux}
+        updateArchiveRedux={updateArchiveRedux}
       />
       <ArchiveDetailForm
         section_loading={sectionInfo.loading}

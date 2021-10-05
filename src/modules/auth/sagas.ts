@@ -6,10 +6,11 @@ import * as userAPI from '../../apis/auth/user';
 import * as sagaType from './types';
 import * as authType from '../../apis/auth/types';
 import jwtDecode from 'jwt-decode';
-import { getGoogleLogin, getRegister } from './actions';
+import { getGoogleLogin, getRegister, updateUser } from './actions';
 
 function* logoutSaga() {
   try {
+    localStorage.removeItem('token');
     yield put({
       type: sagaType.GET_LOGOUT_SUCCESS,
     });
@@ -40,6 +41,7 @@ function* googleLoginSaga(action: ReturnType<typeof getGoogleLogin>) {
         id: token.id,
         name: token.name,
         profile: token.profile,
+        category: token.category,
         auth_type: 'google',
       };
       yield put({
@@ -57,6 +59,7 @@ function* googleLoginSaga(action: ReturnType<typeof getGoogleLogin>) {
           id: action.payload.id,
           name: action.payload.name,
           profile: action.payload.profile,
+          category: [],
           auth_type: 'google',
         };
         yield put({
@@ -97,6 +100,7 @@ function* localLoginSaga(action: ReturnType<typeof getLocalLogin>) {
         id: token.id,
         name: token.name,
         profile: token.profile,
+        category: token.category,
         auth_type: 'local',
       };
       yield put({
@@ -160,6 +164,7 @@ function* setUserSaga() {
       id: response.id,
       name: response.name,
       profile: response.profile,
+      category: response.category,
       auth_type: '',
     };
 
@@ -190,10 +195,49 @@ function* setUserSaga() {
     });
   }
 }
+
+function* updateUserSaga(action: ReturnType<typeof updateUser>) {
+  try {
+    const response: authType.updateUserResponse = yield call(
+      userAPI.updateUser,
+      action.payload,
+    );
+
+    if (response.isSuccess) {
+      localStorage.setItem('token', response.token);
+      action.payload.info.profile = response.profile;
+      yield put({
+        type: sagaType.UPDATE_USER_SUCCESS,
+        payload: action.payload,
+      });
+    } else if (response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.UPDATE_USER_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.UPDATE_USER_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
 export function* authSaga() {
   yield takeEvery(sagaType.GET_LOGOUT, logoutSaga);
   yield takeLatest(sagaType.GET_LOCAL_LOGIN, localLoginSaga);
   yield takeLatest(sagaType.GET_GOOGLE_LOGIN, googleLoginSaga);
   yield takeLatest(sagaType.GET_REGISTER, localRegisterSaga);
   yield takeEvery(sagaType.SET_USER, setUserSaga);
+  yield takeLatest(sagaType.UPDATE_USER, updateUserSaga);
 }

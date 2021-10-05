@@ -1,18 +1,9 @@
-import React, { useState } from 'react';
-import {
-  Backdrop,
-  Button,
-  CircularProgress,
-  Fade,
-  IconButton,
-  makeStyles,
-  Modal,
-} from '@material-ui/core';
+import React from 'react';
+import { CircularProgress, IconButton, makeStyles } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { useLocation } from 'react-router';
 import queryString from 'query-string';
 import {
@@ -21,6 +12,9 @@ import {
   archiveLikeActionType,
 } from '../../modules/archive';
 import { userInfo } from '../../modules/auth';
+import { updateArchiveRequest } from '../../apis/archives/types';
+import { DeleteArchiveModal, UpdateArchiveModal } from './ArchiveModal';
+import { initialState as userListInfo } from '../../modules/userList';
 
 const archiveHeaderStyles = makeStyles(theme => ({
   archiveProfile: {
@@ -41,6 +35,11 @@ const archiveHeaderStyles = makeStyles(theme => ({
   archiveDesc: {
     position: 'relative',
     top: '50px',
+  },
+  archiveUpdateBtnBox: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
   },
   archiveBtnBox: {
     position: 'absolute',
@@ -64,43 +63,32 @@ const archiveHeaderStyles = makeStyles(theme => ({
 type ArchiveHeaderProps = {
   archive_info: archiveInfo;
   user_info: userInfo;
-  loading: boolean;
-  error: string;
-  getArchiveRedux: (archive_no: number) => void;
+  search_user_list: userListInfo;
+  searchUserListRedux: (id: string) => void;
   setArchiveLikeRedux: (likeInfo: archiveLikeActionType) => void;
   deleteArchiveLikeRedux: (likeInfo: archiveLikeActionType) => void;
   setArchiveBookmarkRedux: (bookmarkInfo: archiveBookmarkActionType) => void;
   deleteArchiveBookmarkRedux: (bookmarkInfo: archiveBookmarkActionType) => void;
-  setUserRedux: () => void;
   deleteArchiveRedux: (archive_no: number) => void;
+  updateArchiveRedux: (updateArchiveRequest: updateArchiveRequest) => void;
 };
 
 function ArchiveHeaderForm({
   archive_info,
   user_info,
-  loading,
-  error,
-  getArchiveRedux,
+  search_user_list,
+  searchUserListRedux,
   setArchiveLikeRedux,
   deleteArchiveLikeRedux,
   setArchiveBookmarkRedux,
   deleteArchiveBookmarkRedux,
   deleteArchiveRedux,
+  updateArchiveRedux,
 }: ArchiveHeaderProps) {
   const classes = archiveHeaderStyles();
 
   const location = useLocation();
   const query = queryString.parse(location.search);
-
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const deleteArchiveEvent = () => {
     if (query.no !== null) {
@@ -163,47 +151,21 @@ function ArchiveHeaderForm({
             <div className={classes.archiveDesc}>
               {archive_info.description}
             </div>
+            <div className={classes.archiveUpdateBtnBox}>
+              {archive_info.user_no === user_info.no && (
+                <UpdateArchiveModal
+                  archive_info={archive_info}
+                  search_user_list={search_user_list.data}
+                  search_user_loading={search_user_list.loading}
+                  searchUserListRedux={searchUserListRedux}
+                  updateArchiveRedux={updateArchiveRedux}
+                />
+              )}
+            </div>
             <div className={classes.archiveBtnBox}>
               {/* REF 아카이브 삭제 */}
               {archive_info.user_no === user_info.no && (
-                <IconButton aria-label="delete">
-                  <DeleteIcon onClick={handleOpen} />
-                  <Modal
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
-                    className={classes.modal}
-                    open={open}
-                    onClose={handleClose}
-                    closeAfterTransition
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                      timeout: 500,
-                    }}
-                  >
-                    <Fade in={open}>
-                      <div className={classes.paper}>
-                        <h2 id="transition-modal-title">섹션 삭제</h2>
-                        <p id="transition-modal-description">
-                          정말 저장소를 삭제하시겠습니까?
-                        </p>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={deleteArchiveEvent}
-                        >
-                          예
-                        </Button>
-                        <Button
-                          onClick={handleClose}
-                          variant="contained"
-                          color="secondary"
-                        >
-                          아니요
-                        </Button>
-                      </div>
-                    </Fade>
-                  </Modal>
-                </IconButton>
+                <DeleteArchiveModal deleteArchiveEvent={deleteArchiveEvent} />
               )}
               {/* REF 아카이브 좋아요 */}
               {archive_info.like_no ? (
