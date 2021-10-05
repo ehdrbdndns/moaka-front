@@ -19,6 +19,13 @@ export const UPDATE_SECTION = 'section/UPDATE_SECTION' as const;
 export const UPDATE_SECTION_SUCCESS = 'section/UPDATE_SECTION_SUCCESS' as const;
 export const UPDATE_SECTION_ERROR = 'section/UPDATE_SECTION_ERROR';
 
+// REF 북마크 청크 불러오기
+export const GET_BOOKMARK_CHUNK = 'section/GET_BOOKMARK_CHUNK' as const;
+export const GET_BOOKMARK_CHUNK_SUCCESS =
+  'section/GET_BOOKMARK_CHUNK_SUCCESS' as const;
+export const GET_BOOKMARK_CHUNK_ERROR =
+  'section/GET_BOOKMARK_CHUNK_ERROR' as const;
+
 // REF 청크 삭제
 export const DELETE_CHUNK = 'section/DELETE_CHUNK' as const;
 export const DELETE_CHUNK_SUCCESS = 'section/DELETE_CHUNK_SUCCESS' as const;
@@ -36,6 +43,24 @@ export const UPDATE_CHUNK = 'section/UPDATE_CHUNK' as const;
 export const UPDATE_CHUNK_SUCCESS = 'section/UPDATE_CHUNK_SUCCESS' as const;
 export const UPDATE_CHUNK_ERROR = 'section/UPDATE_CHUNK_ERROR' as const;
 export const UPDATE_CHUNK_NOAUTH = 'section/UPDATE_CHUNK_NOAUTH' as const;
+
+// REF 관련 청크 생성
+export const MAKE_RELATIVE_CHUNK = 'section/MAKE_RELATIVE_CHUNK' as const;
+export const MAKE_RELATIVE_CHUNK_SUCCESS =
+  'section/MAKE_RELATIVE_CHUNK_SUCCESS' as const;
+export const MAKE_RELATIVE_CHUNK_ERROR =
+  'section/MAKE_RELATIVE_CHUNK_ERROR' as const;
+export const MAKE_RELATIVE_CHUNK_NOAUTH =
+  'section/MAKE_RELATIVE_CHUNK_NOAUTH' as const;
+
+// REF 관련 청크 삭제
+export const DELETE_RELATIVE_CHUNK = 'section/DELETE_RELATIVE_CHUNK' as const;
+export const DELETE_RELATIVE_CHUNK_SUCCESS =
+  'section/DELETE_RELATIVE_CHUNK_SUCCESS' as const;
+export const DELETE_RELATIVE_CHUNK_ERROR =
+  'section/DELETE_RELATIVE_CHUNK_ERROR' as const;
+export const DELETE_RELATIVE_CHUNK_NOAUTH =
+  'section/DELETE_RELATIVE_CHUNK_NOAUTH' as const;
 
 // REF 북마크 생성
 export const SET_BOOKMARK = 'section/SET_BOOKMARK' as const;
@@ -58,8 +83,25 @@ export const DELETE_LIKE = 'section/DELETE_LIKE' as const;
 export const DELETE_LIKE_SUCCESS = 'section/DELETE_LIKE_SUCCESS' as const;
 export const DELETE_LIKE_ERROR = 'section/DELETE_LIKE_ERROR' as const;
 
+// REF 댓글 생성
+export const SET_COMMENT = 'section/SET_COMMENT' as const;
+export const SET_COMMENT_SUCCESS = 'section/SET_COMMENT_SUCCESS' as const;
+export const SET_COMMENT_ERROR = 'section/SET_COMMENT_ERROR' as const;
+
+// REF 댓글 삭제
+export const DELETE_COMMENT = 'section/DELETE_COMMENT' as const;
+export const DELETE_COMMENT_SUCCESS = 'section/DELETE_COMMENT_SUCCESS' as const;
+export const DELETE_COMMENT_ERROR = 'section/DELETE_COMMENT_ERROR' as const;
+
 // REF JWT 토큰 기한 만료
 export const EXPIRE_JWT_TOKEN = 'section/EXPIRE_JWT_TOKEN' as const;
+
+export type deleteCommentActionType = {
+  section_no: number;
+  chunk_no: number;
+  comment_no: number;
+  layer: number; // 0: 부모 댓글, 1: 자식 댓글
+};
 
 export type likeActionType = {
   like_no: number;
@@ -78,6 +120,39 @@ export type deleteChunkActionType = {
   chunk_no: number;
 };
 
+export type deleteRelativeChunkActionType = {
+  section_no: number;
+  chunk_no: number;
+  group_num: number;
+};
+
+export type commentInfo = {
+  no: number;
+  section_no: number;
+  chunk_no: number;
+  user_no: number;
+  content: string;
+  content_order: number;
+  layer: number;
+  group_num: number;
+  profile: string;
+  name: string;
+  regdate: string;
+};
+
+export type relativeChunkInfo = {
+  no: number;
+  group_num: number;
+  section_no: number;
+  title: string;
+  thumbnail: string;
+  link: string;
+  link_title: string;
+  link_description: string;
+  description: string;
+  regdate: string;
+};
+
 export type chunkInfo = {
   no: number;
   section_no: number;
@@ -93,6 +168,10 @@ export type chunkInfo = {
   bookmark_loading: boolean;
   like_no: number;
   like_loading: boolean;
+  relative_chunk_list: Array<relativeChunkInfo>;
+  relative_chunk_loading: boolean;
+  comment_list: Array<commentInfo>;
+  comment_loading: boolean;
 };
 
 export type sectionInfo = {

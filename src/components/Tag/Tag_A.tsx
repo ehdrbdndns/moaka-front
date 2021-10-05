@@ -27,30 +27,19 @@ function Tag_A({
   tag_list,
 }: tagAProps) {
   const [selectTagList, setSelectTagList] = useState<Array<string>>([]);
-  const [tag, setTag] = useState<string>('');
+  // const [tag, setTag] = useState<string>('');
+  const [tag] = useState<string>('');
 
   useEffect(() => {
     setSelectTagList([]);
     section_tag_list?.map(section_tag => {
-      setSelectTagList(tag_list => [...tag_list, section_tag]);
+      return setSelectTagList(tag_list => [...tag_list, section_tag]);
     });
   }, [section_tag_list]);
 
   useEffect(() => {
     if (chunk_tag_list.length !== 0) setTagList(chunk_tag_list);
   }, [chunk_tag_list, setTagList]);
-
-  const setTagEvent = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setTag(e.target.value);
-  };
-
-  const setTagListEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      setTagList(tag_list => [...tag_list, tag]);
-      // setTagList(tagList.concat(tag));
-      setTag('');
-    }
-  };
 
   const removeTagEvent = (index: number) => {
     setTagList(tag_list.filter((tag, i) => i !== index));

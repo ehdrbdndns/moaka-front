@@ -1,3 +1,5 @@
+import { deleteCommentActionType } from '.';
+import { insertCommentOfChunkRequest } from '../../apis/comment/types';
 import * as sagaType from './types';
 
 // TODO 액션 함수
@@ -17,6 +19,9 @@ export const updateSection = (sectionInfo: sagaType.sectionInfo) => ({
   type: sagaType.UPDATE_SECTION,
   payload: sectionInfo,
 });
+export const getBookmarkChunk = () => ({
+  type: sagaType.GET_BOOKMARK_CHUNK,
+});
 export const deleteChunk = (
   deleteChunkInfo: sagaType.deleteChunkActionType,
 ) => ({
@@ -30,6 +35,18 @@ export const makeChunk = (chunkInfo: sagaType.chunkInfo) => ({
 export const updateChunk = (chunkInfo: sagaType.chunkInfo) => ({
   type: sagaType.UPDATE_CHUNK,
   payload: chunkInfo,
+});
+export const makeRelativeChunk = (
+  relativeChunkInfo: sagaType.relativeChunkInfo,
+) => ({
+  type: sagaType.MAKE_RELATIVE_CHUNK,
+  payload: relativeChunkInfo,
+});
+export const deleteRelativeChunk = (
+  deleteRelativeChunkActionType: sagaType.deleteRelativeChunkActionType,
+) => ({
+  type: sagaType.DELETE_RELATIVE_CHUNK,
+  payload: deleteRelativeChunkActionType,
 });
 export const setBookmark = (bookmarkInfo: sagaType.bookmarkActionType) => ({
   type: sagaType.SET_BOOKMARK,
@@ -46,4 +63,14 @@ export const setLike = (likeInfo: sagaType.likeActionType) => ({
 export const deleteLike = (likeInfo: sagaType.likeActionType) => ({
   type: sagaType.DELETE_LIKE,
   payload: likeInfo,
+});
+export const setComment = (commentInfo: insertCommentOfChunkRequest) => ({
+  type: sagaType.SET_COMMENT,
+  payload: commentInfo,
+});
+export const deleteComment = (
+  deleteCommentActionType: deleteCommentActionType,
+) => ({
+  type: sagaType.DELETE_COMMENT,
+  payload: deleteCommentActionType,
 });

@@ -1,3 +1,30 @@
+export type setUserResponse = {
+  isSuccess: boolean;
+  error: number;
+  no: number;
+  id: string;
+  name: string;
+  profile: string;
+  category: Array<string>;
+};
+
+export type updateUserRequest = {
+  info: {
+    id: string;
+    name: string;
+    profile: string;
+    categoryList: Array<string>;
+  };
+  profileFile: File | null;
+};
+
+export type updateUserResponse = {
+  isSuccess: boolean;
+  error: number;
+  token: string;
+  profile: string;
+};
+
 export type LoginInfo = {
   id: string;
   pwd: string;
@@ -29,6 +56,7 @@ export type JwtDecodeFromUserInfo = {
   name: string;
   no: number;
   profile: string;
+  category: Array<string>;
   roles: Array<string>;
   id: string;
   sub: string;

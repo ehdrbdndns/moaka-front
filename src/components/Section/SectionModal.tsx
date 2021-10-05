@@ -34,12 +34,11 @@ const sectionBtnStyles = makeStyles((theme: Theme) =>
       justifyContent: 'flex-end',
     },
     btn: {
-      background: 'none',
-      outline: 'none',
-      border: '1px solid black',
-      padding: '10px 20px',
-      marginBottom: '12px',
-      cursor: 'pointer',
+      backgroundColor: 'white',
+      color: '#7a84dc',
+      fontSize: '14px',
+      width: '138px',
+      height: '34px',
     },
     form: {
       display: 'flex',
@@ -166,13 +165,13 @@ export function MakeSectionModal({
 
   return (
     <div className={sectionBtnClasses.btn__box}>
-      <button
-        type="button"
+      <Button
         onClick={handleOpen}
         className={sectionBtnClasses.btn}
+        variant="outlined"
       >
         섹션 생성하기
-      </button>
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -282,13 +281,13 @@ export function DeleteSectionModal({
 
   return (
     <div className={sectionBtnClasses.btn__box}>
-      <button
-        type="button"
+      <Button
         onClick={handleOpen}
         className={sectionBtnClasses.btn}
+        variant="outlined"
       >
         섹션 삭제하기
-      </button>
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -426,13 +425,13 @@ export function UpdateSectionModal({
 
   return (
     <div className={sectionBtnClasses.btn__box}>
-      <button
-        type="button"
+      <Button
         onClick={handleOpen}
         className={sectionBtnClasses.btn}
+        variant="outlined"
       >
         섹션 수정하기
-      </button>
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

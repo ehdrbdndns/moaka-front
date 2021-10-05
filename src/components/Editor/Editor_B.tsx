@@ -1,7 +1,6 @@
 import { LinkPreview } from '@dhaiwat10/react-link-preview';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { getLocalDirectory } from '../../apis/user/user';
 
 // TODO Editor A에서 링크를 직접 기입할 수 있는 버전이다.
 
