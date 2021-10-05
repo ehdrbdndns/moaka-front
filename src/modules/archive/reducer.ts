@@ -30,6 +30,7 @@ function archive(
       };
     case type.DELETE_ARCHIVE:
     case type.INSERT_ARCHIVE:
+    case type.UPDATE_ARCHIVE:
       return {
         ...state,
         loading: true,
@@ -76,6 +77,26 @@ function archive(
         ...state,
         loading: false,
         data: [...state.data, action.payload],
+      };
+    case type.UPDATE_ARCHIVE_SUCCESS:
+      const archive_index = state.data.findIndex(
+        archive => (archive.no = action.payload.no),
+      );
+      const _data = [...state.data];
+      _data[archive_index] = {
+        ..._data[archive_index],
+        no: action.payload.no,
+        title: action.payload.title,
+        description: action.payload.description,
+        tag_list: action.payload.tag_list,
+        privacy_type: action.payload.privacy_type,
+        thumbnail: action.payload.thumbnail,
+        category: action.payload.category,
+      };
+      return {
+        ...state,
+        loading: false,
+        data: _data,
       };
     case type.GET_ARCHIVE_SUCCESS:
     case type.SEARCH_ARCHIVE_SUCCESS:
@@ -127,6 +148,7 @@ function archive(
     case type.SET_LIKE_ERROR:
     case type.DELETE_LIKE_ERROR:
     case type.SEARCH_ARCHIVE_ERROR:
+    case type.UPDATE_ARCHIVE_ERROR:
       return {
         ...state,
         loading: false,

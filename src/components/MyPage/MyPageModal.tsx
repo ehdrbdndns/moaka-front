@@ -169,7 +169,7 @@ function MypageModal({
       info: {
         id: id,
         name: name,
-        profile: profile,
+        profile: authInfo.profile,
         categoryList: category,
       },
       profileFile: profileFile || null,

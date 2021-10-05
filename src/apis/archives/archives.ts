@@ -8,7 +8,10 @@ import {
   getTopArchiveListResponse,
   insertArchiveRequest,
   insertArchiveResponse,
-  retrieveArchiveBySearchResponse,
+  getArchiveBySearchResponse,
+  getCategoryArchiveResponse,
+  updateArchiveRequest,
+  updateArchiveResponse,
 } from './types';
 
 export const insertArchive = async (
@@ -32,6 +35,7 @@ export const insertArchive = async (
       like_no: 0,
       like_loading: false,
       type: '',
+      category: '',
     },
   };
 
@@ -57,6 +61,48 @@ export const insertArchive = async (
       result.isSuccess = response.data.isSuccess;
       result.archive = response.data.archive;
       result.archive.type = 'group';
+    })
+    .catch(function (error) {
+      console.log(error.response);
+      result.isSuccess = false;
+      result.error = error.response.status;
+    });
+
+  return result;
+};
+
+export const updateArchive = async (
+  updateArchiveRequest: updateArchiveRequest,
+): Promise<updateArchiveResponse> => {
+  const result: updateArchiveResponse = {
+    isSuccess: false,
+    error: 0,
+    thumbnail: '',
+  };
+
+  const formData = new FormData();
+
+  updateArchiveRequest.thumbnailFile &&
+    formData.append('thumbnailFile', updateArchiveRequest.thumbnailFile);
+
+  formData.append(
+    'archive',
+    new Blob([JSON.stringify(updateArchiveRequest.info)], {
+      type: 'application/json',
+    }),
+  );
+
+  const token = localStorage.getItem('token');
+  await axios
+    .post(BASE_URL + '/user/updateArchive', formData, {
+      headers: {
+        Bearer: token,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then(function (response) {
+      result.isSuccess = response.data.isSuccess;
+      result.thumbnail = response.data.thumbnail;
     })
     .catch(function (error) {
       console.log(error.response);
@@ -153,8 +199,8 @@ export const getTopArchiveList =
 
 export const retrieveArchiveBySearch = async (
   param: string,
-): Promise<retrieveArchiveBySearchResponse> => {
-  const result: retrieveArchiveBySearchResponse = {
+): Promise<getArchiveBySearchResponse> => {
+  const result: getArchiveBySearchResponse = {
     isSuccess: false,
     error: 0,
     archive_list: [],
@@ -182,6 +228,38 @@ export const retrieveArchiveBySearch = async (
 
   return result;
 };
+
+export const getCategoryArchiveList =
+  async (): Promise<getCategoryArchiveResponse> => {
+    const result: getCategoryArchiveResponse = {
+      isSuccess: false,
+      error: 0,
+      archive_list: [],
+    };
+
+    try {
+      const token = localStorage.getItem('token');
+      await axios
+        .post(BASE_URL + '/user/retrieveArchiveOfCategory', null, {
+          headers: {
+            Bearer: token,
+          },
+        })
+        .then(function (response) {
+          result.isSuccess = response.data.isSuccess;
+          result.archive_list = response.data.archive_list;
+        })
+        .catch(function (error) {
+          console.log(error.response);
+          result.isSuccess = false;
+          result.error = error.response.status;
+        });
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
+  };
 
 export const deleteArchive = async (
   archive_no: number,
@@ -234,6 +312,7 @@ export const getArchive = async (
       like_no: 0,
       like_loading: false,
       type: '',
+      category: '',
     },
   };
 

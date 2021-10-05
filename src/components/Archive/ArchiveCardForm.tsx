@@ -63,7 +63,7 @@ function ArchiveCardForm({ archive_info }: ArchiveCardProps) {
             {archive_info.title}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            {archive_info.creator_name}
+            생성자: {archive_info.creator_name}
           </Typography>
         </CardContent>
         <div className={classes.controls}>

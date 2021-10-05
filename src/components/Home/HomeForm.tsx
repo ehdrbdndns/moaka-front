@@ -109,6 +109,29 @@ function HomeForm({
       <AppBar position="static">
         <Toolbar variant="dense">
           <Typography variant="h6" color="inherit">
+            내 관심사 아카이브
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box my={2}>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <Grid container spacing={3}>
+            {archive_info_data.map(
+              archive =>
+                archive.type === 'category' && (
+                  <Grid key={archive.no} item lg={3} sm={6} xs={12}>
+                    <ArchiveCardForm archive_info={archive} />
+                  </Grid>
+                ),
+            )}
+          </Grid>
+        )}
+      </Box>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <Typography variant="h6" color="inherit">
             내 북마크 아카이브
           </Typography>
         </Toolbar>

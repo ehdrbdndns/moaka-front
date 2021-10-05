@@ -1,10 +1,17 @@
-import { insertArchiveRequest } from '../../apis/archives/types';
+import {
+  insertArchiveRequest,
+  updateArchiveRequest,
+} from '../../apis/archives/types';
 import * as sagaType from './types';
 
 // TODO 액션 함수
 export const insertArchive = (insertArchive: insertArchiveRequest) => ({
   type: sagaType.INSERT_ARCHIVE,
   payload: insertArchive,
+});
+export const updateArchive = (updateArchiveRequest: updateArchiveRequest) => ({
+  type: sagaType.UPDATE_ARCHIVE,
+  payload: updateArchiveRequest,
 });
 export const getGroupArchiveList = () => ({
   type: sagaType.GET_GROUP_ARCHIVE_LIST,

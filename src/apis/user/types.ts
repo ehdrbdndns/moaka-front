@@ -19,3 +19,9 @@ export type searchUserListResponse = {
   user_list: Array<userListType>;
   error: number;
 };
+
+export type retrieveGroupUserOfArchiveByArchiveNoResponse = {
+  user_list: Array<userListType>;
+  isSuccess: boolean;
+  error: number;
+};

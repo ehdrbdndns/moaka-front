@@ -41,18 +41,6 @@ function Tag_A({
     if (chunk_tag_list.length !== 0) setTagList(chunk_tag_list);
   }, [chunk_tag_list, setTagList]);
 
-  // const setTagEvent = (e: React.ChangeEvent<HTMLInputElement>): void => {
-  //   setTag(e.target.value);
-  // };
-
-  // const setTagListEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === 'Enter') {
-  //     setTagList(tag_list => [...tag_list, tag]);
-  //     // setTagList(tagList.concat(tag));
-  //     setTag('');
-  //   }
-  // };
-
   const removeTagEvent = (index: number) => {
     setTagList(tag_list.filter((tag, i) => i !== index));
   };

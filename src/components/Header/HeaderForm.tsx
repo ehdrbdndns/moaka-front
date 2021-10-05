@@ -67,8 +67,8 @@ const headerStyles = makeStyles(theme => ({
 }));
 
 type MakeArchiveModalProps = {
-  userListInfo: userListInfo;
   authInfo: authInfo;
+  userListInfo: userListInfo;
   searchUserListRedux: (id: string) => void;
   insertArchiveRedux: (insertArchiveRequest: insertArchiveRequest) => void;
   updateUserRedux: (userInfo: updateUserRequest) => void;

@@ -13,6 +13,7 @@ import {
   getArchive,
   setArchiveBookmark,
   setArchiveLike,
+  updateArchive,
 } from '../modules/archive';
 import {
   bookmarkActionType,
@@ -41,17 +42,31 @@ import {
 } from '../modules/section';
 import queryString from 'query-string';
 import { insertCommentOfChunkRequest } from '../apis/comment/types';
+import { updateArchiveRequest } from '../apis/archives/types';
+import { searchUserList } from '../modules/userList';
 
 function ArchiveDetail() {
   const dispatch = useDispatch();
   const sectionInfo = useSelector((state: RootState) => state.section);
   const archiveInfo = useSelector((state: RootState) => state.archive);
   const userInfo = useSelector((state: RootState) => state.auth);
+  const userList = useSelector((state: RootState) => state.userList);
 
   const location = useLocation();
   const query = queryString.parse(location.search);
 
   const { push } = useHistory();
+
+  const searchUserListRedux = (id: string) => {
+    dispatch(searchUserList(id));
+  };
+
+  const updateArchiveRedux = useCallback(
+    (updateArchiveRequest: updateArchiveRequest) => {
+      dispatch(updateArchive(updateArchiveRequest));
+    },
+    [dispatch],
+  );
 
   const deleteArchiveRedux = useCallback(
     (archive_no: number) => {
@@ -222,11 +237,14 @@ function ArchiveDetail() {
       <ArchiveHeaderForm
         archive_info={archiveInfo.data[0]}
         user_info={userInfo.data}
+        search_user_list={userList}
+        searchUserListRedux={searchUserListRedux}
         setArchiveLikeRedux={setArchiveLikeRedux}
         deleteArchiveLikeRedux={deleteArchiveLikeRedux}
         setArchiveBookmarkRedux={setArchiveBookmarkRedux}
         deleteArchiveBookmarkRedux={deleteArchiveBookmarkRedux}
         deleteArchiveRedux={deleteArchiveRedux}
+        updateArchiveRedux={updateArchiveRedux}
       />
       <ArchiveDetailForm
         section_loading={sectionInfo.loading}
