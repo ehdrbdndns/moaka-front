@@ -82,7 +82,7 @@ function LoginForm({
   };
 
   const errorGoogleEvent = (response: any) => {
-    console.log('error');
+    console.log('google login error');
     console.log(response);
   };
 
@@ -145,7 +145,21 @@ function LoginForm({
               >
                 로그인
               </Button>
+              {/* <GoogleLogin
+                clientId="1082912120178-qs3951djt47hg2bmmffgdh6rv8ankl9c.apps.googleusercontent.com"
+                buttonText="Total 전용 로그인"
+                onSuccess={successGoogleEvent}
+                onFailure={errorGoogleEvent}
+                cookiePolicy={'single_host_origin'}
+              /> */}
               <GoogleLogin
+                clientId="1082912120178-5uoi27822mvgh3cfklcdfkeqj0d9ln0u.apps.googleusercontent.com"
+                buttonText="Https 전용 Login"
+                onSuccess={successGoogleEvent}
+                onFailure={errorGoogleEvent}
+                cookiePolicy={'single_host_origin'}
+              />
+              {/* <GoogleLogin
                 clientId="1082912120178-ea629dedjv1s0jehssqh2bhq11ttr047.apps.googleusercontent.com"
                 render={renderProps => (
                   <Button
@@ -162,7 +176,7 @@ function LoginForm({
                 onSuccess={successGoogleEvent}
                 onFailure={errorGoogleEvent}
                 cookiePolicy={'single_host_origin'}
-              />
+              /> */}
             </>
           )}
           <Grid container>
