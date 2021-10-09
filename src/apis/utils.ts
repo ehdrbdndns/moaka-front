@@ -1,2 +1,6 @@
-export const BASE_URL: string = 'http://localhost:8080';
-// export const BASE_URL: string = 'https://moaka-server.com';
+let BASE_URL: string = '';
+process.env.NODE_ENV === 'development'
+  ? (BASE_URL = 'http://localhost:8080')
+  : (BASE_URL = 'https://moaka-server.com');
+
+export { BASE_URL };
