@@ -45,3 +45,38 @@
     color: #bdbdbd;
   }
 }
+
+.input-box {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+
+  & > .prefix {
+    margin-right: 4px;
+  }
+
+  & > .surfix {
+    margin-left: auto;
+  }
+
+  & > input {
+    // 14px
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #9f9e9f;
+    line-height: 20px;
+    border: none;
+    outline: none;
+    background-color: inherit;
+  }
+}
+
+.search-input-box {
+  padding: 3px 12px;
+
+  & > .prefix {
+    margin-right: 8px;
+  }
+}

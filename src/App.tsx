@@ -11,12 +11,14 @@ import TEST from './containers/TEST';
 import Footer from './components/Footer/Footer';
 import Header from './containers/Header';
 import Search from './containers/Search';
+import NewHeaderForm from './components/Header/NewHeaderForm';
 
 function App() {
   return (
     <div>
-      <Header />
-      <Switch>
+      <NewHeaderForm />
+      {/* <Header /> */}
+      {/* <Switch>
         <Route path="/test">
           <TEST />
         </Route>
@@ -39,7 +41,7 @@ function App() {
           <Home />
         </Route>
       </Switch>
-      <Footer />
+      <Footer /> */}
     </div>
   );
 }
