@@ -1,41 +1,41 @@
 // -----------------------------------------------------------------------------
 // This file contains all @font-face declarations, if any.
 // -----------------------------------------------------------------------------
-@font-face {
-  font-family: 'NEXON Lv1 Gothic Low OTF';
-  src: url('./assets/NEXON Lv1 Gothic Low OTF.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'NEXON Lv1 Gothic Low OTF';
+//   src: url('./assets/NEXON Lv1 Gothic Low OTF.woff') format('woff');
+//   font-weight: normal;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'NEXON Lv1 Gothic Low OTF';
-  src: url('./assets/NEXON Lv1 Gothic Low OTF Bold.woff');
-  font-weight: bold;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'NEXON Lv1 Gothic Low OTF';
+//   src: url('./assets/NEXON Lv1 Gothic Low OTF Bold.woff');
+//   font-weight: bold;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'Apple SD Gothic Neo';
-  src: url('./assets/AppleSDGothicNeoL.ttf');
-  font-weight: lighter;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Apple SD Gothic Neo';
+//   src: url('./assets/AppleSDGothicNeoL.ttf');
+//   font-weight: lighter;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'Apple SD Gothic Neo';
-  src: url('./assets/AppleSDGothicNeoM.ttf');
-  font-weight: normal;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Apple SD Gothic Neo';
+//   src: url('./assets/AppleSDGothicNeoM.ttf');
+//   font-weight: normal;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'Apple SD Gothic Neo';
-  src: url('./assets/AppleSDGothicNeoB.ttf');
-  font-weight: bold;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Apple SD Gothic Neo';
+//   src: url('./assets/AppleSDGothicNeoB.ttf');
+//   font-weight: bold;
+//   font-style: normal;
+// }
 
 body {
-  // font-family: 'NEXON Lv1 Gothic Low OTF';
+  font-family: 'Noto Sans KR', sans-serif;
 }
