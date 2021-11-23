@@ -82,7 +82,7 @@ function LoginForm({
   };
 
   const errorGoogleEvent = (response: any) => {
-    console.log('error');
+    console.log('google login error');
     console.log(response);
   };
 
@@ -145,24 +145,23 @@ function LoginForm({
               >
                 로그인
               </Button>
-              <GoogleLogin
-                clientId="1082912120178-ea629dedjv1s0jehssqh2bhq11ttr047.apps.googleusercontent.com"
-                render={renderProps => (
-                  <Button
-                    type="button"
-                    fullWidth
-                    variant="outlined"
-                    className={classes.submit}
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                  >
-                    구글 로그인
-                  </Button>
-                )}
-                onSuccess={successGoogleEvent}
-                onFailure={errorGoogleEvent}
-                cookiePolicy={'single_host_origin'}
-              />
+              {process.env.NODE_ENV === 'development' ? (
+                <GoogleLogin
+                  clientId="1082912120178-qs3951djt47hg2bmmffgdh6rv8ankl9c.apps.googleusercontent.com"
+                  buttonText="로컬 전용 로그인"
+                  onSuccess={successGoogleEvent}
+                  onFailure={errorGoogleEvent}
+                  cookiePolicy={'single_host_origin'}
+                />
+              ) : (
+                <GoogleLogin
+                  clientId="1082912120178-5uoi27822mvgh3cfklcdfkeqj0d9ln0u.apps.googleusercontent.com"
+                  buttonText="배포 전용 Login"
+                  onSuccess={successGoogleEvent}
+                  onFailure={errorGoogleEvent}
+                  cookiePolicy={'single_host_origin'}
+                />
+              )}
             </>
           )}
           <Grid container>
