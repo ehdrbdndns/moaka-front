@@ -31,6 +31,10 @@
     margin-left: auto;
     justify-content: flex-end;
   }
+
+  & > .profile {
+    cursor: pointer;
+  }
 }
 
 .header__logo {

@@ -18,8 +18,24 @@ function NewHeaderForm() {
       {/* mode select */}
       <div className="header__item">
         <div className="mode-select">
-          <span className="mode-select__mode active">홈</span>
-          <span className="mode-select__mode">마이페이지</span>
+          <input
+            type="radio"
+            className="mode-select__state"
+            name="header-mode"
+            id="mode-home"
+          />
+          <label className="mode-select__mode home active" htmlFor="mode-home">
+            홈
+          </label>
+          <input
+            type="radio"
+            className="mode-select__state"
+            name="header-mode"
+            id="mode-mypage"
+          />
+          <label className="mode-select__mode" htmlFor="mode-mypage">
+            마이페이지
+          </label>
         </div>
       </div>
       {/* mypage */}
