@@ -14,7 +14,8 @@
 
 // 5. Components
 @import 'components/button', 'components/card', 'components/input',
-  'components/textarea', 'components/select';
+  'components/textarea', 'components/select', 'components/modal',
+  'components/chat';
 
 // 6. Page-specific styles
 @import 'pages/home', 'pages/login', 'pages/bookmark';
