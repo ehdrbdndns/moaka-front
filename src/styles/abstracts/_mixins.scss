@@ -1,36 +1,83 @@
-// -----------------------------------------------------------------------------
-// This file contains all application-wide Sass mixins.
-// -----------------------------------------------------------------------------
-// -----------------------------------------------------------------------------
-// This file contains all application-wide Sass mixins.
-// -----------------------------------------------------------------------------
-
-/// Event wrapper
-/// @author Harry Roberts
-/// @param {Bool} $self [false] - Whether or not to include current selector
-/// @link https://twitter.com/csswizardry/status/478938530342006784 Original tweet from Harry Roberts
-@mixin on-event($self: false) {
-  @if $self {
-    &,
-    &:hover,
-    &:active,
-    &:focus {
-      @content;
-    }
-  } @else {
-    &:hover,
-    &:active,
-    &:focus {
-      @content;
-    }
-  }
+@mixin h1 {
+  font-size: 5.813rem; // 93px
+  font-weight: 300;
+  letter-spacing: 0.015rem;
+  color: #000;
 }
 
-/// Make a context based selector a little more friendly
-/// @author Kitty Giraudel
-/// @param {String} $context
-@mixin when-inside($context) {
-  #{$context} & {
-    @content;
-  }
+@mixin h2 {
+  font-size: 3.625rem; // 58px
+  font-weight: 300;
+  letter-spacing: 0.005rem;
+  color: #000;
+}
+
+@mixin h3 {
+  font-size: 2.938rem; //47px
+  color: #000;
+}
+
+@mixin h4 {
+  font-size: 2.063rem; // 33px
+  letter-spacing: 0.0025rem;
+  color: #000;
+}
+
+@mixin h5 {
+  font-size: 1.438rem; // 23px
+  color: #000;
+}
+
+@mixin h6 {
+  font-size: 1.188rem; // 19px
+  letter-spacing: 0.0015rem;
+  color: #000;
+}
+
+@mixin subtitle1 {
+  font-size: 1rem; // 16px
+  letter-spacing: 0.0015rem;
+  color: #000;
+  font-weight: 500;
+}
+
+@mixin subtitle2 {
+  font-size: 0.875rem; // 14px
+  letter-spacing: 0.001rem;
+  color: #000;
+}
+
+@mixin body1 {
+  font-size: 1rem; // 16px
+  letter-spacing: 0.005rem;
+  color: #000;
+}
+
+@mixin body2 {
+  font-size: 0.875rem; // 14px
+  letter-spacing: 0.0025rem;
+  color: #000;
+}
+
+@mixin button {
+  font-size: 0.813rem; //13px
+  font-weight: 500;
+  letter-spacing: 0.0125rem;
+  text-transform: uppercase;
+  color: #000;
+}
+
+@mixin caption {
+  font-size: 0.813rem; // 13px
+  font-weight: 500;
+  letter-spacing: 0.004em;
+  text-transform: capitalize;
+  color: #000;
+}
+
+@mixin overline {
+  font-size: 0.625rem; // 10px
+  letter-spacing: 0.015rem;
+  text-transform: uppercase;
+  color: #000;
 }
