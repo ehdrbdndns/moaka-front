@@ -22,7 +22,7 @@ function NewProfileModal() {
 
   return (
     <>
-      <div className="profile-modal modal modal--active">
+      <div className="profile-modal modal">
         {/* modal state button */}
         <figure className="modal__state" onClick={modalOnOff}>
           <img src="/img/svg/profile.svg" alt="마이페이지" />
@@ -54,7 +54,11 @@ function NewProfileModal() {
             </div>
             <div className="modal__header">
               <h3 className="modal__title">알림</h3>
-              <span className="modal__more" data-type="alert">
+              <span
+                className="modal__more"
+                data-type="alert"
+                onClick={modalViewChange}
+              >
                 더보기
               </span>
             </div>
@@ -109,7 +113,11 @@ function NewProfileModal() {
             </div>
             <div className="modal__content">
               <ul className="modal__item-list">
-                <li className="modal__item">
+                <li
+                  className="modal__item"
+                  data-type="setting"
+                  onClick={modalViewChange}
+                >
                   <img src="/img/svg/setting.svg" alt="톱니바퀴" />
                   <span>설정 및 개인정보</span>
                 </li>
@@ -151,7 +159,32 @@ function NewProfileModal() {
               <div className="button">저장</div>
             </div>
           </div>
-          <div className="modal__view sub alert"></div>
+          <div className="modal__view sub alert">
+            <div className="modal__header">
+              <figure className="modal__close">
+                <img
+                  src="/img/svg/left-arrow.svg"
+                  alt="뒤로가기"
+                  data-type="alert"
+                  onClick={modalSubViewClose}
+                />
+                <h3 className="modal__title">알림</h3>
+              </figure>
+            </div>
+          </div>
+          <div className="modal__view sub setting">
+            <div className="modal__header">
+              <figure className="modal__close">
+                <img
+                  src="/img/svg/left-arrow.svg"
+                  alt="뒤로가기"
+                  data-type="setting"
+                  onClick={modalSubViewClose}
+                />
+                <h3 className="modal__title">설정 및 개인정보</h3>
+              </figure>
+            </div>
+          </div>
         </div>
       </div>
     </>
