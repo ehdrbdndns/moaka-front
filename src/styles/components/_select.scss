@@ -8,9 +8,8 @@
   }
 
   &__mode {
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 1.25%;
+    @include button;
+
     color: #616161;
     padding-bottom: 8px;
     cursor: pointer;
