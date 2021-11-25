@@ -104,15 +104,14 @@
 
     color: $primary-color;
     cursor: pointer;
+    text-align: center;
   }
 
   &__content {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 16px 0 12px;
-    margin-bottom: 12px;
-    border-bottom: 1px solid $gray400;
+    padding: 16px 0 20px;
 
     &:nth-last-child(1) {
       margin-bottom: 0;
@@ -143,5 +142,16 @@
     &:nth-last-child(1) {
       margin-bottom: 0;
     }
+  }
+
+  &__profile-img {
+    display: grid;
+    justify-content: center;
+    row-gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  &__input {
+    margin-bottom: 20px;
   }
 }

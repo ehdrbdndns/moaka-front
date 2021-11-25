@@ -10,12 +10,13 @@
 @import 'base/base', 'base/fonts', 'base/helpers', 'base/reset';
 
 // 4. Layout-related sections
-@import 'layout/header', 'layout/footer', 'layout/editor', 'layout/tag';
+@import 'layout/header', 'layout/footer', 'layout/editor', 'layout/tag',
+  'layout/modal';
 
 // 5. Components
 @import 'components/button', 'components/card', 'components/input',
-  'components/textarea', 'components/select', 'components/modal',
-  'components/chat';
+  'components/textarea', 'components/select', 'components/chat',
+  'components/image';
 
 // 6. Page-specific styles
 @import 'pages/home', 'pages/login', 'pages/bookmark';

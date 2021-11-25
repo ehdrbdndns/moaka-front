@@ -136,7 +136,20 @@ function NewProfileModal() {
                 <h3 className="modal__title">프로필 수정</h3>
               </figure>
             </div>
-            <div className="modal__content"></div>
+            <div className="modal__content">
+              <figure className="modal__profile-img">
+                <img
+                  src="/img/test/user-test.png"
+                  className="image-xl"
+                  alt="사용자 이미지"
+                />
+                <span className="modal__more">수정</span>
+              </figure>
+              <div className="modal__input input-box">
+                <input type="text" placeholder="닉네임" />
+              </div>
+              <div className="button">저장</div>
+            </div>
           </div>
           <div className="modal__view sub alert"></div>
         </div>
