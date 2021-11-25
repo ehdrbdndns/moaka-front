@@ -21,7 +21,7 @@ function NewProfileModal() {
                 <img src="/img/test/user-test.png" alt="사용자 이미지" />
               </figure>
               <div className="user-chat__info">
-                <span className="user-chat__name">닉네임</span>
+                <div className="user-chat__name">닉네임</div>
                 <span className="user-chat__content">test@gmail.com</span>
               </div>
             </div>
