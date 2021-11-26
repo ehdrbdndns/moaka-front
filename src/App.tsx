@@ -13,15 +13,21 @@ import Footer from './components/Footer/Footer';
 import Header from './containers/Header';
 import Search from './containers/Search';
 import NewHeaderForm from './components/Header/NewHeaderForm';
-import NewArchiveArchiveCardList from './components/CardList/NewArchiveCardList';
+import NewArchiveCardList from './components/CardList/NewArchiveCardList';
+import NewSide from './components/Side/NewSide';
 
 function App() {
   return (
     <div>
       <NewHeaderForm />
       <div className="container">
-        <NewArchiveArchiveCardList title="가장 인기있는 아카이브" index={1} />
-        <NewArchiveArchiveCardList title="내가 관심있는 아카이브" index={2} />
+        <div className="row">
+          <div className="w-100">
+            <NewArchiveCardList title="가장 인기있는 아카이브" index={1} />
+            <NewArchiveCardList title="내가 관심있는 아카이브" index={2} />
+          </div>
+          <NewSide />
+        </div>
       </div>
       {/* <Header /> */}
       {/* <Switch>

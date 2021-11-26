@@ -1,0 +1,17 @@
+.side {
+  &__nav {
+    width: 36px;
+    padding: 12px 6px;
+    background-color: #000;
+    border-radius: 8px;
+
+    & > ul {
+      display: grid;
+      row-gap: 16px;
+    }
+
+    &-item {
+      cursor: pointer;
+    }
+  }
+}
