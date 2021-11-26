@@ -15,6 +15,8 @@ import Search from './containers/Search';
 import NewHeaderForm from './components/Header/NewHeaderForm';
 import NewArchiveCardList from './components/CardList/NewArchiveCardList';
 import NewSide from './components/Side/NewSide';
+import NewHomeCardList from './components/CardList/NewHomeCardList';
+import NewMyCardList from './components/CardList/NewMyCardList';
 
 function App() {
   return (
@@ -22,10 +24,10 @@ function App() {
       <NewHeaderForm />
       <div className="container">
         <div className="row">
-          <div className="w-100">
-            <NewArchiveCardList title="가장 인기있는 아카이브" index={1} />
-            <NewArchiveCardList title="내가 관심있는 아카이브" index={2} />
-          </div>
+          <Switch>
+            <Route path="/mypage" component={NewMyCardList} />
+            <Route path="/" component={NewHomeCardList} />
+          </Switch>
           <NewSide />
         </div>
       </div>

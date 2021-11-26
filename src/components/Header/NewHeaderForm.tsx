@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import NewProfileModal from '../Modal/NewProfileModal';
 
 function NewHeaderForm() {
+  let location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      document
+        .querySelector('.mode-select__mode.home')
+        ?.classList.add('mode-select__mode--active');
+      document
+        .querySelector('.mode-select__mode.mypage')
+        ?.classList.remove('mode-select__mode--active');
+    } else {
+      document
+        .querySelector('.mode-select__mode.mypage')
+        ?.classList.add('mode-select__mode--active');
+      document
+        .querySelector('.mode-select__mode.home')
+        ?.classList.remove('mode-select__mode--active');
+    }
+  }, [location]);
+
   return (
     <>
       <header className="header">
@@ -20,10 +41,12 @@ function NewHeaderForm() {
         {/* mode select */}
         <div className="header__item">
           <div className="mode-select">
-            <div className="mode-select__mode mode-select__mode--active home">
-              홈
-            </div>
-            <div className="mode-select__mode mypage">마이페이지</div>
+            <Link to="/">
+              <div className="mode-select__mode home">홈</div>
+            </Link>
+            <Link to="/mypage">
+              <div className="mode-select__mode mypage">마이페이지</div>
+            </Link>
           </div>
         </div>
         {/* mypage */}
