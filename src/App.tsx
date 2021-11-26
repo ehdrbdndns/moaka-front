@@ -12,13 +12,16 @@ import Footer from './components/Footer/Footer';
 import Header from './containers/Header';
 import Search from './containers/Search';
 import NewHeaderForm from './components/Header/NewHeaderForm';
-import NewArchiveCard from './components/Card/NewArchiveCard';
+import NewArchiveArchiveCardList from './components/CardList/NewArchiveCardList';
 
 function App() {
   return (
     <div>
       <NewHeaderForm />
-      <NewArchiveCard />
+      <div className="container">
+        <NewArchiveArchiveCardList title="가장 인기있는 아카이브" index={1} />
+        <NewArchiveArchiveCardList title="내가 관심있는 아카이브" index={2} />
+      </div>
       {/* <Header /> */}
       {/* <Switch>
         <Route path="/test">
