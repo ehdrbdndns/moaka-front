@@ -11,12 +11,12 @@
 
 // 4. Layout-related sections
 @import 'layout/header', 'layout/footer', 'layout/editor', 'layout/tag',
-  'layout/modal';
+  'layout/modal', 'layout/card-list';
 
 // 5. Components
 @import 'components/button', 'components/card', 'components/input',
   'components/textarea', 'components/select', 'components/chat',
-  'components/image', 'components/card-list';
+  'components/image';
 
 // 6. Page-specific styles
 @import 'pages/home', 'pages/login', 'pages/bookmark';
