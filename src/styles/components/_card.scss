@@ -37,3 +37,66 @@
     margin: 0;
   }
 }
+
+.card {
+  display: grid;
+  row-gap: 6px;
+  justify-content: center;
+  width: 230px;
+  height: 282px;
+  padding: 12px 0;
+  background-color: #f1ecec;
+  border-radius: 16px;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 126px;
+    row-gap: 6px;
+    justify-content: center;
+  }
+
+  &__bookmark {
+    width: 24px;
+    height: 24px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1rem; // 16px
+    font-weight: 700;
+    text-align: center;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__icon-box {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    margin-right: 4px;
+  }
+
+  &__thumbnail {
+    width: 100%;
+    height: 88px;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 8px;
+  }
+}

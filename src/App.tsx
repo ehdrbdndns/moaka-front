@@ -12,11 +12,13 @@ import Footer from './components/Footer/Footer';
 import Header from './containers/Header';
 import Search from './containers/Search';
 import NewHeaderForm from './components/Header/NewHeaderForm';
+import NewArchiveCard from './components/Card/NewArchiveCard';
 
 function App() {
   return (
     <div>
       <NewHeaderForm />
+      <NewArchiveCard />
       {/* <Header /> */}
       {/* <Switch>
         <Route path="/test">
