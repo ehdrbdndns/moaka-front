@@ -17,18 +17,20 @@ import NewArchiveCardList from './components/CardList/NewArchiveCardList';
 import NewSide from './components/Side/NewSide';
 import NewHomeCardList from './components/CardList/NewHomeCardList';
 import NewMyCardList from './components/CardList/NewMyCardList';
+import Component from './components/Component';
 
 function App() {
   return (
     <div>
-      <NewHeaderForm />
+      {/* <NewHeaderForm /> */}
       <div className="container">
         <div className="row">
           <Switch>
+            <Route path="/component" component={Component} />
             <Route path="/mypage" component={NewMyCardList} />
             <Route path="/" component={NewHomeCardList} />
           </Switch>
-          <NewSide />
+          {/* <NewSide /> */}
         </div>
       </div>
       {/* <Header /> */}

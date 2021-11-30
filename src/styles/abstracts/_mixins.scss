@@ -1,51 +1,41 @@
 @mixin h1 {
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 5.813rem; // 93px
-  font-weight: 300;
+  font-size: 2.25rem; // 36px
+  font-weight: 700;
   letter-spacing: 0.015rem;
   color: #000;
 }
 
 @mixin h2 {
-  font-size: 3.625rem; // 58px
-  font-weight: 300;
-  letter-spacing: 0.005rem;
+  font-size: 2rem; // 32px
+  font-weight: 700;
   color: #000;
 }
 
 @mixin h3 {
-  font-size: 2.938rem; //47px
+  font-size: 2.938rem; // 24px
+  font-weight: 700;
+  letter-spacing: 0.005rem;
   color: #000;
 }
 
 @mixin h4 {
-  font-size: 2.063rem; // 33px
-  letter-spacing: 0.0025rem;
+  font-size: 1.25rem; // 20px
+  font-weight: 700;
+  letter-spacing: 0.0015rem;
   color: #000;
 }
 
 @mixin h5 {
-  font-size: 1.438rem; // 23px
-  color: #000;
-}
-
-@mixin h6 {
-  font-size: 1.188rem; // 19px
+  font-size: 1rem; // 16px
   font-weight: 700;
-  letter-spacing: 0.0015rem;
+  letter-spacing: 0.0025rem;
   color: #000;
 }
 
 @mixin subtitle1 {
-  font-size: 1rem; // 16px
-  letter-spacing: 0.0015rem;
-  color: #000;
-  font-weight: 700;
-}
-
-@mixin subtitle2 {
   font-size: 0.875rem; // 14px
-  letter-spacing: 0.001rem;
+  font-weight: 500;
   color: #000;
 }
 
@@ -70,7 +60,7 @@
 }
 
 @mixin caption {
-  font-size: 0.813rem; // 13px
+  font-size: 0.75rem; // 12px
   font-weight: 500;
   letter-spacing: 0.004em;
   text-transform: capitalize;
