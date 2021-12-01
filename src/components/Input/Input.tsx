@@ -1,5 +1,5 @@
 import React from 'react';
-import { onFocus, onBlur } from '../../asset/Input/input';
+import { onFocus, onBlur } from './event';
 import { InputProps } from './type';
 
 function Input(data: InputProps) {
