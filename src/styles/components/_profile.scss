@@ -1,0 +1,73 @@
+.profile {
+  position: relative;
+  border-radius: 100%;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+  }
+
+  &.s {
+    width: 24px;
+    height: 24px;
+
+    .profile__alert {
+      position: absolute;
+      top: -9px;
+      right: 0;
+
+      img {
+        width: 8px;
+        height: 8px;
+      }
+    }
+  }
+
+  &.m {
+    width: 28px;
+    height: 28px;
+
+    .profile__alert {
+      position: absolute;
+      top: -9px;
+      right: 0;
+
+      img {
+        width: 8px;
+        height: 8px;
+      }
+    }
+  }
+
+  &.l {
+    width: 36px;
+    height: 36px;
+
+    .profile__alert {
+      position: absolute;
+      top: -7px;
+      right: 0;
+
+      img {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+
+  &.xl {
+    width: 56px;
+    height: 56px;
+
+    .profile__alert {
+      position: absolute;
+      top: -4px;
+      right: 2px;
+
+      img {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+}
