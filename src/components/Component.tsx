@@ -43,7 +43,7 @@ function Component() {
       </div>
       <div className="w-100">
         <div style={{ display: 'flex', marginBottom: '30px' }}>
-          <div style={{ width: '500px', marginRight: '50px' }}>
+          <div style={{ width: '300px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Profile</h1>
             <div style={{ display: 'flex' }}>
               <Profile />

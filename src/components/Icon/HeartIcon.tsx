@@ -1,5 +1,4 @@
 import React from 'react';
-import { nanoid } from 'nanoid';
 import { onClickIcon } from './event';
 import { HeartIconProps } from './type';
 
