@@ -1,5 +1,4 @@
 import React from 'react';
-import NewArchiveCard from '../Card/NewArchiveCard';
 import { NewArchiveCardListProps } from './type';
 
 function NewArchiveCardList(props: NewArchiveCardListProps) {
@@ -26,15 +25,7 @@ function NewArchiveCardList(props: NewArchiveCardListProps) {
             onClick={cardOnoff}
           />
         </div>
-        <div className="card-list__content">
-          <NewArchiveCard />
-          <NewArchiveCard />
-          <NewArchiveCard />
-          <NewArchiveCard />
-          <NewArchiveCard />
-          <NewArchiveCard />
-          <NewArchiveCard />
-        </div>
+        <div className="card-list__content">{/* Card */}</div>
       </div>
     </>
   );

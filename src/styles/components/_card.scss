@@ -40,18 +40,18 @@
 
 .card {
   display: grid;
-  row-gap: 6px;
+  row-gap: 11px;
   justify-content: center;
   width: 230px;
-  height: 282px;
   padding: 12px 0;
-  background-color: #f1ecec;
-  border-radius: 16px;
+  background-color: white;
+  border-radius: 6px;
+  border: 1px solid $gray200;
 
   &__header {
     display: grid;
     grid-template-columns: 126px;
-    row-gap: 6px;
+    row-gap: 11px;
     justify-content: center;
   }
 
@@ -59,17 +59,19 @@
     width: 24px;
     height: 24px;
     margin: 0 auto;
+    cursor: pointer;
   }
 
   &__title {
-    height: 64px;
+    @include h5;
+    text-align: center;
+
     display: flex;
     justify-content: center;
     align-items: center;
 
-    font-size: 1rem; // 16px
-    font-weight: 700;
-    text-align: center;
+    line-height: 23.17px;
+    height: 64px;
   }
 
   &__info {
@@ -83,13 +85,8 @@
     align-items: center;
   }
 
-  &__icon {
-    margin-right: 4px;
-  }
-
-  &__thumbnail {
-    width: 100%;
-    height: 88px;
+  &__icon-name {
+    margin-left: 4px;
   }
 
   &__footer {

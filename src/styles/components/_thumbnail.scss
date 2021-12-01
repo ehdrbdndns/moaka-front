@@ -1,0 +1,16 @@
+.thumbnail {
+  width: 230px;
+
+  &.book {
+    height: 70px;
+  }
+
+  &.link {
+    height: 133px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}

@@ -1,14 +1,17 @@
 import React from 'react';
-import NewHeaderForm from './Header/NewHeaderForm';
 import Input from './Input/Input';
 import Profile from './Profile/Profile';
 import Tag from './Tag/Tag';
+import Card from './Card/Card';
+import Thumbnail from './Thumbnail/Thumbnail';
+import Favicon from './Favicon/Favicon';
+import HeartIcon from './Icon/HeartIcon';
+import { nanoid } from 'nanoid';
 
 function Component() {
   const userTestImg = '/img/test/user-test.png';
   return (
     <div className="w-100">
-      <NewHeaderForm></NewHeaderForm>
       <div style={{ display: 'flex', marginBottom: '30px' }}>
         <div style={{ width: '200px', marginRight: '50px' }}>
           <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Input</h1>
@@ -27,18 +30,41 @@ function Component() {
           <Tag value="태그" />
           <Tag value="카테고리 선택" type="black" />
         </div>
+        <div style={{ width: '300px' }}>
+          <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Card</h1>
+          <Card />
+        </div>
+        <div style={{ width: '300px' }}>
+          <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Thumbnail</h1>
+          <Thumbnail type="book" />
+          <hr />
+          <Thumbnail type="link" />
+        </div>
       </div>
       <div className="w-100">
-        <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Profile</h1>
-        <div style={{ display: 'flex' }}>
-          <Profile />
-          <Profile notification={true} />
-          <Profile size="m" />
-          <Profile size="m" notification={true} />
-          <Profile size="l" />
-          <Profile size="l" notification={true} />
-          <Profile size="xl" />
-          <Profile size="xl" notification={true} />
+        <div style={{ display: 'flex', marginBottom: '30px' }}>
+          <div style={{ width: '500px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Profile</h1>
+            <div style={{ display: 'flex' }}>
+              <Profile />
+              <Profile notification={true} />
+              <Profile size="m" />
+              <Profile size="m" notification={true} />
+              <Profile size="l" />
+              <Profile size="l" notification={true} />
+              <Profile size="xl" />
+              <Profile size="xl" notification={true} />
+            </div>
+          </div>
+          <div style={{ width: '100px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Favicon</h1>
+            <Favicon type="link" />
+            <Favicon type="moaka" />
+          </div>
+          <div style={{ width: '100px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Icon Box</h1>
+            <HeartIcon id={nanoid()} />
+          </div>
         </div>
       </div>
     </div>

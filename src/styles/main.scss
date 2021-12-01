@@ -16,7 +16,8 @@
 // 5. Components
 @import 'components/button', 'components/card', 'components/input',
   'components/textarea', 'components/select', 'components/chat',
-  'components/image', 'components/tag', 'components/profile';
+  'components/image', 'components/tag', 'components/profile',
+  'components/favicon', 'components/thumbnail', 'components/icon';
 
 // 6. Page-specific styles
 @import 'pages/home', 'pages/login', 'pages/bookmark';
