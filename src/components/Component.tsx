@@ -1,6 +1,7 @@
 import React from 'react';
 import NewHeaderForm from './Header/NewHeaderForm';
 import Input from './Input/Input';
+import Profile from './Profile/Profile';
 import Tag from './Tag/Tag';
 
 function Component() {
@@ -8,7 +9,7 @@ function Component() {
   return (
     <div className="w-100">
       <NewHeaderForm></NewHeaderForm>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', marginBottom: '30px' }}>
         <div style={{ width: '200px', marginRight: '50px' }}>
           <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Input</h1>
           <Input placeholder="placeholder" />
@@ -25,6 +26,19 @@ function Component() {
           <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Tag</h1>
           <Tag value="태그" />
           <Tag value="카테고리 선택" type="black" />
+        </div>
+      </div>
+      <div className="w-100">
+        <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Profile</h1>
+        <div style={{ display: 'flex' }}>
+          <Profile />
+          <Profile notification={true} />
+          <Profile size="m" />
+          <Profile size="m" notification={true} />
+          <Profile size="l" />
+          <Profile size="l" notification={true} />
+          <Profile size="xl" />
+          <Profile size="xl" notification={true} />
         </div>
       </div>
     </div>
