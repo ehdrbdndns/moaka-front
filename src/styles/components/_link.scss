@@ -1,0 +1,70 @@
+.link {
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &__header {
+    height: 31px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 8px;
+    padding: 0 8px;
+  }
+
+  &.imageview {
+    &__header {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  &:hover &__header {
+    border: 1px solid $gray100;
+    background-color: $gray100;
+  }
+
+  &.active &__header {
+    border: 1px solid $gray200;
+    background-color: $tertiary-color;
+  }
+
+  &__title {
+    @include button;
+
+    margin-left: 8px;
+    color: black;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 28px;
+
+    span {
+      @include button;
+      color: $gray700;
+    }
+  }
+
+  &__description {
+    @include caption;
+
+    position: relative;
+    color: $gray700;
+    margin-left: 6px;
+    line-height: 17px;
+
+    &::before {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 100%;
+      background-color: $gray400;
+      transform: translateX(-6px);
+    }
+  }
+}

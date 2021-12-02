@@ -7,6 +7,7 @@ import Thumbnail from './Thumbnail/Thumbnail';
 import Favicon from './Favicon/Favicon';
 import HeartIcon from './Icon/HeartIcon';
 import Button from './Button/Button';
+import Link from './Link/Link';
 import { nanoid } from 'nanoid';
 
 function Component() {
@@ -37,9 +38,9 @@ function Component() {
         </div>
         <div style={{ width: '300px' }}>
           <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Thumbnail</h1>
-          <Thumbnail type="book" />
+          <Thumbnail type="book_thumbnail" />
           <hr />
-          <Thumbnail type="link" />
+          <Thumbnail type="link_thumbnail" />
         </div>
       </div>
       <div className="w-100">
@@ -74,6 +75,21 @@ function Component() {
             <Button type="outline disabled" value="버튼" />
             <Button type="text" value="버튼" />
             <Button type="text disabled" value="버튼" />
+          </div>
+        </div>
+      </div>
+      <div className="w-100">
+        <div style={{ display: 'flex', marginBottom: '30px' }}>
+          <div style={{ width: '600px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Link</h1>
+            <div style={{ display: 'flex' }}>
+              <div style={{ width: '230px', marginRight: '50px' }}>
+                <Link id={nanoid()} type="listview" />
+              </div>
+              <div style={{ width: '230px', marginRight: '50px' }}>
+                <Link id={nanoid()} type="imageview" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -27,8 +27,8 @@ function HeartIcon(data: HeartIconProps) {
 }
 
 HeartIcon.defaultProps = {
-  value: '0',
-  isActive: false,
+  value: '0', // 좋아요 개수
+  isActive: false, // 좋아요 체크 여부
 };
 
 export default HeartIcon;
