@@ -3,3 +3,7 @@ export type HeartIconProps = {
   value: string;
   isActive: boolean;
 };
+
+export type LinkIconProps = {
+  value: string;
+};

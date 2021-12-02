@@ -50,7 +50,7 @@
 
   &__header {
     display: grid;
-    grid-template-columns: 126px;
+    grid-template-columns: 1fr;
     row-gap: 11px;
     justify-content: center;
   }
@@ -76,24 +76,35 @@
 
   &__info {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
   }
 
   &__icon-box {
     display: flex;
     align-items: center;
+    margin-right: 4px;
+
+    &:nth-last-child(1) {
+      margin: 0;
+    }
   }
 
   &__icon-name {
+    @include button;
+
+    color: $gray800;
     margin-left: 4px;
   }
 
-  &__footer {
+  &-footer {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: flex-start;
+    margin-top: 8px;
 
-    padding: 0 8px;
+    &__item {
+      margin: 0px 4px;
+    }
   }
 }

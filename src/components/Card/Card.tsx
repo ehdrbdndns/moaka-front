@@ -1,7 +1,9 @@
 import { nanoid } from 'nanoid';
 import React from 'react';
 import HeartIcon from '../Icon/HeartIcon';
+import LinkIcon from '../Icon/LinkIcon';
 import Profile from '../Profile/Profile';
+import Tag from '../Tag/Tag';
 import Thumbnail from '../Thumbnail/Thumbnail';
 import { CardProps } from './type';
 
@@ -21,19 +23,25 @@ function Card(data: CardProps) {
               <Profile size="s" />
               <span className="card__icon-name">홍길동</span>
             </div>
-            <HeartIcon id={nanoid()} />
+            <div className="card__icon-box">
+              <LinkIcon />
+            </div>
+            <div className="card__icon-box">
+              <HeartIcon id={nanoid()} />
+            </div>
           </div>
         </div>
         <Thumbnail src={data.src} type="book" />
-        <div className="card__footer">
-          <HeartIcon id={nanoid()} />
-          <div className="card__icon-box">
-            <img
-              src="/img/svg/three-dot.svg"
-              className="card__icon"
-              alt="앱실론 이미지"
-            />
-          </div>
+      </div>
+      <div className="card-footer">
+        <div className="card-footer__item">
+          <Tag />
+        </div>
+        <div className="card-footer__item">
+          <Tag />
+        </div>
+        <div className="card-footer__item">
+          <Tag />
         </div>
       </div>
     </>

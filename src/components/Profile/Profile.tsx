@@ -18,7 +18,7 @@ function Profile(data: ProfileProps) {
 
 Profile.defaultProps = {
   size: 's',
-  src: '/img/test/user-test.png',
+  src: '/img/user/user-default-img.png',
   notification: false,
 };
 
