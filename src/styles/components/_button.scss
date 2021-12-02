@@ -57,13 +57,41 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 12px;
-  background-color: #000000;
-  border-radius: 8px;
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 6px;
   cursor: pointer;
-  color: #fff;
 
   &:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
+  }
+
+  &.primary {
+    background-color: $primary-color;
+    color: #fff;
+
+    &.disabled {
+      background-color: $gray300;
+      color: $gray500;
+    }
+  }
+
+  &.outline {
+    border: 1px solid $primary-color;
+    background: none;
+    color: $primary-color;
+
+    &.disabled {
+      border: 1px solid $gray300;
+      color: $gray400;
+    }
+  }
+
+  &.text {
+    color: $quaternary-color;
+
+    &.disabled {
+      color: $gray300;
+    }
   }
 }

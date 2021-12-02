@@ -6,6 +6,7 @@ import Card from './Card/Card';
 import Thumbnail from './Thumbnail/Thumbnail';
 import Favicon from './Favicon/Favicon';
 import HeartIcon from './Icon/HeartIcon';
+import Button from './Button/Button';
 import { nanoid } from 'nanoid';
 
 function Component() {
@@ -64,6 +65,15 @@ function Component() {
           <div style={{ width: '100px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Icon Box</h1>
             <HeartIcon id={nanoid()} />
+          </div>
+          <div style={{ width: '200px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Button</h1>
+            <Button type="primary" value="버튼" />
+            <Button type="primary disabled" value="버튼" />
+            <Button type="outline" value="버튼" />
+            <Button type="outline disabled" value="버튼" />
+            <Button type="text" value="버튼" />
+            <Button type="text disabled" value="버튼" />
           </div>
         </div>
       </div>
