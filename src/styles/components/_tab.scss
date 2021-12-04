@@ -1,4 +1,4 @@
-.mode-select {
+.tab {
   display: flex;
   align-items: center;
   padding: 8px 16px;
@@ -7,19 +7,19 @@
     display: none;
   }
 
-  &__mode {
+  &__item {
     @include button;
 
-    color: #616161;
+    color: $gray700;
     padding-bottom: 8px;
     cursor: pointer;
     position: relative;
 
-    &.home {
+    &:nth-child(1) {
       margin-right: 16px;
     }
 
-    &--active {
+    &.active {
       color: black;
       &::after {
         content: ' ';

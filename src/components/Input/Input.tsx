@@ -1,5 +1,5 @@
 import React from 'react';
-import { onFocus, onBlur } from './event';
+import { onFocus, onBlur, onKeyPressOfEnter } from './event';
 import { InputProps } from './type';
 
 function Input(data: InputProps) {
@@ -15,6 +15,11 @@ function Input(data: InputProps) {
             placeholder={data.placeholder}
             onFocus={onFocus}
             onBlur={onBlur}
+            value={data.value}
+            onChange={e => data.setValue(e.target.value)}
+            onKeyPress={e =>
+              onKeyPressOfEnter(e, data.value, data.onKeyPressOfEnter)
+            }
             className="input-box__input"
           />
         </div>
@@ -33,6 +38,8 @@ Input.defaultProps = {
   prefix: '',
   suffix: '',
   value: '',
+  setValue: () => {},
+  onKeyPressOfEnter: () => {},
   error: '',
   placeholder: '',
 };

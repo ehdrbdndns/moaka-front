@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Input from './Input/Input';
 import Profile from './Profile/Profile';
 import Tag from './Tag/Tag';
@@ -9,8 +9,15 @@ import HeartIcon from './Icon/HeartIcon';
 import Button from './Button/Button';
 import Link from './Link/Link';
 import { nanoid } from 'nanoid';
+import AddArchiveModal from './Modal/AddArchiveModal';
+import ArchiveTab from './Tab/Tab';
+import HeaderTab from './Tab/HeaderTab';
+import DropDown from './DropDown/DropDown';
+import Chat from './Chat/Chat';
 
 function Component() {
+  const testTab = useRef(false);
+
   const userTestImg = '/img/test/user-test.png';
   return (
     <div className="w-100">
@@ -42,6 +49,10 @@ function Component() {
           <hr />
           <Thumbnail type="link_thumbnail" />
         </div>
+        <div style={{ width: '280px' }}>
+          <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Chat</h1>
+          <Chat />
+        </div>
       </div>
       <div className="w-100">
         <div style={{ display: 'flex', marginBottom: '30px' }}>
@@ -69,12 +80,14 @@ function Component() {
           </div>
           <div style={{ width: '200px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Button</h1>
-            <Button type="primary" value="버튼" />
-            <Button type="primary disabled" value="버튼" />
             <Button type="outline" value="버튼" />
-            <Button type="outline disabled" value="버튼" />
+            <Button type="primary" value="버튼" />
             <Button type="text" value="버튼" />
             <Button type="text disabled" value="버튼" />
+          </div>
+          <div style={{ width: '280px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>DropDown</h1>
+            <DropDown />
           </div>
         </div>
       </div>
@@ -90,6 +103,25 @@ function Component() {
                 <Link id={nanoid()} type="imageview" />
               </div>
             </div>
+          </div>
+          <div style={{ width: '200px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Tab</h1>
+            <div style={{ display: 'flex' }}>
+              <div style={{ width: '230px', marginRight: '50px' }}>
+                <ArchiveTab
+                  firstId={nanoid()}
+                  secondId={nanoid()}
+                  mode={testTab}
+                />
+                <HeaderTab />
+              </div>
+            </div>
+          </div>
+          <div style={{ width: '100px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
+              Archive Modal
+            </h1>
+            <AddArchiveModal />
           </div>
         </div>
       </div>

@@ -8,4 +8,14 @@ const onBlur = (e: any) => {
   inputBox.classList.remove('focuse');
 };
 
-export { onFocus, onBlur };
+const onKeyPressOfEnter = (
+  e: React.KeyboardEvent<HTMLInputElement>,
+  value: string,
+  setValueList: any,
+) => {
+  if (e.key === 'Enter' && value.trim() !== '') {
+    setValueList(value.trim());
+  }
+};
+
+export { onFocus, onBlur, onKeyPressOfEnter };

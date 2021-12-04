@@ -6,7 +6,7 @@
     cursor: pointer;
   }
 
-  &--active > &__view-list {
+  &.active > &__view-list {
     display: block;
   }
 
@@ -14,13 +14,12 @@
     display: none;
     position: absolute;
     width: 320px;
-    height: 602px;
     border: 1px solid #bdbdbd;
     box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     background-color: #fff;
-    right: -100%;
     top: calc(100% + 6px);
+    left: calc(100% - 318px);
     overflow: hidden;
   }
 
@@ -47,7 +46,7 @@
     }
   }
 
-  &--active &__caret {
+  &.active &__caret {
     display: block;
   }
 
@@ -109,10 +108,9 @@
   }
 
   &__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 16px 0 20px;
+    display: grid;
+    row-gap: 16px;
+    padding: 16px 0;
 
     &:nth-last-child(1) {
       margin-bottom: 0;
@@ -154,5 +152,14 @@
 
   &__input {
     margin-bottom: 20px;
+  }
+
+  &__chat {
+    display: flex;
+    justify-content: space-between;
+
+    img {
+      cursor: pointer;
+    }
   }
 }
