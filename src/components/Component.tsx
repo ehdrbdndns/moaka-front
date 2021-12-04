@@ -84,7 +84,7 @@ function Component() {
             <Button type="outline" value="버튼" />
             <Button type="primary" value="버튼" />
             <Button type="text" value="버튼" />
-            <Button type="text disabled" value="버튼" />
+            <Button type="text" value="버튼" isDisabled={true} />
           </div>
           <div style={{ width: '280px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>DropDown</h1>

@@ -1,4 +1,5 @@
 export type ButtonProps = {
-  type: string;
+  type: string; // button class
   value: string;
+  isDisabled: boolean;
 };
