@@ -10,7 +10,7 @@ function Button(data: ButtonProps) {
 }
 
 Button.defaultProps = {
-  type: 'primary',
+  type: 'outline', // 'primary', 'outline', 'text'
   value: 'Button',
 };
 
