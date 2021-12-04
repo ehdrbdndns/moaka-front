@@ -14,6 +14,7 @@ import ArchiveTab from './Tab/Tab';
 import HeaderTab from './Tab/HeaderTab';
 import DropDown from './DropDown/DropDown';
 import Chat from './Chat/Chat';
+import NotificationModal from './Modal/NotificationModal';
 
 function Component() {
   const testTab = useRef(false);
@@ -122,6 +123,12 @@ function Component() {
               Archive Modal
             </h1>
             <AddArchiveModal />
+          </div>
+          <div style={{ width: '50px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
+              Norification Modal
+            </h1>
+            <NotificationModal />
           </div>
         </div>
       </div>
