@@ -7,10 +7,12 @@ import Tag from '../Tag/Tag';
 import DropDown from '../DropDown/DropDown';
 import { DropDownProps, DropwDownListType } from '../DropDown/type';
 import Chat from '../Chat/Chat';
-import { onClickModal } from './event';
+import { closeModal, toggleModal } from './event';
 import { regEmail } from '../../asset';
 
 function AddArchiveModal() {
+  const modalElem = useRef<HTMLDivElement>(null);
+
   const tagMode = useRef(false);
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
@@ -88,9 +90,9 @@ function AddArchiveModal() {
 
   return (
     <>
-      <div className="archive-modal modal">
+      <div className="archive-modal modal" ref={modalElem}>
         {/* modal state button */}
-        <div className="modal__state" onClick={onClickModal}>
+        <div className="modal__state" onClick={() => toggleModal(modalElem)}>
           <Button type="outline" value="아카이브 추가" />
         </div>
         {/* modal view */}
@@ -158,6 +160,11 @@ function AddArchiveModal() {
           </div>
         </div>
       </div>
+      {/* modal background */}
+      <div
+        className="modal__background"
+        onClick={() => closeModal(modalElem)}
+      ></div>
     </>
   );
 }

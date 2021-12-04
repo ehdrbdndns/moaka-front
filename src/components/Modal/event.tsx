@@ -1,8 +1,11 @@
-import { findParentElem } from '../../asset';
+import { RefObject } from 'react';
 
-const onClickModal = (e: any) => {
-  let modalElem = findParentElem('modal', e.target);
-  modalElem?.classList.toggle('active');
+const toggleModal = (modalElem: RefObject<HTMLDivElement>) => {
+  modalElem.current?.classList.toggle('active');
 };
 
-export { onClickModal };
+const closeModal = (modalElem: RefObject<HTMLDivElement>) => {
+  modalElem.current?.classList.remove('active');
+};
+
+export { closeModal, toggleModal };
