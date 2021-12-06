@@ -21,7 +21,7 @@ function Button(data: ButtonProps) {
 }
 
 Button.defaultProps = {
-  type: 'outline', // 'primary', 'outline', 'text'
+  type: 'outline', // 'primary', 'outline', 'outline-text', 'text'
   isDisabled: false,
   value: 'Button',
 };

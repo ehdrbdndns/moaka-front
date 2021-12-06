@@ -93,6 +93,16 @@
     }
   }
 
+  &.outline-text {
+    background: none;
+    color: $primary-color;
+
+    &.disabled {
+      border: 1px solid $gray300;
+      color: $gray400;
+    }
+  }
+
   &.text {
     color: $quaternary-color;
 
