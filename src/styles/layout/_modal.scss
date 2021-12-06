@@ -77,6 +77,20 @@
     justify-content: space-between;
   }
 
+  &__logo {
+    margin-bottom: 16px;
+  }
+
+  &-login &__header {
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  &-login &__title {
+    text-align: center;
+    line-height: 23px;
+  }
+
   &__close {
     @include nodrag;
 
@@ -90,7 +104,7 @@
   }
 
   &__title {
-    @include subtitle1;
+    @include h5;
   }
 
   &__more {
@@ -155,6 +169,29 @@
 
     img {
       cursor: pointer;
+    }
+  }
+
+  &__hr {
+    @include button;
+
+    color: $gray600;
+    white-space: nowrap;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    &::after,
+    &::before {
+      content: ' ';
+      width: 100%;
+      height: 1px;
+      background-color: $gray300;
+      margin: 0 10px;
     }
   }
 

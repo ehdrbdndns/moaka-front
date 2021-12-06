@@ -11,7 +11,7 @@ function Input(data: InputProps) {
             <img src={data.prefix} alt="prefix" className="input-box__prefix" />
           )}
           <input
-            type="text"
+            type={data.type}
             placeholder={data.placeholder}
             onFocus={onFocus}
             onBlur={onBlur}
@@ -37,6 +37,7 @@ function Input(data: InputProps) {
 Input.defaultProps = {
   prefix: '',
   suffix: '',
+  type: 'text',
   value: '',
   setValue: () => {},
   onKeyPressOfEnter: () => {},
