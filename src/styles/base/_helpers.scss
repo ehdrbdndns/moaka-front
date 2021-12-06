@@ -50,8 +50,7 @@ $nameMap: (
 /**
   실제 css class를 만들어주는 mixin입니다.
   nameMap, position, size를 혼합하여 아래와 같은 형식으로 만들어줍니다.
-  
-  ex>
+   
   px-m-0 : { margin : 0; }
   px-mt-1 : { margin-top : 1px; }
 */
@@ -59,11 +58,11 @@ $nameMap: (
   @each $preKey, $preValue in $nameMap {
     @each $px in $size {
       .#{$preKey}-#{$px} {
-        #{$preValue}: getPx($px);
+        #{$preValue}: getPx($px) !important;
       }
       @each $sufKey, $sufValue in $position {
         .#{$preKey}#{$sufKey}-#{$px} {
-          #{$preValue}-#{$sufValue}: getPx($px);
+          #{$preValue}-#{$sufValue}: getPx($px) !important;
         }
       }
     }
