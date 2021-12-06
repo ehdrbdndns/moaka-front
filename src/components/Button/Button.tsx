@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { toggleButton } from './event';
+// import { toggleButton } from './event';
 import { ButtonProps } from './type';
 
 function Button(data: ButtonProps) {
@@ -12,7 +12,10 @@ function Button(data: ButtonProps) {
           'button ' + data.type + ' ' + (data.isDisabled && 'disabled')
         }
         ref={buttonElem}
-        onClick={() => toggleButton(buttonElem, data.isDisabled)}
+        onClick={() => {
+          data.onClick();
+          // toggleButton(buttonElem, data.isDisabled);
+        }}
       >
         {data.type === 'google' && (
           <img
@@ -31,6 +34,7 @@ Button.defaultProps = {
   type: 'outline', // 'primary', 'outline', 'outline-text', 'text'
   isDisabled: false,
   value: 'Button',
+  onClick: () => {},
 };
 
 export default Button;
