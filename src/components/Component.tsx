@@ -10,11 +10,12 @@ import Button from './Button/Button';
 import Link from './Link/Link';
 import { nanoid } from 'nanoid';
 import AddArchiveModal from './Modal/AddArchiveModal';
-import ArchiveTab from './Tab/Tab';
+import Tab from './Tab/Tab';
 import HeaderTab from './Tab/HeaderTab';
 import DropDown from './DropDown/DropDown';
 import Chat from './Chat/Chat';
 import NotificationModal from './Modal/NotificationModal';
+import LoginModal from './Modal/LoginModal';
 
 function Component() {
   const testTab = useRef(false);
@@ -94,22 +95,13 @@ function Component() {
       </div>
       <div className="w-100">
         <div style={{ display: 'flex', marginBottom: '30px' }}>
-          <div style={{ width: '600px', marginRight: '50px' }}>
-            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Link</h1>
-            <div style={{ display: 'flex' }}>
-              <div style={{ width: '230px', marginRight: '50px' }}>
-                <Link id={nanoid()} type="listview" />
-              </div>
-              <div style={{ width: '230px', marginRight: '50px' }}>
-                <Link id={nanoid()} type="imageview" />
-              </div>
-            </div>
-          </div>
           <div style={{ width: '200px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Tab</h1>
             <div style={{ display: 'flex' }}>
               <div style={{ width: '230px', marginRight: '50px' }}>
-                <ArchiveTab
+                <Tab
+                  firstName={'비공개'}
+                  secondName={'공개'}
                   firstId={nanoid()}
                   secondId={nanoid()}
                   mode={testTab}
@@ -124,11 +116,32 @@ function Component() {
             </h1>
             <AddArchiveModal />
           </div>
-          <div style={{ width: '50px', marginRight: '50px' }}>
+          <div style={{ width: '130px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
               Norification Modal
             </h1>
             <NotificationModal />
+          </div>
+          <div style={{ width: '50px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
+              Login Modal
+            </h1>
+            <LoginModal />
+          </div>
+        </div>
+      </div>
+      <div className="w-100">
+        <div style={{ display: 'flex', marginBottom: '30px' }}>
+          <div style={{ width: '600px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Link</h1>
+            <div style={{ display: 'flex' }}>
+              <div style={{ width: '230px', marginRight: '50px' }}>
+                <Link id={nanoid()} type="listview" />
+              </div>
+              <div style={{ width: '230px', marginRight: '50px' }}>
+                <Link id={nanoid()} type="imageview" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

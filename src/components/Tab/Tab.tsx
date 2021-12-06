@@ -13,7 +13,7 @@ function Tab(data: TabProps) {
             onClickTab(data.firstId, data.secondId, 'first', data.mode)
           }
         >
-          비공개
+          {data.firstName}
         </div>
         <div
           className={'tab__item ' + (data.mode.current && 'active')}
@@ -22,7 +22,7 @@ function Tab(data: TabProps) {
             onClickTab(data.secondId, data.firstId, 'second', data.mode)
           }
         >
-          공개
+          {data.secondName}
         </div>
       </div>
     </>

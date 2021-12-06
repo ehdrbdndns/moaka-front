@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { nanoid } from 'nanoid';
 import Button from '../Button/Button';
-import ArchiveTab from '../Tab/Tab';
+import Tab from '../Tab/Tab';
 import Input from '../Input/Input';
 import Tag from '../Tag/Tag';
 import DropDown from '../DropDown/DropDown';
@@ -103,8 +103,10 @@ function AddArchiveModal() {
             </div>
             <form>
               <div className="modal__content">
-                <ArchiveTab
+                <Tab
                   mode={tagMode}
+                  firstName={'비공개'}
+                  secondName={'공개'}
                   firstId={nanoid()}
                   secondId={nanoid()}
                 />
