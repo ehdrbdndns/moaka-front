@@ -58,7 +58,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 10px 0;
+  height: 40px;
   border-radius: 6px;
   cursor: pointer;
 
@@ -109,5 +109,16 @@
     &.disabled {
       color: $gray300;
     }
+  }
+
+  &.google {
+    background-color: $gray100;
+    color: black;
+  }
+
+  &__img {
+    margin-right: 16px;
+    width: 20px;
+    height: 20px;
   }
 }
