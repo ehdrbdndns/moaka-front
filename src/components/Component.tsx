@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import Input from './Input/Input';
 import Profile from './Profile/Profile';
 import Tag from './Tag/Tag';
@@ -15,12 +15,16 @@ import HeaderTab from './Tab/HeaderTab';
 import DropDown from './DropDown/DropDown';
 import Chat from './Chat/Chat';
 import NotificationModal from './Modal/NotificationModal';
-import LoginModal from './Modal/LoginModal';
+import { searchUnsplashImg } from '../apis/unsplash/unsplash';
 
 function Component() {
-  const testTab = useRef(false);
-
   const userTestImg = '/img/test/user-test.png';
+
+  const [unsplashParam, setUnsplashParam] = useState<string>('');
+  const testUnsplash = () => {
+    searchUnsplashImg(unsplashParam);
+  };
+
   return (
     <div className="w-100">
       <div style={{ display: 'flex', marginBottom: '30px' }}>
@@ -104,7 +108,6 @@ function Component() {
                   secondName={'공개'}
                   firstId={nanoid()}
                   secondId={nanoid()}
-                  mode={testTab}
                 />
                 <HeaderTab />
               </div>
@@ -126,7 +129,7 @@ function Component() {
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
               Login Modal
             </h1>
-            <LoginModal />
+            {/* <LoginModal dispatch={dispatch} authInfo={authInfo} /> */}
           </div>
         </div>
       </div>
@@ -142,6 +145,15 @@ function Component() {
                 <Link id={nanoid()} type="imageview" />
               </div>
             </div>
+          </div>
+          <div style={{ width: '200px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Unsplash</h1>
+            <Input
+              value={unsplashParam}
+              setValue={setUnsplashParam}
+              placeholder="검색할 이미지"
+            ></Input>
+            <Button value="Unsplash 테스트" onClick={testUnsplash}></Button>
           </div>
         </div>
       </div>
