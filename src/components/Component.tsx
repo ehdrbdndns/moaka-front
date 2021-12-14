@@ -16,6 +16,7 @@ import DropDown from './DropDown/DropDown';
 import Chat from './Chat/Chat';
 import NotificationModal from './Modal/NotificationModal';
 import { searchUnsplashImg } from '../apis/unsplash/unsplash';
+import LoginModal from './Modal/LoginModal';
 
 function Component() {
   const userTestImg = '/img/test/user-test.png';
@@ -27,6 +28,42 @@ function Component() {
 
   return (
     <div className="w-100">
+      <div className="w-100">
+        <div style={{ display: 'flex', marginBottom: '30px' }}>
+          <div style={{ width: '200px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Tab</h1>
+            <div style={{ display: 'flex' }}>
+              <div style={{ width: '230px', marginRight: '50px' }}>
+                <Tab
+                  firstName={'비공개'}
+                  secondName={'공개'}
+                  firstId={nanoid()}
+                  secondId={nanoid()}
+                />
+                <HeaderTab />
+              </div>
+            </div>
+          </div>
+          <div style={{ width: '100px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
+              Archive Modal
+            </h1>
+            <AddArchiveModal />
+          </div>
+          <div style={{ width: '130px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
+              Norification Modal
+            </h1>
+            <NotificationModal />
+          </div>
+          <div style={{ width: '50px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
+              Login Modal
+            </h1>
+            <LoginModal />
+          </div>
+        </div>
+      </div>
       <div style={{ display: 'flex', marginBottom: '30px' }}>
         <div style={{ width: '200px', marginRight: '50px' }}>
           <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Input</h1>
@@ -89,7 +126,9 @@ function Component() {
             <Button type="outline" value="버튼" isPressed={true} />
             <Button type="primary" value="버튼" />
             <Button type="text" value="버튼" />
-            <Button type="text" value="버튼" isDisabled={true} />
+            <Button type="outline" size="s" value="버튼" isPressed={true} />
+            <Button type="primary" size="s" value="버튼" />
+            <Button type="text" size="s" value="버튼" />
           </div>
           <div style={{ width: '280px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>DropDown</h1>
@@ -97,42 +136,7 @@ function Component() {
           </div>
         </div>
       </div>
-      <div className="w-100">
-        <div style={{ display: 'flex', marginBottom: '30px' }}>
-          <div style={{ width: '200px', marginRight: '50px' }}>
-            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Tab</h1>
-            <div style={{ display: 'flex' }}>
-              <div style={{ width: '230px', marginRight: '50px' }}>
-                <Tab
-                  firstName={'비공개'}
-                  secondName={'공개'}
-                  firstId={nanoid()}
-                  secondId={nanoid()}
-                />
-                <HeaderTab />
-              </div>
-            </div>
-          </div>
-          <div style={{ width: '100px', marginRight: '50px' }}>
-            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
-              Archive Modal
-            </h1>
-            <AddArchiveModal />
-          </div>
-          <div style={{ width: '130px', marginRight: '50px' }}>
-            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
-              Norification Modal
-            </h1>
-            <NotificationModal />
-          </div>
-          <div style={{ width: '50px', marginRight: '50px' }}>
-            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
-              Login Modal
-            </h1>
-            {/* <LoginModal dispatch={dispatch} authInfo={authInfo} /> */}
-          </div>
-        </div>
-      </div>
+
       <div className="w-100">
         <div style={{ display: 'flex', marginBottom: '30px' }}>
           <div style={{ width: '600px', marginRight: '50px' }}>

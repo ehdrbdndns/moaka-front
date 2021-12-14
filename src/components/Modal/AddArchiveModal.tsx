@@ -13,47 +13,64 @@ import { regEmail } from '../../asset';
 function AddArchiveModal() {
   const modalElem = useRef<HTMLDivElement>(null);
 
-  const tagMode = useRef(false);
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
   const [category, setCategory] = useState<number>(0);
   const [tag, setTag] = useState<string>();
+  const [tagError, setTagError] = useState<string>('');
   const [tagList, setTagList] = useState<Array<string>>([]);
   const [email, setEmail] = useState<string>();
   const [userList, setUserList] = useState<string[]>([]);
 
-  const setUserListEvent = (newEmail: string) => {
-    // 이메일인지 확인
-    if (regEmail.test(newEmail)) {
-      let isExist = false;
+  const setUserListEvent = (e: any) => {
+    if (e.key === 'Enter') {
+      let newEmail = e.target.value;
+      // 이메일인지 확인
+      if (regEmail.test(newEmail)) {
+        let isExist = false;
 
-      userList.forEach(email => {
-        if (email === newEmail) {
-          isExist = true;
-          return false;
+        userList.forEach(email => {
+          if (email === newEmail) {
+            isExist = true;
+            return false;
+          }
+        });
+
+        if (!isExist) {
+          setUserList([...userList, newEmail]);
+          setEmail('');
         }
-      });
-
-      if (!isExist) {
-        setUserList([...userList, newEmail]);
-        setEmail('');
       }
     }
   };
 
-  const setTagListEvent = (newTag: string) => {
-    let isExist = false;
+  const setTagEvent = (value: string) => {
+    setTag(value);
+    setTagError('');
+  };
 
-    tagList.forEach(tag => {
-      if (tag === newTag) {
-        isExist = true;
-        return false;
+  const setTagListEvent = (e: any) => {
+    if (e.key === 'Enter') {
+      let newTag: string = e.target.value.trim();
+      if (newTag.length !== 0) {
+        let isExist = false;
+
+        if (tagList.length < 3) {
+          tagList.forEach(tag => {
+            if (tag === newTag) {
+              isExist = true;
+              return false;
+            }
+          });
+
+          if (!isExist) {
+            setTagList([...tagList, newTag]);
+            setTag('');
+          }
+        } else {
+          setTagError('최대 3개까지 등록할 수 있습니다.');
+        }
       }
-    });
-
-    if (!isExist) {
-      setTagList([...tagList, newTag]);
-      setTag('');
     }
   };
 
@@ -108,7 +125,6 @@ function AddArchiveModal() {
             <form>
               <div className="modal__content">
                 <Tab
-                  mode={tagMode}
                   firstName={'비공개'}
                   secondName={'공개'}
                   firstId={nanoid()}
@@ -133,8 +149,9 @@ function AddArchiveModal() {
                   <Input
                     placeholder="태그 추가"
                     value={tag}
-                    setValue={setTag}
-                    onKeyPressOfEnter={setTagListEvent}
+                    setValue={setTagEvent}
+                    error={tagError}
+                    onKeyPress={setTagListEvent}
                   />
                   <div className="px-mt-12">
                     {tagList.map(tag => (
@@ -156,7 +173,7 @@ function AddArchiveModal() {
                   placeholder="이메일"
                   value={email}
                   setValue={setEmail}
-                  onKeyPressOfEnter={setUserListEvent}
+                  onKeyPress={setUserListEvent}
                 />
                 {userList.map(user => (
                   <div className="modal__chat">

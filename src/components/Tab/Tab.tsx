@@ -7,20 +7,22 @@ function Tab(data: TabProps) {
     <>
       <div className="tab">
         <div
-          className={'tab__item ' + (data.mode.current || 'active')}
+          className={'tab__item ' + (data.activeMode === 'first' && 'active')}
           id={data.firstId}
-          onClick={() =>
-            onClickTab(data.firstId, data.secondId, 'first', data.mode)
-          }
+          onClick={() => {
+            onClickTab(data.firstId, data.secondId, 'first');
+            data.onClickOfFirst();
+          }}
         >
           {data.firstName}
         </div>
         <div
-          className={'tab__item ' + (data.mode.current && 'active')}
+          className={'tab__item ' + (data.activeMode === 'second' && 'active')}
           id={data.secondId}
-          onClick={() =>
-            onClickTab(data.secondId, data.firstId, 'second', data.mode)
-          }
+          onClick={() => {
+            onClickTab(data.secondId, data.firstId, 'second');
+            data.onClickOfSecond();
+          }}
         >
           {data.secondName}
         </div>
@@ -28,5 +30,11 @@ function Tab(data: TabProps) {
     </>
   );
 }
+
+Tab.defaultProps = {
+  onClickOfFirst: () => {},
+  onClickOfSecond: () => {},
+  activeMode: 'first',
+};
 
 export default Tab;

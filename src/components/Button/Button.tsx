@@ -1,35 +1,42 @@
 import React, { useRef } from 'react';
-import { addButton } from './event';
-// import { toggleButton } from './event';
 import { ButtonProps } from './type';
-
+import DotLoader from 'react-spinners/DotLoader';
+import { addPressButton } from './event';
 function Button(data: ButtonProps) {
   const buttonElem = useRef<HTMLDivElement>(null);
 
   return (
     <>
-      <div>
-        <div
-          className={
-            'button ' + data.type + ' ' + (data.isDisabled && 'disabled')
+      <div
+        className={
+          'button ' +
+          data.type +
+          ' ' +
+          (data.isDisabled && 'disabled') +
+          ' ' +
+          data.size
+        }
+        ref={buttonElem}
+        onClick={() => {
+          if (!data.isDisabled) {
+            data.onClick();
+            data.isPressed && addPressButton(buttonElem);
           }
-          ref={buttonElem}
-          onClick={() => {
-            if (!data.isDisabled) {
-              data.onClick();
-              data.isPressed && addButton(buttonElem);
-            }
-          }}
-        >
-          {data.type === 'google' && (
-            <img
-              src="/img/google-logo.svg"
-              alt="구글 로고"
-              className="button__img"
-            />
-          )}
-          {data.value}
-        </div>
+        }}
+      >
+        {data.type === 'google' && (
+          <img
+            src="/img/google-logo.svg"
+            alt="구글 로고"
+            className="button__img"
+          />
+        )}
+        {data.isLoading ? (
+          <DotLoader size="18px" color="#A1C0FB" />
+        ) : (
+          data.value
+        )}
+        {/* {data.value} */}
       </div>
     </>
   );
@@ -37,7 +44,9 @@ function Button(data: ButtonProps) {
 
 Button.defaultProps = {
   type: 'outline', // 'primary', 'outline', 'outline-text', 'text'
+  size: 'm',
   isDisabled: false,
+  isLoading: false,
   isPressed: false,
   value: 'Button',
   onClick: () => {},
