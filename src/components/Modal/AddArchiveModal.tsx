@@ -16,7 +16,7 @@ function AddArchiveModal() {
   const tagMode = useRef(false);
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
-  const [category, setCategory] = useState<string>();
+  const [category, setCategory] = useState<number>(0);
   const [tag, setTag] = useState<string>();
   const [tagList, setTagList] = useState<Array<string>>([]);
   const [email, setEmail] = useState<string>();
@@ -57,6 +57,10 @@ function AddArchiveModal() {
     }
   };
 
+  const removeTagListEvent = (existTag: string) => {
+    setTagList(tagList.filter(tag => tag !== existTag));
+  };
+
   const categoryInfo: DropDownProps = {
     defaultValue: '카테고리 선택',
     dropdownList: [
@@ -64,24 +68,24 @@ function AddArchiveModal() {
         title: '카테고리 선택',
         list: [
           {
-            index: 0,
-            value: '카테고리_1',
+            no: 0,
+            title: '카테고리_1',
           },
           {
-            index: 1,
-            value: '카테고리_2',
+            no: 1,
+            title: '카테고리_2',
           },
           {
-            index: 2,
-            value: '카테고리_3',
+            no: 2,
+            title: '카테고리_3',
           },
           {
-            index: 3,
-            value: '카테고리_4',
+            no: 3,
+            title: '카테고리_4',
           },
           {
-            index: 5,
-            value: '카테고리_5',
+            no: 5,
+            title: '카테고리_5',
           },
         ],
       } as DropwDownListType,
@@ -121,7 +125,6 @@ function AddArchiveModal() {
                   setValue={setDescription}
                 />
                 <DropDown
-                  value={category}
                   setValue={setCategory}
                   defaultValue={categoryInfo.defaultValue}
                   dropdownList={categoryInfo.dropdownList}
@@ -135,7 +138,12 @@ function AddArchiveModal() {
                   />
                   <div className="px-mt-12">
                     {tagList.map(tag => (
-                      <Tag key={nanoid()} value={tag} />
+                      <Tag
+                        key={nanoid()}
+                        value={tag}
+                        isCloseEvent={true}
+                        onClickOfClose={removeTagListEvent}
+                      />
                     ))}
                   </div>
                 </div>

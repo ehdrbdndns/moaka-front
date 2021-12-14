@@ -10,13 +10,14 @@
     align-items: center;
     border-radius: 8px;
     padding: 0 8px;
+
+    border: 1px solid $gray200;
+    background-color: $tertiary-color;
   }
 
-  &.imageview {
-    &__header {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
+  &.imageview &__header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   &:hover &__header {
@@ -26,7 +27,7 @@
 
   &.active &__header {
     border: 1px solid $gray200;
-    background-color: $tertiary-color;
+    background-color: $secondary-color;
   }
 
   &__title {

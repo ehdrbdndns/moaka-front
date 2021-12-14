@@ -82,7 +82,7 @@ function Component() {
           </div>
           <div style={{ width: '200px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Button</h1>
-            <Button type="outline" value="버튼" />
+            <Button type="outline" value="버튼" isPressed={true} />
             <Button type="primary" value="버튼" />
             <Button type="text" value="버튼" />
             <Button type="text" value="버튼" isDisabled={true} />

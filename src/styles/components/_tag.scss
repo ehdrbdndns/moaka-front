@@ -1,6 +1,6 @@
 .tag {
   @include caption;
-  color: $gray800;
+  color: $gray700;
 
   display: inline-flex;
   justify-content: center;
@@ -8,12 +8,34 @@
   height: 20px;
   padding: 0 4px;
   border-radius: 4px;
-  background: $gray200;
+  border: 1px solid $gray400;
   cursor: pointer;
 
-  &.black {
+  position: relative;
+
+  &.m {
+    height: 20px;
+  }
+
+  &.l {
+    height: 28px;
+  }
+
+  &.primary {
     color: white;
     background: $primary-color;
+  }
+
+  &:hover &__close {
+    display: block;
+  }
+
+  &__close {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
   }
 
   & + & {

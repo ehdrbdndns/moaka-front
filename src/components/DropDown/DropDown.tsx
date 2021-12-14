@@ -32,14 +32,15 @@ function DropDown(data: DropDownProps) {
                     className="dropdown__list-item"
                     onClick={() =>
                       selectDropdownItem(
-                        item.value,
+                        item.no,
+                        item.title,
                         data.setValue,
                         dropdownElem,
                         dropdownStateElem,
                       )
                     }
                   >
-                    {item.value}
+                    {item.title}
                   </li>
                 ))}
               </ul>
@@ -53,23 +54,14 @@ function DropDown(data: DropDownProps) {
 
 DropDown.defaultProps = {
   defaultValue: 'dropdown', // 기본 select 값
-  value: '',
   setValue: () => {},
   dropdownList: [
     {
       title: '아카이브 제목',
       list: [
         {
-          index: 0,
-          value: '타이틀1',
-        },
-        {
-          index: 1,
-          value: '타이틀2',
-        },
-        {
-          index: 2,
-          value: '타이틀3',
+          no: 0,
+          title: '타이틀1',
         },
       ],
     } as DropwDownListType,

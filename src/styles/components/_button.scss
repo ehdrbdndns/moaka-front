@@ -81,15 +81,27 @@
     background: none;
     color: $primary-color;
 
-    &.pressed,
     &:hover {
       color: white;
       background-color: $primary-color;
     }
 
-    &.disabled {
-      border: 1px solid $gray300;
-      color: $gray400;
+    &.pressed {
+      color: white;
+      background-color: $secondary-color;
+      border: 1px solid $secondary-color;
+    }
+  }
+
+  &.outline.disabled {
+    border: 1px solid $gray500;
+    color: $gray500;
+    cursor: not-allowed;
+
+    &.pressed,
+    &:hover {
+      color: $gray500;
+      background: none;
     }
   }
 
