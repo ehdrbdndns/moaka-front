@@ -15,6 +15,7 @@ function AddArchiveModal() {
 
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [category, setCategory] = useState<number>(0);
   const [tag, setTag] = useState<string>();
   const [tagError, setTagError] = useState<string>('');
