@@ -9,7 +9,11 @@ import { LinkProps } from './type';
 function Link(data: LinkProps) {
   return (
     <>
-      <div className={'link ' + data.type} id={data.id} onClick={onClickLink}>
+      <article
+        className={'link ' + data.type}
+        id={data.id}
+        onClick={onClickLink}
+      >
         <div className="link__header">
           <Favicon type="link" src={data.favicon_src} />
           <span className="link__title">{data.title}</span>
@@ -26,7 +30,7 @@ function Link(data: LinkProps) {
           <span>{data.comment_count}개의 답글</span>
         </div>
         <div className="link__description">{data.description}</div>
-      </div>
+      </article>
     </>
   );
 }
