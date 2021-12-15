@@ -17,6 +17,7 @@ import Chat from './Chat/Chat';
 import NotificationModal from './Modal/NotificationModal';
 import { searchUnsplashImg } from '../apis/unsplash/unsplash';
 import LoginModal from './Modal/LoginModal';
+import Navigation from './Navigation/Navigation';
 
 function Component() {
   const userTestImg = '/img/test/user-test.png';
@@ -62,6 +63,12 @@ function Component() {
             </h1>
             <LoginModal />
           </div>
+        </div>
+      </div>
+      <div>
+        <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Nav</h1>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Navigation />
         </div>
       </div>
       <div style={{ display: 'flex', marginBottom: '30px' }}>

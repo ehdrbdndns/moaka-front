@@ -14,7 +14,6 @@ import Header from './containers/Header';
 import Search from './containers/Search';
 import NewHeaderForm from './components/Header/NewHeaderForm';
 import NewArchiveCardList from './components/CardList/NewArchiveCardList';
-import NewSide from './components/Side/NewSide';
 import NewHomeCardList from './components/CardList/NewHomeCardList';
 import NewMyCardList from './components/CardList/NewMyCardList';
 import Component from './components/Component';
@@ -40,7 +39,7 @@ function App() {
         </Route>
         <Route path="/login">
           <Login />
-        </Route>
+        </Route> 
         <Route path="/register">
           <Register />
         </Route>

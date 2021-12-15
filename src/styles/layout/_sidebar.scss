@@ -1,0 +1,22 @@
+.sidebar {
+  display: none;
+  width: 280px;
+  height: 100%;
+  background-color: white;
+  padding: 16px;
+  margin: 0 4px;
+
+  &.show {
+    display: block;
+  }
+
+  &__title {
+    @include h5;
+  }
+
+  &__content {
+    margin-top: 16px;
+    display: grid;
+    row-gap: 16px;
+  }
+}

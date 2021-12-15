@@ -10,4 +10,5 @@ export type DropDownProps = {
   defaultValue: string; // 기본 select 값
   setValue: React.Dispatch<React.SetStateAction<number>>;
   dropdownList: Array<DropwDownListType>;
+  error: string;
 };

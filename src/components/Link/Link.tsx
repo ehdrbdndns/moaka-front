@@ -3,7 +3,6 @@ import React from 'react';
 import Favicon from '../Favicon/Favicon';
 import HeartIcon from '../Icon/HeartIcon';
 import Thumbnail from '../Thumbnail/Thumbnail';
-import { onClickLink } from './event';
 import { LinkProps } from './type';
 
 function Link(data: LinkProps) {
