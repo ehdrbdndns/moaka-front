@@ -9,7 +9,10 @@ function DropDown(data: DropDownProps) {
 
   return (
     <>
-      <div className="dropdown" ref={dropdownElem}>
+      <div
+        className={'dropdown ' + (data.error !== '' && 'error')}
+        ref={dropdownElem}
+      >
         <div
           className="dropdown__state"
           onClick={() => onClickDropdown(dropdownElem)}
@@ -21,6 +24,9 @@ function DropDown(data: DropDownProps) {
             alt="화살표"
           />
         </div>
+        {data.error !== '' && (
+          <span className="dropdown__error">{data.error}</span>
+        )}
         <div className="dropdown__content">
           {data.dropdownList.map(dropdown => (
             <div key={nanoid()}>
@@ -55,6 +61,7 @@ function DropDown(data: DropDownProps) {
 DropDown.defaultProps = {
   defaultValue: 'dropdown', // 기본 select 값
   setValue: () => {},
+  error: '',
   dropdownList: [
     {
       title: '아카이브 제목',

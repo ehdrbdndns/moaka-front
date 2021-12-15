@@ -30,6 +30,16 @@
     }
   }
 
+  &.error &__state {
+    border: 1px solid $red-color;
+  }
+
+  &__error {
+    @include caption;
+
+    color: $red-color;
+  }
+
   &__content {
     @include scroll;
 
