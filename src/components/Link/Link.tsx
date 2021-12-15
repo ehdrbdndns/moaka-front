@@ -12,7 +12,9 @@ function Link(data: LinkProps) {
       <article
         className={'link ' + data.type}
         id={data.id}
-        onClick={onClickLink}
+        onClick={() => {
+          // onClickLink()
+        }}
       >
         <div className="link__header">
           <Favicon type="link" src={data.favicon_src} />
