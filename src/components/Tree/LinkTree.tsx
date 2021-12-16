@@ -9,7 +9,7 @@ function LinkTree(data: LinkTreeProps) {
     <>
       <div className="link-tree">
         {data.tree.map(section => (
-          <div className="link-tree__content" id={section.id}>
+          <div key={section.id} className="link-tree__content" id={section.id}>
             <div
               className="link-tree__header"
               data-id={section.id}
@@ -24,7 +24,7 @@ function LinkTree(data: LinkTreeProps) {
             </div>
             <ul className="link-tree__item-list">
               {section.linkList.map(link => (
-                <li className="link-tree__item">
+                <li key={link.no} className="link-tree__item">
                   <Favicon src={link.favicon} />
                   <span className="link-tree__item-text">{link.link}</span>
                 </li>

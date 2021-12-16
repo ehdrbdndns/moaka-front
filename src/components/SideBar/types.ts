@@ -7,3 +7,7 @@ export type LinkSideBarProps = {
 export type TreeSideBarProps = {
   sidebarElem: RefObject<HTMLDivElement>;
 };
+
+export type CommentSideBarProps = {
+  sidebarElem: RefObject<HTMLDivElement>;
+};

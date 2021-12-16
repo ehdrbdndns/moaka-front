@@ -4,6 +4,8 @@ import TreeSideBar from '../SideBar/TreeSideBar';
 import { onClickNavItem } from './event';
 
 function Navigation() {
+  const sideNavElem = useRef<HTMLDivElement>(null);
+
   const linkSidebarElem = useRef<HTMLDivElement>(null);
   const treeSidebarElem = useRef<HTMLDivElement>(null);
   const commentSidebarElem = useRef<HTMLDivElement>(null);
@@ -13,12 +15,14 @@ function Navigation() {
   const commentNavItemElem = useRef<HTMLLIElement>(null);
 
   return (
-    <aside className="side-nav">
+    <aside className="side-nav" ref={sideNavElem}>
       <nav className="side-nav__item-list">
         <ul>
           <li
             className="side-nav__item"
-            onClick={() => onClickNavItem(linkSidebarElem, linkNavItemElem)}
+            onClick={() =>
+              onClickNavItem(sideNavElem, linkSidebarElem, linkNavItemElem)
+            }
             ref={linkNavItemElem}
           >
             <svg
@@ -36,7 +40,9 @@ function Navigation() {
           </li>
           <li
             className="side-nav__item"
-            onClick={() => onClickNavItem(treeSidebarElem, treeNavItemElem)}
+            onClick={() =>
+              onClickNavItem(sideNavElem, treeSidebarElem, treeNavItemElem)
+            }
             ref={treeNavItemElem}
           >
             <svg
@@ -55,7 +61,11 @@ function Navigation() {
           <li
             className="side-nav__item"
             onClick={() =>
-              onClickNavItem(commentSidebarElem, commentNavItemElem)
+              onClickNavItem(
+                sideNavElem,
+                commentSidebarElem,
+                commentNavItemElem,
+              )
             }
             ref={commentNavItemElem}
           >

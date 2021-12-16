@@ -1,13 +1,22 @@
 .sidebar {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: grid;
   width: 280px;
+  transform: translateX(280px);
+  overflow: hidden;
+  visibility: hidden;
   background-color: white;
-  padding: 16px;
-  margin: 0 4px;
+  padding: 8px 0;
   row-gap: 16px;
+  transition: 0.25s;
 
   &.show {
-    display: grid;
+    visibility: visible;
+    transform: translateX(0);
+    padding: 8px;
   }
 
   &__title {
