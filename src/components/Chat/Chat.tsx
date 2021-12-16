@@ -13,7 +13,9 @@ function Chat(data: ChatProps) {
         </figure>
         <div className="chat__content">
           <div className="chat__info">
-            <div className="chat__name">{data.name}</div>
+            <div className={'chat__name ' + (data.isMine && 'active')}>
+              {data.name}
+            </div>
             {data.isTimeShow && (
               <span className="chat__time">{data.time}시간</span>
             )}
@@ -39,6 +41,8 @@ Chat.defaultProps = {
   likeValue: '0',
   // 좋아요 여부
   likeIsActive: false,
+
+  isMine: false,
 };
 
 export default Chat;

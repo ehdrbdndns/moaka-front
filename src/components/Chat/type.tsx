@@ -13,4 +13,7 @@ export type ChatProps = {
   likeValue: string;
   // 좋아요 여부
   likeIsActive: boolean;
+
+  // 자신인지 체크
+  isMine: boolean;
 };

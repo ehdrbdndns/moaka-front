@@ -3,7 +3,7 @@
   padding: 4px 7px;
   display: grid;
   grid-template-columns: 36px 1fr;
-  column-gap: 16px;
+  column-gap: 8px;
 
   &__profile {
     padding: 4px;
@@ -23,6 +23,10 @@
     @include subtitle1;
 
     margin-right: 12px;
+
+    &.active {
+      color: $primary-color;
+    }
   }
 
   &__time {
@@ -34,5 +38,9 @@
   &__description {
     @include body2;
     color: $gray800;
+  }
+
+  & + & {
+    margin-top: 4px;
   }
 }
