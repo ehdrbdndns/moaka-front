@@ -1,13 +1,13 @@
 .sidebar {
   display: none;
   width: 280px;
-  height: 100%;
   background-color: white;
   padding: 16px;
   margin: 0 4px;
+  row-gap: 16px;
 
   &.show {
-    display: block;
+    display: grid;
   }
 
   &__title {
@@ -15,7 +15,6 @@
   }
 
   &__content {
-    margin-top: 16px;
     display: grid;
     row-gap: 16px;
   }

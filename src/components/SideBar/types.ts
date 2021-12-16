@@ -1,3 +1,9 @@
+import { RefObject } from 'react';
+
 export type LinkSideBarProps = {
-  sidebarElem: React.RefObject<HTMLDivElement>;
+  sidebarElem: RefObject<HTMLDivElement>;
+};
+
+export type TreeSideBarProps = {
+  sidebarElem: RefObject<HTMLDivElement>;
 };

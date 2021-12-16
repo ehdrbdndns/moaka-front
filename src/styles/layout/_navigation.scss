@@ -10,7 +10,7 @@
     border-radius: 8px;
   }
 
-  & ul {
+  &__item-list > ul {
     display: grid;
     row-gap: 16px;
   }
