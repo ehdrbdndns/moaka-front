@@ -15,3 +15,10 @@ export type LinkProps = {
   // 좋아요 여부
   like_isActive: boolean;
 };
+
+export type LinkBoxProps = {
+  id: string; // link 고유 번호
+  url: string;
+  favicon_src: string;
+  description: string;
+};
