@@ -111,7 +111,7 @@ function LoginModal() {
       <div className="modal" ref={modalElem}>
         {/* modal state button */}
         <div className="modal__state" onClick={() => toggleModal(modalElem)}>
-          <Button type="text primary-color" value="시작하기" />
+          <Button type="text primary-color" size="s" value="시작하기" />
         </div>
         <div className="modal__view-list">
           <div className="modal__view main modal-login">

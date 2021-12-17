@@ -115,7 +115,7 @@ function AddArchiveModal() {
       <div className="archive-modal modal" ref={modalElem}>
         {/* modal state button */}
         <div className="modal__state" onClick={() => toggleModal(modalElem)}>
-          <Button type="outline" value="아카이브 추가" />
+          <Button size="s" type="outline" value="아카이브 추가" />
         </div>
         {/* modal view */}
         <div className="modal__view-list">
