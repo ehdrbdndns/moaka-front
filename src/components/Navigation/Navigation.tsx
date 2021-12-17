@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import CommentSidebar from '../SideBar/CommentSidebar';
 import LinkSideBar from '../SideBar/LinkSideBar';
 import TreeSideBar from '../SideBar/TreeSideBar';
 import { onClickNavItem } from './event';
@@ -97,6 +98,7 @@ function Navigation() {
       <div className="side-nav__content">
         <LinkSideBar sidebarElem={linkSidebarElem}></LinkSideBar>
         <TreeSideBar sidebarElem={treeSidebarElem}></TreeSideBar>
+        <CommentSidebar sidebarElem={commentSidebarElem}></CommentSidebar>
       </div>
     </aside>
   );

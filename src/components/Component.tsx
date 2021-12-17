@@ -29,6 +29,12 @@ function Component() {
 
   return (
     <div className="w-100">
+      <div>
+        <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Nav</h1>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Navigation />
+        </div>
+      </div>
       <div className="w-100">
         <div style={{ display: 'flex', marginBottom: '30px' }}>
           <div style={{ width: '200px', marginRight: '50px' }}>
@@ -63,12 +69,6 @@ function Component() {
             </h1>
             <LoginModal />
           </div>
-        </div>
-      </div>
-      <div>
-        <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Nav</h1>
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Navigation />
         </div>
       </div>
       <div style={{ display: 'flex', marginBottom: '30px' }}>

@@ -31,13 +31,12 @@
   &__content {
     position: relative;
     width: 0;
-    height: calc(100vh - 48px);
     transition: 0.25s;
     overflow: hidden;
-    background: red;
   }
 
   &.active &__content {
     width: 280px;
+    height: calc(100vh - 48px);
   }
 }
