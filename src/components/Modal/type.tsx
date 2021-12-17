@@ -15,6 +15,20 @@ export type SearchPwdModalProps = {
   subModalElem: RefObject<HTMLDivElement>;
 };
 
+export type SupportModalProps = {
+  subModalElem: RefObject<HTMLDivElement>;
+};
+
+export type SettingModalProps = {
+  mainModalElem: RefObject<HTMLDivElement>;
+  subModalElem: RefObject<HTMLDivElement>;
+};
+
+export type WithDrawModalProps = {
+  mainModalElem: RefObject<HTMLDivElement>;
+  subModalElem: RefObject<HTMLDivElement>;
+};
+
 export type ProfileModalProps = {
   file: File | undefined; // 프로파일 이미지
   setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
@@ -27,4 +41,9 @@ export type ProfileModalProps = {
 
   buttonValue: string;
   onClickButton: () => void;
+};
+
+export type LogoutModalProps = {
+  mainModalElem: RefObject<HTMLDivElement>;
+  subModalElem: RefObject<HTMLDivElement>;
 };

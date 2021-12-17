@@ -136,8 +136,8 @@
   &__item {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
-    padding: 10px 0;
+    margin-bottom: 12px;
+    height: 40px;
     cursor: pointer;
 
     & > img {
@@ -145,7 +145,7 @@
     }
 
     & > span {
-      @include subtitle1;
+      @include body1;
     }
 
     &:nth-last-child(1) {

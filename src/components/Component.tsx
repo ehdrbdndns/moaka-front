@@ -19,6 +19,7 @@ import { searchUnsplashImg } from '../apis/unsplash/unsplash';
 import LoginModal from './Modal/LoginModal';
 import Navigation from './Navigation/Navigation';
 import Toggle from './Toggle/Toggle';
+import ProfileModal from './Modal/ProfileModal';
 
 function Component() {
   const userTestImg = '/img/test/user-test.png';
@@ -69,6 +70,12 @@ function Component() {
               Login Modal
             </h1>
             <LoginModal />
+          </div>
+          <div style={{ width: '50px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
+              Profile Modal
+            </h1>
+            <ProfileModal />
           </div>
         </div>
       </div>

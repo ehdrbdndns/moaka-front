@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import NewProfileModal from '../Modal/NewProfileModal';
+import NewProfileModal from '../Modal/ProfileModal';
 
 function NewHeaderForm() {
   let location = useLocation();

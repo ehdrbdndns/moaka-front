@@ -77,13 +77,15 @@ function ProfileModal(data: ProfileModalProps) {
               accept="image/*"
             />
           </figure>
-          <Input
-            placeholder="닉네임"
-            value={data.name}
-            setValue={setNameEvent}
-            error={data.nameError}
-            tabindex={-1}
-          ></Input>
+          <div>
+            <Input
+              placeholder="닉네임"
+              value={data.name}
+              setValue={setNameEvent}
+              error={data.nameError}
+              tabindex={-1}
+            ></Input>
+          </div>
           <Button
             value={data.buttonValue}
             onClick={() => {
