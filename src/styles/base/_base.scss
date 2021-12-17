@@ -1,0 +1,45 @@
+html,
+body {
+  @include scroll;
+
+  overflow: overlay;
+}
+
+.container {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+.row {
+  display: flex;
+}
+
+.d-none {
+  display: none;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.m-0-auto {
+  margin: 0 auto;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+a {
+  text-decoration: none;
+}

@@ -45,3 +45,56 @@
     color: #bdbdbd;
   }
 }
+
+.input-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 100%;
+  height: 40px;
+  border: 1px solid $gray200;
+  border-radius: 6px;
+  background-color: $gray50;
+  padding: 10px 12px;
+
+  & input {
+    @include body2;
+
+    width: 100%;
+    border: none;
+    outline: none;
+    background: none;
+
+    &::placeholder {
+      color: $gray500;
+    }
+  }
+
+  &__prefix {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &__suffix {
+    width: 18px;
+    height: 18px;
+    margin-left: auto;
+    cursor: pointer;
+  }
+
+  &.focuse {
+    border: 1px solid #424242;
+  }
+
+  &.error {
+    border: 1px solid $red-color;
+  }
+
+  & + &__error {
+    @include caption;
+    margin-top: 4px;
+    color: $red-color;
+  }
+}

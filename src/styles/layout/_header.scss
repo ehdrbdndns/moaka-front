@@ -1,3 +1,40 @@
 // -----------------------------------------------------------------------------
 // This file contains all styles related to the header of the site/application.
 // -----------------------------------------------------------------------------
+.header {
+  max-width: $max-width;
+  width: 100%;
+  padding: 7px 30px;
+  margin: 0 auto;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+
+  &__item {
+    display: flex;
+    align-items: center;
+
+    &:nth-child(1) {
+      width: 33.333%;
+      margin-right: auto;
+    }
+
+    &:nth-child(2) {
+      width: 33.333%;
+      margin: 0 auto;
+      justify-content: center;
+    }
+
+    &:nth-child(3) {
+      width: 33.333%;
+      margin-left: auto;
+      justify-content: flex-end;
+    }
+  }
+
+  &__logo {
+    & > .logo {
+      margin-right: 8px;
+    }
+  }
+}

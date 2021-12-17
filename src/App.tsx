@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import './App.css';
 import './styles/main.scss';
@@ -11,18 +12,34 @@ import TEST from './containers/TEST';
 import Footer from './components/Footer/Footer';
 import Header from './containers/Header';
 import Search from './containers/Search';
+import NewHeaderForm from './components/Header/NewHeaderForm';
+import NewArchiveCardList from './components/CardList/NewArchiveCardList';
+import NewHomeCardList from './components/CardList/NewHomeCardList';
+import NewMyCardList from './components/CardList/NewMyCardList';
+import Component from './components/Component';
 
 function App() {
   return (
     <div>
-      <Header />
-      <Switch>
+      {/* <NewHeaderForm /> */}
+      <div className="container">
+        <div className="row">
+          <Switch>
+            <Route path="/component" component={Component} />
+            <Route path="/mypage" component={NewMyCardList} />
+            <Route path="/" component={NewHomeCardList} />
+          </Switch>
+          {/* <NewSide /> */}
+        </div>
+      </div>
+      {/* <Header /> */}
+      {/* <Switch>
         <Route path="/test">
           <TEST />
         </Route>
         <Route path="/login">
           <Login />
-        </Route>
+        </Route> 
         <Route path="/register">
           <Register />
         </Route>
@@ -39,7 +56,7 @@ function App() {
           <Home />
         </Route>
       </Switch>
-      <Footer />
+      <Footer /> */}
     </div>
   );
 }

@@ -1,0 +1,42 @@
+.side-nav {
+  display: flex;
+  flex-direction: row-reverse;
+
+  &__item-list {
+    width: 36px;
+    height: 208px;
+    padding: 12px 6px;
+    background-color: #000;
+    border-radius: 8px;
+    margin-left: 4px;
+  }
+
+  &__item-list > ul {
+    display: grid;
+    row-gap: 16px;
+  }
+
+  &__item {
+    cursor: pointer;
+  }
+
+  &__img {
+    fill: white;
+  }
+
+  &__item.active &__img {
+    fill: $secondary-color;
+  }
+
+  &__content {
+    position: relative;
+    width: 0;
+    transition: 0.25s;
+    overflow: hidden;
+  }
+
+  &.active &__content {
+    width: 280px;
+    height: calc(100vh - 48px);
+  }
+}

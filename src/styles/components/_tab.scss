@@ -1,0 +1,35 @@
+.tab {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+
+  &__state {
+    display: none;
+  }
+
+  &__item {
+    @include button;
+
+    color: $gray700;
+    padding-bottom: 8px;
+    cursor: pointer;
+    position: relative;
+
+    &:nth-child(1) {
+      margin-right: 16px;
+    }
+
+    &.active {
+      color: black;
+      &::after {
+        content: ' ';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background-color: black;
+      }
+    }
+  }
+}
