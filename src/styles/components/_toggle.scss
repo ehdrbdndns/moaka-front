@@ -1,0 +1,55 @@
+.toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 20px;
+  padding: 3px;
+  position: relative;
+  transition: 0.25s;
+
+  &__circle {
+    width: 18px;
+    height: 18px;
+    border-radius: 100%;
+    background-color: white;
+    position: absolute;
+
+    transition: 0.25s;
+  }
+
+  &.on {
+    background-color: $primary-color;
+    cursor: pointer;
+  }
+
+  &.on &__circle {
+    right: 3px;
+  }
+
+  // &:hover {
+  //   background-color: $secondary-color;
+  // }
+
+  // &:hover &__circle {
+  //   right: 50%;
+  //   transform: translateX(50%);
+  // }
+
+  &.off {
+    background-color: $gray300;
+    cursor: pointer;
+  }
+
+  &.off &__circle {
+    right: 23px;
+  }
+
+  &.disabled {
+    background-color: $gray300;
+    cursor: not-allowed;
+  }
+
+  &.disabled &__circle {
+    background-color: $gray400;
+    left: 3px;
+  }
+}

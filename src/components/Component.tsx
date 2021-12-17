@@ -18,6 +18,7 @@ import NotificationModal from './Modal/NotificationModal';
 import { searchUnsplashImg } from '../apis/unsplash/unsplash';
 import LoginModal from './Modal/LoginModal';
 import Navigation from './Navigation/Navigation';
+import Toggle from './Toggle/Toggle';
 
 function Component() {
   const userTestImg = '/img/test/user-test.png';
@@ -143,7 +144,6 @@ function Component() {
           </div>
         </div>
       </div>
-
       <div className="w-100">
         <div style={{ display: 'flex', marginBottom: '30px' }}>
           <div style={{ width: '600px', marginRight: '50px' }}>
@@ -165,6 +165,9 @@ function Component() {
               placeholder="검색할 이미지"
             ></Input>
             <Button value="Unsplash 테스트" onClick={testUnsplash}></Button>
+          </div>
+          <div style={{ width: '100px' }}>
+            <Toggle></Toggle>
           </div>
         </div>
       </div>
