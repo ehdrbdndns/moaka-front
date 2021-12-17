@@ -9,7 +9,6 @@ import { setCommentMaxHeight } from './event';
 function CommentSidebar(data: CommentSideBarProps) {
   const sidebarHeaderElem = useRef<HTMLDivElement>(null);
   const sidebarLinkElem = useRef<HTMLDivElement>(null);
-  const sidebarCommentElem = useRef<HTMLDivElement>(null);
   const sidebarCommentInputElem = useRef<HTMLDivElement>(null);
 
   const [commentHeight, setCommentHeight] = useState('');
