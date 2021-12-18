@@ -16,7 +16,7 @@ function Button(data: ButtonProps) {
           ' ' +
           data.size
         }
-        ref={buttonElem}
+        ref={data.buttonElem !== null ? data.buttonElem : buttonElem}
         onClick={() => {
           if (!data.isDisabled) {
             data.onClick();
@@ -43,6 +43,7 @@ function Button(data: ButtonProps) {
 }
 
 Button.defaultProps = {
+  buttonElem: null,
   type: 'outline', // 'primary', 'outline', 'outline-text', 'text'
   size: 'm',
   isDisabled: false,

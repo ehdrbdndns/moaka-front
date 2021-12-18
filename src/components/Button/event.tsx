@@ -1,5 +1,5 @@
 const addPressButton = (buttonElem: React.RefObject<HTMLDivElement>) => {
-  buttonElem.current?.classList.add('pressed');
+  buttonElem.current?.classList.toggle('pressed');
 };
 
 export { addPressButton };
