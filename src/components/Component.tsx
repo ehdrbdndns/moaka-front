@@ -11,7 +11,6 @@ import Link from './Link/Link';
 import { nanoid } from 'nanoid';
 import AddArchiveModal from './Modal/AddArchiveModal';
 import Tab from './Tab/Tab';
-import HeaderTab from './Tab/HeaderTab';
 import DropDown from './DropDown/DropDown';
 import Chat from './Chat/Chat';
 import NotificationModal from './Modal/NotificationModal';
@@ -20,6 +19,7 @@ import LoginModal from './Modal/LoginModal';
 import Navigation from './Navigation/Navigation';
 import Toggle from './Toggle/Toggle';
 import ProfileModal from './Modal/ProfileModal';
+import Header from './Header/Header';
 
 function Component() {
   const userTestImg = '/img/test/user-test.png';
@@ -37,6 +37,12 @@ function Component() {
           <Navigation />
         </div>
       </div>
+      <div>
+        <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Header</h1>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Header></Header>
+        </div>
+      </div>
       <div className="w-100">
         <div style={{ display: 'flex', marginBottom: '30px' }}>
           <div style={{ width: '200px', marginRight: '50px' }}>
@@ -49,7 +55,6 @@ function Component() {
                   firstId={nanoid()}
                   secondId={nanoid()}
                 />
-                <HeaderTab />
               </div>
             </div>
           </div>

@@ -116,6 +116,8 @@
     color: $gray700;
     padding-left: 6px;
     line-height: 17px;
+    overflow: overlay;
+    max-height: 120px;
 
     &::before {
       content: ' ';

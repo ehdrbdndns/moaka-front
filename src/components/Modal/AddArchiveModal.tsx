@@ -120,6 +120,7 @@ function AddArchiveModal() {
           <Button
             size="s"
             buttonElem={modalStateElem}
+            width={100}
             type="outline"
             value="아카이브 추가"
             onClick={() => addPressButton(modalStateElem)}

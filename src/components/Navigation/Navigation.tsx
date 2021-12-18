@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import CommentSidebar from '../SideBar/CommentSidebar';
 import LinkSideBar from '../SideBar/LinkSideBar';
 import TreeSideBar from '../SideBar/TreeSideBar';
@@ -7,13 +7,17 @@ import { onClickNavItem } from './event';
 function Navigation() {
   const sideNavElem = useRef<HTMLDivElement>(null);
 
+  const linkNavItemElem = useRef<HTMLLIElement>(null);
+  const treeNavItemElem = useRef<HTMLLIElement>(null);
+  const commentNavItemElem = useRef<HTMLLIElement>(null);
+
   const linkSidebarElem = useRef<HTMLDivElement>(null);
   const treeSidebarElem = useRef<HTMLDivElement>(null);
   const commentSidebarElem = useRef<HTMLDivElement>(null);
 
-  const linkNavItemElem = useRef<HTMLLIElement>(null);
-  const treeNavItemElem = useRef<HTMLLIElement>(null);
-  const commentNavItemElem = useRef<HTMLLIElement>(null);
+  const [openLink, setOpenLink] = useState<boolean>(false);
+  const [openTree, setOpenTree] = useState<boolean>(false);
+  const [openComment, setOpenComment] = useState<boolean>(false);
 
   return (
     <aside className="side-nav" ref={sideNavElem}>
@@ -22,7 +26,12 @@ function Navigation() {
           <li
             className="side-nav__item"
             onClick={() =>
-              onClickNavItem(sideNavElem, linkSidebarElem, linkNavItemElem)
+              onClickNavItem(
+                sideNavElem,
+                linkSidebarElem,
+                linkNavItemElem,
+                setOpenLink,
+              )
             }
             ref={linkNavItemElem}
           >
@@ -42,7 +51,12 @@ function Navigation() {
           <li
             className="side-nav__item"
             onClick={() =>
-              onClickNavItem(sideNavElem, treeSidebarElem, treeNavItemElem)
+              onClickNavItem(
+                sideNavElem,
+                treeSidebarElem,
+                treeNavItemElem,
+                setOpenTree,
+              )
             }
             ref={treeNavItemElem}
           >
@@ -61,13 +75,14 @@ function Navigation() {
           </li>
           <li
             className="side-nav__item"
-            onClick={() =>
+            onClick={() => {
               onClickNavItem(
                 sideNavElem,
                 commentSidebarElem,
                 commentNavItemElem,
-              )
-            }
+                setOpenComment,
+              );
+            }}
             ref={commentNavItemElem}
           >
             <svg
@@ -83,7 +98,7 @@ function Navigation() {
               />
             </svg>
           </li>
-          <li className="side-nav__item mobile">
+          {/* <li className="side-nav__item mobile">
             <img src="/img/svg/clock.svg" className="image-s" alt="최근 내역" />
           </li>
           <li className="side-nav__item mobile">
@@ -92,13 +107,16 @@ function Navigation() {
               className="image-s"
               alt="하트"
             />
-          </li>
+          </li> */}
         </ul>
       </nav>
       <div className="side-nav__content">
         <LinkSideBar sidebarElem={linkSidebarElem}></LinkSideBar>
         <TreeSideBar sidebarElem={treeSidebarElem}></TreeSideBar>
-        <CommentSidebar sidebarElem={commentSidebarElem}></CommentSidebar>
+        <CommentSidebar
+          sidebarElem={commentSidebarElem}
+          openComment={openComment}
+        ></CommentSidebar>
       </div>
     </aside>
   );

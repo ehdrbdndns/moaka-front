@@ -1,32 +1,23 @@
+import React, { useEffect, useRef } from 'react';
 import { nanoid } from 'nanoid';
-import React, { useLayoutEffect, useRef, useState } from 'react';
 import Chat from '../Chat/Chat';
 import LinkBox from '../Link/LinkBox';
 import Input from '../Input/Input';
 import { CommentSideBarProps } from './types';
-import { setCommentMaxHeight } from './event';
+import { initialCommentSidebarEvent } from './event';
 
 function CommentSidebar(data: CommentSideBarProps) {
-  const sidebarHeaderElem = useRef<HTMLDivElement>(null);
-  const sidebarLinkElem = useRef<HTMLDivElement>(null);
-  const sidebarCommentInputElem = useRef<HTMLDivElement>(null);
+  const commentElem = useRef<HTMLDivElement>(null);
+  const linkElem = useRef<HTMLDivElement>(null);
 
-  const [commentHeight, setCommentHeight] = useState('');
-
-  useLayoutEffect(() => {
-    setCommentMaxHeight(
-      data.sidebarElem,
-      sidebarHeaderElem,
-      sidebarLinkElem,
-      sidebarCommentInputElem,
-      setCommentHeight,
-    );
-  }, [data.sidebarElem]);
+  useEffect(() => {
+    data.openComment && initialCommentSidebarEvent(commentElem, linkElem);
+  }, [data.sidebarElem, data.openComment]);
 
   return (
     <>
       <article className="sidebar comment" ref={data.sidebarElem}>
-        <div className="sidebar__header" ref={sidebarHeaderElem}>
+        <div className="sidebar__header">
           <h1 className="sidebar__title">댓글</h1>
           <svg
             width="24"
@@ -42,16 +33,34 @@ function CommentSidebar(data: CommentSideBarProps) {
           </svg>
         </div>
         <div className="sidebar__content">
-          <div className="px-p-8" ref={sidebarLinkElem}>
-            <LinkBox id={nanoid()}></LinkBox>
+          <div className="sidebar__comment" ref={commentElem}>
+            {data.openComment && (
+              <>
+                <div className="sidebar__link" ref={linkElem}>
+                  <div className="px-p-8">
+                    <LinkBox id={nanoid()}></LinkBox>
+                  </div>
+                  <div className="sidebar__div" />
+                </div>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true}></Chat>
+                <Chat isTimeShow={true} isLikeShow={true} isMine={true}></Chat>
+              </>
+            )}
           </div>
-          <div className="sidebar__div" />
-          <div className="sidebar__comment" style={{ height: commentHeight }}>
-            <Chat isTimeShow={true} isLikeShow={true}></Chat>
-            <Chat isTimeShow={true} isLikeShow={true}></Chat>
-            <Chat isTimeShow={true} isLikeShow={true} isMine={true}></Chat>
-          </div>
-          <div className="sidebar__comment-input" ref={sidebarCommentInputElem}>
+          <div className="sidebar__comment-input">
             <Input
               placeholder="답글..."
               suffix={'/img/svg/comment-input.svg'}

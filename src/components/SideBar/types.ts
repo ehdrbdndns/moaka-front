@@ -9,5 +9,6 @@ export type TreeSideBarProps = {
 };
 
 export type CommentSideBarProps = {
+  openComment: boolean;
   sidebarElem: RefObject<HTMLDivElement>;
 };

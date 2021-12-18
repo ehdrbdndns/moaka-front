@@ -18,9 +18,15 @@
     padding: 8px;
   }
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
   &__title {
     @include h5;
-    margin-bottom: 16px;
   }
 
   &__content {
@@ -29,22 +35,25 @@
   }
 
   &.comment &__content {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 0;
+    // sidebar 높이 - 헤더 - 사이드바 헤더
+    max-height: calc(100vh - 48px - 39px);
+    height: 100%;
+  }
+
+  &__comment {
+    position: relative;
+    overflow: scroll;
+    height: 100%;
   }
 
   &__comment-input {
-    position: absolute;
     width: 100%;
     padding: 16px;
     background-color: white;
-    bottom: 0;
-    left: 0;
-  }
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
   }
 
   &__div {
@@ -52,5 +61,59 @@
     height: 1px;
     background-color: $gray200;
     margin: 16px 0;
+  }
+
+  @keyframes hide-ani {
+    0% {
+      transform: translateY(-10px);
+      opacity: 0.5;
+    }
+    50% {
+      transform: translateY(-30px);
+      opacity: 0;
+      visibility: hidden;
+    }
+    100% {
+      position: relative;
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes show-ani {
+    0% {
+      position: sticky;
+      transform: translateY(-30px);
+      opacity: 0;
+      visibility: hidden;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+  }
+
+  &__link {
+    position: sticky;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: white;
+
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    max-height: 200px;
+    transition: 0.25s;
+    z-index: 1;
+
+    &.hide {
+      animation: hide-ani 0.35s forwards;
+    }
+
+    &.show {
+      animation: show-ani 0.35s forwards;
+    }
   }
 }

@@ -4,37 +4,26 @@
 .header {
   max-width: $max-width;
   width: 100%;
-  padding: 7px 30px;
-  margin: 0 auto;
+  height: 48px;
   display: flex;
-  box-sizing: border-box;
+  justify-content: space-between;
   align-items: center;
+
+  &__logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  &__item-list {
+    display: flex;
+    align-items: center;
+  }
 
   &__item {
     display: flex;
     align-items: center;
-
-    &:nth-child(1) {
-      width: 33.333%;
-      margin-right: auto;
-    }
-
-    &:nth-child(2) {
-      width: 33.333%;
-      margin: 0 auto;
-      justify-content: center;
-    }
-
-    &:nth-child(3) {
-      width: 33.333%;
-      margin-left: auto;
-      justify-content: flex-end;
-    }
-  }
-
-  &__logo {
-    & > .logo {
-      margin-right: 8px;
+    & + & {
+      margin-left: 8px;
     }
   }
 }

@@ -10,7 +10,9 @@ function LinkSideBar(data: LinkSideBarProps) {
   return (
     <>
       <article className="sidebar" ref={data.sidebarElem}>
-        <h1 className="sidebar__title">링크 추가</h1>
+        <div className="sidebar__header">
+          <h1 className="sidebar__title">링크 추가</h1>
+        </div>
         <div className="sidebar__content">
           <Input
             prefix="/img/svg/link.svg"
