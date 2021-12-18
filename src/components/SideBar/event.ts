@@ -11,13 +11,9 @@ const initialCommentSidebarEvent = (
   const element = commentElem.current as HTMLDivElement;
   const scrollHeight = element.scrollHeight as number;
   const clientHeight = element.clientHeight as number;
-  console.log(scrollHeight);
-  console.log(clientHeight);
 
   element.scrollTop = scrollHeight - clientHeight;
   prevScrollTop = element.scrollTop;
-
-  console.log('initail');
 
   // scrollEvent 설정
   element.addEventListener('scroll', e => {
@@ -30,9 +26,6 @@ const commentScrollEvent = (
   LinkElem: React.RefObject<HTMLDivElement>,
 ) => {
   currentScrollTop = e.target.scrollTop;
-
-  console.log('prev: ' + prevScrollTop);
-  console.log('current: ' + currentScrollTop);
 
   switch (currentScrollTop < prevScrollTop) {
     case true:
