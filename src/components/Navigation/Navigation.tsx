@@ -98,21 +98,17 @@ function Navigation() {
               />
             </svg>
           </li>
-          {/* <li className="side-nav__item mobile">
-            <img src="/img/svg/clock.svg" className="image-s" alt="최근 내역" />
-          </li>
-          <li className="side-nav__item mobile">
-            <img
-              src="/img/svg/white-heart.svg"
-              className="image-s"
-              alt="하트"
-            />
-          </li> */}
         </ul>
       </nav>
       <div className="side-nav__content">
-        <LinkSideBar sidebarElem={linkSidebarElem}></LinkSideBar>
-        <TreeSideBar sidebarElem={treeSidebarElem}></TreeSideBar>
+        <LinkSideBar
+          sidebarElem={linkSidebarElem}
+          openLink={openLink}
+        ></LinkSideBar>
+        <TreeSideBar
+          sidebarElem={treeSidebarElem}
+          openTree={openTree}
+        ></TreeSideBar>
         <CommentSidebar
           sidebarElem={commentSidebarElem}
           openComment={openComment}
