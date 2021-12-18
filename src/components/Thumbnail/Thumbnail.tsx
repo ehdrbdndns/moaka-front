@@ -13,7 +13,7 @@ function Thumbnail(data: ThumbnailProps) {
 
 Thumbnail.defaultProps = {
   type: 'book_thumbnail', // link_thumbnail or book_thumbnail
-  src: '/img/test/thumbnail.png',
+  src: '/img/default-thumbnail.png',
 };
 
 export default Thumbnail;
