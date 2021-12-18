@@ -30,13 +30,10 @@ const commentScrollEvent = (
   switch (currentScrollTop < prevScrollTop) {
     case true:
       // hide link
-      console.log('hide');
-
       hideLink(LinkElem);
       break;
     case false:
       // show link
-      console.log('show');
       showLink(LinkElem);
       break;
     default:
