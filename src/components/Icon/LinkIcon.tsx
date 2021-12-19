@@ -4,7 +4,7 @@ import { LinkIconProps } from './type';
 function LinkIcon(data: LinkIconProps) {
   return (
     <>
-      <div className={'icon link'}>
+      <div className={'icon icon-link'}>
         <img src="/img/svg/link.svg" alt="아이콘" />
         <span className="icon__value">{data.value}</span>
       </div>
