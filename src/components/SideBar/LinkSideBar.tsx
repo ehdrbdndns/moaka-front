@@ -22,7 +22,9 @@ function LinkSideBar(data: LinkSideBarProps) {
               ></Input>
               <Input placeholder="링크 설명"></Input>
               <DropDown defaultValue="아카이브 선택"></DropDown>
-              <Link type="imageview" id={nanoid()}></Link>
+              <div className="m-0-auto">
+                <Link type="imageview" id={nanoid()}></Link>
+              </div>
               <Button value="추가하기"></Button>
             </>
           )}

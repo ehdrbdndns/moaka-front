@@ -4,14 +4,18 @@ import Chat from '../Chat/Chat';
 import LinkBox from '../Link/LinkBox';
 import Input from '../Input/Input';
 import { CommentSideBarProps } from './types';
-import { initialCommentSidebarEvent } from './event';
+import { initialCommentSidebarEvent, resetCommentVariableEvent } from './event';
 
 function CommentSidebar(data: CommentSideBarProps) {
   const commentElem = useRef<HTMLDivElement>(null);
   const linkElem = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    data.openComment && initialCommentSidebarEvent(commentElem, linkElem);
+    if (data.openComment) {
+      initialCommentSidebarEvent(commentElem, linkElem);
+    } else {
+      resetCommentVariableEvent();
+    }
   }, [data.sidebarElem, data.openComment]);
 
   return (
@@ -33,33 +37,31 @@ function CommentSidebar(data: CommentSideBarProps) {
           </svg>
         </div>
         <div className="sidebar__content">
-          <div className="sidebar__comment" ref={commentElem}>
-            {data.openComment && (
-              <>
-                <div className="sidebar__link" ref={linkElem}>
-                  <div className="px-p-8">
-                    <LinkBox id={nanoid()}></LinkBox>
-                  </div>
-                  <div className="sidebar__div" />
+          {data.openComment && (
+            <div className="sidebar__comment" ref={commentElem}>
+              <div className="sidebar__link" ref={linkElem}>
+                <div className="px-p-8">
+                  <LinkBox id={nanoid()}></LinkBox>
                 </div>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true}></Chat>
-                <Chat isTimeShow={true} isLikeShow={true} isMine={true}></Chat>
-              </>
-            )}
-          </div>
+                <div className="sidebar__div" />
+              </div>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true}></Chat>
+              <Chat isTimeShow={true} isLikeShow={true} isMine={true}></Chat>
+            </div>
+          )}
           <div className="sidebar__comment-input">
             <Input
               placeholder="답글..."

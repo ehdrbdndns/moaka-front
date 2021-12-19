@@ -1,7 +1,10 @@
-import React from 'react';
-
 let prevScrollTop = 0;
 let currentScrollTop = 0;
+
+const resetCommentVariableEvent = () => {
+  prevScrollTop = 0;
+  currentScrollTop = 0;
+};
 
 const initialCommentSidebarEvent = (
   commentElem: React.RefObject<HTMLDivElement>,
@@ -53,4 +56,8 @@ const showLink = (LinkElem: React.RefObject<HTMLDivElement>) => {
   LinkElem.current?.classList.add('show');
 };
 
-export { commentScrollEvent, initialCommentSidebarEvent };
+export {
+  commentScrollEvent,
+  initialCommentSidebarEvent,
+  resetCommentVariableEvent,
+};
