@@ -45,8 +45,10 @@
   }
 
   &__comment {
+    @include scroll;
+
     position: relative;
-    overflow: scroll;
+    overflow-y: scroll;
     height: 100%;
   }
 
