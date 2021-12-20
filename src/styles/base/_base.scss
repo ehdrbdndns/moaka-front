@@ -57,7 +57,7 @@ a {
 
 @include desktop {
   .desktop {
-    display: initial;
+    display: initial !important;
   }
 
   .tablet {
@@ -75,7 +75,7 @@ a {
   }
 
   .tablet {
-    display: initial;
+    display: initial !important;
   }
 
   .mobile {
@@ -93,6 +93,6 @@ a {
   }
 
   .mobile {
-    display: initial;
+    display: initial !important;
   }
 }
