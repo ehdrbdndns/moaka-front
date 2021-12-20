@@ -3,6 +3,26 @@
 
   &__state {
     cursor: pointer;
+
+    &-icon {
+      @include desktop {
+        width: 24px;
+        height: 24px;
+      }
+
+      @include tablet {
+        width: 24px;
+        height: 24px;
+      }
+
+      @include mobile {
+        width: 18px;
+        height: 18px;
+      }
+      &:hover > path {
+        fill: black;
+      }
+    }
   }
 
   &__view-list {

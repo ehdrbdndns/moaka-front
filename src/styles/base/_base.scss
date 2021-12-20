@@ -65,3 +65,45 @@ body {
 a {
   text-decoration: none;
 }
+
+@include desktop {
+  .desktop {
+    display: initial;
+  }
+
+  .tablet {
+    display: none;
+  }
+
+  .mobile {
+    display: none;
+  }
+}
+
+@include tablet {
+  .desktop {
+    display: none;
+  }
+
+  .tablet {
+    display: initial;
+  }
+
+  .mobile {
+    display: none;
+  }
+}
+
+@include mobile {
+  .desktop {
+    display: none;
+  }
+
+  .tablet {
+    display: none;
+  }
+
+  .mobile {
+    display: initial;
+  }
+}
