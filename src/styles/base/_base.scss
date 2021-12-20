@@ -1,8 +1,6 @@
 html,
 body {
   @include scroll;
-
-  overflow: overlay;
 }
 
 .container {
