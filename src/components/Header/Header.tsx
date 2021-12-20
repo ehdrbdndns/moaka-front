@@ -29,15 +29,17 @@ function Header() {
           className="header__logo"
           alt="로고 이미지"
         />
-        <Tab
-          firstName="탐색하기"
-          secondName="나의 저장소"
-          firstId={nanoid()}
-          secondId={nanoid()}
-          onClickOfFirst={headerFirstTabClick}
-          onClickOfSecond={headerSecondTabClick}
-          activeMode={headerActiveTab}
-        ></Tab>
+        <div className="m-0-auto">
+          <Tab
+            firstName="탐색하기"
+            secondName="나의 저장소"
+            firstId={nanoid()}
+            secondId={nanoid()}
+            onClickOfFirst={headerFirstTabClick}
+            onClickOfSecond={headerSecondTabClick}
+            activeMode={headerActiveTab}
+          ></Tab>
+        </div>
         <div className="header__item-list">
           <div className="header__item">
             <NotificationModal></NotificationModal>
