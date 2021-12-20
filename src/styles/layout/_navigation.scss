@@ -12,11 +12,12 @@
     border-radius: 8px;
     margin-left: 4px;
 
-    &-home {
+    &-home,
+    &-mypage {
       height: 88px;
     }
 
-    &-mypage {
+    &-detail {
       height: 128px;
     }
   }
