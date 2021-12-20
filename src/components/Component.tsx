@@ -19,9 +19,12 @@ import LoginModal from './Modal/LoginModal';
 import Navigation from './Navigation/Navigation';
 import Toggle from './Toggle/Toggle';
 import ProfileModal from './Modal/ProfileModal';
-import Header from './Header/Header';
+import { useDispatch } from 'react-redux';
+import Toast from './Toast/Toast';
 
 function Component() {
+  const dispath = useDispatch();
+
   const userTestImg = '/img/test/user-test.png';
 
   const [unsplashParam, setUnsplashParam] = useState<string>('');
@@ -35,12 +38,6 @@ function Component() {
         <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Nav</h1>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Navigation />
-        </div>
-      </div>
-      <div>
-        <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Header</h1>
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Header></Header>
         </div>
       </div>
       <div className="w-100">
@@ -74,7 +71,7 @@ function Component() {
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
               Login Modal
             </h1>
-            <LoginModal />
+            <LoginModal dispatch={dispath} />
           </div>
           <div style={{ width: '50px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
@@ -180,6 +177,14 @@ function Component() {
           </div>
           <div style={{ width: '100px' }}>
             <Toggle></Toggle>
+          </div>
+        </div>
+      </div>
+      <div className="w-100">
+        <div style={{ display: 'flex', marginBottom: '30px' }}>
+          <div style={{ width: '300px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Toast</h1>
+            <Toast></Toast>
           </div>
         </div>
       </div>

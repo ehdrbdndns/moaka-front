@@ -1,0 +1,32 @@
+.toast {
+  display: inline;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.24);
+
+  &-message {
+    @include subtitle1;
+
+    color: $quaternary-color;
+  }
+
+  &-default {
+    background: $tertiary-color;
+  }
+
+  &-error {
+    background: #ffa9a3;
+  }
+
+  &-warning {
+    background: #ffd990;
+  }
+
+  &-success {
+    background: #a8e58c;
+  }
+
+  &-notification {
+    background: $secondary-color;
+  }
+}
