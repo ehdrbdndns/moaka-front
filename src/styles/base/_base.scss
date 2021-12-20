@@ -1,17 +1,6 @@
 html,
 body {
   @include scroll;
-
-  overflow: overlay;
-}
-
-.container {
-  max-width: $max-width;
-  margin: 0 auto;
-}
-
-.row {
-  display: flex;
 }
 
 .d-none {
@@ -66,9 +55,17 @@ a {
   text-decoration: none;
 }
 
+svg {
+  cursor: pointer;
+}
+
+svg:hover path {
+  fill: black;
+}
+
 @include desktop {
   .desktop {
-    display: initial;
+    display: initial !important;
   }
 
   .tablet {
@@ -86,7 +83,7 @@ a {
   }
 
   .tablet {
-    display: initial;
+    display: initial !important;
   }
 
   .mobile {
@@ -104,6 +101,6 @@ a {
   }
 
   .mobile {
-    display: initial;
+    display: initial !important;
   }
 }

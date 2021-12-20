@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid';
 import React from 'react';
+import { useHistory } from 'react-router';
 import HeartIcon from '../Icon/HeartIcon';
 import LinkIcon from '../Icon/LinkIcon';
 import Profile from '../Profile/Profile';
@@ -8,6 +9,8 @@ import Thumbnail from '../Thumbnail/Thumbnail';
 import { CardProps } from './type';
 
 function Card(data: CardProps) {
+  const { push } = useHistory();
+
   return (
     <>
       <div className="card">
@@ -31,7 +34,14 @@ function Card(data: CardProps) {
             </div>
           </div>
         </div>
-        <Thumbnail src={data.src} type="book" />
+        <div
+          className="cursor-pointer"
+          onClick={() => {
+            push(data.link);
+          }}
+        >
+          <Thumbnail src={data.src} type="book" />
+        </div>
       </div>
       <div className="card-footer">
         <div className="card-footer__item">
@@ -51,6 +61,7 @@ function Card(data: CardProps) {
 Card.defaultProps = {
   title: '제목',
   src: '/img/default-thumbnail.png',
+  link: '/archive?no=1',
 };
 
 export default Card;

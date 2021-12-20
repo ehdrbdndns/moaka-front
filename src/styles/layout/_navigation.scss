@@ -1,6 +1,8 @@
 .side-nav {
   display: flex;
   flex-direction: row-reverse;
+  position: sticky;
+  top: 48px;
 
   &__item-list {
     width: 36px;
@@ -9,6 +11,15 @@
     background-color: #000;
     border-radius: 8px;
     margin-left: 4px;
+
+    &-home,
+    &-mypage {
+      height: 88px;
+    }
+
+    &-detail {
+      height: 128px;
+    }
   }
 
   &__item-list > ul {
@@ -38,5 +49,6 @@
   &.active &__content {
     width: 280px;
     height: calc(100vh - 48px);
+    border-left: 1px solid $gray300;
   }
 }
