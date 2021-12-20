@@ -12,9 +12,7 @@ import TEST from './containers/TEST';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import Search from './containers/Search';
-import NewArchiveCardList from './components/CardList/NewArchiveCardList';
-import NewHomeCardList from './components/CardList/NewHomeCardList';
-import NewMyCardList from './components/CardList/NewMyCardList';
+import NewArchiveCardList from './components/CardList/CardList';
 import Component from './components/Component';
 
 function App() {
@@ -23,7 +21,7 @@ function App() {
       <Header />
       <Switch>
         <Route path="/component" component={Component} />
-        <Route path="/mypage" component={NewMyCardList} />
+        <Route path="/mypage" component={Home} />
         <Route path="/" component={Home} />
       </Switch>
       {/* <NewSide /> */}

@@ -37,8 +37,11 @@
   }
 
   &.show &__content {
+    @include scroll;
+
     height: 100%;
-    max-height: 600px;
+    max-height: 650px;
+    overflow: scroll;
   }
 
   &.show &__toggle {
