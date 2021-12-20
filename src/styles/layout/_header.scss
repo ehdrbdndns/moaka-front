@@ -11,8 +11,20 @@
   position: relative;
 
   &__logo {
-    width: 36px;
-    height: 36px;
+    @include desktop {
+      width: 36px;
+      height: 36px;
+    }
+
+    @include tablet {
+      width: 36px;
+      height: 36px;
+    }
+
+    @include mobile {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   &__item-list {

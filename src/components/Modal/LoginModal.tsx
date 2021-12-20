@@ -111,12 +111,29 @@ function LoginModal() {
       <div className="modal" ref={modalElem}>
         {/* modal state button */}
         <div className="modal__state" onClick={() => toggleModal(modalElem)}>
-          <Button
-            width={73}
-            type="text primary-color"
-            size="s"
-            value="시작하기"
-          />
+          <div className="desktop tablet">
+            <Button
+              width={73}
+              type="text primary-color"
+              size="s"
+              value="시작하기"
+            />
+          </div>
+          <div className="mobile">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              className="modal__state-icon"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.25 2.25H6.75C6.15326 2.25 5.58097 2.48705 5.15901 2.90901C4.73705 3.33097 4.5 3.90326 4.5 4.5V7.5H5.25V4.5C5.25 4.10218 5.40804 3.72064 5.68934 3.43934C5.97064 3.15804 6.35218 3 6.75 3H11.25C11.6478 3 12.0294 3.15804 12.3107 3.43934C12.592 3.72064 12.75 4.10218 12.75 4.5V14.25C12.75 14.6478 12.592 15.0294 12.3107 15.3107C12.0294 15.592 11.6478 15.75 11.25 15.75H6.75C6.35218 15.75 5.97064 15.592 5.68934 15.3107C5.40804 15.0294 5.25 14.6478 5.25 14.25V11.25H4.5V14.25C4.5 14.8467 4.73705 15.419 5.15901 15.841C5.58097 16.2629 6.15326 16.5 6.75 16.5H11.25C11.8467 16.5 12.419 16.2629 12.841 15.841C13.2629 15.419 13.5 14.8467 13.5 14.25V4.5C13.5 3.90326 13.2629 3.33097 12.841 2.90901C12.419 2.48705 11.8467 2.25 11.25 2.25V2.25ZM2.25 9H9.9375L7.5 6.5625L7.998 6L11.373 9.375L7.998 12.75L7.5 12.1875L9.9375 9.75H2.25V9Z"
+                fill="#616161"
+              />
+            </svg>
+          </div>
         </div>
         <div className="modal__view-list">
           <div className="modal__view main modal-login">
