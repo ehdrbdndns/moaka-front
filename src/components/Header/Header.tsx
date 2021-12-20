@@ -26,7 +26,8 @@ function Header() {
       <header className="header">
         <img
           src="/img/svg/logo.svg"
-          className="header__logo"
+          style={{ left: '10px' }}
+          className="header__logo absolute"
           alt="로고 이미지"
         />
         <div className="m-0-auto">
@@ -40,7 +41,7 @@ function Header() {
             activeMode={headerActiveTab}
           ></Tab>
         </div>
-        <div className="header__item-list">
+        <div className="header__item-list absolute" style={{ right: '10px' }}>
           <div className="header__item">
             <NotificationModal></NotificationModal>
           </div>
