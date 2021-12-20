@@ -50,7 +50,7 @@ function Card(data: CardProps) {
 
 Card.defaultProps = {
   title: '제목',
-  src: '/img/test/thumbnail.png',
+  src: '/img/default-thumbnail.png',
 };
 
 export default Card;

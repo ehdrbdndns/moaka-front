@@ -1,34 +1,63 @@
-import { Dispatch, RefObject } from 'react';
+let prevScrollTop = 0;
+let currentScrollTop = 0;
 
-const setCommentMaxHeight = (
-  sidebar: RefObject<HTMLDivElement>,
-  header: RefObject<HTMLDivElement>,
-  link: RefObject<HTMLDivElement>,
-  commentInput: RefObject<HTMLDivElement>,
-  setCommentHeight: Dispatch<React.SetStateAction<string>>,
-) => {
-  let totalHeight = sidebar.current?.clientHeight as number;
-  let headerHeight = header.current?.clientHeight as number;
-  let linkHeight = link.current?.clientHeight as number;
-  let commentInputHeight = commentInput.current?.clientHeight as number;
-  let divHeight = 32;
-
-  console.log('totalHeight: ' + totalHeight);
-  console.log(headerHeight);
-  console.log(linkHeight);
-  console.log(commentInputHeight);
-
-  console.log(
-    totalHeight -
-      (headerHeight + linkHeight + divHeight + commentInputHeight) +
-      'px',
-  );
-
-  setCommentHeight(
-    totalHeight -
-      (headerHeight + linkHeight + divHeight + commentInputHeight) +
-      'px',
-  );
+const resetCommentVariableEvent = () => {
+  prevScrollTop = 0;
+  currentScrollTop = 0;
 };
 
-export { setCommentMaxHeight };
+const initialCommentSidebarEvent = (
+  commentElem: React.RefObject<HTMLDivElement>,
+  linkElem: React.RefObject<HTMLDivElement>,
+) => {
+  // sidebar scroll 맨 아래로 내리기
+  const element = commentElem.current as HTMLDivElement;
+  const scrollHeight = element.scrollHeight as number;
+  const clientHeight = element.clientHeight as number;
+
+  element.scrollTop = scrollHeight - clientHeight;
+  prevScrollTop = element.scrollTop;
+
+  // scrollEvent 설정
+  element.addEventListener('scroll', e => {
+    commentScrollEvent(e, linkElem);
+  });
+};
+
+const commentScrollEvent = (
+  e: any,
+  LinkElem: React.RefObject<HTMLDivElement>,
+) => {
+  currentScrollTop = e.target.scrollTop;
+
+  switch (currentScrollTop < prevScrollTop) {
+    case true:
+      // hide link
+      hideLink(LinkElem);
+      break;
+    case false:
+      // show link
+      showLink(LinkElem);
+      break;
+    default:
+      break;
+  }
+
+  prevScrollTop = currentScrollTop;
+};
+
+const hideLink = (LinkElem: React.RefObject<HTMLDivElement>) => {
+  LinkElem.current?.classList.remove('show');
+  LinkElem.current?.classList.add('hide');
+};
+
+const showLink = (LinkElem: React.RefObject<HTMLDivElement>) => {
+  LinkElem.current?.classList.remove('hide');
+  LinkElem.current?.classList.add('show');
+};
+
+export {
+  commentScrollEvent,
+  initialCommentSidebarEvent,
+  resetCommentVariableEvent,
+};

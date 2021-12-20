@@ -1,5 +1,5 @@
 .link {
-  width: 100%;
+  width: 230px;
   border-radius: 8px;
   cursor: pointer;
 
@@ -116,6 +116,8 @@
     color: $gray700;
     padding-left: 6px;
     line-height: 17px;
+    overflow: overlay;
+    max-height: 120px;
 
     &::before {
       content: ' ';

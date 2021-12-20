@@ -6,9 +6,11 @@ function TreeSideBar(data: TreeSideBarProps) {
   return (
     <>
       <article className="sidebar" ref={data.sidebarElem}>
-        <h1 className="sidebar__title">링크 트리</h1>
+        <div className="sidebar__header">
+          <h1 className="sidebar__title">링크 트리</h1>
+        </div>
         <div className="sidebar__content">
-          <LinkTree></LinkTree>
+          {data.openTree && <LinkTree></LinkTree>}
         </div>
       </article>
     </>

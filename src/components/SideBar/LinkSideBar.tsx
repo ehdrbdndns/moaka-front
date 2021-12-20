@@ -10,16 +10,24 @@ function LinkSideBar(data: LinkSideBarProps) {
   return (
     <>
       <article className="sidebar" ref={data.sidebarElem}>
-        <h1 className="sidebar__title">링크 추가</h1>
+        <div className="sidebar__header">
+          <h1 className="sidebar__title">링크 추가</h1>
+        </div>
         <div className="sidebar__content">
-          <Input
-            prefix="/img/svg/link.svg"
-            placeholder="사이트 주소 (URL)"
-          ></Input>
-          <Input placeholder="링크 설명"></Input>
-          <DropDown defaultValue="아카이브 선택"></DropDown>
-          <Link type="imageview" id={nanoid()}></Link>
-          <Button value="추가하기"></Button>
+          {data.openLink && (
+            <>
+              <Input
+                prefix="/img/svg/link.svg"
+                placeholder="사이트 주소 (URL)"
+              ></Input>
+              <Input placeholder="링크 설명"></Input>
+              <DropDown defaultValue="아카이브 선택"></DropDown>
+              <div className="m-0-auto">
+                <Link type="imageview" id={nanoid()}></Link>
+              </div>
+              <Button value="추가하기"></Button>
+            </>
+          )}
         </div>
       </article>
     </>

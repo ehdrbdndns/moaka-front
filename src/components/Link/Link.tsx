@@ -39,7 +39,7 @@ function Link(data: LinkProps) {
 Link.defaultProps = {
   type: 'listview', // listview, imageview
   url: 'naver.com',
-  thumbnail_src: '/img/test/thumbnail.png',
+  thumbnail_src: '/img/default-link-img.png',
   favicon_src: '/img/link-favicon.png',
   title: '링크 제목',
   description: '링크에 대한 설명',

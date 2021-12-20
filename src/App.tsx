@@ -12,7 +12,6 @@ import TEST from './containers/TEST';
 import Footer from './components/Footer/Footer';
 import Header from './containers/Header';
 import Search from './containers/Search';
-import NewHeaderForm from './components/Header/NewHeaderForm';
 import NewArchiveCardList from './components/CardList/NewArchiveCardList';
 import NewHomeCardList from './components/CardList/NewHomeCardList';
 import NewMyCardList from './components/CardList/NewMyCardList';
