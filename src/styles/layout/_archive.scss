@@ -1,0 +1,52 @@
+.archive {
+  width: 100%;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+
+    &-item {
+      display: flex;
+
+      svg + svg {
+        margin-left: 8px;
+      }
+    }
+  }
+
+  &__title {
+    @include h3;
+    color: black;
+    margin-right: 8px;
+  }
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    padding: 12px 0 24px 0;
+
+    .profile {
+      margin-right: 8px;
+    }
+  }
+
+  &__content {
+    @include body2;
+
+    color: $gray800;
+    margin-bottom: 20px;
+  }
+
+  &__mode {
+    max-width: 1010px;
+    margin: 0 auto;
+    padding: 0 12px;
+    display: flex;
+
+    svg {
+      margin-left: auto;
+    }
+  }
+}

@@ -3,4 +3,10 @@ type CardListProps = {
   isShow: boolean;
 };
 
-export type { CardListProps };
+type LinkListProps = {
+  title: string;
+  isShow: boolean;
+  linktype: string;
+};
+
+export type { CardListProps, LinkListProps };
