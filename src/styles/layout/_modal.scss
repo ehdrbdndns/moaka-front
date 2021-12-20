@@ -301,3 +301,12 @@
     z-index: 1;
   }
 }
+
+.notification-modal {
+  .modal__view {
+    @include scroll;
+
+    max-height: 591px;
+    overflow: scroll;
+  }
+}

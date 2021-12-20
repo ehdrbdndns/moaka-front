@@ -51,6 +51,26 @@ function NotificationModal() {
                 name="닉네임"
                 description="(아카이브제목/링크제목)을 좋아합니다."
               />
+              <Chat
+                isTimeShow={true}
+                name="닉네임"
+                description="(아카이브제목/링크제목)을 좋아합니다."
+              />
+              <Chat
+                isTimeShow={true}
+                name="닉네임"
+                description="(아카이브제목/링크제목)을 좋아합니다."
+              />
+              <Chat
+                isTimeShow={true}
+                name="닉네임"
+                description="(아카이브제목/링크제목)을 좋아합니다."
+              />
+              <Chat
+                isTimeShow={true}
+                name="닉네임"
+                description="(아카이브제목/링크제목)을 좋아합니다."
+              />
             </div>
           </div>
         </div>
