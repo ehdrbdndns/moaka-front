@@ -49,7 +49,7 @@ function Navigation(data: NavigationProps) {
               />
             </svg>
           </li>
-          {data.mode === 'mypage' && (
+          {data.mode === 'detail' && (
             <li
               className="side-nav__item"
               onClick={() =>
@@ -108,7 +108,7 @@ function Navigation(data: NavigationProps) {
           sidebarElem={linkSidebarElem}
           openLink={openLink}
         ></LinkSideBar>
-        {data.mode === 'mypage' && (
+        {data.mode === 'detail' && (
           <TreeSideBar
             sidebarElem={treeSidebarElem}
             openTree={openTree}

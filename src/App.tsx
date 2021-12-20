@@ -6,8 +6,8 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './containers/Home/Home';
 import Login from './containers/Login';
 import Register from './containers/Register';
-import MyPage from './containers/MyPage';
-import ArchiveDetail from './containers/ArchiveDetail';
+import MyPage from './containers/MyPage/MyPage';
+import ArchiveDetail from './containers/Archive/ArchiveDetail';
 import TEST from './containers/TEST';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
@@ -21,7 +21,8 @@ function App() {
       <Header />
       <Switch>
         <Route path="/component" component={Component} />
-        <Route path="/mypage" component={Home} />
+        <Route path="/archive" component={ArchiveDetail} />
+        <Route path="/mypage" component={MyPage} />
         <Route path="/" component={Home} />
       </Switch>
       {/* <NewSide /> */}
