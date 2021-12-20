@@ -40,8 +40,8 @@
     flex-direction: column;
     justify-content: space-between;
     row-gap: 0;
-    // sidebar 높이 - 헤더 - 사이드바 헤더
-    max-height: calc(100vh - 48px - 39px);
+    // sidebar 높이 - 헤더 - 사이드바 헤더 - Input 패딩
+    max-height: calc(100vh - 48px - 39px - 16px);
     height: 100%;
   }
 
