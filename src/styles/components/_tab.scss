@@ -21,6 +21,11 @@
 
     &.active {
       color: black;
+
+      svg path {
+        fill: black;
+      }
+
       &::after {
         content: ' ';
         position: absolute;
