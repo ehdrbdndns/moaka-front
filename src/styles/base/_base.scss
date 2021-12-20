@@ -3,15 +3,6 @@ body {
   @include scroll;
 }
 
-.container {
-  max-width: $max-width;
-  margin: 0 auto;
-}
-
-.row {
-  display: flex;
-}
-
 .d-none {
   display: none;
 }

@@ -113,6 +113,7 @@ function Header() {
           </div>
         </div>
       </header>
+      <div className="header__area"></div>
     </>
   );
 }
