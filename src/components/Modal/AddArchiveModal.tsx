@@ -7,13 +7,16 @@ import Tag from '../Tag/Tag';
 import DropDown from '../DropDown/DropDown';
 import { DropDownProps, DropwDownListType } from '../DropDown/type';
 import Chat from '../Chat/Chat';
-import { closeModal, toggleModal } from './event';
+import { closeModal, openSubModal, toggleModal } from './event';
 import { regEmail } from '../../asset';
 import { addPressButton } from '../Button/event';
+import ThumbnailModal from './SubModal/Thumbnail';
+import Thumbnail from '../Thumbnail/Thumbnail';
 
 function AddArchiveModal() {
   const modalElem = useRef<HTMLDivElement>(null);
   const modalStateElem = useRef<HTMLDivElement>(null);
+  const thumbnailModalElem = useRef<HTMLDivElement>(null);
 
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
@@ -176,6 +179,27 @@ function AddArchiveModal() {
                 </div>
               </div>
               <div className="modal__header">
+                <h3 className="modal__title">썸네일</h3>
+              </div>
+              <div className="modal__content">
+                <div className="d-flex align-item-center">
+                  <div className="relative">
+                    <Thumbnail></Thumbnail>
+                    <img
+                      onClick={() => openSubModal(thumbnailModalElem)}
+                      className="cursor-pointer absolute-center"
+                      src="/img/svg/plus.svg"
+                      alt="추가 아이콘"
+                    />
+                  </div>
+                  <img
+                    src="/img/svg/remove.svg"
+                    className="px-ml-16 cursor-pointer"
+                    alt="삭제 아이콘"
+                  />
+                </div>
+              </div>
+              <div className="modal__header">
                 <h3 className="modal__title">참여자 초대</h3>
               </div>
               <div className="modal__content">
@@ -195,6 +219,7 @@ function AddArchiveModal() {
               <Button type="outline" value="추가" />
             </form>
           </div>
+          <ThumbnailModal subModalElem={thumbnailModalElem}></ThumbnailModal>
         </div>
       </div>
       {/* modal background */}

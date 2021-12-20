@@ -32,12 +32,35 @@ body {
   align-items: center;
 }
 
+.d-flex {
+  display: flex;
+}
+
+.align-item-center {
+  align-items: center;
+}
+
 .m-0-auto {
   margin: 0 auto;
 }
 
 .ml-auto {
   margin-left: auto;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 a {

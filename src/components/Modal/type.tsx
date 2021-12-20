@@ -29,6 +29,10 @@ export type WithDrawModalProps = {
   subModalElem: RefObject<HTMLDivElement>;
 };
 
+export type ThumbnailModalProps = {
+  subModalElem: RefObject<HTMLDivElement>;
+};
+
 export type ProfileModalProps = {
   file: File | undefined; // 프로파일 이미지
   setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
