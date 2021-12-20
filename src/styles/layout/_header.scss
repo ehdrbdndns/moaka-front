@@ -16,6 +16,8 @@
   z-index: 1;
 
   &__logo {
+    cursor: pointer;
+
     @include desktop {
       width: 36px;
       height: 36px;

@@ -59,6 +59,7 @@ function Header() {
           style={{ left: '10px' }}
           className="header__logo absolute"
           alt="로고 이미지"
+          onClick={() => push('/')}
         />
         <div className="m-0-auto">
           <div className="desktop tablet">
