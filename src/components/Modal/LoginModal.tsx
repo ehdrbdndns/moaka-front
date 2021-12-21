@@ -183,6 +183,8 @@ function LoginModal(data: LoginModalProps) {
   const googleRegisterRedux = async (response: any) => {
     const user = response.profileObj;
 
+    console.log(user.email);
+
     let retrieveUserResponse = await retrieveUserById(user.email);
 
     if (retrieveUserResponse.isSuccess) {
@@ -194,7 +196,7 @@ function LoginModal(data: LoginModalProps) {
     } else {
       // 존재하지 않는 아이디
       setRegisterType('google');
-      setEmail(user.id);
+      setEmail(user.email);
       setSub(user.googleId + '');
       setProfile(user.imageUrl);
       openSubModal(profileModalElem);

@@ -112,15 +112,14 @@ function RegisterModal(data: RegisterModalProps) {
       // 회원가입 성공
       setModalError('');
       openSubModal(resultModalElem);
+      data.setId('');
+      data.setPwd('');
     } else if (response.error !== 0) {
       setModalError(response.error + '에러');
     } else {
       // 이미 존재하는 사용자
       setModalError('이미 가입된 유저입니다.');
     }
-
-    data.setId('');
-    data.setPwd('');
 
     setBtnLoading(false);
   };
