@@ -111,7 +111,7 @@ function* localLoginSaga(action: ReturnType<typeof getLocalLogin>) {
       // TODO 로그인 실패
       yield put({
         type: sagaType.GET_LOCAL_LOGIN_FAILE,
-        payload: '이메일 또는 비밀번호 오류입니다.',
+        payload: '이메일 또는 비밀번호',
       });
     }
   } catch (error) {

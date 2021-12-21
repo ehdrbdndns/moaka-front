@@ -1,17 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import './App.css';
 import './styles/main.scss';
 import { Route, Switch } from 'react-router-dom';
 import Home from './containers/Home/Home';
-import Login from './containers/Login';
-import Register from './containers/Register';
 import MyPage from './containers/MyPage/MyPage';
 import ArchiveDetail from './containers/Archive/ArchiveDetail';
-import TEST from './containers/TEST';
-import Footer from './components/Footer/Footer';
-import Search from './containers/Search';
-import NewArchiveCardList from './components/CardList/CardList';
 import Component from './components/Component';
 import Header from './containers/Header/Header';
 
