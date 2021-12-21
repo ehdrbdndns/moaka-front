@@ -323,3 +323,12 @@ export const googleRegister = async ({
 
   return result;
 };
+
+export const withDraw = async () => {
+  const token = localStorage.getItem('token');
+  await axios.post(BASE_URL + '/user/withDraw', null, {
+    headers: {
+      Bearer: token,
+    },
+  });
+};

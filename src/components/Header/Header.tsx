@@ -116,7 +116,10 @@ function Header(data: HeaderProps) {
           </div>
           <div className="header__item">
             {authInfo.data.isLogin ? (
-              <ProfileModal></ProfileModal>
+              <ProfileModal
+                dispatch={dispatch}
+                authInfo={authInfo}
+              ></ProfileModal>
             ) : (
               <LoginModal dispatch={dispatch} authInfo={authInfo}></LoginModal>
             )}

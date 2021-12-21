@@ -1,43 +1,60 @@
 import React, { useRef, useState } from 'react';
 import { closeModal, closeSubModal, openSubModal } from '../event';
-import { WithDrawModalProps } from '../type';
 import Input from '../../Input/Input';
 import Button from '../../Button/Button';
-import { findParentElem } from '../../../asset';
+import { ChangePwdModalProps } from '../type';
 import {
+  changeUserPwd,
   expireMailCode,
   isExistMailCode,
   sendMailCode,
-  withDraw,
 } from '../../../apis/auth/auth';
-import Tag from '../../Tag/Tag';
-import { useHistory } from 'react-router';
-import { getLogout } from '../../../modules/auth';
+import { regPwd } from '../../../asset';
 
-function WithDrawModal(data: WithDrawModalProps) {
-  const { push } = useHistory();
+function ChangePwdModal(data: ChangePwdModalProps) {
+  const codeRef = useRef<HTMLDivElement>(null);
+  const pwdRef = useRef<HTMLDivElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  const [code, setCode] = useState<string>('');
+  const [codeError, setCodeError] = useState<string>('');
+  const [pwd, setPwd] = useState<string>('');
+  const [pwdError, setPwdError] = useState<string>('');
+  const [modalError, setModalError] = useState<string>('');
+
+  const [isCheckBtnDisabled, setIsCheckBtnDisabled] = useState<boolean>(true);
+  const [isPwdBtnDisabled, setIsPwdBtnDisabled] = useState<boolean>(true);
 
   const codeNo = useRef<number>(0);
   const isCheckCode = useRef<boolean>(false);
 
-  const codeElem = useRef<HTMLDivElement>(null);
-  const reasonElem = useRef<HTMLDivElement>(null);
-  const resultElem = useRef<HTMLDivElement>(null);
-
-  const [modalError, setModalError] = useState<string>('');
-
-  const [code, setCode] = useState<string>('');
-  const [codeError, setCodeError] = useState<string>('');
-  const [categoryList, setCategoryList] = useState<string[]>([]);
-  const [reason, setReason] = useState<string>('');
-
-  const [isCheckBtnDisabled, setIsCheckBtnDisabled] = useState<boolean>(true);
-
   const [btnLoading, setBtnLoading] = useState<boolean>(false);
 
+  const setCodeEvent = (data: string) => {
+    setCode(data);
+    setCheckBtnState(data);
+  };
+
+  const setPwdEvent = (data: string) => {
+    setPwd(data);
+
+    if (regPwd.test(data)) {
+      setPwdError('');
+      setIsPwdBtnDisabled(false);
+    } else {
+      setPwdError(
+        '최소 8 자, 하나 이상의 문자, 숫자, 특수문자로 이루어져야 합니다.',
+      );
+    }
+  };
+
   const sendMailCodeEvent = async () => {
-    openSubModal(codeElem);
+    openSubModal(codeRef);
+
+    setModalError('');
+
     let result = await sendMailCode(data.id);
+
     if (!result.isSuccess) {
       setModalError('현재 서버에 문제가 있습니다.');
     } else {
@@ -45,23 +62,46 @@ function WithDrawModal(data: WithDrawModalProps) {
     }
   };
 
-  const onKeyPressOfSendBtn = (e: any) => {
-    e.key === 'Enter' && sendMailCodeEvent();
+  const onkeyPressOfPwdBtn = (e: any) => {
+    e.key === 'Enter' && onClickPwdBtn();
   };
 
-  const setCodeEvent = (data: string) => {
-    setCode(data);
-    setCheckBtnState(data);
+  const onKeyPressOfSendBtn = (e: any) => {
+    e.key === 'Enter' && sendMailCodeEvent();
   };
 
   const setCheckBtnState = (data: string) => {
     data !== '' ? setIsCheckBtnDisabled(false) : setIsCheckBtnDisabled(true);
   };
 
+  const onClickCheckBtn = async () => {
+    if (isCheckCode.current) {
+      // 이미 코드 인증이 완료된 경우
+      openSubModal(pwdRef);
+    } else {
+      // 코드 인증 처리
+      setCodeError('');
+      setBtnLoading(true);
+
+      let response = await isExistMailCode(codeNo.current, code);
+      isCheckCode.current = response.isSuccess;
+
+      if (isCheckCode.current) {
+        openSubModal(pwdRef);
+      } else {
+        setCodeError('코드가 일치하지 않습니다. 다시 입력해주세요.');
+        setIsCheckBtnDisabled(true);
+      }
+
+      setBtnLoading(false);
+    }
+  };
+
   const onClickReCheckBtn = async () => {
     isCheckCode.current = false;
     setIsCheckBtnDisabled(true);
     setBtnLoading(true);
+
     await expireMailCode(codeNo.current);
     let result = await sendMailCode(data.id);
 
@@ -74,62 +114,29 @@ function WithDrawModal(data: WithDrawModalProps) {
     setBtnLoading(false);
   };
 
-  const onClickCheckBtn = async () => {
-    if (isCheckCode.current) {
-      // 이미 코드 인증이 완료된 경우
-      openSubModal(reasonElem);
+  const onClickPwdBtn = async () => {
+    setIsPwdBtnDisabled(true);
+    setBtnLoading(true);
+
+    let response = await changeUserPwd(data.id, pwd);
+    if (response) {
+      // 변경에 성공함
+      setIsPwdBtnDisabled(false);
+      openSubModal(resultRef);
     } else {
-      // 코드 인증 처리
-      setCodeError('');
-      setBtnLoading(true);
-
-      let response = await isExistMailCode(codeNo.current, code);
-      isCheckCode.current = response.isSuccess;
-
-      if (isCheckCode.current) {
-        openSubModal(reasonElem);
-      } else {
-        setCodeError('코드가 일치하지 않습니다. 다시 입력해주세요.');
-        setIsCheckBtnDisabled(true);
-      }
-
-      setBtnLoading(false);
+      // 변경에 실패함
+      setModalError('현재 서버가 점검중입니다.');
     }
-  };
 
-  const onClickTagEvent = (e: any, value: string) => {
-    let parent = findParentElem('tag', e.target);
-    parent?.classList.toggle('primary');
-
-    let isExist = false;
-    categoryList.forEach(category => {
-      if (category === value) {
-        isExist = true;
-        return false;
-      }
-    });
-
-    if (isExist) {
-      // 카테고리 삭제
-      setCategoryList(categoryList.filter(category => category !== value));
-    } else {
-      // 카테고리 추가
-      setCategoryList([...categoryList, value]);
-    }
-  };
-
-  const withDrawEvent = () => {
-    withDraw();
-    data.dispatch(getLogout());
-    openSubModal(resultElem);
+    setBtnLoading(false);
   };
 
   const closeAllModal = () => {
     closeModal(data.mainModalElem);
     closeSubModal(data.subModalElem);
-    closeSubModal(codeElem);
-    closeSubModal(reasonElem);
-    closeSubModal(resultElem);
+    closeSubModal(resultRef);
+    closeSubModal(codeRef);
+    closeSubModal(pwdRef);
   };
 
   return (
@@ -159,7 +166,7 @@ function WithDrawModal(data: WithDrawModalProps) {
           <Button value="코드 전송 및 확인" onClick={sendMailCodeEvent} />
         </div>
       </div>
-      <div className="modal__view sub" ref={codeElem}>
+      <div className="modal__view sub" ref={codeRef}>
         {modalError !== '' && (
           <div className="modal__caption-error">{modalError}</div>
         )}
@@ -168,7 +175,7 @@ function WithDrawModal(data: WithDrawModalProps) {
             <img
               src="/img/svg/left-arrow.svg"
               alt="뒤로가기"
-              onClick={() => closeSubModal(codeElem)}
+              onClick={() => closeSubModal(codeRef)}
             />
             <h3 className="modal__title">인증 코드 입력</h3>
           </figure>
@@ -195,65 +202,57 @@ function WithDrawModal(data: WithDrawModalProps) {
           />
         </div>
       </div>
-      <div className="modal__view sub" ref={reasonElem}>
-        {modalError !== '' && (
+      <div className="modal__view sub" ref={pwdRef}>
+        {modalError !== '' ? (
           <div className="modal__caption-error">{modalError}</div>
+        ) : (
+          <div className="modal__caption">이메일 인증이 완료되었습니다.</div>
         )}
         <div className="modal__header">
           <figure className="modal__close">
             <img
               src="/img/svg/left-arrow.svg"
               alt="뒤로가기"
-              onClick={() => closeSubModal(reasonElem)}
+              onClick={() => closeSubModal(pwdRef)}
             />
-            <h3 className="modal__title">회원 탈퇴 사유</h3>
+            <h3 className="modal__title">비밀번호 재설정</h3>
           </figure>
         </div>
         <div className="modal__content">
-          <div>
-            <h6 className="modal__subtitle">카테고리 테마</h6>
-            <div className="modal__tag-box">
-              <Tag size="l" value="콘텐츠" onClick={onClickTagEvent} />
-              <Tag size="l" value="계정 문제" onClick={onClickTagEvent} />
-              <Tag size="l" value="UX / UI" onClick={onClickTagEvent} />
-              <Tag size="l" value="고객 대응" onClick={onClickTagEvent} />
-              <Tag size="l" value="제품 성능" onClick={onClickTagEvent} />
-              <Tag size="l" value="기타" onClick={onClickTagEvent} />
-            </div>
-          </div>
           <Input
-            value={reason}
-            setValue={setReason}
-            placeholder="자세한 내용을 입력해주세요."
-          ></Input>
-          <Button value="다음" onClick={withDrawEvent}></Button>
+            placeholder="비밀번호"
+            type="password"
+            value={pwd}
+            setValue={setPwdEvent}
+            error={pwdError}
+            onKeyPress={onkeyPressOfPwdBtn}
+            tabindex={-1}
+          />
+          <Button
+            value="확인"
+            onClick={onClickPwdBtn}
+            isDisabled={isPwdBtnDisabled}
+            isLoading={btnLoading}
+          />
         </div>
       </div>
-      <div className="modal__view sub modal-login" ref={resultElem}>
-        <div className="modal__header">
-          <figure className="modal__logo">
-            <img src="/img/logo/logo.png" alt="로고" />
-          </figure>
-          <h3 className="modal__title">
-            회원 탈퇴 되었습니다. <br /> 다음에 또 만나요.
-          </h3>
-        </div>
-        <div className="modal__content px-pt-0">
+      <div className="modal__view sub" ref={resultRef}>
+        <div className="modal__caption">비밀번호가 변경되었습니다.</div>
+        <div className="modal__content">
+          <div className="m-0-auto">
+            <figure className="modal__logo">
+              <img src="/img/logo/logo-big.png" alt="로고" />
+            </figure>
+          </div>
           <Button value="홈" onClick={closeAllModal} />
         </div>
         <div className="modal__footer">
           <span></span>
-          <span
-            onClick={() => {
-              push('/');
-            }}
-          >
-            ©Moaca
-          </span>
+          <span>©Moaca</span>
         </div>
       </div>
     </>
   );
 }
 
-export default WithDrawModal;
+export default ChangePwdModal;

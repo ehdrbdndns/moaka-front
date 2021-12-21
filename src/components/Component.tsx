@@ -79,7 +79,7 @@ function Component() {
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
               Profile Modal
             </h1>
-            <ProfileModal />
+            <ProfileModal dispatch={dispath} authInfo={authInfo} />
           </div>
         </div>
       </div>

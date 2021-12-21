@@ -6,8 +6,10 @@ import LogoutModal from './SubModal/LogoutModal';
 import SubProfileModal from './SubModal/SubProfileModal';
 import SettingModal from './SubModal/SettingModal';
 import SupportModal from './SubModal/SupportModal';
+import { ProfileModalProps } from './type';
+import { getLogout } from '../../modules/auth';
 
-function ProfileModal() {
+function ProfileModal(data: ProfileModalProps) {
   const modalElem = useRef<HTMLDivElement>(null);
   const profileModalElem = useRef<HTMLDivElement>(null);
   const settingModalElem = useRef<HTMLDivElement>(null);
@@ -19,12 +21,17 @@ function ProfileModal() {
   const [profileName, setProfileName] = useState<string>('');
   const [profileNameError, setProfileNameError] = useState<string>('');
 
+  const logoutEvent = () => {
+    data.dispatch(getLogout());
+    openSubModal(logoutModalElem);
+  };
+
   return (
     <>
       <div className="profile-modal modal" ref={modalElem}>
         {/* modal state button */}
         <div className="modal__state" onClick={() => toggleModal(modalElem)}>
-          <Profile size="s"></Profile>
+          <Profile src={data.authInfo.data.profile} size="s"></Profile>
         </div>
         {/* modal view */}
         <div className="modal__view-list">
@@ -39,7 +46,11 @@ function ProfileModal() {
               </span>
             </div>
             <div className="modal__content">
-              <Chat description="moaca123@gmail.com"></Chat>
+              <Chat
+                profileSrc={data.authInfo.data.profile}
+                name={data.authInfo.data.name}
+                description={data.authInfo.data.id}
+              ></Chat>
             </div>
             <div className="modal__header">
               <h3 className="modal__title">개인 설정</h3>
@@ -60,10 +71,7 @@ function ProfileModal() {
                   <img src="/img/svg/help.svg" alt="물음표" />
                   <span>도움말 및 지원</span>
                 </li>
-                <li
-                  className="modal__item"
-                  onClick={() => openSubModal(logoutModalElem)}
-                >
+                <li className="modal__item" onClick={logoutEvent}>
                   <img src="/img/svg/logout.svg" alt="로그아웃" />
                   <span>로그아웃</span>
                 </li>
@@ -82,8 +90,10 @@ function ProfileModal() {
             buttonValue={'저장'}
           ></SubProfileModal>
           <SettingModal
+            dispatch={data.dispatch}
             mainModalElem={modalElem}
             subModalElem={settingModalElem}
+            id={data.authInfo.data.id}
           ></SettingModal>
           <SupportModal subModalElem={supportModalElem}></SupportModal>
           <LogoutModal

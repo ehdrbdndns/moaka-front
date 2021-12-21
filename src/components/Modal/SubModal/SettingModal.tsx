@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import Toggle from '../../Toggle/Toggle';
 import { closeSubModal, openSubModal } from '../event';
 import { SettingModalProps } from '../type';
-import SearchPwdModal from './SearchPwdModal';
+import ChangePwdModal from './ChangePwdModal';
 import WithDrawModal from './WithDrawModal';
 
 function SettingModal(data: SettingModalProps) {
@@ -51,11 +51,14 @@ function SettingModal(data: SettingModalProps) {
           </ul>
         </div>
       </div>
-      <SearchPwdModal
+      <ChangePwdModal
+        id={data.id}
         mainModalElem={data.mainModalElem}
         subModalElem={searchPwdModalElem}
-      ></SearchPwdModal>
+      ></ChangePwdModal>
       <WithDrawModal
+        id={data.id}
+        dispatch={data.dispatch}
         mainModalElem={data.mainModalElem}
         subModalElem={withDrawModalElem}
       ></WithDrawModal>

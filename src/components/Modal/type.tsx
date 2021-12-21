@@ -24,18 +24,28 @@ export type SearchPwdModalProps = {
   subModalElem: RefObject<HTMLDivElement>;
 };
 
+export type ChangePwdModalProps = {
+  mainModalElem: RefObject<HTMLDivElement>;
+  subModalElem: RefObject<HTMLDivElement>;
+  id: string;
+};
+
 export type SupportModalProps = {
   subModalElem: RefObject<HTMLDivElement>;
 };
 
 export type SettingModalProps = {
+  dispatch: Dispatch<any>;
   mainModalElem: RefObject<HTMLDivElement>;
   subModalElem: RefObject<HTMLDivElement>;
+  id: string;
 };
 
 export type WithDrawModalProps = {
+  dispatch: Dispatch<any>;
   mainModalElem: RefObject<HTMLDivElement>;
   subModalElem: RefObject<HTMLDivElement>;
+  id: string;
 };
 
 export type ThumbnailModalProps = {
@@ -59,4 +69,9 @@ export type SubProfileModalProps = {
 export type LogoutModalProps = {
   mainModalElem: RefObject<HTMLDivElement>;
   subModalElem: RefObject<HTMLDivElement>;
+};
+
+export type ProfileModalProps = {
+  dispatch: Dispatch<any>;
+  authInfo: AuthState;
 };
