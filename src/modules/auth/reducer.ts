@@ -49,7 +49,7 @@ function auth(
           category: [],
           isLogin: false,
         },
-        error: '아이디 혹은 비밀번호가 올바르지 않습니다.',
+        error: action.payload,
       };
     case type.GET_LOCAL_LOGIN_ERROR:
       return {
@@ -230,6 +230,11 @@ function auth(
         ...state,
         loading: false,
         data: action.payload,
+      };
+    case type.SET_USER_FAIL:
+      return {
+        ...state,
+        loading: false,
       };
     case type.UPDATE_USER:
       return {

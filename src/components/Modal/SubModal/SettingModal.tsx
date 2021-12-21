@@ -51,7 +51,10 @@ function SettingModal(data: SettingModalProps) {
           </ul>
         </div>
       </div>
-      <SearchPwdModal subModalElem={searchPwdModalElem}></SearchPwdModal>
+      <SearchPwdModal
+        mainModalElem={data.mainModalElem}
+        subModalElem={searchPwdModalElem}
+      ></SearchPwdModal>
       <WithDrawModal
         mainModalElem={data.mainModalElem}
         subModalElem={withDrawModalElem}

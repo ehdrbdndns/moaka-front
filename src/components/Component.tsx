@@ -19,11 +19,13 @@ import LoginModal from './Modal/LoginModal';
 import Navigation from './Navigation/Navigation';
 import Toggle from './Toggle/Toggle';
 import ProfileModal from './Modal/ProfileModal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Toast from './Toast/Toast';
+import { RootState } from '../modules';
 
 function Component() {
   const dispath = useDispatch();
+  const authInfo = useSelector((state: RootState) => state.auth);
 
   const userTestImg = '/img/test/user-test.png';
 
@@ -71,7 +73,7 @@ function Component() {
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
               Login Modal
             </h1>
-            <LoginModal dispatch={dispath} />
+            <LoginModal authInfo={authInfo} dispatch={dispath} />
           </div>
           <div style={{ width: '50px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>

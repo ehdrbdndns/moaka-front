@@ -1,17 +1,26 @@
 import { Dispatch, RefObject } from 'react';
-import { initialState as authState } from '../../modules/auth';
+import { initialState as AuthState } from '../../modules/auth';
 
 export type LoginModalProps = {
   dispatch: Dispatch<any>;
-  authInfo: authState;
+  authInfo: AuthState;
 };
 
 export type RegisterModalProps = {
   dispatch: Dispatch<any>;
-  authInfo: authState;
+  mainModalElem: RefObject<HTMLDivElement>;
+  profileModalElem: RefObject<HTMLDivElement>;
+  id: string;
+  pwd: string;
+  setId: React.Dispatch<React.SetStateAction<string>>;
+  setPwd: React.Dispatch<React.SetStateAction<string>>;
+  registerType: string;
+  sub: string;
+  profile: string;
 };
 
 export type SearchPwdModalProps = {
+  mainModalElem: RefObject<HTMLDivElement>;
   subModalElem: RefObject<HTMLDivElement>;
 };
 

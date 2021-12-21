@@ -10,10 +10,10 @@ import MyPage from './containers/MyPage/MyPage';
 import ArchiveDetail from './containers/Archive/ArchiveDetail';
 import TEST from './containers/TEST';
 import Footer from './components/Footer/Footer';
-import Header from './components/Header/Header';
 import Search from './containers/Search';
 import NewArchiveCardList from './components/CardList/CardList';
 import Component from './components/Component';
+import Header from './containers/Header/Header';
 
 function App() {
   return (

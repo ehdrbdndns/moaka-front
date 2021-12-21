@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { closeModal, openSubModal, toggleModal } from './event';
 import Button from '../Button/Button';
 import Tab from '../Tab/Tab';
@@ -7,25 +7,64 @@ import { nanoid } from 'nanoid';
 import SearchPwdModal from './SubModal/SearchPwdModal';
 import { regEmail, regPwd } from '../../asset';
 import RegisterModal from './RegisterModal';
+import { LoginInfo } from '../../apis/auth/types';
+import { LoginModalProps } from './type';
+import {
+  getGoogleLogin,
+  getLocalLogin,
+  googleUserInfo,
+} from '../../modules/auth';
+import GoogleLogin from 'react-google-login';
+import Toast from '../Toast/Toast';
+import { retrieveUserById } from '../../apis/auth/auth';
 
-function LoginModal() {
+function LoginModal(data: LoginModalProps) {
+  const authInfo = data.authInfo;
+
   const modalElem = useRef<HTMLDivElement>(null);
   const changePwdModalElem = useRef<HTMLDivElement>(null);
+  const profileModalElem = useRef<HTMLDivElement>(null);
   const formElem = useRef<HTMLFormElement>(null);
 
+  const [registerType, setRegisterType] = useState<string>('local');
+
+  const [modalError, setModalError] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState<string>('');
   const [pwd, setPwd] = useState<string>('');
   const [pwdError, setPwdError] = useState<string>('');
+  const [sub, setSub] = useState<string>('');
+  const [profile, setProfile] = useState<string>(
+    '/img/user/user-default-img.png',
+  );
   const [isloginDisabled, setIsLoginDisabled] = useState<boolean>(true);
+  const [btnLoading, setBtnLoading] = useState<boolean>(false);
   const [pwdSuffix, setPwdSuffix] = useState<string>('/img/svg/close-eye.svg');
   const [isPwdOpenEye, setIsPwdOpenEye] = useState<boolean>(false);
 
   const [mode, setMode] = useState<string>('login');
 
+  useEffect(() => {
+    if (authInfo.data.isLogin) {
+      // 로그인 성공
+      closeModal(modalElem);
+    } else if (data.authInfo.error !== null) {
+      // 로그인 실패
+      setModalError(data.authInfo.error + '');
+      setEmailError(' ');
+      setPwdError(' ');
+      setIsLoginDisabled(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authInfo.loading]);
+
   const onKeyPressOfPwdEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      localLoginRedux();
+      if (mode === 'login') {
+        localLoginRedux();
+      } else {
+        isExistEmailEvent();
+      }
     }
   };
 
@@ -46,9 +85,11 @@ function LoginModal() {
     if (regEmail.test(value)) {
       setEmailError('');
 
-      if (regPwd.test(value)) {
+      if (regPwd.test(pwd)) {
         setPwdError('');
         setIsLoginDisabled(false);
+      } else {
+        setIsLoginDisabled(true);
       }
     } else {
       setEmailError('올바르지 않은 이메일형식입니다.');
@@ -83,20 +124,82 @@ function LoginModal() {
       email.length !== 0 &&
       pwd.length !== 0
     ) {
-      // const loginInfo: LoginInfo = {
-      //   id: email.trim(),
-      //   pwd: pwd.trim(),
-      // };
+      const loginInfo: LoginInfo = {
+        id: email.trim(),
+        pwd: pwd.trim(),
+      };
       // 로컬 로그인 redux 호출
-      // data.dispatch(getLocalLogin(loginInfo));
+      data.dispatch(getLocalLogin(loginInfo));
+    }
+
+    setEmail('');
+    setPwd('');
+  };
+
+  const isExistEmailEvent = async () => {
+    if (!isloginDisabled) {
+      setBtnLoading(true);
+
+      let response = await retrieveUserById(email);
+
+      if (response.isSuccess) {
+        // 존재하는 아이디
+        setEmailError('이미 존재하는 이메일입니다.');
+        setIsLoginDisabled(true);
+      } else if (response.error !== 0) {
+        // 서버 에러
+        setModalError(response.error + '에러 입니다.');
+        setIsLoginDisabled(true);
+      } else {
+        // 존재하지 않는 아이디
+        setRegisterType('local');
+        openSubModal(profileModalElem);
+      }
+
+      setBtnLoading(false);
     }
   };
 
-  const registerRedux = () => {};
+  const googleLoginRedux = async (response: any) => {
+    const user = response.profileObj;
 
-  const googleLoginRedux = () => {};
+    const googleUserInfo: googleUserInfo = {
+      no: 0,
+      id: user.email,
+      name: user.familyName,
+      sub: user.googleId,
+      profile: user.imageUrl,
+      auth_type: 'google',
+    };
+    data.dispatch(getGoogleLogin(googleUserInfo));
+  };
 
-  const googleRegisterRedux = () => {};
+  const googleLoginErrorRedux = (response: any) => {
+    console.log(response);
+    console.log(response.error);
+    console.log(response.details);
+  };
+
+  const googleRegisterRedux = async (response: any) => {
+    const user = response.profileObj;
+
+    let retrieveUserResponse = await retrieveUserById(user.email);
+
+    if (retrieveUserResponse.isSuccess) {
+      // 존재하는 아이디
+      setModalError('이미 가입한 유저입니다.');
+    } else if (retrieveUserResponse.error !== 0) {
+      // 서버 에러
+      setModalError(retrieveUserResponse.error + '에러 입니다.');
+    } else {
+      // 존재하지 않는 아이디
+      setRegisterType('google');
+      setEmail(user.id);
+      setSub(user.googleId + '');
+      setProfile(user.imageUrl);
+      openSubModal(profileModalElem);
+    }
+  };
 
   const onClickOfFirstTabEvent = () => {
     setMode('login');
@@ -137,6 +240,11 @@ function LoginModal() {
         </div>
         <div className="modal__view-list">
           <div className="modal__view main modal-login">
+            {modalError !== '' && (
+              <div className="modal__caption-error">
+                <Toast type="error" message={modalError}></Toast>
+              </div>
+            )}
             <div className="modal__header">
               <figure className="modal__logo">
                 <img src="/img/logo/logo.png" alt="로고" />
@@ -183,13 +291,15 @@ function LoginModal() {
                     value="로그인"
                     isDisabled={isloginDisabled}
                     onClick={localLoginRedux}
+                    isLoading={btnLoading}
                   />
                 )}
                 {mode === 'register' && (
                   <Button
                     value="회원가입"
                     isDisabled={isloginDisabled}
-                    onClick={registerRedux}
+                    onClick={isExistEmailEvent}
+                    isLoading={btnLoading}
                   />
                 )}
                 {mode === 'login' && (
@@ -200,20 +310,21 @@ function LoginModal() {
                   />
                 )}
                 <div className="modal__hr">또는</div>
-                {mode === 'login' && (
-                  <Button
-                    type="google"
-                    value="구글로 계속하기"
-                    onClick={googleLoginRedux}
-                  />
-                )}
-                {mode === 'register' && (
-                  <Button
-                    type="google"
-                    value="구글로 가입"
-                    onClick={googleRegisterRedux}
-                  />
-                )}
+                <GoogleLogin
+                  clientId="470041201803-oif0bfdaj26uunpn9ku89e4mfg2tsart.apps.googleusercontent.com"
+                  render={renderProps => (
+                    <Button
+                      type="google"
+                      onClick={renderProps.onClick}
+                      value={mode === 'login' ? '구글로 로그인' : '구글로 가입'}
+                    />
+                  )}
+                  onSuccess={
+                    mode === 'login' ? googleLoginRedux : googleRegisterRedux
+                  }
+                  onFailure={googleLoginErrorRedux}
+                  cookiePolicy={'single_host_origin'}
+                />
               </div>
             </form>
             {mode === 'register' && (
@@ -246,8 +357,24 @@ function LoginModal() {
               </div>
             )}
           </div>
-          <SearchPwdModal subModalElem={changePwdModalElem} />
-          {mode === 'register' && <RegisterModal />}
+          <SearchPwdModal
+            mainModalElem={modalElem}
+            subModalElem={changePwdModalElem}
+          />
+          {mode === 'register' && (
+            <RegisterModal
+              dispatch={data.dispatch}
+              mainModalElem={modalElem}
+              profileModalElem={profileModalElem}
+              id={email}
+              pwd={pwd}
+              setId={setEmail}
+              setPwd={setPwd}
+              registerType={registerType}
+              sub={sub}
+              profile={profile}
+            />
+          )}
         </div>
       </div>
       {/* modal background */}

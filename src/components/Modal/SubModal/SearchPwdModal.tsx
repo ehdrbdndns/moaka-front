@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { closeSubModal, openSubModal } from '../event';
+import { closeModal, closeSubModal, openSubModal } from '../event';
 import Input from '../../Input/Input';
 import Button from '../../Button/Button';
 import { SearchPwdModalProps } from '../type';
@@ -10,11 +10,8 @@ import {
   sendMailCode,
 } from '../../../apis/auth/auth';
 import { regEmail, regPwd } from '../../../asset';
-import { useHistory } from 'react-router';
 
 function SearchPwdModal(data: SearchPwdModalProps) {
-  const { push } = useHistory();
-
   const codeRef = useRef<HTMLDivElement>(null);
   const pwdRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -155,6 +152,14 @@ function SearchPwdModal(data: SearchPwdModalProps) {
     setBtnLoading(false);
   };
 
+  const closeAllModal = () => {
+    closeModal(data.mainModalElem);
+    closeSubModal(data.subModalElem);
+    closeSubModal(resultRef);
+    closeSubModal(codeRef);
+    closeSubModal(pwdRef);
+  };
+
   return (
     <>
       <div className="modal__view sub" ref={data.subModalElem}>
@@ -265,12 +270,7 @@ function SearchPwdModal(data: SearchPwdModalProps) {
               <img src="/img/logo/logo-big.png" alt="로고" />
             </figure>
           </div>
-          <Button
-            value="홈"
-            onClick={() => {
-              push('/login');
-            }}
-          />
+          <Button value="홈" onClick={closeAllModal} />
         </div>
         <div className="modal__footer">
           <span></span>

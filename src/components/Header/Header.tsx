@@ -5,8 +5,12 @@ import AddArchiveModal from '../Modal/AddArchiveModal';
 import LoginModal from '../Modal/LoginModal';
 import NotificationModal from '../Modal/NotificationModal';
 import Tab from '../Tab/Tab';
+import { HeaderProps } from './types';
 
-function Header() {
+function Header(data: HeaderProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { dispatch, authInfo, userListInfo } = data;
+
   const { push } = useHistory();
 
   const [headerActiveTab, setHeaderActiveTab] = useState<string>('first');
@@ -110,7 +114,7 @@ function Header() {
             <AddArchiveModal></AddArchiveModal>
           </div>
           <div className="header__item">
-            <LoginModal></LoginModal>
+            <LoginModal dispatch={dispatch} authInfo={authInfo}></LoginModal>
           </div>
         </div>
       </header>

@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { toggleCardList } from './event';
-import { CardListProps, LinkListProps } from './type';
-import Card from '../Card/Card';
+import { LinkListProps } from './type';
 import Link from '../Link/Link';
 import { nanoid } from 'nanoid';
 

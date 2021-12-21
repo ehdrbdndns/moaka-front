@@ -100,7 +100,7 @@ function ProfileModal(data: ProfileModalProps) {
 }
 
 ProfileModal.defaultProps = {
-  src: '/img/default_profile.png',
+  src: '/img/user/user-default-img.png',
   buttonValue: '다음',
   onClickButton: () => {},
 };
