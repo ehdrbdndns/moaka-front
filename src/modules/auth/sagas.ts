@@ -43,6 +43,7 @@ function* googleLoginSaga(action: ReturnType<typeof getGoogleLogin>) {
         profile: token.profile,
         category: token.category,
         auth_type: 'google',
+        isLogin: true,
       };
       yield put({
         type: sagaType.GET_GOOGLE_LOGIN_SUCCESS,
@@ -61,6 +62,7 @@ function* googleLoginSaga(action: ReturnType<typeof getGoogleLogin>) {
           profile: action.payload.profile,
           category: [],
           auth_type: 'google',
+          isLogin: true,
         };
         yield put({
           type: sagaType.GET_GOOGLE_LOGIN_SUCCESS,
@@ -102,6 +104,7 @@ function* localLoginSaga(action: ReturnType<typeof getLocalLogin>) {
         profile: token.profile,
         category: token.category,
         auth_type: 'local',
+        isLogin: true,
       };
       yield put({
         type: sagaType.GET_LOCAL_LOGIN_SUCCESS,
@@ -167,6 +170,7 @@ function* setUserSaga() {
       profile: response.profile,
       category: response.category,
       auth_type: '',
+      isLogin: true,
     };
 
     if (response.isSuccess) {

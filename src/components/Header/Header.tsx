@@ -4,6 +4,7 @@ import { useHistory } from 'react-router';
 import AddArchiveModal from '../Modal/AddArchiveModal';
 import LoginModal from '../Modal/LoginModal';
 import NotificationModal from '../Modal/NotificationModal';
+import ProfileModal from '../Modal/ProfileModal';
 import Tab from '../Tab/Tab';
 import { HeaderProps } from './types';
 
@@ -114,7 +115,11 @@ function Header(data: HeaderProps) {
             <AddArchiveModal></AddArchiveModal>
           </div>
           <div className="header__item">
-            <LoginModal dispatch={dispatch} authInfo={authInfo}></LoginModal>
+            {authInfo.data.isLogin ? (
+              <ProfileModal></ProfileModal>
+            ) : (
+              <LoginModal dispatch={dispatch} authInfo={authInfo}></LoginModal>
+            )}
           </div>
         </div>
       </header>

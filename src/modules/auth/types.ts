@@ -50,6 +50,7 @@ export type userInfo = {
   profile: string;
   auth_type: string;
   category: Array<string>;
+  isLogin: boolean;
 };
 
 export type googleUserInfo = {
