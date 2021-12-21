@@ -3,10 +3,10 @@ import Input from '../../Input/Input';
 import Profile from '../../Profile/Profile';
 import Button from '../../Button/Button';
 import { closeSubModal } from '../event';
-import { ProfileModalProps } from '../type';
+import { SubProfileModalProps } from '../type';
 import { setImgFile } from '../../../asset';
 
-function ProfileModal(data: ProfileModalProps) {
+function ProfileModal(data: SubProfileModalProps) {
   const profileElem = useRef<HTMLInputElement>(null);
 
   const [modalError, setModalError] = useState<string>('');

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '../Button/Button';
-import ProfileModal from './SubModal/ProfileModal';
+import ProfileModal from './SubModal/SubProfileModal';
 import { closeModal, closeSubModal, openSubModal } from './event';
 import {
   googleRegister,

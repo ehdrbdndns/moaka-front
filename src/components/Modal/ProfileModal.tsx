@@ -3,7 +3,7 @@ import Chat from '../Chat/Chat';
 import Profile from '../Profile/Profile';
 import { closeModal, openSubModal, toggleModal } from './event';
 import LogoutModal from './SubModal/LogoutModal';
-import SubProfileModal from './SubModal/ProfileModal';
+import SubProfileModal from './SubModal/SubProfileModal';
 import SettingModal from './SubModal/SettingModal';
 import SupportModal from './SubModal/SupportModal';
 

@@ -42,7 +42,7 @@ export type ThumbnailModalProps = {
   subModalElem: RefObject<HTMLDivElement>;
 };
 
-export type ProfileModalProps = {
+export type SubProfileModalProps = {
   file: File | undefined; // 프로파일 이미지
   setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
   subModalElem: RefObject<HTMLDivElement>;
