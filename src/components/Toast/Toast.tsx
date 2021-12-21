@@ -4,7 +4,9 @@ import { ToastProps } from './types';
 function Toast(data: ToastProps) {
   return (
     <>
-      <div className={'toast toast-' + data.type}>{data.message}</div>
+      <div className={'toast toast-' + data.type}>
+        <span className="toast__message">{data.message}</span>
+      </div>
     </>
   );
 }
