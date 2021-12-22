@@ -66,6 +66,12 @@ export type SubProfileModalProps = {
   onClickButton: () => void;
 };
 
+export type ChangeProfileModalProps = {
+  subModalElem: RefObject<HTMLDivElement>;
+  src: string;
+  name: string;
+};
+
 export type LogoutModalProps = {
   mainModalElem: RefObject<HTMLDivElement>;
   subModalElem: RefObject<HTMLDivElement>;

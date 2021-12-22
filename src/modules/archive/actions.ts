@@ -13,6 +13,9 @@ export const updateArchive = (updateArchiveRequest: updateArchiveRequest) => ({
   type: sagaType.UPDATE_ARCHIVE,
   payload: updateArchiveRequest,
 });
+export const getTopArchiveList = () => ({
+  type: sagaType.GET_TOP_ARCHIVE_LIST,
+});
 export const getGroupArchiveList = () => ({
   type: sagaType.GET_GROUP_ARCHIVE_LIST,
 });
@@ -52,4 +55,7 @@ export const deleteArchiveBookmark = (
 ) => ({
   type: sagaType.DELETE_BOOKMARK,
   payload: bookmarkInfo,
+});
+export const resetArchive = () => ({
+  type: sagaType.RESET_ARCHIVE,
 });

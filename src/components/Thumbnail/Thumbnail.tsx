@@ -4,7 +4,7 @@ import { ThumbnailProps } from './type';
 function Thumbnail(data: ThumbnailProps) {
   return (
     <>
-      <figure className={'thumbnail ' + data.type}>
+      <figure className={'thumbnail thumbnail-' + data.type}>
         <img src={data.src} alt="thumbnail" />
       </figure>
     </>

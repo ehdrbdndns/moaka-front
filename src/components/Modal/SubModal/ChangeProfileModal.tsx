@@ -3,14 +3,18 @@ import Input from '../../Input/Input';
 import Profile from '../../Profile/Profile';
 import Button from '../../Button/Button';
 import { closeSubModal } from '../event';
-import { SubProfileModalProps } from '../type';
+import { ChangeProfileModalProps } from '../type';
 import { setImgFile } from '../../../asset';
+import { updateProfile } from '../../../apis/auth/auth';
 
-function SubProfileModal(data: SubProfileModalProps) {
+function ChangeProfileModal(data: ChangeProfileModalProps) {
   const profileElem = useRef<HTMLInputElement>(null);
 
   const [modalError, setModalError] = useState<string>('');
+  const [file, setFile] = useState<File>();
   const [src, setSrc] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [nameError, setNameError] = useState<string>('');
 
   const [isProfileBtnDisabled, setIsProfileBtnDisabled] =
     useState<boolean>(true);
@@ -20,24 +24,32 @@ function SubProfileModal(data: SubProfileModalProps) {
   }, [data.src]);
 
   useEffect(() => {
-    data.nameError !== '' && setIsProfileBtnDisabled(true);
-  }, [data.nameError]);
+    setName(data.name);
+  }, [data.name]);
 
   const setNameEvent = (value: string) => {
-    data.setName(value);
+    setName(value);
 
     if (value.length > 1) {
-      data.setNameError('');
-      setIsProfileBtnDisabled(false);
+      setNameError('');
+      (value !== data.name || file !== undefined) &&
+        setIsProfileBtnDisabled(false);
     } else {
-      data.setNameError('두 글자 이상의 이름이여야 합니다.');
+      setNameError('두 글자 이상의 이름이여야 합니다.');
       setIsProfileBtnDisabled(true);
     }
   };
 
   const onChangeProfile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let isSuccess = setImgFile(e, setSrc, data.setFile);
+    let isSuccess = setImgFile(e, setSrc, setFile);
     isSuccess || setModalError('이미지 파일이 아닙니다.');
+
+    setIsProfileBtnDisabled(false);
+  };
+
+  const changeProfileEvent = () => {
+    updateProfile(file, name);
+    closeSubModal(data.subModalElem);
   };
 
   return (
@@ -80,16 +92,16 @@ function SubProfileModal(data: SubProfileModalProps) {
           <div>
             <Input
               placeholder="닉네임"
-              value={data.name}
+              value={name}
               setValue={setNameEvent}
-              error={data.nameError}
+              error={nameError}
               tabindex={-1}
             ></Input>
           </div>
           <Button
-            value={data.buttonValue}
+            value="저장"
             onClick={() => {
-              isProfileBtnDisabled || data.onClickButton();
+              isProfileBtnDisabled || changeProfileEvent();
             }}
             isDisabled={isProfileBtnDisabled}
           ></Button>
@@ -99,10 +111,10 @@ function SubProfileModal(data: SubProfileModalProps) {
   );
 }
 
-SubProfileModal.defaultProps = {
+ChangeProfileModal.defaultProps = {
   src: '/img/user/user-default-img.png',
   buttonValue: '다음',
   onClickButton: () => {},
 };
 
-export default SubProfileModal;
+export default ChangeProfileModal;

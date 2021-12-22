@@ -332,3 +332,21 @@ export const withDraw = async () => {
     },
   });
 };
+
+export const updateProfile = async (
+  profileFile: File | undefined,
+  name: string,
+) => {
+  const formData = new FormData();
+
+  profileFile && formData.append('profileFile', profileFile);
+  formData.append('name', name);
+
+  const token = localStorage.getItem('token');
+  await axios.post(BASE_URL + '/user/updateProfile', formData, {
+    headers: {
+      Bearer: token,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};

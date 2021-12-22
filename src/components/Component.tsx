@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Input from './Input/Input';
 import Profile from './Profile/Profile';
 import Tag from './Tag/Tag';
-import Card from './Card/Card';
 import Thumbnail from './Thumbnail/Thumbnail';
 import Favicon from './Favicon/Favicon';
 import HeartIcon from './Icon/HeartIcon';
@@ -103,7 +102,7 @@ function Component() {
         </div>
         <div style={{ width: '300px' }}>
           <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Card</h1>
-          <Card />
+          {/* <Card archiveInfo={archiveInfo} /> */}
         </div>
         <div style={{ width: '300px' }}>
           <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Thumbnail</h1>

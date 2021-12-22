@@ -1,4 +1,11 @@
 // TODO 액션 타입 설정
+// REF 가장 인기 있는 아카이브 리스트
+export const GET_TOP_ARCHIVE_LIST = 'archive/GET_TOP_ARCHIVE_LIST' as const;
+export const GET_TOP_ARCHIVE_LIST_SUCCESS =
+  'archive/GET_TOP_ARCHIVE_LIST_SUCCESS' as const;
+export const GET_TOP_ARCHIVE_LIST_ERROR =
+  'archive/GET_TOP_ARCHIVE_LIST_ERROR' as const;
+
 // REF 홈 페이지 아카이브 리스트
 export const GET_HOME_ARCHIVE_LIST = 'archive/GET_HOME_ARCHIVE_LIST' as const;
 export const GET_HOME_ARCHIVE_LIST_SUCCESS =
@@ -59,6 +66,10 @@ export const DELETE_BOOKMARK_SUCCESS =
   'archive/DELETE_BOOKMARK_SUCCESS' as const;
 export const DELETE_BOOKMARK_ERROR = 'archive/DELETE_BOOKMARK_ERROR' as const;
 
+// REF 아카이브 리셋
+export const RESET_ARCHIVE = 'archive/RESET_ARCHIVE' as const;
+export const RESET_ARCHIVE_SUCCESS = 'archive/RESET_ARCHIVE_SUCCESS' as const;
+
 // REF JWT 토큰 기한 만료
 export const EXPIRE_JWT_TOKEN = 'section/EXPIRE_JWT_TOKEN' as const;
 
@@ -79,6 +90,7 @@ export type archiveInfo = {
   description: string;
   thumbnail: string;
   creator_name: string;
+  creator_profile: string;
   privacy_type: string;
   regdate: string;
   tag_list: string[];
@@ -86,6 +98,9 @@ export type archiveInfo = {
   bookmark_loading: boolean;
   like_no: number;
   like_loading: boolean;
+  link_count: number;
+  like_count: number;
+  bookmark_count: number;
   category: string;
   type: string; // 인기, 그룹, 북마크, 관심사의 아카이브
 };

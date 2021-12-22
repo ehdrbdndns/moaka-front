@@ -20,18 +20,14 @@ function CardList(props: CardListProps) {
         </div>
         <div className="card-list__content">
           {/* Card */}
-          <div>
-            <Card></Card>
-          </div>
-          <div>
-            <Card></Card>
-          </div>
-          <div>
-            <Card></Card>
-          </div>
-          <div>
-            <Card></Card>
-          </div>
+          {props.archiveInfoList.data.map(
+            archive =>
+              archive.type === props.archiveType && (
+                <div key={archive.no}>
+                  <Card dispatch={props.dispatch} archiveInfo={archive}></Card>
+                </div>
+              ),
+          )}
         </div>
       </div>
     </>

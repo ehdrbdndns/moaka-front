@@ -59,10 +59,6 @@ svg {
   cursor: pointer;
 }
 
-svg:hover path {
-  fill: black;
-}
-
 @include desktop {
   .desktop {
     display: initial !important;

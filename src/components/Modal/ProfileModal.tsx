@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import Chat from '../Chat/Chat';
 import Profile from '../Profile/Profile';
 import { closeModal, openSubModal, toggleModal } from './event';
 import LogoutModal from './SubModal/LogoutModal';
-import SubProfileModal from './SubModal/SubProfileModal';
 import SettingModal from './SubModal/SettingModal';
 import SupportModal from './SubModal/SupportModal';
 import { ProfileModalProps } from './type';
 import { getLogout } from '../../modules/auth';
+import ChangeProfileModal from './SubModal/ChangeProfileModal';
 
 function ProfileModal(data: ProfileModalProps) {
   const modalElem = useRef<HTMLDivElement>(null);
@@ -15,11 +15,6 @@ function ProfileModal(data: ProfileModalProps) {
   const settingModalElem = useRef<HTMLDivElement>(null);
   const supportModalElem = useRef<HTMLDivElement>(null);
   const logoutModalElem = useRef<HTMLDivElement>(null);
-
-  // Profile Modal
-  const [profileFile, setProfileFile] = useState<File>();
-  const [profileName, setProfileName] = useState<string>('');
-  const [profileNameError, setProfileNameError] = useState<string>('');
 
   const logoutEvent = () => {
     data.dispatch(getLogout());
@@ -78,17 +73,11 @@ function ProfileModal(data: ProfileModalProps) {
               </ul>
             </div>
           </div>
-          <SubProfileModal
-            src={'/img/user/user-default-img.png'}
-            file={profileFile}
-            setFile={setProfileFile}
+          <ChangeProfileModal
             subModalElem={profileModalElem}
-            name={profileName}
-            setName={setProfileName}
-            nameError={profileNameError}
-            setNameError={setProfileNameError}
-            buttonValue={'저장'}
-          ></SubProfileModal>
+            src={data.authInfo.data.profile}
+            name={data.authInfo.data.name}
+          ></ChangeProfileModal>
           <SettingModal
             dispatch={data.dispatch}
             mainModalElem={modalElem}

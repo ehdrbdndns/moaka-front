@@ -23,11 +23,7 @@ function Link(data: LinkProps) {
           <Thumbnail src={data.thumbnail_src} type="link_thumbnail" />
         )}
         <div className="link__info">
-          <HeartIcon
-            id={nanoid()}
-            value={data.like_value}
-            isActive={data.like_isActive}
-          />
+          <HeartIcon id={nanoid()} value={0} isActive={data.like_isActive} />
           <span>{data.comment_count}개의 답글</span>
         </div>
         <div className="link__description">{data.description}</div>

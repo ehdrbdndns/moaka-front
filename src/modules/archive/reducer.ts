@@ -6,6 +6,12 @@ function archive(
   action: AnyAction,
 ) {
   switch (action.type) {
+    case type.GET_TOP_ARCHIVE_LIST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
     case type.GET_GROUP_ARCHIVE_LIST:
       return {
         ...state,
@@ -65,6 +71,16 @@ function archive(
         data: _data,
       };
     }
+    case type.RESET_ARCHIVE:
+      return {
+        ...state,
+      };
+    case type.GET_TOP_ARCHIVE_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: [...state.data, ...action.payload],
+      };
     case type.GET_HOME_ARCHIVE_LIST_SUCCESS:
     case type.GET_GROUP_ARCHIVE_LIST_SUCCESS:
       return {
@@ -141,6 +157,14 @@ function archive(
         data: _data,
       };
     }
+    case type.RESET_ARCHIVE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        data: [],
+      };
+    case type.GET_TOP_ARCHIVE_LIST_ERROR:
     case type.GET_HOME_ARCHIVE_LIST_ERROR:
     case type.GET_GROUP_ARCHIVE_LIST_ERROR:
     case type.GET_ARCHIVE_ERROR:
@@ -158,7 +182,7 @@ function archive(
       return {
         ...state,
         loading: false,
-        error: '404',
+        error: '403',
       };
     }
     default:

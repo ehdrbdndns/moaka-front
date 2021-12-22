@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { archiveInfo } from '../../modules/archive';
 import { BASE_URL } from '../utils';
 import {
   deleteArchiveResponse,
@@ -20,23 +21,7 @@ export const insertArchive = async (
   const result: insertArchiveResponse = {
     isSuccess: false,
     error: 0,
-    archive: {
-      no: 0,
-      user_no: 0,
-      title: '',
-      description: '',
-      thumbnail: '',
-      creator_name: '',
-      privacy_type: '',
-      regdate: '',
-      tag_list: [],
-      bookmark_no: 0,
-      bookmark_loading: false,
-      like_no: 0,
-      like_loading: false,
-      type: '',
-      category: '',
-    },
+    archive: {} as archiveInfo,
   };
 
   const formData = new FormData();
@@ -297,23 +282,7 @@ export const getArchive = async (
   const result: getArchiveResponse = {
     isSuccess: false,
     error: 0,
-    archive: {
-      no: 0,
-      user_no: 0,
-      title: '',
-      description: '',
-      thumbnail: '',
-      creator_name: '',
-      privacy_type: '',
-      regdate: '',
-      tag_list: [],
-      bookmark_no: 0,
-      bookmark_loading: false,
-      like_no: 0,
-      like_loading: false,
-      type: '',
-      category: '',
-    },
+    archive: {} as archiveInfo,
   };
 
   const token = localStorage.getItem('token');

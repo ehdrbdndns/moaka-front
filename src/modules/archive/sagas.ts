@@ -2,6 +2,7 @@ import { put, call, takeLatest, takeEvery } from 'redux-saga/effects';
 import {
   deleteArchiveResponse,
   getArchiveResponse,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getBookmarkArchiveListResponse,
   getGroupArchiveListResponse,
   getTopArchiveListResponse,
@@ -68,32 +69,56 @@ function* getGroupArchiveListSaga() {
   }
 }
 
-function* getHomeArchiveListSaga() {
+function* getTopArchiveListSaga() {
   try {
     let archive_list: archiveInfo[] = [];
 
-    // Group Archive List 가져오기
-    const group_archive_response: getGroupArchiveListResponse = yield call(
-      archiveAPI.getGroupArchiveList,
-    );
-    archive_list = archive_list.concat(group_archive_response.archive_list);
-
-    // TOP Archive List 가져오기
+    // 가장 인기있는 아카이브
     const top_archive_response: getTopArchiveListResponse = yield call(
       archiveAPI.getTopArchiveList,
     );
     archive_list = archive_list.concat(top_archive_response.archive_list);
 
-    // Bookmark Archive List 가져오기
-    const bookmark_archive_response: getBookmarkArchiveListResponse =
-      yield call(archiveAPI.getBookmarkArchiveList);
-    archive_list = archive_list.concat(bookmark_archive_response.archive_list);
+    yield put({
+      type: sagaType.GET_TOP_ARCHIVE_LIST_SUCCESS,
+      payload: archive_list,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.GET_TOP_ARCHIVE_LIST_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
 
-    // Category Archive List 가져오기
+function* getHomeArchiveListSaga() {
+  try {
+    let archive_list: archiveInfo[] = [];
+
+    // 가장 인기있는 아카이브
+    const top_archive_response: getTopArchiveListResponse = yield call(
+      archiveAPI.getTopArchiveList,
+    );
+    archive_list = archive_list.concat(top_archive_response.archive_list);
+
+    // 내가 관심있는 아카이브
     const category_archive_response: getCategoryArchiveResponse = yield call(
       archiveAPI.getCategoryArchiveList,
     );
     archive_list = archive_list.concat(category_archive_response.archive_list);
+
+    // Group Archive List 가져오기
+    // const group_archive_response: getGroupArchiveListResponse = yield call(
+    //   archiveAPI.getGroupArchiveList,
+    // );
+    // archive_list = archive_list.concat(group_archive_response.archive_list);
+
+    // Bookmark Archive List 가져오기
+    // const bookmark_archive_response: getBookmarkArchiveListResponse =
+    //   yield call(archiveAPI.getBookmarkArchiveList);
+    // archive_list = archive_list.concat(bookmark_archive_response.archive_list);
 
     yield put({
       type: sagaType.GET_HOME_ARCHIVE_LIST_SUCCESS,
@@ -419,7 +444,14 @@ function* searchArchiveSaga(action: ReturnType<typeof searchArchive>) {
   }
 }
 
+function* resetArchiveSaga() {
+  yield put({
+    type: sagaType.RESET_ARCHIVE_SUCCESS,
+  });
+}
+
 export function* archiveSaga() {
+  yield takeEvery(sagaType.GET_TOP_ARCHIVE_LIST, getTopArchiveListSaga);
   yield takeEvery(sagaType.GET_GROUP_ARCHIVE_LIST, getGroupArchiveListSaga);
   yield takeLatest(sagaType.GET_ARCHIVE, getArchiveSaga);
   yield takeLatest(sagaType.SET_LIKE, setLikeSaga);
@@ -431,4 +463,5 @@ export function* archiveSaga() {
   yield takeEvery(sagaType.SEARCH_ARCHIVE, searchArchiveSaga);
   yield takeEvery(sagaType.GET_HOME_ARCHIVE_LIST, getHomeArchiveListSaga);
   yield takeLatest(sagaType.UPDATE_ARCHIVE, updateArchiveSaga);
+  yield takeEvery(sagaType.RESET_ARCHIVE, resetArchiveSaga);
 }
