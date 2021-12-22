@@ -179,6 +179,8 @@ function* setUserSaga() {
         payload: userInfo,
       });
     } else if (response.error === 403) {
+      localStorage.removeItem('token');
+
       yield put({
         type: sagaType.SET_USER_FAIL,
         payload: '토큰 기한 만료',
