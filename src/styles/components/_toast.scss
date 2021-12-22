@@ -10,6 +10,21 @@
     color: $quaternary-color;
   }
 
+  &-show-fixed {
+    position: fixed;
+    top: 20px; // 40px로 pase in 효과
+    left: 50%;
+    transform: translate(-50%, 0);
+    opacity: 0;
+    transition: 0.25s;
+    z-index: 2;
+  }
+
+  &-show-fixed__pase-in {
+    transform: translate(-50%, 20px);
+    opacity: 1;
+  }
+
   &-default {
     background: $tertiary-color;
   }
