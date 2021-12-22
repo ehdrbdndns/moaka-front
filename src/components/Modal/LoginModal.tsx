@@ -45,10 +45,7 @@ function LoginModal(data: LoginModalProps) {
   const [mode, setMode] = useState<string>('login');
 
   useEffect(() => {
-    if (authInfo.data.isLogin) {
-      // 로그인 성공
-      closeModal(modalElem);
-    } else if (data.authInfo.error !== null) {
+    if (data.authInfo.error !== null) {
       // 로그인 실패
       setModalError(data.authInfo.error + '');
       setEmailError(' ');

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CardList from '../../components/CardList/CardList';
-import Navigation from '../../components/Navigation/Navigation';
+import HomeForm from '../../components/Home/Home';
 import { RootState } from '../../modules';
 import {
   getCategoryArchiveList,
@@ -17,34 +16,14 @@ function Home() {
     // 아카이브 초기화
     dispatch(resetArchive());
 
-    // 가장 인기있는 아카이브 리스트
+    // 가장 인기있는 아카이브 리스트 불러오기
     dispatch(getTopArchiveList());
 
-    // 내가 관심있는 아카이브 리스트
+    // 내가 관심있는 아카이브 리스트 불러오기
     dispatch(getCategoryArchiveList());
   }, [dispatch]);
 
-  return (
-    <div className="container">
-      <div className="container__main">
-        <CardList
-          dispatch={dispatch}
-          archiveInfoList={archive_info}
-          archiveType="top"
-          title="가장 인기있는 아카이브"
-        />
-        <CardList
-          dispatch={dispatch}
-          archiveInfoList={archive_info}
-          archiveType="category"
-          title="내가 관심있는 아카이브"
-        />
-      </div>
-      <div className="container__sub">
-        <Navigation mode="home"></Navigation>
-      </div>
-    </div>
-  );
+  return <HomeForm dispatch={dispatch} archive_info={archive_info}></HomeForm>;
 }
 
 export default Home;
