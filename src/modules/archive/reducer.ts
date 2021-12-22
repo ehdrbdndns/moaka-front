@@ -60,7 +60,7 @@ function archive(
     case type.DELETE_BOOKMARK:
     case type.SET_BOOKMARK: {
       const archive_index = state.data.findIndex(
-        archive => (archive.no = action.payload.archive_no),
+        archive => archive.no === action.payload.archive_no,
       );
 
       const _data = [...state.data];
@@ -130,7 +130,7 @@ function archive(
     case type.SET_LIKE_SUCCESS:
     case type.DELETE_LIKE_SUCCESS: {
       const archive_index = state.data.findIndex(
-        archive => (archive.no = action.payload.archive_no),
+        archive => archive.no === action.payload.archive_no,
       );
 
       const _data = [...state.data];
@@ -145,7 +145,7 @@ function archive(
     case type.SET_BOOKMARK_SUCCESS:
     case type.DELETE_BOOKMARK_SUCCESS: {
       const archive_index = state.data.findIndex(
-        archive => (archive.no = action.payload.archive_no),
+        archive => archive.no === action.payload.archive_no,
       );
 
       const _data = [...state.data];

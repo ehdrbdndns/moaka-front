@@ -1,18 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CardList from '../../components/CardList/CardList';
 import Navigation from '../../components/Navigation/Navigation';
 import { RootState } from '../../modules';
-import {
-  archiveBookmarkActionType,
-  archiveLikeActionType,
-  deleteArchiveBookmark,
-  deleteArchiveLike,
-  getTopArchiveList,
-  resetArchive,
-  setArchiveBookmark,
-  setArchiveLike,
-} from '../../modules/archive';
+import { getTopArchiveList, resetArchive } from '../../modules/archive';
 
 function Home() {
   const dispatch = useDispatch();
@@ -27,34 +18,6 @@ function Home() {
 
     // 내가 관심있는 아카이브 리스트
   }, [dispatch]);
-
-  const setArchiveBookmarkRedux = useCallback(
-    (bookmarkInfo: archiveBookmarkActionType) => {
-      dispatch(setArchiveBookmark(bookmarkInfo));
-    },
-    [dispatch],
-  );
-
-  const deleteArchiveBookmarkRedux = useCallback(
-    (bookmarkInfo: archiveBookmarkActionType) => {
-      dispatch(deleteArchiveBookmark(bookmarkInfo));
-    },
-    [dispatch],
-  );
-
-  const deleteArchiveLikeRedux = useCallback(
-    (likeInfo: archiveLikeActionType) => {
-      dispatch(deleteArchiveLike(likeInfo));
-    },
-    [dispatch],
-  );
-
-  const setArchiveLikeRedux = useCallback(
-    (likeInfo: archiveLikeActionType) => {
-      dispatch(setArchiveLike(likeInfo));
-    },
-    [dispatch],
-  );
 
   return (
     <div className="container">

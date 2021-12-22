@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { nanoid } from 'nanoid';
 import { useHistory } from 'react-router';
 import HeartIcon from '../Icon/HeartIcon';
@@ -7,16 +7,70 @@ import Profile from '../Profile/Profile';
 import Tag from '../Tag/Tag';
 import Thumbnail from '../Thumbnail/Thumbnail';
 import { CardProps } from './type';
+import {
+  archiveBookmarkActionType,
+  archiveLikeActionType,
+  deleteArchiveBookmark,
+  deleteArchiveLike,
+  setArchiveBookmark,
+  setArchiveLike,
+} from '../../modules/archive';
 
 function Card(data: CardProps) {
   const { push } = useHistory();
+  const { dispatch, archiveInfo } = data;
+
+  const setArchiveBookmarkRedux = useCallback(
+    (bookmarkInfo: archiveBookmarkActionType) => {
+      dispatch(setArchiveBookmark(bookmarkInfo));
+    },
+    [dispatch],
+  );
+
+  const deleteArchiveBookmarkRedux = useCallback(
+    (bookmarkInfo: archiveBookmarkActionType) => {
+      dispatch(deleteArchiveBookmark(bookmarkInfo));
+    },
+    [dispatch],
+  );
+
+  const deleteArchiveLikeRedux = useCallback(
+    (likeInfo: archiveLikeActionType) => {
+      dispatch(deleteArchiveLike(likeInfo));
+    },
+    [dispatch],
+  );
+
+  const setArchiveLikeRedux = useCallback(
+    (likeInfo: archiveLikeActionType) => {
+      dispatch(setArchiveLike(likeInfo));
+    },
+    [dispatch],
+  );
 
   return (
     <>
       <div className="card">
+        {archiveInfo.no}
         <div className="card__header">
-          <div className="card__bookmark">
-            {data.archiveInfo.bookmark_no ? (
+          <div
+            className="card__bookmark"
+            onClick={
+              archiveInfo.bookmark_no
+                ? () =>
+                    deleteArchiveBookmarkRedux({
+                      bookmark_no: archiveInfo.bookmark_no,
+                      archive_no: archiveInfo.no,
+                    })
+                : () =>
+                    setArchiveBookmarkRedux({
+                      bookmark_no: archiveInfo.bookmark_no,
+                      archive_no: archiveInfo.no,
+                    })
+            }
+          >
+            {archiveInfo.bookmark_no ? (
+              // fill bookmark
               <svg
                 width="24"
                 height="24"
@@ -30,6 +84,7 @@ function Card(data: CardProps) {
                 />
               </svg>
             ) : (
+              // not fill bookmark
               <svg
                 width="24"
                 height="24"
@@ -44,19 +99,19 @@ function Card(data: CardProps) {
               </svg>
             )}
           </div>
-          <h1 className="card__title">{data.archiveInfo.title}</h1>
+          <h1 className="card__title">{archiveInfo.title}</h1>
           <div className="card__info">
             <div className="card__icon-box">
-              <Profile size="s" src={data.archiveInfo.creator_profile} />
+              <Profile size="s" src={archiveInfo.creator_profile} />
               <span className="card__icon-name">
-                {data.archiveInfo.creator_name}
+                {archiveInfo.creator_name}
               </span>
             </div>
             <div className="card__icon-box">
-              <LinkIcon value={data.archiveInfo.link_count} />
+              <LinkIcon value={archiveInfo.link_count} />
             </div>
             <div className="card__icon-box">
-              <HeartIcon id={nanoid()} value={data.archiveInfo.like_count} />
+              <HeartIcon id={nanoid()} value={archiveInfo.like_count} />
             </div>
           </div>
         </div>
@@ -66,7 +121,7 @@ function Card(data: CardProps) {
             push('/archive');
           }}
         >
-          <Thumbnail src={data.archiveInfo.thumbnail} type="book" />
+          <Thumbnail src={archiveInfo.thumbnail} type="book" />
         </div>
       </div>
       <div className="card-footer">
