@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import React from 'react';
 import LinkList from '../../components/CardList/LinkList';
 import HeartIcon from '../../components/Icon/HeartIcon';
@@ -69,7 +68,7 @@ function ArchiveDetail() {
             </div>
             <div className="archive__avatar">
               <Profile></Profile>
-              <HeartIcon id={nanoid()}></HeartIcon>
+              <HeartIcon></HeartIcon>
             </div>
             <div className="archive__content">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic

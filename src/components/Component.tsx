@@ -137,7 +137,7 @@ function Component() {
           </div>
           <div style={{ width: '100px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Icon Box</h1>
-            <HeartIcon id={nanoid()} />
+            <HeartIcon />
           </div>
           <div style={{ width: '200px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Button</h1>

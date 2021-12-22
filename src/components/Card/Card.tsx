@@ -34,24 +34,25 @@ function Card(data: CardProps) {
     [dispatch],
   );
 
-  const deleteArchiveLikeRedux = useCallback(
-    (likeInfo: archiveLikeActionType) => {
-      dispatch(deleteArchiveLike(likeInfo));
-    },
-    [dispatch],
-  );
+  const deleteArchiveLikeRedux = useCallback(() => {
+    const likeInfo: archiveLikeActionType = {
+      archive_no: archiveInfo.no,
+      like_no: archiveInfo.like_no,
+    };
+    dispatch(deleteArchiveLike(likeInfo));
+  }, [dispatch, archiveInfo]);
 
-  const setArchiveLikeRedux = useCallback(
-    (likeInfo: archiveLikeActionType) => {
-      dispatch(setArchiveLike(likeInfo));
-    },
-    [dispatch],
-  );
+  const setArchiveLikeRedux = useCallback(() => {
+    const likeInfo: archiveLikeActionType = {
+      archive_no: archiveInfo.no,
+      like_no: archiveInfo.like_no,
+    };
+    dispatch(setArchiveLike(likeInfo));
+  }, [dispatch, archiveInfo]);
 
   return (
     <>
       <div className="card">
-        {archiveInfo.no}
         <div className="card__header">
           <div
             className="card__bookmark"
@@ -111,7 +112,12 @@ function Card(data: CardProps) {
               <LinkIcon value={archiveInfo.link_count} />
             </div>
             <div className="card__icon-box">
-              <HeartIcon id={nanoid()} value={archiveInfo.like_count} />
+              <HeartIcon
+                isActive={archiveInfo.like_no ? true : false}
+                setLikeEvent={setArchiveLikeRedux}
+                deleteLikeEvent={deleteArchiveLikeRedux}
+                value={archiveInfo.like_count}
+              />
             </div>
           </div>
         </div>

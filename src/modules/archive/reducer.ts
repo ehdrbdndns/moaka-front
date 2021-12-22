@@ -46,7 +46,7 @@ function archive(
     case type.SET_LIKE:
     case type.DELETE_LIKE: {
       const archive_index = state.data.findIndex(
-        archive => (archive.no = action.payload.archive_no),
+        archive => archive.no === action.payload.archive_no,
       );
 
       const _data = [...state.data];
@@ -127,7 +127,21 @@ function archive(
         loading: false,
         data: [...state.data.filter(archive => archive.no !== action.payload)],
       };
-    case type.SET_LIKE_SUCCESS:
+    case type.SET_LIKE_SUCCESS: {
+      const archive_index = state.data.findIndex(
+        archive => archive.no === action.payload.archive_no,
+      );
+
+      const _data = [...state.data];
+      _data[archive_index].like_loading = false;
+      _data[archive_index].like_no = action.payload.like_no;
+      _data[archive_index].like_count += 1;
+
+      return {
+        ...state,
+        data: _data,
+      };
+    }
     case type.DELETE_LIKE_SUCCESS: {
       const archive_index = state.data.findIndex(
         archive => archive.no === action.payload.archive_no,
@@ -136,6 +150,7 @@ function archive(
       const _data = [...state.data];
       _data[archive_index].like_loading = false;
       _data[archive_index].like_no = action.payload.like_no;
+      _data[archive_index].like_count -= 1;
 
       return {
         ...state,

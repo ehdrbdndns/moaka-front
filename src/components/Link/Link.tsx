@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import React from 'react';
 import Favicon from '../Favicon/Favicon';
 import HeartIcon from '../Icon/HeartIcon';
@@ -23,7 +22,7 @@ function Link(data: LinkProps) {
           <Thumbnail src={data.thumbnail_src} type="link_thumbnail" />
         )}
         <div className="link__info">
-          <HeartIcon id={nanoid()} value={0} isActive={data.like_isActive} />
+          <HeartIcon value={0} isActive={data.like_isActive} />
           <span>{data.comment_count}개의 답글</span>
         </div>
         <div className="link__description">{data.description}</div>
