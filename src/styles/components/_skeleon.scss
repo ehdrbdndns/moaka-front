@@ -1,0 +1,39 @@
+.skeleton-sidebar {
+  width: 100%;
+  padding: 8px;
+
+  &__title {
+    width: 116px;
+    height: 24px;
+    background-color: $gray200;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  &__content-list {
+    position: relative;
+    padding: 4px 8px;
+  }
+
+  &__content {
+    height: 20px;
+    border-radius: 2px;
+    background-color: $gray200;
+    margin-left: 28px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      width: 20px;
+      height: 20px;
+      border-radius: 2px;
+      background-color: $gray200;
+      margin-right: 8px;
+    }
+
+    & + & {
+      margin-top: 16px;
+    }
+  }
+}
