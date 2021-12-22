@@ -16,6 +16,9 @@ export const updateArchive = (updateArchiveRequest: updateArchiveRequest) => ({
 export const getTopArchiveList = () => ({
   type: sagaType.GET_TOP_ARCHIVE_LIST,
 });
+export const getCategoryArchiveList = () => ({
+  type: sagaType.GET_CATEGORY_ARCHIVE_LIST,
+});
 export const getGroupArchiveList = () => ({
   type: sagaType.GET_GROUP_ARCHIVE_LIST,
 });

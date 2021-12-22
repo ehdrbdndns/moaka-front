@@ -7,6 +7,7 @@ function archive(
 ) {
   switch (action.type) {
     case type.GET_TOP_ARCHIVE_LIST:
+    case type.GET_CATEGORY_ARCHIVE_LIST:
       return {
         ...state,
         loading: true,
@@ -76,6 +77,7 @@ function archive(
         ...state,
       };
     case type.GET_TOP_ARCHIVE_LIST_SUCCESS:
+    case type.GET_CATEGORY_ARCHIVE_LIST_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -180,6 +182,7 @@ function archive(
         data: [],
       };
     case type.GET_TOP_ARCHIVE_LIST_ERROR:
+    case type.GET_CATEGORY_ARCHIVE_LIST_ERROR:
     case type.GET_HOME_ARCHIVE_LIST_ERROR:
     case type.GET_GROUP_ARCHIVE_LIST_ERROR:
     case type.GET_ARCHIVE_ERROR:

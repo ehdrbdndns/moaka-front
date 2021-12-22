@@ -225,7 +225,7 @@ export const getCategoryArchiveList =
     try {
       const token = localStorage.getItem('token');
       await axios
-        .post(BASE_URL + '/user/retrieveArchiveOfCategory', null, {
+        .post(BASE_URL + '/retrieveArchiveOfCategory', null, {
           headers: {
             Bearer: token,
           },
