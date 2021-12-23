@@ -10,7 +10,8 @@ import {
 
 function Home() {
   const dispatch = useDispatch();
-  const archive_info = useSelector((state: RootState) => state.archive);
+  const archiveInfo = useSelector((state: RootState) => state.archive);
+  const authInfo = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     // 아카이브 초기화
@@ -23,7 +24,13 @@ function Home() {
     dispatch(getCategoryArchiveList());
   }, [dispatch]);
 
-  return <HomeForm dispatch={dispatch} archive_info={archive_info}></HomeForm>;
+  return (
+    <HomeForm
+      dispatch={dispatch}
+      authInfo={authInfo}
+      archiveInfo={archiveInfo}
+    ></HomeForm>
+  );
 }
 
 export default Home;

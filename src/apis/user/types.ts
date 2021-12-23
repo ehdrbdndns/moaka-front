@@ -1,7 +1,6 @@
-export type DirectoryResponse = {
-  archive_no: number;
-  archive_title: string;
-  section_list: {
+export type DirectoryResponseByAxios = {
+  title: string;
+  list: {
     no: number;
     title: string;
   }[];

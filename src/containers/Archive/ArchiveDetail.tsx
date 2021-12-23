@@ -1,7 +1,6 @@
 import React from 'react';
 import LinkList from '../../components/CardList/LinkList';
 import HeartIcon from '../../components/Icon/HeartIcon';
-import Navigation from '../../components/Navigation/Navigation';
 import Profile from '../../components/Profile/Profile';
 
 function ArchiveDetail() {
@@ -109,7 +108,7 @@ function ArchiveDetail() {
           </div>
         </div>
         <div className="container__sub">
-          <Navigation mode="detail"></Navigation>
+          {/* <Navigation mode="detail"></Navigation> */}
         </div>
       </div>
     </>

@@ -1,15 +1,15 @@
 import axios from 'axios';
 import { BASE_URL } from '../utils';
 import {
-  DirectoryResponse,
+  DirectoryResponseByAxios,
   retrieveGroupUserOfArchiveByArchiveNoResponse,
   searchUserListResponse,
 } from './types';
 
 export const getLocalDirectory = async (
   user_no: number,
-): Promise<DirectoryResponse> => {
-  let directoryInfo: DirectoryResponse = [];
+): Promise<DirectoryResponseByAxios> => {
+  let directoryInfo: DirectoryResponseByAxios = [];
   await axios
     .post(BASE_URL + '/retrieveLocalDirectory', null, {
       params: {

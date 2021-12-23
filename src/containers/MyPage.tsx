@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core';
-import Navigation from '../components/Navigation/Navigation';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +22,7 @@ function MyPage() {
 
   return (
     <div className={classes.root}>
-      <Navigation />
+      {/* <Navigation /> */}
       <main className={classes.content}></main>
     </div>
   );

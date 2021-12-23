@@ -153,16 +153,42 @@ export type relativeChunkInfo = {
   regdate: string;
 };
 
-export type chunkInfo = {
+export type newChunkInfo = {
   no: number;
-  section_no: number;
-  title: string;
-  thumbnail: string;
   link: string;
-  link_title: string;
-  link_description: string;
+  thumbnail: string;
+  section_no: number;
   description: string;
   regdate: string;
+  favicon: string;
+  domain: string;
+  user_no: number;
+};
+
+export type insertChunkInfo = {
+  link: string;
+  thumbnail: string;
+  section_no: number;
+  description: string;
+  favicon: string;
+  domain: string;
+};
+
+export type chunkInfo = {
+  no: number;
+  link: string;
+  thumbnail: string;
+  section_no: number;
+  description: string;
+  regdate: string;
+  favicon: string;
+  domain: string;
+  user_no: number;
+
+  // 구 버전 타입
+  title: string;
+  link_title: string;
+  link_description: string;
   tag_list: Array<string>;
   bookmark_no: number;
   bookmark_loading: boolean;

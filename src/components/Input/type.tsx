@@ -5,6 +5,7 @@ export type InputProps = {
   value: string;
   setValue: (value: string) => void;
   onKeyPress: (value: any) => void;
+  onBlur: (value: any) => void;
   onClickOfSuffix: () => void;
   disabled: boolean;
   error: string;

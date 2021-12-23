@@ -15,16 +15,25 @@ function Link(data: LinkProps) {
         }}
       >
         <div className="link__header">
-          <Favicon type="link" src={data.favicon_src} />
+          {data.favicon_src === '' ? (
+            <Favicon type="link" src="/img/link-favicon.png" />
+          ) : (
+            <Favicon type="link" src={data.favicon_src} />
+          )}
           <span className="link__title">{data.title}</span>
         </div>
-        {data.type === 'imageview' && (
-          <Thumbnail src={data.thumbnail_src} type="link_thumbnail" />
+        {data.type === 'imageview' &&
+          (data.thumbnail_src === '' ? (
+            <Thumbnail src="/img/default-link-img.png" type="link_thumbnail" />
+          ) : (
+            <Thumbnail src={data.thumbnail_src} type="link_thumbnail" />
+          ))}
+        {data.is_info_show && (
+          <div className="link__info">
+            <HeartIcon value={0} isActive={data.like_isActive} />
+            <span>{data.comment_count}개의 답글</span>
+          </div>
         )}
-        <div className="link__info">
-          <HeartIcon value={0} isActive={data.like_isActive} />
-          <span>{data.comment_count}개의 답글</span>
-        </div>
         <div className="link__description">{data.description}</div>
       </article>
     </>
@@ -46,6 +55,9 @@ Link.defaultProps = {
   like_value: '0',
   // 좋아요 여부
   like_isActive: false,
+
+  // link info 노출 여부
+  is_info_show: true,
 };
 
 export default Link;

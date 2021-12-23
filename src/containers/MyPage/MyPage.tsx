@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CardList from '../../components/CardList/CardList';
-import Navigation from '../../components/Navigation/Navigation';
 import { RootState } from '../../modules';
 
 function MyPage() {
@@ -27,7 +26,7 @@ function MyPage() {
           />
         </div>
         <div className="container__sub">
-          <Navigation mode="mypage"></Navigation>
+          {/* <Navigation mode="mypage"></Navigation> */}
         </div>
       </div>
     </>

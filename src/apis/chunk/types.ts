@@ -10,6 +10,11 @@ export type deleteChunkResponse = {
   isSuccess: boolean;
   error: number;
 };
+export type insertChunkResponse = {
+  no: number;
+  isSuccess: boolean;
+  error: number;
+};
 export type makeChunkResponse = {
   isSuccess: boolean;
   error: number;

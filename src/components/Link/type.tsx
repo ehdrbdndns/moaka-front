@@ -14,6 +14,9 @@ export type LinkProps = {
   like_value: string;
   // 좋아요 여부
   like_isActive: boolean;
+
+  // link 정보 노출 여부
+  is_info_show: boolean;
 };
 
 export type LinkBoxProps = {

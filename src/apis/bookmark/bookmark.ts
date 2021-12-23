@@ -4,7 +4,31 @@ import {
   deleteBookmarkResponse,
   insertBookmarkOfArchiveResponse,
   insertBookmarkOfChunkResponse,
+  linkPreviewResponse,
 } from './types';
+
+export const linkPreview = async (
+  link: string,
+): Promise<linkPreviewResponse> => {
+  let result: linkPreviewResponse = {} as linkPreviewResponse;
+
+  await axios
+    .post(BASE_URL + '/linkPreview', null, {
+      params: {
+        link,
+      },
+    })
+    .then(function (response) {
+      result = response.data;
+      result.error = 0;
+    })
+    .catch(function (error) {
+      console.log(error);
+      error = error.response.status;
+    });
+
+  return result;
+};
 
 export const insertBookmarkOfArchive = async (
   archive_no: number,
