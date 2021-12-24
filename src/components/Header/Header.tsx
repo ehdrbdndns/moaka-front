@@ -1,11 +1,13 @@
-import { nanoid } from 'nanoid';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 import AddArchiveModal from '../Modal/AddArchiveModal';
 import LoginModal from '../Modal/LoginModal';
 import NotificationModal from '../Modal/NotificationModal';
 import ProfileModal from '../Modal/ProfileModal';
+import { onClickTab } from '../Tab/event';
 import Tab from '../Tab/Tab';
+import { toasting } from '../Toast/event';
+import Toast from '../Toast/Toast';
 import { HeaderProps } from './types';
 
 function Header(data: HeaderProps) {
@@ -14,16 +16,26 @@ function Header(data: HeaderProps) {
 
   const { push } = useHistory();
 
+  const errorToastElem = useRef<HTMLDivElement>(null);
+  const firstTabElem = useRef<HTMLDivElement>(null);
+  const secondTabElem = useRef<HTMLDivElement>(null);
+
   const [headerActiveTab, setHeaderActiveTab] = useState<string>('first');
 
   const headerFirstTabClick = () => {
     push('/');
     setHeaderActiveTab('first');
+    onClickTab(firstTabElem, secondTabElem);
   };
 
   const headerSecondTabClick = () => {
-    push('/mypage');
-    setHeaderActiveTab('second');
+    if (authInfo.data.isLogin) {
+      push('/mypage');
+      setHeaderActiveTab('second');
+      onClickTab(secondTabElem, firstTabElem);
+    } else {
+      toasting(errorToastElem);
+    }
   };
 
   const eye = (
@@ -58,6 +70,12 @@ function Header(data: HeaderProps) {
 
   return (
     <>
+      <Toast
+        toastElem={errorToastElem}
+        showType="fixed"
+        type="error"
+        message="로그인후 이용해주세요."
+      ></Toast>
       <header className="header">
         <img
           src="/img/svg/logo.svg"
@@ -71,8 +89,8 @@ function Header(data: HeaderProps) {
             <Tab
               firstName="탐색하기"
               secondName="나의 저장소"
-              firstId={nanoid()}
-              secondId={nanoid()}
+              firstElem={firstTabElem}
+              secondElem={secondTabElem}
               onClickOfFirst={headerFirstTabClick}
               onClickOfSecond={headerSecondTabClick}
               activeMode={headerActiveTab}
@@ -82,8 +100,8 @@ function Header(data: HeaderProps) {
             <Tab
               firstName={eye}
               secondName={folder}
-              firstId={nanoid()}
-              secondId={nanoid()}
+              firstElem={firstTabElem}
+              secondElem={secondTabElem}
               onClickOfFirst={headerFirstTabClick}
               onClickOfSecond={headerSecondTabClick}
               activeMode={headerActiveTab}

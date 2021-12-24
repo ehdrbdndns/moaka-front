@@ -7,11 +7,27 @@ export const GET_TOP_ARCHIVE_LIST_ERROR =
   'archive/GET_TOP_ARCHIVE_LIST_ERROR' as const;
 
 // REF 내가 관심있는 아카이브 리스트
-export const GET_CATEGORY_ARCHIVE_LIST = 'archive/GET_CATEGORY_LIST' as const;
+export const GET_CATEGORY_ARCHIVE_LIST =
+  'archive/GET_CATEGORY_ARCHIVE_LIST' as const;
 export const GET_CATEGORY_ARCHIVE_LIST_SUCCESS =
-  'archive/GET_CATEGORY_LIST_SUCCESS' as const;
+  'archive/GET_CATEGORY_ARCHIVE_LIST_SUCCESS' as const;
 export const GET_CATEGORY_ARCHIVE_LIST_ERROR =
-  'archive/GET_CATEGORY_LIST_ERROR' as const;
+  'archive/GET_CATEGORY_ARCHIVE_LIST_ERROR' as const;
+
+// REF 소속 아카이브 리스트
+export const GET_GROUP_ARCHIVE_LIST = 'archive/GET_GROUP_ARCHIVE_LIST' as const;
+export const GET_GROUP_ARCHIVE_LIST_SUCCESS =
+  'archive/GET_GROUP_ARCHIVE_LIST_SUCCESS' as const;
+export const GET_GROUP_ARCHIVE_LIST_ERROR =
+  'archive/GET_GROUP_ARCHIVE_LIST_ERROR' as const;
+
+// REF 북마크한 아카이브 리스트
+export const GET_BOOKMARK_ARCHIVE_LIST =
+  'archive/GET_BOOKMARK_ARCHIVE_LIST' as const;
+export const GET_BOOKMARK_ARCHIVE_LIST_SUCCESS =
+  'archive/GET_BOOKMARK_ARCHIVE_LIST_SUCCESS' as const;
+export const GET_BOOKMARK_ARCHIVE_LIST_ERROR =
+  'archive/GET_BOOKMARK_ARCHIVE_LIST_ERROR' as const;
 
 // REF 홈 페이지 아카이브 리스트
 export const GET_HOME_ARCHIVE_LIST = 'archive/GET_HOME_ARCHIVE_LIST' as const;
@@ -19,13 +35,6 @@ export const GET_HOME_ARCHIVE_LIST_SUCCESS =
   'archive/GET_HOME_ARCHIVE_LIST_SUCCESS' as const;
 export const GET_HOME_ARCHIVE_LIST_ERROR =
   'archive/GET_HOME_ARCHIVE_LIST_ERROR' as const;
-
-//  REF 소속 아카이브 리스트
-export const GET_GROUP_ARCHIVE_LIST = 'archive/GET_GROUP_ARCHIVE_LIST' as const;
-export const GET_GROUP_ARCHIVE_LIST_SUCCESS =
-  'archive/GET_GROUP_ARCHIVE_LIST_SUCCESS' as const;
-export const GET_GROUP_ARCHIVE_LIST_ERROR =
-  'archive/GET_GROUP_ARCHIVE_LIST_ERROR' as const;
 
 // REF 아카이브 정보 가져오기
 export const GET_ARCHIVE = 'archive/GET_ARCHIVE' as const;

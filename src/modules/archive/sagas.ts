@@ -69,6 +69,39 @@ function* getGroupArchiveListSaga() {
   }
 }
 
+function* getBookmarkArchiveListSaga() {
+  try {
+    // Bookmark Archive List 가져오기
+    const bookmark_archive_response: getBookmarkArchiveListResponse =
+      yield call(archiveAPI.getBookmarkArchiveList);
+
+    if (bookmark_archive_response.isSuccess) {
+      yield put({
+        type: sagaType.GET_BOOKMARK_ARCHIVE_LIST_SUCCESS,
+        payload: bookmark_archive_response.archive_list,
+      });
+    } else if (bookmark_archive_response.error === 403) {
+      yield put({
+        type: sagaType.EXPIRE_JWT_TOKEN,
+        payload: '재 로그인 해주세요.',
+      });
+    } else {
+      yield put({
+        type: sagaType.GET_BOOKMARK_ARCHIVE_LIST_ERROR,
+        error: true,
+        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.GET_BOOKMARK_ARCHIVE_LIST_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
 function* getTopArchiveListSaga() {
   try {
     let archive_list: archiveInfo[] = [];
@@ -126,17 +159,6 @@ function* getHomeArchiveListSaga() {
       archiveAPI.getTopArchiveList,
     );
     archive_list = archive_list.concat(top_archive_response.archive_list);
-
-    // Group Archive List 가져오기
-    // const group_archive_response: getGroupArchiveListResponse = yield call(
-    //   archiveAPI.getGroupArchiveList,
-    // );
-    // archive_list = archive_list.concat(group_archive_response.archive_list);
-
-    // Bookmark Archive List 가져오기
-    // const bookmark_archive_response: getBookmarkArchiveListResponse =
-    //   yield call(archiveAPI.getBookmarkArchiveList);
-    // archive_list = archive_list.concat(bookmark_archive_response.archive_list);
 
     yield put({
       type: sagaType.GET_HOME_ARCHIVE_LIST_SUCCESS,
@@ -473,6 +495,10 @@ export function* archiveSaga() {
   yield takeEvery(
     sagaType.GET_CATEGORY_ARCHIVE_LIST,
     getCategoryArchiveListSaga,
+  );
+  yield takeEvery(
+    sagaType.GET_BOOKMARK_ARCHIVE_LIST,
+    getBookmarkArchiveListSaga,
   );
   yield takeEvery(sagaType.GET_GROUP_ARCHIVE_LIST, getGroupArchiveListSaga);
   yield takeLatest(sagaType.GET_ARCHIVE, getArchiveSaga);

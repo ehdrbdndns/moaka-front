@@ -22,6 +22,9 @@ export const getCategoryArchiveList = () => ({
 export const getGroupArchiveList = () => ({
   type: sagaType.GET_GROUP_ARCHIVE_LIST,
 });
+export const getBookmarkArchiveList = () => ({
+  type: sagaType.GET_BOOKMARK_ARCHIVE_LIST,
+});
 export const getHomeArchiveList = () => ({
   type: sagaType.GET_HOME_ARCHIVE_LIST,
 });
