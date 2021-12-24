@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { useHistory } from 'react-router';
+import React, { useEffect, useRef, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
 import AddArchiveModal from '../Modal/AddArchiveModal';
 import LoginModal from '../Modal/LoginModal';
 import NotificationModal from '../Modal/NotificationModal';
@@ -15,12 +15,21 @@ function Header(data: HeaderProps) {
   const { dispatch, authInfo, userListInfo } = data;
 
   const { push } = useHistory();
+  const { pathname } = useLocation();
 
   const errorToastElem = useRef<HTMLDivElement>(null);
   const firstTabElem = useRef<HTMLDivElement>(null);
   const secondTabElem = useRef<HTMLDivElement>(null);
 
   const [headerActiveTab, setHeaderActiveTab] = useState<string>('first');
+
+  useEffect(() => {
+    if (pathname === '/') {
+      setHeaderActiveTab('first');
+    } else {
+      setHeaderActiveTab('second');
+    }
+  }, [pathname]);
 
   const headerFirstTabClick = () => {
     push('/');
