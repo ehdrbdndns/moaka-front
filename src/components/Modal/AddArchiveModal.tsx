@@ -18,6 +18,9 @@ function AddArchiveModal() {
   const modalStateElem = useRef<HTMLDivElement>(null);
   const thumbnailModalElem = useRef<HTMLDivElement>(null);
 
+  const firstTabElem = useRef<HTMLDivElement>(null);
+  const secondTabElem = useRef<HTMLDivElement>(null);
+
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -156,8 +159,8 @@ function AddArchiveModal() {
                 <Tab
                   firstName={'비공개'}
                   secondName={'공개'}
-                  firstId={nanoid()}
-                  secondId={nanoid()}
+                  firstElem={firstTabElem}
+                  secondElem={secondTabElem}
                 />
                 <Input
                   placeholder="아카이브 제목"

@@ -3,7 +3,6 @@ import { closeModal, openSubModal, toggleModal } from './event';
 import Button from '../Button/Button';
 import Tab from '../Tab/Tab';
 import Input from '../Input/Input';
-import { nanoid } from 'nanoid';
 import SearchPwdModal from './SubModal/SearchPwdModal';
 import { regEmail, regPwd } from '../../asset';
 import RegisterModal from './RegisterModal';
@@ -17,6 +16,7 @@ import {
 import GoogleLogin from 'react-google-login';
 import Toast from '../Toast/Toast';
 import { retrieveUserById } from '../../apis/auth/auth';
+import { onClickTab } from '../Tab/event';
 
 function LoginModal(data: LoginModalProps) {
   const authInfo = data.authInfo;
@@ -25,6 +25,8 @@ function LoginModal(data: LoginModalProps) {
   const changePwdModalElem = useRef<HTMLDivElement>(null);
   const profileModalElem = useRef<HTMLDivElement>(null);
   const formElem = useRef<HTMLFormElement>(null);
+  const firstTabElem = useRef<HTMLDivElement>(null);
+  const secondTabElem = useRef<HTMLDivElement>(null);
 
   const [registerType, setRegisterType] = useState<string>('local');
 
@@ -201,10 +203,12 @@ function LoginModal(data: LoginModalProps) {
   };
 
   const onClickOfFirstTabEvent = () => {
+    onClickTab(firstTabElem, secondTabElem);
     setMode('login');
   };
 
   const onClickOfSecondTabEvent = () => {
+    onClickTab(secondTabElem, firstTabElem);
     setMode('register');
   };
 
@@ -263,8 +267,8 @@ function LoginModal(data: LoginModalProps) {
                   <Tab
                     firstName={'로그인'}
                     secondName={'회원가입'}
-                    firstId={nanoid()}
-                    secondId={nanoid()}
+                    firstElem={firstTabElem}
+                    secondElem={secondTabElem}
                     onClickOfFirst={onClickOfFirstTabEvent}
                     onClickOfSecond={onClickOfSecondTabEvent}
                   />

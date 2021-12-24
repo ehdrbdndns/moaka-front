@@ -9,7 +9,6 @@ import Button from './Button/Button';
 import Link from './Link/Link';
 import { nanoid } from 'nanoid';
 import AddArchiveModal from './Modal/AddArchiveModal';
-import Tab from './Tab/Tab';
 import DropDown from './DropDown/DropDown';
 import Chat from './Chat/Chat';
 import NotificationModal from './Modal/NotificationModal';
@@ -47,12 +46,12 @@ function Component() {
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Tab</h1>
             <div style={{ display: 'flex' }}>
               <div style={{ width: '230px', marginRight: '50px' }}>
-                <Tab
+                {/* <Tab
                   firstName={'비공개'}
                   secondName={'공개'}
                   firstId={nanoid()}
-                  secondId={nanoid()}
-                />
+                  secondId={nanoid()} 
+                /> */}
               </div>
             </div>
           </div>
