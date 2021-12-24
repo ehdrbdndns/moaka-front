@@ -26,7 +26,7 @@ function LinkSideBar(data: LinkSideBarProps) {
   const [description, setDescription] = useState<string>('');
   const [descriptionError, setDescriptionError] = useState<string>('');
 
-  const [sectionNo, setSectionNo] = useState<number>(0);
+  const [sectionNo, setSectionNo] = useState<number | string>(0);
   const [directoryList, setDirectoryList] = useState<DirectoryResponseByAxios>(
     {} as DirectoryResponseByAxios,
   );
@@ -103,7 +103,7 @@ function LinkSideBar(data: LinkSideBarProps) {
       setIsBtnLoading(true);
 
       await insertChunk({
-        section_no: sectionNo,
+        section_no: sectionNo as number,
         description: description,
         domain: linkPreviewInfo.domain,
         favicon: linkPreviewInfo.favicon,

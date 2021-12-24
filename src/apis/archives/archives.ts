@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { defaultThumbnailImg } from '../../asset';
 import { archiveInfo } from '../../modules/archive';
 import { BASE_URL } from '../utils';
 import {
@@ -26,7 +27,11 @@ export const insertArchive = async (
 
   const formData = new FormData();
 
-  formData.append('thumbnailFile', insertArchiveRequest.thumbnailFile);
+  if (insertArchiveRequest.thumbnailFile !== undefined) {
+    formData.append('thumbnailFile', insertArchiveRequest.thumbnailFile);
+  } else {
+    insertArchiveRequest.info.thumbnail = defaultThumbnailImg;
+  }
   formData.append(
     'archive',
     new Blob([JSON.stringify(insertArchiveRequest.info)], {
@@ -48,7 +53,7 @@ export const insertArchive = async (
       result.archive.type = 'group';
     })
     .catch(function (error) {
-      console.log(error.response);
+      console.log(error);
       result.isSuccess = false;
       result.error = error.response.status;
     });

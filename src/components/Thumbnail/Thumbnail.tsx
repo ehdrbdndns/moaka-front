@@ -1,4 +1,5 @@
 import React from 'react';
+import { defaultThumbnailImg } from '../../asset';
 import { ThumbnailProps } from './type';
 
 function Thumbnail(data: ThumbnailProps) {
@@ -12,8 +13,8 @@ function Thumbnail(data: ThumbnailProps) {
 }
 
 Thumbnail.defaultProps = {
-  type: 'book_thumbnail', // link_thumbnail or book_thumbnail
-  src: '/img/default-thumbnail.png',
+  type: 'book', // link or book
+  src: defaultThumbnailImg,
 };
 
 export default Thumbnail;

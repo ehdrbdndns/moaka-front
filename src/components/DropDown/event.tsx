@@ -3,7 +3,7 @@ const onClickDropdown = (dropdownElem: React.RefObject<HTMLDivElement>) => {
 };
 
 const selectDropdownItem = (
-  value: number,
+  value: number | string,
   title: string,
   setValue: any,
   dropdownElem: React.RefObject<HTMLDivElement>,

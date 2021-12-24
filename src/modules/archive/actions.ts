@@ -1,3 +1,4 @@
+import { archiveInfo } from '.';
 import {
   insertArchiveRequest,
   updateArchiveRequest,
@@ -5,6 +6,10 @@ import {
 import * as sagaType from './types';
 
 // TODO 액션 함수
+export const insertStoreArchvie = (archiveInfo: archiveInfo) => ({
+  type: sagaType.INSERT_STORE_ARCHIVE,
+  payload: archiveInfo,
+});
 export const insertArchive = (insertArchive: insertArchiveRequest) => ({
   type: sagaType.INSERT_ARCHIVE,
   payload: insertArchive,

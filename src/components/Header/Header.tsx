@@ -139,7 +139,7 @@ function Header(data: HeaderProps) {
             <NotificationModal></NotificationModal>
           </div>
           <div className="header__item">
-            <AddArchiveModal></AddArchiveModal>
+            <AddArchiveModal dispatch={dispatch}></AddArchiveModal>
           </div>
           <div className="header__item">
             {authInfo.data.isLogin ? (

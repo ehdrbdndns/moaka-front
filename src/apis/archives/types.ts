@@ -51,12 +51,13 @@ export type insertArchiveRequest = {
   info: {
     title: string;
     description: string;
-    tag_list: string[];
     privacy_type: string;
+    thumbnail: string;
+    tag_list: string[];
     group_no_list: number[];
     category: string;
   };
-  thumbnailFile: File;
+  thumbnailFile: File | undefined;
 };
 
 export type updateArchiveRequest = {

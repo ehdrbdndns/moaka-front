@@ -36,6 +36,13 @@ export const GET_HOME_ARCHIVE_LIST_SUCCESS =
 export const GET_HOME_ARCHIVE_LIST_ERROR =
   'archive/GET_HOME_ARCHIVE_LIST_ERROR' as const;
 
+// REF 아카이브 Store에 정보 넣기
+export const INSERT_STORE_ARCHIVE = 'archive/INSERT_STORE_ARCHIVE' as const;
+export const INSERT_STORE_ARCHIVE_SUCCESS =
+  'archive/INSERT_STORE_ARCHIVE_SUCCESS' as const;
+export const INSERT_STORE_ARCHIVE_ERROR =
+  'archive/INSERT_STORE_ARCHIVE_ERROR' as const;
+
 // REF 아카이브 정보 가져오기
 export const GET_ARCHIVE = 'archive/GET_ARCHIVE' as const;
 export const GET_ARCHIVE_SUCCESS = 'archive/GET_ARCHIVE_SUCCESS' as const;

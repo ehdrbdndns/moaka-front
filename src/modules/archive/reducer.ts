@@ -15,6 +15,10 @@ function archive(
         loading: true,
         error: null,
       };
+    case type.INSERT_STORE_ARCHIVE:
+      return {
+        ...state,
+      };
     case type.GET_HOME_ARCHIVE_LIST:
       return {
         ...state,
@@ -80,6 +84,11 @@ function archive(
         loading: false,
         data: [...state.data, ...action.payload],
       };
+    case type.INSERT_STORE_ARCHIVE_SUCCESS:
+      return {
+        ...state,
+        data: [action.payload, ...state.data],
+      };
     case type.GET_HOME_ARCHIVE_LIST_SUCCESS:
       return {
         ...state,
@@ -90,7 +99,7 @@ function archive(
       return {
         ...state,
         loading: false,
-        data: [...state.data, action.payload],
+        data: [...state.data, ...action.payload],
       };
     case type.UPDATE_ARCHIVE_SUCCESS:
       const archive_index = state.data.findIndex(
@@ -177,6 +186,7 @@ function archive(
         error: null,
         data: [],
       };
+    case type.INSERT_STORE_ARCHIVE_ERROR:
     case type.GET_BOOKMARK_ARCHIVE_LIST_ERROR:
     case type.GET_TOP_ARCHIVE_LIST_ERROR:
     case type.GET_CATEGORY_ARCHIVE_LIST_ERROR:

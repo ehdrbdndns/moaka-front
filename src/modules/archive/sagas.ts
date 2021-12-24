@@ -181,9 +181,6 @@ function* insertArchiveSaga(action: ReturnType<typeof insertArchive>) {
       action.payload,
     );
 
-    console.log('response');
-    console.log(response);
-
     if (response.isSuccess) {
       yield put({
         type: sagaType.INSERT_ARCHIVE_SUCCESS,
@@ -484,6 +481,22 @@ function* searchArchiveSaga(action: ReturnType<typeof searchArchive>) {
   }
 }
 
+function* insertStoreArchiveSaga(action: ReturnType<typeof searchArchive>) {
+  try {
+    yield put({
+      type: sagaType.INSERT_STORE_ARCHIVE_SUCCESS,
+      payload: action.payload,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: sagaType.INSERT_STORE_ARCHIVE_ERROR,
+      error: true,
+      payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+    });
+  }
+}
+
 function* resetArchiveSaga() {
   yield put({
     type: sagaType.RESET_ARCHIVE_SUCCESS,
@@ -491,6 +504,7 @@ function* resetArchiveSaga() {
 }
 
 export function* archiveSaga() {
+  yield takeEvery(sagaType.INSERT_STORE_ARCHIVE, insertStoreArchiveSaga);
   yield takeEvery(sagaType.GET_TOP_ARCHIVE_LIST, getTopArchiveListSaga);
   yield takeEvery(
     sagaType.GET_CATEGORY_ARCHIVE_LIST,

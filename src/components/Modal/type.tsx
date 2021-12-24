@@ -1,6 +1,10 @@
 import { Dispatch, RefObject } from 'react';
 import { initialState as AuthState } from '../../modules/auth';
 
+export type AddArchiveModalProps = {
+  dispatch: Dispatch<any>;
+};
+
 export type LoginModalProps = {
   dispatch: Dispatch<any>;
   authInfo: AuthState;
@@ -50,6 +54,9 @@ export type WithDrawModalProps = {
 
 export type ThumbnailModalProps = {
   subModalElem: RefObject<HTMLDivElement>;
+  imgSrc: string;
+  setImgSrc: (src: string) => void;
+  setImgFile: (file: File) => void;
 };
 
 export type SubProfileModalProps = {

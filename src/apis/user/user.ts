@@ -4,6 +4,7 @@ import {
   DirectoryResponseByAxios,
   retrieveGroupUserOfArchiveByArchiveNoResponse,
   searchUserListResponse,
+  searchUserResponse,
 } from './types';
 
 export const getLocalDirectory = async (
@@ -42,6 +43,28 @@ export const searchUserList = async (
     })
     .then(function (response) {
       result = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+      result.isSuccess = false;
+      result.error = error.response.status;
+    });
+
+  return result;
+};
+
+export const searchUser = async (id: string): Promise<searchUserResponse> => {
+  let result = {} as searchUserResponse;
+
+  await axios
+    .post(BASE_URL + '/searchUser', null, {
+      params: {
+        id: id,
+      },
+    })
+    .then(function (response) {
+      result = response.data;
+      result.error = 0;
     })
     .catch(function (error) {
       console.log(error);

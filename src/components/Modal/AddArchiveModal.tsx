@@ -5,50 +5,93 @@ import Tab from '../Tab/Tab';
 import Input from '../Input/Input';
 import Tag from '../Tag/Tag';
 import DropDown from '../DropDown/DropDown';
-import { DropDownProps, DropwDownListType } from '../DropDown/type';
 import Chat from '../Chat/Chat';
-import { closeModal, openSubModal, toggleModal } from './event';
-import { regEmail } from '../../asset';
+import { closeModal, toggleModal } from './event';
+import {
+  categoryInfo,
+  defaultThumbnailImg,
+  regEmail,
+  setImgFile,
+} from '../../asset';
 import { addPressButton } from '../Button/event';
-import ThumbnailModal from './SubModal/Thumbnail';
 import Thumbnail from '../Thumbnail/Thumbnail';
+import { searchUserResponse, searchUserType } from '../../apis/user/types';
+import { searchUser } from '../../apis/user/user';
+import { AddArchiveModalProps } from './type';
+import { onClickTab } from '../Tab/event';
+import Toast from '../Toast/Toast';
+import { toasting } from '../Toast/event';
+import { insertArchive } from '../../apis/archives/archives';
+import { insertStoreArchvie } from '../../modules/archive';
 
-function AddArchiveModal() {
+function AddArchiveModal(data: AddArchiveModalProps) {
   const modalElem = useRef<HTMLDivElement>(null);
   const modalStateElem = useRef<HTMLDivElement>(null);
-  const thumbnailModalElem = useRef<HTMLDivElement>(null);
+  const thumbnailFileElem = useRef<HTMLInputElement>(null);
+  // const thumbnailModalElem = useRef<HTMLDivElement>(null);
 
   const firstTabElem = useRef<HTMLDivElement>(null);
   const secondTabElem = useRef<HTMLDivElement>(null);
 
-  const [title, setTitle] = useState<string>();
-  const [description, setDescription] = useState<string>();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [category, setCategory] = useState<number>(0);
+  const resultToastElem = useRef<HTMLDivElement>(null);
+  const errorToastElem = useRef<HTMLDivElement>(null);
+
+  const [privacyType, setPrivacyType] = useState<string>('private');
+  const [title, setTitle] = useState<string>('');
+  const [titleError, setTitleError] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [descriptionError, setDescriptionError] = useState<string>('');
+  const [category, setCategory] = useState<number | string>('');
+  const [categoryError, setCategoryError] = useState<string>('');
   const [tag, setTag] = useState<string>();
   const [tagError, setTagError] = useState<string>('');
   const [tagList, setTagList] = useState<Array<string>>([]);
   const [email, setEmail] = useState<string>();
-  const [userList, setUserList] = useState<string[]>([]);
+  const [emailError, setEmailError] = useState<string>('');
+  const [userList, setUserList] = useState<Array<searchUserType>>([]);
+  const [thumbnailFile, setThumbnailFile] = useState<File>();
+  const [thumbnailSrc, setThumbnailSrc] = useState<string>(defaultThumbnailImg);
 
-  const setUserListEvent = (e: any) => {
+  const [btnLoading, setBtnLoading] = useState<boolean>(false);
+
+  const privacyFirstTabClick = () => {
+    setPrivacyType('private');
+    onClickTab(firstTabElem, secondTabElem);
+  };
+
+  const privacySecondTabClick = () => {
+    setPrivacyType('public');
+    onClickTab(secondTabElem, firstTabElem);
+  };
+
+  const setUserListEvent = async (e: any) => {
     if (e.key === 'Enter') {
       let newEmail = e.target.value;
       // 이메일인지 확인
       if (regEmail.test(newEmail)) {
+        setEmailError('');
         let isExist = false;
 
-        userList.forEach(email => {
-          if (email === newEmail) {
-            isExist = true;
-            return false;
-          }
-        });
+        const response: searchUserResponse = await searchUser(newEmail);
+        if (response.isSuccess) {
+          userList.forEach(user => {
+            if (user.id === newEmail) {
+              isExist = true;
+              return false;
+            }
+          });
 
-        if (!isExist) {
-          setUserList([...userList, newEmail]);
-          setEmail('');
+          if (!isExist) {
+            setUserList([...userList, response.user]);
+            setEmail('');
+          } else {
+            setEmailError('이미 초대된 사용자 입니다.');
+          }
+        } else {
+          setEmailError('존재하지 않는 사용자입니다.');
         }
+      } else {
+        setEmailError('이메일을 입력해주세요.');
       }
     }
   };
@@ -87,39 +130,95 @@ function AddArchiveModal() {
     setTagList(tagList.filter(tag => tag !== existTag));
   };
 
-  const categoryInfo: DropDownProps = {
-    defaultValue: '카테고리 선택',
-    dropdownList: [
-      {
-        title: '카테고리 선택',
-        list: [
-          {
-            no: 0,
-            title: '카테고리_1',
-          },
-          {
-            no: 1,
-            title: '카테고리_2',
-          },
-          {
-            no: 2,
-            title: '카테고리_3',
-          },
-          {
-            no: 3,
-            title: '카테고리_4',
-          },
-          {
-            no: 5,
-            title: '카테고리_5',
-          },
-        ],
-      } as DropwDownListType,
-    ],
-  } as DropDownProps;
+  const removeThumbnail = () => {
+    setThumbnailFile(undefined);
+    setThumbnailSrc(defaultThumbnailImg);
+  };
+
+  const reset = () => {
+    setTitle('');
+    setTitleError('');
+    setDescription('');
+    setDescriptionError('');
+    setCategory('');
+    setTag('');
+    setTagError('');
+    setTagList([]);
+    setEmail('');
+    setEmailError('');
+    setUserList([]);
+    setThumbnailFile(undefined);
+    setThumbnailSrc('');
+  };
+
+  const checkValue = () => {
+    let isTrue = true;
+    if (title === '') {
+      isTrue = false;
+      setTitleError('내용을 입력해주세요');
+    }
+
+    if (description === '') {
+      isTrue = false;
+      setDescriptionError('내용을 입력해주세요');
+    }
+
+    if (category === '') {
+      isTrue = false;
+      setCategoryError('카테고리를 선택해주세요');
+    }
+
+    return isTrue;
+  };
+
+  const insertArchiveRedux = async () => {
+    if (checkValue()) {
+      setBtnLoading(true);
+
+      let userNoList: number[] = [];
+
+      userList.map(user => userNoList.push(user.no));
+
+      let insertArchiveResponse = await insertArchive({
+        info: {
+          title,
+          category: category as string,
+          tag_list: tagList,
+          thumbnail: '',
+          description,
+          privacy_type: privacyType,
+          group_no_list: userNoList,
+        },
+        thumbnailFile,
+      });
+
+      if (insertArchiveResponse.isSuccess) {
+        data.dispatch(insertStoreArchvie(insertArchiveResponse.archive));
+        toasting(resultToastElem);
+        closeModal(modalElem);
+        reset();
+      } else {
+        toasting(errorToastElem);
+      }
+
+      setBtnLoading(false);
+    }
+  };
 
   return (
     <>
+      <Toast
+        type="default"
+        message="아카이브가 추가되었습니다."
+        showType="fixed"
+        toastElem={resultToastElem}
+      ></Toast>
+      <Toast
+        type="error"
+        message="아카이브 추가에 실패했습니다."
+        showType="fixed"
+        toastElem={errorToastElem}
+      ></Toast>
       <div className="archive-modal modal" ref={modalElem}>
         {/* modal state button */}
         <div className="modal__state" onClick={() => toggleModal(modalElem)}>
@@ -161,13 +260,17 @@ function AddArchiveModal() {
                   secondName={'공개'}
                   firstElem={firstTabElem}
                   secondElem={secondTabElem}
+                  onClickOfFirst={privacyFirstTabClick}
+                  onClickOfSecond={privacySecondTabClick}
                 />
                 <Input
                   placeholder="아카이브 제목"
                   value={title}
                   setValue={setTitle}
+                  error={titleError}
                 />
                 <Input
+                  error={descriptionError}
                   placeholder="아카이브 설명"
                   value={description}
                   setValue={setDescription}
@@ -176,6 +279,7 @@ function AddArchiveModal() {
                   setValue={setCategory}
                   defaultValue={categoryInfo.defaultValue}
                   dropdownList={categoryInfo.dropdownList}
+                  error={categoryError}
                 />
                 <div>
                   <Input
@@ -203,18 +307,30 @@ function AddArchiveModal() {
               <div className="modal__content">
                 <div className="d-flex align-item-center">
                   <div className="relative">
-                    <Thumbnail></Thumbnail>
+                    <Thumbnail src={thumbnailSrc}></Thumbnail>
                     <img
-                      onClick={() => openSubModal(thumbnailModalElem)}
+                      onClick={() => {
+                        thumbnailFileElem.current?.click();
+                      }}
                       className="cursor-pointer absolute-center"
                       src="/img/svg/plus.svg"
                       alt="추가 아이콘"
+                    />
+                    <input
+                      ref={thumbnailFileElem}
+                      type="file"
+                      hidden
+                      accept="image/*"
+                      onChange={e =>
+                        setImgFile(e, setThumbnailSrc, setThumbnailFile)
+                      }
                     />
                   </div>
                   <img
                     src="/img/svg/remove.svg"
                     className="px-ml-16 cursor-pointer"
                     alt="삭제 아이콘"
+                    onClick={removeThumbnail}
                   />
                 </div>
               </div>
@@ -225,20 +341,35 @@ function AddArchiveModal() {
                 <Input
                   placeholder="이메일"
                   value={email}
+                  error={emailError}
                   setValue={setEmail}
                   onKeyPress={setUserListEvent}
                 />
                 {userList.map(user => (
-                  <div className="modal__chat">
-                    <Chat description={user} />
+                  <div className="modal__chat" key={nanoid()}>
+                    <Chat
+                      profileSrc={user.profile}
+                      description={user.id}
+                      name={user.name}
+                    />
                     <img src="/img/svg/remove.svg" alt="삭제 아이콘" />
                   </div>
                 ))}
               </div>
-              <Button type="outline" value="추가" />
+              <Button
+                type="outline"
+                value="추가"
+                onClick={insertArchiveRedux}
+                isDisabled={btnLoading}
+              />
             </form>
           </div>
-          <ThumbnailModal subModalElem={thumbnailModalElem}></ThumbnailModal>
+          {/* <ThumbnailModal
+            imgSrc={thumbnailSrc}
+            setImgFile={setThumbnailFile}
+            setImgSrc={setThumbnailSrc}
+            subModalElem={thumbnailModalElem} 
+          ></ThumbnailModal> */}
         </div>
       </div>
       {/* modal background */}

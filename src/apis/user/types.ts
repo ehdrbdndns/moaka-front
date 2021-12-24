@@ -19,6 +19,19 @@ export type searchUserListResponse = {
   error: number;
 };
 
+export type searchUserType = {
+  no: number;
+  id: string;
+  name: string;
+  profile: string;
+};
+
+export type searchUserResponse = {
+  isSuccess: boolean;
+  user: searchUserType;
+  error: number;
+};
+
 export type retrieveGroupUserOfArchiveByArchiveNoResponse = {
   user_list: Array<userListType>;
   isSuccess: boolean;
