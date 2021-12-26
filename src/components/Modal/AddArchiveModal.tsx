@@ -69,26 +69,30 @@ function AddArchiveModal(data: AddArchiveModalProps) {
       let newEmail = e.target.value;
       // 이메일인지 확인
       if (regEmail.test(newEmail)) {
-        setEmailError('');
-        let isExist = false;
+        if (newEmail !== data.authInfo.data.id) {
+          setEmailError('');
+          let isExist = false;
 
-        const response: searchUserResponse = await searchUser(newEmail);
-        if (response.isSuccess) {
-          userList.forEach(user => {
-            if (user.id === newEmail) {
-              isExist = true;
-              return false;
+          const response: searchUserResponse = await searchUser(newEmail);
+          if (response.isSuccess) {
+            userList.forEach(user => {
+              if (user.id === newEmail) {
+                isExist = true;
+                return false;
+              }
+            });
+
+            if (!isExist) {
+              setUserList([...userList, response.user]);
+              setEmail('');
+            } else {
+              setEmailError('이미 초대된 사용자 입니다.');
             }
-          });
-
-          if (!isExist) {
-            setUserList([...userList, response.user]);
-            setEmail('');
           } else {
-            setEmailError('이미 초대된 사용자 입니다.');
+            setEmailError('존재하지 않는 사용자입니다.');
           }
         } else {
-          setEmailError('존재하지 않는 사용자입니다.');
+          setEmailError('본인의 이메일은 초대하실 수 없습니다.');
         }
       } else {
         setEmailError('이메일을 입력해주세요.');
@@ -169,6 +173,10 @@ function AddArchiveModal(data: AddArchiveModalProps) {
     }
 
     return isTrue;
+  };
+
+  const removeUserList = (id: string) => {
+    setUserList(userList.filter(user => user.id !== id));
   };
 
   const insertArchiveRedux = async () => {
@@ -352,7 +360,11 @@ function AddArchiveModal(data: AddArchiveModalProps) {
                       description={user.id}
                       name={user.name}
                     />
-                    <img src="/img/svg/remove.svg" alt="삭제 아이콘" />
+                    <img
+                      src="/img/svg/remove.svg"
+                      alt="삭제 아이콘"
+                      onClick={() => removeUserList(user.id)}
+                    />
                   </div>
                 ))}
               </div>
