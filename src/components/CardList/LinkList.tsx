@@ -21,18 +21,22 @@ function LinkList(props: LinkListProps) {
         </div>
         <div className="card-list__content">
           {/* Card */}
-          <div>
-            <Link type={props.linktype} id={nanoid()}></Link>
-          </div>
-          <div>
-            <Link type={props.linktype} id={nanoid()}></Link>
-          </div>
-          <div>
-            <Link type={props.linktype} id={nanoid()}></Link>
-          </div>
-          <div>
-            <Link type={props.linktype} id={nanoid()}></Link>
-          </div>
+          {props.linkList.map(link => (
+            <div key={nanoid()}>
+              <Link
+                type={props.linktype}
+                id={link.id}
+                url={link.url}
+                thumbnail_src={link.thumbnail_src}
+                description={link.description}
+                favicon_src={link.favicon_src}
+                comment_count={link.comment_count}
+                like_value={link.like_value}
+                like_isActive={link.like_isActive}
+                is_info_show={true}
+              ></Link>
+            </div>
+          ))}
         </div>
       </div>
     </>
@@ -43,6 +47,7 @@ LinkList.defaultProps = {
   title: '링크',
   isShow: true,
   linktype: 'imageview',
+  linkList: [],
 };
 
 export default LinkList;

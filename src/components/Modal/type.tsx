@@ -3,6 +3,7 @@ import { initialState as AuthState } from '../../modules/auth';
 
 export type AddArchiveModalProps = {
   dispatch: Dispatch<any>;
+  authInfo: AuthState;
 };
 
 export type LoginModalProps = {

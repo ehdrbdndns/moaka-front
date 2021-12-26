@@ -103,7 +103,7 @@ function archive(
       };
     case type.UPDATE_ARCHIVE_SUCCESS:
       const archive_index = state.data.findIndex(
-        archive => (archive.no = action.payload.no),
+        archive => archive.no === action.payload.no,
       );
       const _data = [...state.data];
       _data[archive_index] = {
@@ -115,6 +115,7 @@ function archive(
         privacy_type: action.payload.privacy_type,
         thumbnail: action.payload.thumbnail,
         category: action.payload.category,
+        user_list: action.payload.user_list,
       };
       return {
         ...state,

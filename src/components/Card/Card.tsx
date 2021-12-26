@@ -124,7 +124,10 @@ function Card(data: CardProps) {
         <div
           className="cursor-pointer"
           onClick={() => {
-            push('/archive?no=' + archiveInfo.no);
+            push({
+              pathname: '/archive',
+              search: '?no=' + archiveInfo.no,
+            });
           }}
         >
           <Thumbnail src={archiveInfo.thumbnail} type="book" />

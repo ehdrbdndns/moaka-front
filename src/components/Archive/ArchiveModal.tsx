@@ -661,7 +661,8 @@ function UpdateArchiveModal({
         privacy_type: privacy,
         category: category,
       },
-      thumbnailFile: thumbnailFile || null,
+      thumbnailFile: thumbnailFile,
+      user_list: [],
     };
 
     updateArchiveRedux(updateArchiveRequest);

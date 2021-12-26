@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import ArchiveSideBar from '../SideBar/ArchiveSideBar';
 import CommentSidebar from '../SideBar/CommentSidebar';
 import LinkSideBar from '../SideBar/LinkSideBar';
 import TreeSideBar from '../SideBar/TreeSideBar';
 import { toasting } from '../Toast/event';
 import Toast from '../Toast/Toast';
-import { onClickNavItem } from './event';
+import { onClickNavItem, setInitValueOfNav } from './event';
 import { NavigationProps } from './types';
 
 function Navigation(data: NavigationProps) {
@@ -19,10 +20,19 @@ function Navigation(data: NavigationProps) {
   const linkSidebarElem = useRef<HTMLDivElement>(null);
   const treeSidebarElem = useRef<HTMLDivElement>(null);
   const commentSidebarElem = useRef<HTMLDivElement>(null);
+  const archiveSidebarElem = useRef<HTMLDivElement>(null);
 
   const [openLink, setOpenLink] = useState<boolean>(false);
   const [openTree, setOpenTree] = useState<boolean>(false);
   const [openComment, setOpenComment] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (data.mode === 'detail' && data.archiveInfo) {
+      sideNavElem.current?.classList.add('active');
+      archiveSidebarElem.current?.classList.add('show');
+      setInitValueOfNav(archiveSidebarElem);
+    }
+  }, [data.mode, data.archiveInfo]);
 
   return (
     <>
@@ -137,11 +147,19 @@ function Navigation(data: NavigationProps) {
             sidebarElem={linkSidebarElem}
             openLink={openLink}
           ></LinkSideBar>
-          {data.mode === 'detail' && (
-            <TreeSideBar
-              sidebarElem={treeSidebarElem}
-              openTree={openTree}
-            ></TreeSideBar>
+          {data.mode === 'detail' && data.archiveInfo && (
+            <>
+              <TreeSideBar
+                sidebarElem={treeSidebarElem}
+                openTree={openTree}
+              ></TreeSideBar>
+              <ArchiveSideBar
+                dispatch={data.dispatch}
+                authInfo={data.authInfo}
+                archiveInfo={data.archiveInfo}
+                sidebarElem={archiveSidebarElem}
+              ></ArchiveSideBar>
+            </>
           )}
           <CommentSidebar
             sidebarElem={commentSidebarElem}
@@ -155,6 +173,7 @@ function Navigation(data: NavigationProps) {
 
 Navigation.defaultProps = {
   mode: 'home',
+  archiveInfo: null,
 };
 
 export default Navigation;

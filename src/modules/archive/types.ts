@@ -1,4 +1,7 @@
 // TODO 액션 타입 설정
+
+import { searchUserType } from '../../apis/user/types';
+
 // REF 가장 인기 있는 아카이브 리스트
 export const GET_TOP_ARCHIVE_LIST = 'archive/GET_TOP_ARCHIVE_LIST' as const;
 export const GET_TOP_ARCHIVE_LIST_SUCCESS =
@@ -126,6 +129,7 @@ export type archiveInfo = {
   bookmark_count: number;
   category: string;
   type: string; // 인기, 그룹, 북마크, 관심사의 아카이브
+  user_list: Array<searchUserType>;
 };
 
 export type initialState = {

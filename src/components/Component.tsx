@@ -59,7 +59,7 @@ function Component() {
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
               Archive Modal
             </h1>
-            <AddArchiveModal dispatch={dispath} />
+            <AddArchiveModal authInfo={authInfo} dispatch={dispath} />
           </div>
           <div style={{ width: '130px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>

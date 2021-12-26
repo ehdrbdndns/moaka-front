@@ -205,9 +205,11 @@ export type sectionInfo = {
   archive_no: number;
   title: string;
   description: string;
-  tag_list: Array<string>;
   chunk_list: Array<chunkInfo>;
   regdate: string | undefined;
+
+  // 구 버전 타입
+  tag_list: Array<string>;
 };
 
 export type initialState = {

@@ -1,3 +1,7 @@
+* {
+  @include nodrag;
+}
+
 html,
 body {
   @include scroll;

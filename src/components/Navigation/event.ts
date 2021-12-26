@@ -3,6 +3,10 @@ import { RefObject } from 'react';
 let prevNavItem: RefObject<HTMLLIElement>;
 let prevSideItem: RefObject<HTMLDivElement> | null = null;
 
+const setInitValueOfNav = (sideItem: RefObject<HTMLDivElement>) => {
+  prevSideItem = sideItem;
+};
+
 const onClickNavItem = (
   sideNavElem: RefObject<HTMLDivElement>,
   sideItem: RefObject<HTMLDivElement>,
@@ -49,4 +53,4 @@ const onClickNavItem = (
   }
 };
 
-export { onClickNavItem };
+export { onClickNavItem, setInitValueOfNav };

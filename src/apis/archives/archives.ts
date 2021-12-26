@@ -72,7 +72,7 @@ export const updateArchive = async (
 
   const formData = new FormData();
 
-  updateArchiveRequest.thumbnailFile &&
+  updateArchiveRequest.thumbnailFile !== undefined &&
     formData.append('thumbnailFile', updateArchiveRequest.thumbnailFile);
 
   formData.append(

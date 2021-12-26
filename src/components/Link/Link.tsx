@@ -24,9 +24,9 @@ function Link(data: LinkProps) {
         </div>
         {data.type === 'imageview' &&
           (data.thumbnail_src === '' ? (
-            <Thumbnail src="/img/default-link-img.png" type="link_thumbnail" />
+            <Thumbnail src="/img/default-link-img.png" type="link" />
           ) : (
-            <Thumbnail src={data.thumbnail_src} type="link_thumbnail" />
+            <Thumbnail src={data.thumbnail_src} type="link" />
           ))}
         {data.is_info_show && (
           <div className="link__info">
