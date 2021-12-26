@@ -8,11 +8,11 @@ import {
   regEmail,
   setImgFile,
 } from '../../asset';
-import { updateArchive } from '../../modules/archive';
+import { deleteArchive, updateArchive } from '../../modules/archive';
 import Chat from '../Chat/Chat';
 import DropDown from '../DropDown/DropDown';
 import { onClickTab } from '../Tab/event';
-import { toasting } from '../Toast/event';
+import { closeToast, openToast, toasting } from '../Toast/event';
 import { ArchiveSideBarProps } from './types';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
@@ -20,8 +20,11 @@ import Tab from '../Tab/Tab';
 import Tag from '../Tag/Tag';
 import Thumbnail from '../Thumbnail/Thumbnail';
 import Toast from '../Toast/Toast';
+import { useHistory } from 'react-router';
 
 function ArchiveSideBar(data: ArchiveSideBarProps) {
+  const { push } = useHistory();
+
   const archiveInfo = data.archiveInfo;
   const authInfo = data.authInfo;
 
@@ -32,6 +35,7 @@ function ArchiveSideBar(data: ArchiveSideBarProps) {
   const secondTabElem = useRef<HTMLDivElement>(null);
 
   const resultToastElem = useRef<HTMLDivElement>(null);
+  const removeToastElem = useRef<HTMLDivElement>(null);
 
   const [privacyType, setPrivacyType] = useState<string>('private');
   const [title, setTitle] = useState<string>('');
@@ -197,6 +201,11 @@ function ArchiveSideBar(data: ArchiveSideBarProps) {
     }
   };
 
+  const removeArchiveRedux = () => {
+    data.dispatch(deleteArchive(archiveInfo.no));
+    push('/');
+  };
+
   return (
     <>
       <Toast
@@ -204,6 +213,18 @@ function ArchiveSideBar(data: ArchiveSideBarProps) {
         type="default"
         showType="fixed"
         toastElem={resultToastElem}
+      ></Toast>
+      <Toast
+        message="아카이브/링크를 삭제하시겠습니까?"
+        type="default"
+        showType="fixed"
+        toastElem={removeToastElem}
+        isFirstButton={true}
+        isSecondButton={true}
+        firstButtonValue="삭제"
+        secondButtonValue="취소"
+        onClickFirstButtonEvent={removeArchiveRedux}
+        onClickSecondButtonEvent={() => closeToast(removeToastElem)}
       ></Toast>
       <article className="sidebar" ref={data.sidebarElem}>
         <div className="sidebar__header">
@@ -320,6 +341,15 @@ function ArchiveSideBar(data: ArchiveSideBarProps) {
             value="수정"
             onClick={updateArchiveRedux}
             isDisabled={btnLoading}
+          />
+        </div>
+        <div className="px-mt-16">
+          <Button
+            type="text"
+            value="아카이브 삭제"
+            onClick={() => {
+              openToast(removeToastElem);
+            }}
           />
         </div>
       </article>

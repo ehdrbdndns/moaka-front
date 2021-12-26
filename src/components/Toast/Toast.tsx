@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastProps } from './types';
-
+import Button from '../Button/Button';
 function Toast(data: ToastProps) {
   return (
     <>
@@ -9,6 +9,24 @@ function Toast(data: ToastProps) {
         className={'toast toast-' + data.type + ' toast-show-' + data.showType}
       >
         <span className="toast__message">{data.message}</span>
+        {data.isFirstButton && (
+          <Button
+            width={44}
+            value={data.firstButtonValue}
+            size="s"
+            type="outline"
+            onClick={data.onClickFirstButtonEvent}
+          ></Button>
+        )}
+        {data.isSecondButton && (
+          <Button
+            width={44}
+            value={data.secondButtonValue}
+            size="s"
+            type="outline"
+            onClick={data.onClickSecondButtonEvent}
+          ></Button>
+        )}
       </div>
     </>
   );
@@ -19,6 +37,12 @@ Toast.defaultProps = {
   message: 'Message',
   showType: 'normal',
   toastElem: null,
+  isFirstButton: false,
+  firstButtonValue: '',
+  isSecondButton: false,
+  secondButtonValue: '',
+  onClickFirstButtonEvent: () => {},
+  onClickSecondButtonEvent: () => {},
 };
 
 export default Toast;

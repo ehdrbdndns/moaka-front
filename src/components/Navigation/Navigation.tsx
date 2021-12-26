@@ -27,12 +27,21 @@ function Navigation(data: NavigationProps) {
   const [openComment, setOpenComment] = useState<boolean>(false);
 
   useEffect(() => {
-    if (data.mode === 'detail' && data.archiveInfo) {
+    if (
+      data.mode === 'detail' &&
+      data.archiveInfo &&
+      data.archiveInfo.user_no === data.authInfo.data.no
+    ) {
       sideNavElem.current?.classList.add('active');
       archiveSidebarElem.current?.classList.add('show');
       setInitValueOfNav(archiveSidebarElem);
     }
-  }, [data.mode, data.archiveInfo]);
+  }, [
+    data.mode,
+    data.archiveInfo,
+    data.archiveInfo?.user_no,
+    data.authInfo.data.no,
+  ]);
 
   return (
     <>
@@ -153,12 +162,14 @@ function Navigation(data: NavigationProps) {
                 sidebarElem={treeSidebarElem}
                 openTree={openTree}
               ></TreeSideBar>
-              <ArchiveSideBar
-                dispatch={data.dispatch}
-                authInfo={data.authInfo}
-                archiveInfo={data.archiveInfo}
-                sidebarElem={archiveSidebarElem}
-              ></ArchiveSideBar>
+              {data.archiveInfo.user_no === data.authInfo.data.no && (
+                <ArchiveSideBar
+                  dispatch={data.dispatch}
+                  authInfo={data.authInfo}
+                  archiveInfo={data.archiveInfo}
+                  sidebarElem={archiveSidebarElem}
+                ></ArchiveSideBar>
+              )}
             </>
           )}
           <CommentSidebar

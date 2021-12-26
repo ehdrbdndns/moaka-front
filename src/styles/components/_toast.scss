@@ -1,9 +1,14 @@
 .toast {
-  display: inline;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
   padding: 10px 20px;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.24);
-
+  z-index: 2;
+  & .button {
+    margin-left: 10px;
+  }
   &__message {
     @include subtitle1;
 
@@ -17,11 +22,10 @@
     transform: translate(-50%, 0);
     opacity: 0;
     transition: 0.25s;
-    z-index: 2;
   }
 
   &-show-fixed__pase-in {
-    transform: translate(-50%, 20px);
+    transform: translate(-50%, 40px);
     opacity: 1;
   }
 
