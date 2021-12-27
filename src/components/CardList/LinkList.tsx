@@ -27,6 +27,7 @@ function LinkList(props: LinkListProps) {
                 type={props.linktype}
                 id={link.id}
                 url={link.url}
+                title={link.title}
                 thumbnail_src={link.thumbnail_src}
                 description={link.description}
                 favicon_src={link.favicon_src}

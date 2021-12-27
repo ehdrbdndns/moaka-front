@@ -217,7 +217,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
                       url: chunk.link,
                       thumbnail_src: chunk.thumbnail,
                       favicon_src: chunk.favicon,
-                      title: chunk.title,
+                      title: chunk.domain,
                       description: chunk.description,
                       comment_count: 0,
                       like_value: '',
