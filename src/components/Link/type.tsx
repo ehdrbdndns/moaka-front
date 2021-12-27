@@ -17,6 +17,8 @@ export type LinkProps = {
 
   // link 정보 노출 여부
   is_info_show: boolean;
+
+  onClick: () => void | null;
 };
 
 export type LinkBoxProps = {

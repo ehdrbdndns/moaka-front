@@ -11,7 +11,7 @@ function Link(data: LinkProps) {
         className={'link ' + data.type}
         id={data.id}
         onClick={() => {
-          // onClickLink()
+          data.onClick();
         }}
       >
         <div className="link__header">
@@ -58,6 +58,8 @@ Link.defaultProps = {
 
   // link info 노출 여부
   is_info_show: true,
+
+  onClick: () => {},
 };
 
 export default Link;

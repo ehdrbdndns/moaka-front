@@ -24,7 +24,12 @@ export const linkPreview = async (
     })
     .catch(function (error) {
       console.log(error);
-      error = error.response.status;
+      result.error = error.response.status;
+      result.favicon = '/img/logo/logo.png';
+      result.link = link;
+      // eslint-disable-next-line no-useless-escape
+      result.domain = link.toString().replace(/^(.*\/\/[^\/?#]*).*$/, '$1');
+      result.description = '';
     });
 
   return result;

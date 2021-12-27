@@ -35,6 +35,7 @@ function LinkList(props: LinkListProps) {
                 like_value={link.like_value}
                 like_isActive={link.like_isActive}
                 is_info_show={true}
+                onClick={link.onClick}
               ></Link>
             </div>
           ))}

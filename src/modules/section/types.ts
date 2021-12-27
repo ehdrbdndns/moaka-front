@@ -174,6 +174,16 @@ export type insertChunkInfo = {
   domain: string;
 };
 
+export type updateChunkInfo = {
+  no: number;
+  link: string;
+  thumbnail: string;
+  section_no: number;
+  description: string;
+  favicon: string;
+  domain: string;
+};
+
 export type chunkInfo = {
   no: number;
   link: string;

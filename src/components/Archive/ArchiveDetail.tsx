@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   archiveBookmarkActionType,
   archiveLikeActionType,
@@ -8,12 +8,16 @@ import {
   setArchiveBookmark,
   setArchiveLike,
 } from '../../modules/archive';
+import { chunkInfo } from '../../modules/section';
 import LinkList from '../CardList/LinkList';
 import HeartIcon from '../Icon/HeartIcon';
+import Iframe from '../Iframe/Iframe';
 import { LinkProps } from '../Link/type';
 import Navigation from '../Navigation/Navigation';
 import Profile from '../Profile/Profile';
 import ArchiveSkeleton from '../Skeleton/ArchiveSkeleton';
+import { closeToast, openToast } from '../Toast/event';
+import Toast from '../Toast/Toast';
 import { changeLinkType } from './event';
 import { ArchiveDetailProps } from './types';
 
@@ -25,7 +29,39 @@ function ArchiveDetail(data: ArchiveDetailProps) {
 
   const sectionInfo = data.sectionInfo;
 
+  const editToastElem = useRef<HTMLDivElement>(null);
+
   const [linkType, setLinkType] = useState<string>('imageview');
+
+  const iframeElem = useRef<HTMLDivElement>(null);
+  const [iframeShow, setIframeShow] = useState<boolean>(false);
+  const [iframeUrl, setIframeUrl] = useState<string>('');
+  const [iframeDomain, setIframeDomain] = useState<string>('');
+
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [navMode, setNavMode] = useState<string>('detail');
+
+  const [editChunk, setEditChunk] = useState<chunkInfo>({} as chunkInfo);
+
+  const openIframe = (chunkInfo: chunkInfo) => {
+    if (!isEditMode) {
+      setIframeShow(true);
+      setIframeDomain(chunkInfo.domain);
+      setIframeUrl(chunkInfo.link);
+    } else {
+      setNavMode('edit');
+      setEditChunk(chunkInfo);
+    }
+  };
+
+  const openEditMode = () => {
+    setIsEditMode(true);
+  };
+
+  const closeEditMode = () => {
+    setIsEditMode(false);
+    setNavMode('detail');
+  };
 
   const setArchiveBookmarkRedux = useCallback(
     (bookmarkInfo: archiveBookmarkActionType) => {
@@ -59,8 +95,27 @@ function ArchiveDetail(data: ArchiveDetailProps) {
 
   return (
     <>
+      <Toast
+        message="편집모드입니다. 수정할 링크를 클릭하세요."
+        type="default"
+        showType="fixed"
+        toastElem={editToastElem}
+        isFirstButton={true}
+        firstButtonValue="끄기"
+        onClickFirstButtonEvent={() => {
+          closeEditMode();
+          closeToast(editToastElem);
+        }}
+      ></Toast>
       <div className="container">
         <div className="container__main">
+          <Iframe
+            elem={iframeElem}
+            title={iframeDomain}
+            url={iframeUrl}
+            isShow={iframeShow}
+            setIsShow={setIframeShow}
+          ></Iframe>
           <div className="archive">
             {archiveLoading || !archiveInfo ? (
               <ArchiveSkeleton></ArchiveSkeleton>
@@ -118,18 +173,24 @@ function ArchiveDetail(data: ArchiveDetailProps) {
                   </div>
                   <div className="archive__header-item">
                     {/* 수정 아이콘 */}
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M19.705 8.04198L17.373 10.374L13.623 6.62398L15.955 4.29198C16.0478 4.19903 16.158 4.1253 16.2794 4.07499C16.4007 4.02468 16.5307 3.99878 16.662 3.99878C16.7934 3.99878 16.9234 4.02468 17.0447 4.07499C17.1661 4.1253 17.2763 4.19903 17.369 4.29198L19.705 6.62798C19.798 6.72077 19.8717 6.83097 19.922 6.95229C19.9724 7.0736 19.9982 7.20365 19.9982 7.33498C19.9982 7.46631 19.9724 7.59636 19.922 7.71767C19.8717 7.83899 19.798 7.94919 19.705 8.04198ZM2.99805 17.248L13.063 7.18398L16.813 10.934L6.74805 20.998H2.99905V17.248H2.99805ZM16.62 5.04398L15.08 6.58298L17.417 8.91798L18.955 7.37898L16.62 5.04398ZM15.356 10.979L13.021 8.64298L3.99905 17.664V20H6.33505L15.356 10.979Z"
-                        fill="#616161"
-                      />
-                    </svg>
+                    {data.authInfo.data.no === archiveInfo.user_no && (
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        onClick={() => {
+                          openToast(editToastElem);
+                          openEditMode();
+                        }}
+                      >
+                        <path
+                          d="M19.705 8.04198L17.373 10.374L13.623 6.62398L15.955 4.29198C16.0478 4.19903 16.158 4.1253 16.2794 4.07499C16.4007 4.02468 16.5307 3.99878 16.662 3.99878C16.7934 3.99878 16.9234 4.02468 17.0447 4.07499C17.1661 4.1253 17.2763 4.19903 17.369 4.29198L19.705 6.62798C19.798 6.72077 19.8717 6.83097 19.922 6.95229C19.9724 7.0736 19.9982 7.20365 19.9982 7.33498C19.9982 7.46631 19.9724 7.59636 19.922 7.71767C19.8717 7.83899 19.798 7.94919 19.705 8.04198ZM2.99805 17.248L13.063 7.18398L16.813 10.934L6.74805 20.998H2.99905V17.248H2.99805ZM16.62 5.04398L15.08 6.58298L17.417 8.91798L18.955 7.37898L16.62 5.04398ZM15.356 10.979L13.021 8.64298L3.99905 17.664V20H6.33505L15.356 10.979Z"
+                          fill={isEditMode ? '#5C91F6' : '#616161'}
+                        />
+                      </svg>
+                    )}
                     {/* 공유 아이콘 */}
                     <svg
                       width="24"
@@ -223,6 +284,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
                       like_value: '',
                       like_isActive: false,
                       is_info_show: true,
+                      onClick: () => openIframe(chunk),
                     };
                     linkList = [...linkList, link];
 
@@ -247,8 +309,9 @@ function ArchiveDetail(data: ArchiveDetailProps) {
             dispatch={data.dispatch}
             authInfo={data.authInfo}
             archiveInfo={archiveInfo}
+            chunkInfo={editChunk}
             sectionInfo={data.sectionInfo.data}
-            mode="detail"
+            mode={navMode}
           ></Navigation>
         </div>
       </div>

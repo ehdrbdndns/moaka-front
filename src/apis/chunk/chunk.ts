@@ -4,6 +4,7 @@ import {
   chunkInfo,
   insertChunkInfo,
   relativeChunkInfo,
+  updateChunkInfo,
 } from '../../modules/section';
 import {
   deleteChunkResponse,
@@ -173,7 +174,7 @@ export const makeRelativeChunk = async (
 };
 
 export const updateChunk = async (
-  chunk_info: chunkInfo,
+  chunk_info: updateChunkInfo,
 ): Promise<updateChunkResponse> => {
   const result: updateChunkResponse = {
     isSuccess: false,

@@ -6,6 +6,7 @@
 
   padding: 0 30px;
   &__main {
+    position: relative;
     max-width: $main-max-width;
     width: 100%;
   }

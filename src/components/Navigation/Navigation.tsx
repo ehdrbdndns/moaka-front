@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { DirectoryResponseByAxios } from '../../apis/user/types';
+import { getLocalDirectory } from '../../apis/user/user';
 import ArchiveSideBar from '../SideBar/ArchiveSideBar';
 import CommentSidebar from '../SideBar/CommentSidebar';
+import EditLinkSideBar from '../SideBar/EditLinkSideBar';
 import LinkSideBar from '../SideBar/LinkSideBar';
 import TreeSideBar from '../SideBar/TreeSideBar';
 import { toasting } from '../Toast/event';
@@ -20,11 +23,36 @@ function Navigation(data: NavigationProps) {
   const linkSidebarElem = useRef<HTMLDivElement>(null);
   const treeSidebarElem = useRef<HTMLDivElement>(null);
   const commentSidebarElem = useRef<HTMLDivElement>(null);
-  const archiveSidebarElem = useRef<HTMLDivElement>(null);
+  const editArchiveSidebarElem = useRef<HTMLDivElement>(null);
+  const editLinkSidebarElem = useRef<HTMLDivElement>(null);
 
   const [openLink, setOpenLink] = useState<boolean>(false);
   const [openTree, setOpenTree] = useState<boolean>(false);
   const [openComment, setOpenComment] = useState<boolean>(false);
+
+  const [directoryList, setDirectoryList] = useState<DirectoryResponseByAxios>(
+    {} as DirectoryResponseByAxios,
+  );
+
+  // 디렉토리 정보 갱신
+  useEffect(() => {
+    const getLocalDirectoryEvent = async () => {
+      setDirectoryList(await getLocalDirectory(data.authInfo.data.no));
+    };
+
+    getLocalDirectoryEvent();
+  }, [data.authInfo.data.no]);
+
+  // 디렉토리 정보 재 갱신
+  useEffect(() => {
+    const getLocalDirectoryEvent = async () => {
+      setDirectoryList(await getLocalDirectory(data.authInfo.data.no));
+    };
+
+    if (openLink) {
+      getLocalDirectoryEvent();
+    }
+  }, [data.authInfo.data.no, openLink]);
 
   useEffect(() => {
     if (
@@ -33,8 +61,14 @@ function Navigation(data: NavigationProps) {
       data.archiveInfo.user_no === data.authInfo.data.no
     ) {
       sideNavElem.current?.classList.add('active');
-      archiveSidebarElem.current?.classList.add('show');
-      setInitValueOfNav(archiveSidebarElem);
+      editArchiveSidebarElem.current?.classList.add('show');
+      setInitValueOfNav(editArchiveSidebarElem);
+    }
+
+    if (data.mode === 'edit') {
+      sideNavElem.current?.classList.add('active');
+      editLinkSidebarElem.current?.classList.add('show');
+      setInitValueOfNav(editLinkSidebarElem);
     }
   }, [
     data.mode,
@@ -86,7 +120,7 @@ function Navigation(data: NavigationProps) {
                 />
               </svg>
             </li>
-            {data.mode === 'detail' && (
+            {(data.mode === 'detail' || data.mode === 'edit') && (
               <li
                 className="side-nav__item"
                 onClick={() =>
@@ -142,6 +176,7 @@ function Navigation(data: NavigationProps) {
         </nav>
         <div className="side-nav__content">
           <LinkSideBar
+            directoryList={directoryList}
             closeSidebar={() => {
               toasting(linkToastElem);
               onClickNavItem(
@@ -156,25 +191,38 @@ function Navigation(data: NavigationProps) {
             sidebarElem={linkSidebarElem}
             openLink={openLink}
           ></LinkSideBar>
-          {data.mode === 'detail' && data.sectionInfo && (
+          {(data.mode === 'detail' || data.mode === 'edit') &&
+            data.sectionInfo && (
+              <>
+                <TreeSideBar
+                  sidebarElem={treeSidebarElem}
+                  sectionInfoList={data.sectionInfo}
+                  openTree={openTree}
+                ></TreeSideBar>
+              </>
+            )}
+          {(data.mode === 'detail' || data.mode === 'edit') &&
+            data.archiveInfo && (
+              <>
+                {data.archiveInfo.user_no === data.authInfo.data.no && (
+                  <ArchiveSideBar
+                    dispatch={data.dispatch}
+                    authInfo={data.authInfo}
+                    archiveInfo={data.archiveInfo}
+                    sidebarElem={editArchiveSidebarElem}
+                  ></ArchiveSideBar>
+                )}
+              </>
+            )}
+          {data.mode === 'edit' && data.chunkInfo && (
             <>
-              <TreeSideBar
-                sidebarElem={treeSidebarElem}
-                sectionInfoList={data.sectionInfo}
-                openTree={openTree}
-              ></TreeSideBar>
-            </>
-          )}
-          {data.mode === 'detail' && data.archiveInfo && (
-            <>
-              {data.archiveInfo.user_no === data.authInfo.data.no && (
-                <ArchiveSideBar
-                  dispatch={data.dispatch}
-                  authInfo={data.authInfo}
-                  archiveInfo={data.archiveInfo}
-                  sidebarElem={archiveSidebarElem}
-                ></ArchiveSideBar>
-              )}
+              <EditLinkSideBar
+                dispatch={data.dispatch}
+                authInfo={data.authInfo}
+                sidebarElem={editLinkSidebarElem}
+                chunkInfo={data.chunkInfo}
+                directoryList={directoryList}
+              ></EditLinkSideBar>
             </>
           )}
           <CommentSidebar
@@ -191,6 +239,7 @@ Navigation.defaultProps = {
   mode: 'home',
   archiveInfo: null,
   sectionInfo: null,
+  chunkInfo: null,
 };
 
 export default Navigation;

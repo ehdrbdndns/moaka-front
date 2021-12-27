@@ -215,7 +215,7 @@ function ArchiveSideBar(data: ArchiveSideBarProps) {
         toastElem={resultToastElem}
       ></Toast>
       <Toast
-        message="아카이브/링크를 삭제하시겠습니까?"
+        message="아카이브를 삭제하시겠습니까?"
         type="default"
         showType="fixed"
         toastElem={removeToastElem}

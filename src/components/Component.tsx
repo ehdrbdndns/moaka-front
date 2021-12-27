@@ -14,7 +14,6 @@ import Chat from './Chat/Chat';
 import NotificationModal from './Modal/NotificationModal';
 import { searchUnsplashImg } from '../apis/unsplash/unsplash';
 import LoginModal from './Modal/LoginModal';
-import Navigation from './Navigation/Navigation';
 import Toggle from './Toggle/Toggle';
 import ProfileModal from './Modal/ProfileModal';
 import { useDispatch, useSelector } from 'react-redux';

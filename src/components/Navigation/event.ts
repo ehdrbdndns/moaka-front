@@ -1,9 +1,13 @@
 import { RefObject } from 'react';
 
-let prevNavItem: RefObject<HTMLLIElement>;
+let prevNavItem: RefObject<HTMLLIElement> | null = null;
 let prevSideItem: RefObject<HTMLDivElement> | null = null;
 
 const setInitValueOfNav = (sideItem: RefObject<HTMLDivElement>) => {
+  prevNavItem && prevNavItem.current?.classList.remove('active');
+  prevNavItem = null;
+
+  prevSideItem?.current?.classList.remove('show');
   prevSideItem = sideItem;
 };
 

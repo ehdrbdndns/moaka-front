@@ -28,30 +28,31 @@ function DropDown(data: DropDownProps) {
           <span className="dropdown__error">{data.error}</span>
         )}
         <div className="dropdown__content">
-          {data.dropdownList.map(dropdown => (
-            <div key={nanoid()}>
-              <h1 className="dropdown__title">{dropdown.title}</h1>
-              <ul className="dropdown__list">
-                {dropdown.list.map(item => (
-                  <li
-                    key={nanoid()}
-                    className="dropdown__list-item"
-                    onClick={() =>
-                      selectDropdownItem(
-                        item.no,
-                        item.title,
-                        data.setValue,
-                        dropdownElem,
-                        dropdownStateElem,
-                      )
-                    }
-                  >
-                    {item.title}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {data.dropdownList &&
+            data.dropdownList.map(dropdown => (
+              <div key={nanoid()}>
+                <h1 className="dropdown__title">{dropdown.title}</h1>
+                <ul className="dropdown__list">
+                  {dropdown.list.map(item => (
+                    <li
+                      key={nanoid()}
+                      className="dropdown__list-item"
+                      onClick={() =>
+                        selectDropdownItem(
+                          item.no,
+                          item.title,
+                          data.setValue,
+                          dropdownElem,
+                          dropdownStateElem,
+                        )
+                      }
+                    >
+                      {item.title}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
         </div>
       </div>
     </>

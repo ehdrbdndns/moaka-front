@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Input from '../Input/Input';
 import DropDown from '../DropDown/DropDown';
 import Link from '../Link/Link';
@@ -6,12 +6,13 @@ import Button from '../Button/Button';
 import { nanoid } from 'nanoid';
 import { LinkSideBarProps } from './types';
 import SidebarSkeleton from '../Skeleton/SidebarSkeleton';
-import { getLocalDirectory } from '../../apis/user/user';
-import { DirectoryResponseByAxios } from '../../apis/user/types';
 import { regUrl } from '../../asset';
 import { linkPreview } from '../../apis/bookmark/bookmark';
 import { linkPreviewResponse } from '../../apis/bookmark/types';
 import { insertChunk } from '../../apis/chunk/chunk';
+import { getSection } from '../../modules/section';
+import { useLocation } from 'react-router';
+import queryString from 'query-string';
 
 function LinkSideBar(data: LinkSideBarProps) {
   const [link, setLink] = useState<string>('');
@@ -27,32 +28,12 @@ function LinkSideBar(data: LinkSideBarProps) {
   const [descriptionError, setDescriptionError] = useState<string>('');
 
   const [sectionNo, setSectionNo] = useState<number | string>(0);
-  const [directoryList, setDirectoryList] = useState<DirectoryResponseByAxios>(
-    {} as DirectoryResponseByAxios,
-  );
   const [directoryError, setDirectoryError] = useState<string>('');
 
   const [isBtnLoading, setIsBtnLoading] = useState<boolean>(false);
 
-  // 디렉토리 정보 갱신
-  useEffect(() => {
-    const getLocalDirectoryEvent = async () => {
-      setDirectoryList(await getLocalDirectory(data.authInfo.data.no));
-    };
-
-    getLocalDirectoryEvent();
-  }, [data.authInfo.data.no]);
-
-  // 디렉토리 정보 재 갱신
-  useEffect(() => {
-    const getLocalDirectoryEvent = async () => {
-      setDirectoryList(await getLocalDirectory(data.authInfo.data.no));
-    };
-
-    if (data.openLink) {
-      getLocalDirectoryEvent();
-    }
-  }, [data.authInfo.data.no, data.openLink]);
+  const location = useLocation();
+  const query = queryString.parse(location.search);
 
   const onKeyPressOfLink = (e: any) => {
     if (e.key === 'Enter') {
@@ -112,9 +93,13 @@ function LinkSideBar(data: LinkSideBarProps) {
       });
 
       data.closeSidebar();
+      // 섹션 리스트 불러오기
       reset();
 
       setIsBtnLoading(false);
+
+      // 섹션 정보 갱신
+      query.no && data.dispatch(getSection(+query.no));
     }
   };
 
@@ -157,7 +142,7 @@ function LinkSideBar(data: LinkSideBarProps) {
               ></Input>
               <DropDown
                 error={directoryError}
-                dropdownList={directoryList}
+                dropdownList={data.directoryList}
                 defaultValue="아카이브 선택"
                 setValue={setSectionNo}
               ></DropDown>
