@@ -1,5 +1,4 @@
 import React from 'react';
-import { onClickTab } from './event';
 import { TabProps } from './type';
 
 function Tab(data: TabProps) {
@@ -8,9 +7,8 @@ function Tab(data: TabProps) {
       <div className="tab">
         <div
           className={'tab__item ' + (data.activeMode === 'first' && 'active')}
-          id={data.firstId}
+          ref={data.firstElem}
           onClick={() => {
-            onClickTab(data.firstId, data.secondId, 'first');
             data.onClickOfFirst();
           }}
         >
@@ -18,9 +16,8 @@ function Tab(data: TabProps) {
         </div>
         <div
           className={'tab__item ' + (data.activeMode === 'second' && 'active')}
-          id={data.secondId}
+          ref={data.secondElem}
           onClick={() => {
-            onClickTab(data.secondId, data.firstId, 'second');
             data.onClickOfSecond();
           }}
         >

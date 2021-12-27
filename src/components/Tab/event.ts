@@ -1,6 +1,9 @@
-const onClickTab = (selectId: string, notSelectId: string, type: string) => {
-  document.getElementById(selectId)?.classList.add('active');
-  document.getElementById(notSelectId)?.classList.remove('active');
+const onClickTab = (
+  openTabElem: React.RefObject<HTMLDivElement>,
+  closeTabElem: React.RefObject<HTMLDivElement>,
+) => {
+  openTabElem.current?.classList.add('active');
+  closeTabElem.current?.classList.remove('active');
 };
 
 export { onClickTab };

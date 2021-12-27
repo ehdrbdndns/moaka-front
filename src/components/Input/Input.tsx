@@ -18,7 +18,10 @@ function Input(data: InputProps) {
               type={data.type}
               placeholder={data.placeholder}
               onFocus={onFocus}
-              onBlur={onBlur}
+              onBlur={e => {
+                data.onBlur(e);
+                onBlur(e);
+              }}
               value={data.value}
               onChange={e => data.setValue(e.target.value)}
               disabled={data.disabled}
@@ -51,6 +54,7 @@ Input.defaultProps = {
   value: '',
   setValue: () => {},
   onKeyPress: () => {},
+  onBlur: () => {},
   onClickOfSuffix: () => {},
   disabled: false,
   error: '',

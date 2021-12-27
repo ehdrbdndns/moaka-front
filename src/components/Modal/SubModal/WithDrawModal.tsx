@@ -3,14 +3,16 @@ import { closeModal, closeSubModal, openSubModal } from '../event';
 import { WithDrawModalProps } from '../type';
 import Input from '../../Input/Input';
 import Button from '../../Button/Button';
-import { findParentElem, regEmail } from '../../../asset';
+import { findParentElem } from '../../../asset';
 import {
   expireMailCode,
   isExistMailCode,
   sendMailCode,
+  withDraw,
 } from '../../../apis/auth/auth';
 import Tag from '../../Tag/Tag';
 import { useHistory } from 'react-router';
+import { getLogout } from '../../../modules/auth';
 
 function WithDrawModal(data: WithDrawModalProps) {
   const { push } = useHistory();
@@ -24,47 +26,22 @@ function WithDrawModal(data: WithDrawModalProps) {
 
   const [modalError, setModalError] = useState<string>('');
 
-  const [email, setEmail] = useState<string>('');
-  const [emailError, setEmailError] = useState<string>('');
   const [code, setCode] = useState<string>('');
   const [codeError, setCodeError] = useState<string>('');
   const [categoryList, setCategoryList] = useState<string[]>([]);
   const [reason, setReason] = useState<string>('');
 
-  const [isSendBtnDisalbed, setIsSendBtnDisabled] = useState<boolean>(true);
   const [isCheckBtnDisabled, setIsCheckBtnDisabled] = useState<boolean>(true);
 
   const [btnLoading, setBtnLoading] = useState<boolean>(false);
 
-  const setEmailEvent = (data: string) => {
-    setEmail(data);
-
-    regEmail.test(data)
-      ? setEmailError('')
-      : setEmailError('올바르지 않은 이메일형식입니다.');
-
-    setSendBtnStateEvent();
-  };
-
-  const setSendBtnStateEvent = () => {
-    regEmail.test(email)
-      ? setIsSendBtnDisabled(false)
-      : setIsSendBtnDisabled(true);
-  };
-
   const sendMailCodeEvent = async () => {
-    if (emailError === '' && email.length !== 0) {
-      openSubModal(codeElem);
-
-      setModalError('');
-
-      let result = await sendMailCode(email);
-
-      if (!result.isSuccess) {
-        setModalError('현재 서버에 문제가 있습니다.');
-      } else {
-        codeNo.current = result.no;
-      }
+    openSubModal(codeElem);
+    let result = await sendMailCode(data.id);
+    if (!result.isSuccess) {
+      setModalError('현재 서버에 문제가 있습니다.');
+    } else {
+      codeNo.current = result.no;
     }
   };
 
@@ -86,7 +63,7 @@ function WithDrawModal(data: WithDrawModalProps) {
     setIsCheckBtnDisabled(true);
     setBtnLoading(true);
     await expireMailCode(codeNo.current);
-    let result = await sendMailCode(email);
+    let result = await sendMailCode(data.id);
 
     if (!result.isSuccess) {
       setModalError('현재 서버가 점검중입니다.');
@@ -141,8 +118,15 @@ function WithDrawModal(data: WithDrawModalProps) {
     }
   };
 
+  const withDrawEvent = () => {
+    withDraw();
+    data.dispatch(getLogout());
+    openSubModal(resultElem);
+  };
+
   const closeAllModal = () => {
     closeModal(data.mainModalElem);
+    closeSubModal(data.subModalElem);
     closeSubModal(codeElem);
     closeSubModal(reasonElem);
     closeSubModal(resultElem);
@@ -167,17 +151,12 @@ function WithDrawModal(data: WithDrawModalProps) {
         <div className="modal__content">
           <Input
             placeholder="이메일"
-            value={email}
-            setValue={setEmailEvent}
-            error={emailError}
+            value={data.id}
             onKeyPress={onKeyPressOfSendBtn}
             tabindex={-1}
+            disabled={true}
           />
-          <Button
-            value="코드 전송 및 확인"
-            onClick={sendMailCodeEvent}
-            isDisabled={isSendBtnDisalbed}
-          />
+          <Button value="코드 전송 및 확인" onClick={sendMailCodeEvent} />
         </div>
       </div>
       <div className="modal__view sub" ref={codeElem}>
@@ -247,10 +226,7 @@ function WithDrawModal(data: WithDrawModalProps) {
             setValue={setReason}
             placeholder="자세한 내용을 입력해주세요."
           ></Input>
-          <Button
-            value="다음"
-            onClick={() => openSubModal(resultElem)}
-          ></Button>
+          <Button value="다음" onClick={withDrawEvent}></Button>
         </div>
       </div>
       <div className="modal__view sub modal-login" ref={resultElem}>

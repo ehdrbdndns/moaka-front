@@ -1,18 +1,38 @@
 import { Dispatch, RefObject } from 'react';
-import { initialState as authState } from '../../modules/auth';
+import { initialState as AuthState } from '../../modules/auth';
+
+export type AddArchiveModalProps = {
+  dispatch: Dispatch<any>;
+  authInfo: AuthState;
+};
 
 export type LoginModalProps = {
   dispatch: Dispatch<any>;
-  authInfo: authState;
+  authInfo: AuthState;
 };
 
 export type RegisterModalProps = {
   dispatch: Dispatch<any>;
-  authInfo: authState;
+  mainModalElem: RefObject<HTMLDivElement>;
+  profileModalElem: RefObject<HTMLDivElement>;
+  id: string;
+  pwd: string;
+  setId: React.Dispatch<React.SetStateAction<string>>;
+  setPwd: React.Dispatch<React.SetStateAction<string>>;
+  registerType: string;
+  sub: string;
+  profile: string;
 };
 
 export type SearchPwdModalProps = {
+  mainModalElem: RefObject<HTMLDivElement>;
   subModalElem: RefObject<HTMLDivElement>;
+};
+
+export type ChangePwdModalProps = {
+  mainModalElem: RefObject<HTMLDivElement>;
+  subModalElem: RefObject<HTMLDivElement>;
+  id: string;
 };
 
 export type SupportModalProps = {
@@ -20,20 +40,27 @@ export type SupportModalProps = {
 };
 
 export type SettingModalProps = {
+  dispatch: Dispatch<any>;
   mainModalElem: RefObject<HTMLDivElement>;
   subModalElem: RefObject<HTMLDivElement>;
+  id: string;
 };
 
 export type WithDrawModalProps = {
+  dispatch: Dispatch<any>;
   mainModalElem: RefObject<HTMLDivElement>;
   subModalElem: RefObject<HTMLDivElement>;
+  id: string;
 };
 
 export type ThumbnailModalProps = {
   subModalElem: RefObject<HTMLDivElement>;
+  imgSrc: string;
+  setImgSrc: (src: string) => void;
+  setImgFile: (file: File) => void;
 };
 
-export type ProfileModalProps = {
+export type SubProfileModalProps = {
   file: File | undefined; // 프로파일 이미지
   setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
   subModalElem: RefObject<HTMLDivElement>;
@@ -47,7 +74,18 @@ export type ProfileModalProps = {
   onClickButton: () => void;
 };
 
+export type ChangeProfileModalProps = {
+  subModalElem: RefObject<HTMLDivElement>;
+  src: string;
+  name: string;
+};
+
 export type LogoutModalProps = {
   mainModalElem: RefObject<HTMLDivElement>;
   subModalElem: RefObject<HTMLDivElement>;
+};
+
+export type ProfileModalProps = {
+  dispatch: Dispatch<any>;
+  authInfo: AuthState;
 };

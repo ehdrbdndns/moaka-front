@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import React from 'react';
 import HeartIcon from '../Icon/HeartIcon';
 import Profile from '../Profile/Profile';
@@ -21,7 +20,7 @@ function Chat(data: ChatProps) {
             )}
           </div>
           <p className="chat__description">{data.description}</p>
-          {data.isLikeShow && <HeartIcon id={nanoid()} />}
+          {data.isLikeShow && <HeartIcon />}
         </div>
       </div>
     </>

@@ -69,18 +69,31 @@ function section(
     }
     case type.DELETE_LIKE:
     case type.SET_LIKE: {
-      const section_index = state.data.findIndex(
-        section => section.no === action.payload.section_no,
-      );
-      const chunk_index = state.data[section_index].chunk_list.findIndex(
-        chunk => chunk.no === action.payload.chunk_no,
-      );
-      const _data = [...state.data];
-      _data[section_index].chunk_list[chunk_index].like_loading = true;
+      // console.log('section_no');
+      // console.log(action.payload.section_no);
+
+      // console.log('state');
+      // console.log(state);
+
+      // const section_index = state.data.findIndex(
+      //   section => section.no === action.payload.section_no,
+      // );
+
+      // console.log('section_index');
+      // console.log(section_index);
+
+      // console.log('chunk_list');
+      // console.log(state.data[section_index]);
+
+      // const chunk_index = state.data[section_index].chunk_list.findIndex(
+      //   chunk => chunk.no === action.payload.chunk_no,
+      // );
+      // const _data = [...state.data];
+      // _data[section_index].chunk_list[chunk_index].like_loading = true;
 
       return {
         ...state,
-        data: _data,
+        // data: _data,
       };
     }
     case type.SET_COMMENT: {
@@ -248,7 +261,30 @@ function section(
         data: _data,
       };
     }
-    case type.DELETE_LIKE_SUCCESS:
+    case type.DELETE_LIKE_SUCCESS: {
+      const section_index = state.data.findIndex(
+        section => section.no === action.payload.section_no,
+      );
+      const chunk_index = state.data[section_index].chunk_list.findIndex(
+        chunk => chunk.no === action.payload.chunk_no,
+      );
+
+      console.log(action.payload);
+
+      console.log(action.payload.like_no);
+      console.log(chunk_index);
+      console.log(section_index);
+
+      const _data = [...state.data];
+      _data[section_index].chunk_list[chunk_index].like_no =
+        action.payload.like_no;
+      _data[section_index].chunk_list[chunk_index].like_count -= 1;
+
+      return {
+        ...state,
+        data: _data,
+      };
+    }
     case type.SET_LIKE_SUCCESS: {
       const section_index = state.data.findIndex(
         section => section.no === action.payload.section_no,
@@ -257,10 +293,12 @@ function section(
         chunk => chunk.no === action.payload.chunk_no,
       );
 
+      console.log(action.payload.like_no);
+
       const _data = [...state.data];
       _data[section_index].chunk_list[chunk_index].like_no =
         action.payload.like_no;
-      _data[section_index].chunk_list[chunk_index].like_loading = false;
+      _data[section_index].chunk_list[chunk_index].like_count += 1;
 
       return {
         ...state,

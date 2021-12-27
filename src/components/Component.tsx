@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Input from './Input/Input';
 import Profile from './Profile/Profile';
 import Tag from './Tag/Tag';
-import Card from './Card/Card';
 import Thumbnail from './Thumbnail/Thumbnail';
 import Favicon from './Favicon/Favicon';
 import HeartIcon from './Icon/HeartIcon';
@@ -10,18 +9,21 @@ import Button from './Button/Button';
 import Link from './Link/Link';
 import { nanoid } from 'nanoid';
 import AddArchiveModal from './Modal/AddArchiveModal';
-import Tab from './Tab/Tab';
 import DropDown from './DropDown/DropDown';
 import Chat from './Chat/Chat';
 import NotificationModal from './Modal/NotificationModal';
 import { searchUnsplashImg } from '../apis/unsplash/unsplash';
 import LoginModal from './Modal/LoginModal';
-import Navigation from './Navigation/Navigation';
 import Toggle from './Toggle/Toggle';
 import ProfileModal from './Modal/ProfileModal';
-import Header from './Header/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import Toast from './Toast/Toast';
+import { RootState } from '../modules';
 
 function Component() {
+  const dispath = useDispatch();
+  const authInfo = useSelector((state: RootState) => state.auth);
+
   const userTestImg = '/img/test/user-test.png';
 
   const [unsplashParam, setUnsplashParam] = useState<string>('');
@@ -34,13 +36,7 @@ function Component() {
       <div>
         <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Nav</h1>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Navigation />
-        </div>
-      </div>
-      <div>
-        <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Header</h1>
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Header></Header>
+          {/* <Navigation dispatch={dispath} authInfo={authInfo} /> */}
         </div>
       </div>
       <div className="w-100">
@@ -49,12 +45,12 @@ function Component() {
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Tab</h1>
             <div style={{ display: 'flex' }}>
               <div style={{ width: '230px', marginRight: '50px' }}>
-                <Tab
+                {/* <Tab
                   firstName={'비공개'}
                   secondName={'공개'}
                   firstId={nanoid()}
-                  secondId={nanoid()}
-                />
+                  secondId={nanoid()} 
+                /> */}
               </div>
             </div>
           </div>
@@ -62,7 +58,7 @@ function Component() {
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
               Archive Modal
             </h1>
-            <AddArchiveModal />
+            <AddArchiveModal authInfo={authInfo} dispatch={dispath} />
           </div>
           <div style={{ width: '130px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
@@ -74,13 +70,13 @@ function Component() {
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
               Login Modal
             </h1>
-            <LoginModal />
+            <LoginModal authInfo={authInfo} dispatch={dispath} />
           </div>
           <div style={{ width: '50px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
               Profile Modal
             </h1>
-            <ProfileModal />
+            <ProfileModal dispatch={dispath} authInfo={authInfo} />
           </div>
         </div>
       </div>
@@ -104,7 +100,7 @@ function Component() {
         </div>
         <div style={{ width: '300px' }}>
           <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Card</h1>
-          <Card />
+          {/* <Card archiveInfo={archiveInfo} /> */}
         </div>
         <div style={{ width: '300px' }}>
           <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Thumbnail</h1>
@@ -139,7 +135,7 @@ function Component() {
           </div>
           <div style={{ width: '100px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Icon Box</h1>
-            <HeartIcon id={nanoid()} />
+            <HeartIcon />
           </div>
           <div style={{ width: '200px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Button</h1>
@@ -180,6 +176,14 @@ function Component() {
           </div>
           <div style={{ width: '100px' }}>
             <Toggle></Toggle>
+          </div>
+        </div>
+      </div>
+      <div className="w-100">
+        <div style={{ display: 'flex', marginBottom: '30px' }}>
+          <div style={{ width: '300px', marginRight: '50px' }}>
+            <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Toast</h1>
+            <Toast></Toast>
           </div>
         </div>
       </div>

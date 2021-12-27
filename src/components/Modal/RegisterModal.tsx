@@ -1,12 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '../Button/Button';
-import ProfileModal from './SubModal/ProfileModal';
-import { closeSubModal, openSubModal } from './event';
-import { retrieveUserByName } from '../../apis/auth/auth';
+import ProfileModal from './SubModal/SubProfileModal';
+import { closeModal, closeSubModal, openSubModal } from './event';
+import {
+  googleRegister,
+  localRegister,
+  retrieveUserByName,
+} from '../../apis/auth/auth';
 import Tag from '../Tag/Tag';
+import { RegisterModalProps } from './type';
+import {
+  googleRegisterRequest,
+  googleRegisterResponse,
+  LocalRegisterRequest,
+  localRegisterResponse,
+} from '../../apis/auth/types';
 
-function RegisterModal() {
-  const profileModalElem = useRef<HTMLDivElement>(null);
+function RegisterModal(data: RegisterModalProps) {
   const categoryModalElem = useRef<HTMLDivElement>(null);
   const resultModalElem = useRef<HTMLDivElement>(null);
 
@@ -15,7 +25,9 @@ function RegisterModal() {
   const [name, setName] = useState<string>('');
   const [nameError, setNameError] = useState<string>('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [profile, setProfile] = useState<string>('/img/default_profile.png');
+  const [profile, setProfile] = useState<string>(
+    '/img/user/user-default-img.png',
+  );
   const [profileFile, setProfileFile] = useState<File>();
   const [categoryList, setCategoryList] = useState<string[]>([]);
 
@@ -23,6 +35,18 @@ function RegisterModal() {
     useState<boolean>(true);
 
   const [btnLoading, setBtnLoading] = useState<boolean>(false);
+
+  // 카테고리 리스트 변경될 때 Hook
+  useEffect(() => {
+    if (categoryList.length) {
+      setIsCategoryBtnDisabled(false);
+    }
+  }, [categoryList.length]);
+
+  // 프로파일 설정
+  useEffect(() => {
+    setProfile(data.profile);
+  }, [data.profile]);
 
   const onClickProfileBtnEvent = async () => {
     // 이미 존재하는 닉네임인지 확인
@@ -58,52 +82,53 @@ function RegisterModal() {
     }
   };
 
-  // 카테고리 리스트 변경될 때 Hook
-  useEffect(() => {
-    if (categoryList.length) {
-      setIsCategoryBtnDisabled(false);
-    }
-  }, [categoryList.length]);
-
-  const onClickOfLocalRegister = async () => {
+  let response: localRegisterResponse | googleRegisterResponse;
+  const onClickOfRegister = async () => {
     setBtnLoading(true);
 
-    // let response: localRegisterResponse | googleRegisterResponse;
-    // if (registerType === 'local') {
-    //   let localRegisterRequest = {
-    //     id: email,
-    //     pwd,
-    //     name,
-    //     profileFile: profileFile === undefined ? null : profileFile,
-    //     categoryList: categoryList,
-    //   } as LocalRegisterRequest;
+    if (data.registerType === 'local') {
+      let localRegisterRequest = {
+        id: data.id,
+        pwd: data.pwd,
+        name,
+        profileFile: profileFile === undefined ? null : profileFile,
+        categoryList: categoryList,
+      } as LocalRegisterRequest;
 
-    //   response = await localRegister(localRegisterRequest);
-    // } else {
-    //   let googleRegisterRequest: googleRegisterRequest = {
-    //     sub,
-    //     id: email,
-    //     name,
-    //     profile,
-    //     profileFile: profileFile === undefined ? null : profileFile,
-    //     categoryList: categoryList,
-    //   } as googleRegisterRequest;
+      response = await localRegister(localRegisterRequest);
+    } else {
+      let googleRegisterRequest: googleRegisterRequest = {
+        sub: data.sub,
+        id: data.id,
+        name,
+        profile,
+        profileFile: profileFile === undefined ? null : profileFile,
+        categoryList: categoryList,
+      } as googleRegisterRequest;
+      response = await googleRegister(googleRegisterRequest);
+    }
 
-    //   response = await googleRegister(googleRegisterRequest);
-    // }
-
-    // if (response.isSuccess) {
-    //   // 회원가입 성공
-    //   setModalError('');
-    //   openSubModal(resultModalElem);
-    // } else if (response.error !== 0) {
-    //   setModalError(response.error + '에러');
-    // } else {
-    //   // 이미 존재하는 사용자
-    //   setModalError('이미 가입된 유저입니다.');
-    // }
+    if (response.isSuccess) {
+      // 회원가입 성공
+      setModalError('');
+      openSubModal(resultModalElem);
+      data.setId('');
+      data.setPwd('');
+    } else if (response.error !== 0) {
+      setModalError(response.error + '에러');
+    } else {
+      // 이미 존재하는 사용자
+      setModalError('이미 가입된 유저입니다.');
+    }
 
     setBtnLoading(false);
+  };
+
+  const closeAllModal = () => {
+    closeModal(data.mainModalElem);
+    closeSubModal(resultModalElem);
+    closeSubModal(categoryModalElem);
+    closeSubModal(data.profileModalElem);
   };
 
   return (
@@ -116,7 +141,7 @@ function RegisterModal() {
         setNameError={setNameError}
         file={profileFile}
         setFile={setProfileFile}
-        subModalElem={profileModalElem}
+        subModalElem={data.profileModalElem}
         onClickButton={onClickProfileBtnEvent}
       />
       <div className="modal__view sub" ref={categoryModalElem}>
@@ -148,7 +173,7 @@ function RegisterModal() {
           <Button
             value="다음"
             isDisabled={isCategoryBtnDisabled}
-            onClick={onClickOfLocalRegister}
+            onClick={onClickOfRegister}
             isLoading={btnLoading}
           ></Button>
         </div>
@@ -163,17 +188,11 @@ function RegisterModal() {
           </h3>
         </div>
         <div className="modal__content px-pt-0">
-          <Button value="홈" />
+          <Button value="홈" onClick={closeAllModal} />
         </div>
         <div className="modal__footer">
           <span></span>
-          <span
-            onClick={() => {
-              window.location.href = 'https://moaka.net';
-            }}
-          >
-            ©Moaca
-          </span>
+          <span onClick={closeAllModal}>©Moaca</span>
         </div>
       </div>
     </>

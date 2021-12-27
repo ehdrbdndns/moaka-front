@@ -7,11 +7,17 @@ function archive(
 ) {
   switch (action.type) {
     case type.GET_GROUP_ARCHIVE_LIST:
+    case type.GET_BOOKMARK_ARCHIVE_LIST:
+    case type.GET_TOP_ARCHIVE_LIST:
+    case type.GET_CATEGORY_ARCHIVE_LIST:
       return {
         ...state,
         loading: true,
-        data: [...state.data],
         error: null,
+      };
+    case type.INSERT_STORE_ARCHIVE:
+      return {
+        ...state,
       };
     case type.GET_HOME_ARCHIVE_LIST:
       return {
@@ -40,7 +46,7 @@ function archive(
     case type.SET_LIKE:
     case type.DELETE_LIKE: {
       const archive_index = state.data.findIndex(
-        archive => (archive.no = action.payload.archive_no),
+        archive => archive.no === action.payload.archive_no,
       );
 
       const _data = [...state.data];
@@ -54,7 +60,7 @@ function archive(
     case type.DELETE_BOOKMARK:
     case type.SET_BOOKMARK: {
       const archive_index = state.data.findIndex(
-        archive => (archive.no = action.payload.archive_no),
+        archive => archive.no === action.payload.archive_no,
       );
 
       const _data = [...state.data];
@@ -65,8 +71,25 @@ function archive(
         data: _data,
       };
     }
-    case type.GET_HOME_ARCHIVE_LIST_SUCCESS:
+    case type.RESET_ARCHIVE:
+      return {
+        ...state,
+      };
     case type.GET_GROUP_ARCHIVE_LIST_SUCCESS:
+    case type.GET_BOOKMARK_ARCHIVE_LIST_SUCCESS:
+    case type.GET_TOP_ARCHIVE_LIST_SUCCESS:
+    case type.GET_CATEGORY_ARCHIVE_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: [...state.data, ...action.payload],
+      };
+    case type.INSERT_STORE_ARCHIVE_SUCCESS:
+      return {
+        ...state,
+        data: [action.payload, ...state.data],
+      };
+    case type.GET_HOME_ARCHIVE_LIST_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -76,11 +99,11 @@ function archive(
       return {
         ...state,
         loading: false,
-        data: [...state.data, action.payload],
+        data: [...state.data, ...action.payload],
       };
     case type.UPDATE_ARCHIVE_SUCCESS:
       const archive_index = state.data.findIndex(
-        archive => (archive.no = action.payload.no),
+        archive => archive.no === action.payload.no,
       );
       const _data = [...state.data];
       _data[archive_index] = {
@@ -92,6 +115,7 @@ function archive(
         privacy_type: action.payload.privacy_type,
         thumbnail: action.payload.thumbnail,
         category: action.payload.category,
+        user_list: action.payload.user_list,
       };
       return {
         ...state,
@@ -111,15 +135,30 @@ function archive(
         loading: false,
         data: [...state.data.filter(archive => archive.no !== action.payload)],
       };
-    case type.SET_LIKE_SUCCESS:
-    case type.DELETE_LIKE_SUCCESS: {
+    case type.SET_LIKE_SUCCESS: {
       const archive_index = state.data.findIndex(
-        archive => (archive.no = action.payload.archive_no),
+        archive => archive.no === action.payload.archive_no,
       );
 
       const _data = [...state.data];
       _data[archive_index].like_loading = false;
       _data[archive_index].like_no = action.payload.like_no;
+      _data[archive_index].like_count += 1;
+
+      return {
+        ...state,
+        data: _data,
+      };
+    }
+    case type.DELETE_LIKE_SUCCESS: {
+      const archive_index = state.data.findIndex(
+        archive => archive.no === action.payload.archive_no,
+      );
+
+      const _data = [...state.data];
+      _data[archive_index].like_loading = false;
+      _data[archive_index].like_no = action.payload.like_no;
+      _data[archive_index].like_count -= 1;
 
       return {
         ...state,
@@ -129,7 +168,7 @@ function archive(
     case type.SET_BOOKMARK_SUCCESS:
     case type.DELETE_BOOKMARK_SUCCESS: {
       const archive_index = state.data.findIndex(
-        archive => (archive.no = action.payload.archive_no),
+        archive => archive.no === action.payload.archive_no,
       );
 
       const _data = [...state.data];
@@ -141,6 +180,17 @@ function archive(
         data: _data,
       };
     }
+    case type.RESET_ARCHIVE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        data: [],
+      };
+    case type.INSERT_STORE_ARCHIVE_ERROR:
+    case type.GET_BOOKMARK_ARCHIVE_LIST_ERROR:
+    case type.GET_TOP_ARCHIVE_LIST_ERROR:
+    case type.GET_CATEGORY_ARCHIVE_LIST_ERROR:
     case type.GET_HOME_ARCHIVE_LIST_ERROR:
     case type.GET_GROUP_ARCHIVE_LIST_ERROR:
     case type.GET_ARCHIVE_ERROR:
@@ -158,7 +208,7 @@ function archive(
       return {
         ...state,
         loading: false,
-        error: '404',
+        error: '403',
       };
     }
     default:

@@ -1,24 +1,50 @@
-import { nanoid } from 'nanoid';
-import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import React, { useEffect, useRef, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
 import AddArchiveModal from '../Modal/AddArchiveModal';
 import LoginModal from '../Modal/LoginModal';
 import NotificationModal from '../Modal/NotificationModal';
+import ProfileModal from '../Modal/ProfileModal';
+import { onClickTab } from '../Tab/event';
 import Tab from '../Tab/Tab';
+import { toasting } from '../Toast/event';
+import Toast from '../Toast/Toast';
+import { HeaderProps } from './types';
 
-function Header() {
+function Header(data: HeaderProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { dispatch, authInfo, userListInfo } = data;
+
   const { push } = useHistory();
+  const { pathname } = useLocation();
+
+  const errorToastElem = useRef<HTMLDivElement>(null);
+  const firstTabElem = useRef<HTMLDivElement>(null);
+  const secondTabElem = useRef<HTMLDivElement>(null);
 
   const [headerActiveTab, setHeaderActiveTab] = useState<string>('first');
+
+  useEffect(() => {
+    if (pathname === '/') {
+      setHeaderActiveTab('first');
+    } else {
+      setHeaderActiveTab('second');
+    }
+  }, [pathname]);
 
   const headerFirstTabClick = () => {
     push('/');
     setHeaderActiveTab('first');
+    onClickTab(firstTabElem, secondTabElem);
   };
 
   const headerSecondTabClick = () => {
-    push('/mypage');
-    setHeaderActiveTab('second');
+    if (authInfo.data.isLogin) {
+      push('/mypage');
+      setHeaderActiveTab('second');
+      onClickTab(secondTabElem, firstTabElem);
+    } else {
+      toasting(errorToastElem);
+    }
   };
 
   const eye = (
@@ -53,20 +79,27 @@ function Header() {
 
   return (
     <>
+      <Toast
+        toastElem={errorToastElem}
+        showType="fixed"
+        type="error"
+        message="로그인후 이용해주세요."
+      ></Toast>
       <header className="header">
         <img
           src="/img/svg/logo.svg"
           style={{ left: '10px' }}
           className="header__logo absolute"
           alt="로고 이미지"
+          onClick={() => push('/')}
         />
         <div className="m-0-auto">
           <div className="desktop tablet">
             <Tab
               firstName="탐색하기"
               secondName="나의 저장소"
-              firstId={nanoid()}
-              secondId={nanoid()}
+              firstElem={firstTabElem}
+              secondElem={secondTabElem}
               onClickOfFirst={headerFirstTabClick}
               onClickOfSecond={headerSecondTabClick}
               activeMode={headerActiveTab}
@@ -76,8 +109,8 @@ function Header() {
             <Tab
               firstName={eye}
               secondName={folder}
-              firstId={nanoid()}
-              secondId={nanoid()}
+              firstElem={firstTabElem}
+              secondElem={secondTabElem}
               onClickOfFirst={headerFirstTabClick}
               onClickOfSecond={headerSecondTabClick}
               activeMode={headerActiveTab}
@@ -106,10 +139,20 @@ function Header() {
             <NotificationModal></NotificationModal>
           </div>
           <div className="header__item">
-            <AddArchiveModal></AddArchiveModal>
+            <AddArchiveModal
+              authInfo={authInfo}
+              dispatch={dispatch}
+            ></AddArchiveModal>
           </div>
           <div className="header__item">
-            <LoginModal></LoginModal>
+            {authInfo.data.isLogin ? (
+              <ProfileModal
+                dispatch={dispatch}
+                authInfo={authInfo}
+              ></ProfileModal>
+            ) : (
+              <LoginModal dispatch={dispatch} authInfo={authInfo}></LoginModal>
+            )}
           </div>
         </div>
       </header>

@@ -1,0 +1,51 @@
+.toast {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.24);
+  z-index: 2;
+  & .button {
+    margin-left: 10px;
+  }
+  &__message {
+    @include subtitle1;
+
+    color: $quaternary-color;
+  }
+
+  &-show-fixed {
+    position: fixed;
+    top: 20px; // 40px로 pase in 효과
+    left: 50%;
+    transform: translate(-50%, 0);
+    opacity: 0;
+    transition: 0.25s;
+  }
+
+  &-show-fixed__pase-in {
+    transform: translate(-50%, 40px);
+    opacity: 1;
+  }
+
+  &-default {
+    background: $tertiary-color;
+  }
+
+  &-error {
+    background: #ffa9a3;
+  }
+
+  &-warning {
+    background: #ffd990;
+  }
+
+  &-success {
+    background: #a8e58c;
+  }
+
+  &-notification {
+    background: $secondary-color;
+  }
+}

@@ -1,9 +1,10 @@
 export type HeartIconProps = {
-  id: string;
-  value: string;
+  value: number;
   isActive: boolean;
+  setLikeEvent: () => void;
+  deleteLikeEvent: () => void;
 };
 
 export type LinkIconProps = {
-  value: string;
+  value: number;
 };

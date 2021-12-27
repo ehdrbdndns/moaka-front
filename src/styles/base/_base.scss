@@ -1,3 +1,7 @@
+* {
+  @include nodrag;
+}
+
 html,
 body {
   @include scroll;
@@ -57,10 +61,6 @@ a {
 
 svg {
   cursor: pointer;
-}
-
-svg:hover path {
-  fill: black;
 }
 
 @include desktop {

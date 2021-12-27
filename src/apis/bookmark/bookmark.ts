@@ -4,7 +4,36 @@ import {
   deleteBookmarkResponse,
   insertBookmarkOfArchiveResponse,
   insertBookmarkOfChunkResponse,
+  linkPreviewResponse,
 } from './types';
+
+export const linkPreview = async (
+  link: string,
+): Promise<linkPreviewResponse> => {
+  let result: linkPreviewResponse = {} as linkPreviewResponse;
+
+  await axios
+    .post(BASE_URL + '/linkPreview', null, {
+      params: {
+        link,
+      },
+    })
+    .then(function (response) {
+      result = response.data;
+      result.error = 0;
+    })
+    .catch(function (error) {
+      console.log(error);
+      result.error = error.response.status;
+      result.favicon = '/img/logo/logo.png';
+      result.link = link;
+      // eslint-disable-next-line no-useless-escape
+      result.domain = link.toString().replace(/^(.*\/\/[^\/?#]*).*$/, '$1');
+      result.description = '';
+    });
+
+  return result;
+};
 
 export const insertBookmarkOfArchive = async (
   archive_no: number,

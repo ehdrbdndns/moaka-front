@@ -43,6 +43,7 @@ function* googleLoginSaga(action: ReturnType<typeof getGoogleLogin>) {
         profile: token.profile,
         category: token.category,
         auth_type: 'google',
+        isLogin: true,
       };
       yield put({
         type: sagaType.GET_GOOGLE_LOGIN_SUCCESS,
@@ -61,6 +62,7 @@ function* googleLoginSaga(action: ReturnType<typeof getGoogleLogin>) {
           profile: action.payload.profile,
           category: [],
           auth_type: 'google',
+          isLogin: true,
         };
         yield put({
           type: sagaType.GET_GOOGLE_LOGIN_SUCCESS,
@@ -102,6 +104,7 @@ function* localLoginSaga(action: ReturnType<typeof getLocalLogin>) {
         profile: token.profile,
         category: token.category,
         auth_type: 'local',
+        isLogin: true,
       };
       yield put({
         type: sagaType.GET_LOCAL_LOGIN_SUCCESS,
@@ -111,6 +114,7 @@ function* localLoginSaga(action: ReturnType<typeof getLocalLogin>) {
       // TODO 로그인 실패
       yield put({
         type: sagaType.GET_LOCAL_LOGIN_FAILE,
+        payload: '이메일 또는 비밀번호',
       });
     }
   } catch (error) {
@@ -166,6 +170,7 @@ function* setUserSaga() {
       profile: response.profile,
       category: response.category,
       auth_type: '',
+      isLogin: true,
     };
 
     if (response.isSuccess) {
@@ -174,10 +179,11 @@ function* setUserSaga() {
         payload: userInfo,
       });
     } else if (response.error === 403) {
+      localStorage.removeItem('token');
+
       yield put({
-        type: sagaType.EXPIRE_JWT_TOKEN,
-        error: true,
-        payload: '현재 서버에 문제가 있습니다. 추후에 다시 시도해주세요.',
+        type: sagaType.SET_USER_FAIL,
+        payload: '토큰 기한 만료',
       });
     } else {
       yield put({
