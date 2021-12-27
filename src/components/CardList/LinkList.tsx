@@ -24,7 +24,9 @@ function LinkList(props: LinkListProps) {
           {props.linkList.map(link => (
             <div key={nanoid()}>
               <Link
+                dispatch={props.dispatch}
                 type={props.linktype}
+                no={link.no}
                 id={link.id}
                 url={link.url}
                 title={link.title}
@@ -34,8 +36,10 @@ function LinkList(props: LinkListProps) {
                 comment_count={link.comment_count}
                 like_value={link.like_value}
                 like_isActive={link.like_isActive}
+                like_no={link.like_no}
                 is_info_show={true}
                 onClick={link.onClick}
+                section_no={link.section_no}
               ></Link>
             </div>
           ))}

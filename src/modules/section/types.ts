@@ -194,6 +194,8 @@ export type chunkInfo = {
   favicon: string;
   domain: string;
   user_no: number;
+  like_no: number;
+  like_count: number;
 
   // 구 버전 타입
   title: string;
@@ -202,7 +204,6 @@ export type chunkInfo = {
   tag_list: Array<string>;
   bookmark_no: number;
   bookmark_loading: boolean;
-  like_no: number;
   like_loading: boolean;
   relative_chunk_list: Array<relativeChunkInfo>;
   relative_chunk_loading: boolean;

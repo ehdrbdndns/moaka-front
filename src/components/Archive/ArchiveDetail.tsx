@@ -284,6 +284,9 @@ function ArchiveDetail(data: ArchiveDetailProps) {
 
                   section.chunk_list.map(chunk => {
                     let link: LinkProps = {
+                      section_no: section.no,
+                      dispatch: null,
+                      no: chunk.no,
                       id: nanoid(),
                       type: linkType,
                       url: chunk.link,
@@ -292,8 +295,9 @@ function ArchiveDetail(data: ArchiveDetailProps) {
                       title: chunk.domain,
                       description: chunk.description,
                       comment_count: 0,
-                      like_value: '',
-                      like_isActive: false,
+                      like_value: chunk.like_count,
+                      like_isActive: chunk.like_no ? true : false,
+                      like_no: chunk.like_no,
                       is_info_show: true,
                       onClick: () => onClickLink(chunk),
                     };
@@ -304,6 +308,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
 
                   return (
                     <LinkList
+                      dispatch={dispatch}
                       key={nanoid()}
                       linktype={linkType}
                       title={section.title}

@@ -15,6 +15,7 @@ type LinkListProps = {
   isShow: boolean;
   linktype: string;
   linkList: Array<LinkProps>;
+  dispatch: Dispatch<any>;
 };
 
 export type { CardListProps, LinkListProps };

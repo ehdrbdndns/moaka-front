@@ -247,6 +247,7 @@ function UpdateChunkModal({
         domain: '',
         favicon: '',
         user_no: 0,
+        like_count: 0,
       };
 
       updateChunkRedux(chunkInfo);
@@ -362,6 +363,7 @@ function MakeChunkModal({
         domain: '',
         favicon: '',
         user_no: 0,
+        like_count: 0,
       };
 
       makeChunkRedux(chunkInfo);

@@ -212,6 +212,8 @@ function EditLinkSideBar(data: EditLinkSideBarProps) {
             ) : (
               isShowLinkPreview && (
                 <Link
+                  no={data.chunkInfo.no}
+                  dispatch={data.dispatch}
                   url={linkPreviewInfo.link}
                   thumbnail_src={linkPreviewInfo.thumbnail}
                   favicon_src={linkPreviewInfo.favicon}
