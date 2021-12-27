@@ -30,7 +30,7 @@ function LinkTree(data: LinkTreeProps) {
               {section.chunk_list.map(link => (
                 <li key={link.no} className="link-tree__item">
                   <Favicon src={link.favicon} />
-                  <span className="link-tree__item-text">{link.link}</span>
+                  <span className="link-tree__item-text">{link.domain}</span>
                 </li>
               ))}
             </ul>
