@@ -12,6 +12,7 @@ function Iframe(data: IframeProps) {
             data-type="profile"
             className="iframe__close"
             onClick={() => {
+              data.setIframeNo(0);
               data.setIsShow(false);
             }}
           />

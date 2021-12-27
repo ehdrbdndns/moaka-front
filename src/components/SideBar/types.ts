@@ -26,6 +26,8 @@ export type TreeSideBarProps = {
   openTree: boolean;
   sidebarElem: RefObject<HTMLDivElement>;
   sectionInfoList: Array<sectionInfo>;
+  openIframe: (domain: string, link: string, no: number) => void;
+  iframeLinkNo: number;
 };
 
 export type CommentSideBarProps = {

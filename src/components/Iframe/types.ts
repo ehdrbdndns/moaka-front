@@ -6,4 +6,5 @@ export type IframeProps = {
   url: string;
   isShow: boolean;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setIframeNo: React.Dispatch<React.SetStateAction<number>>;
 };

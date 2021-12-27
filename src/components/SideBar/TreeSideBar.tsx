@@ -11,7 +11,11 @@ function TreeSideBar(data: TreeSideBarProps) {
         </div>
         <div className="sidebar__content">
           {data.openTree && (
-            <LinkTree sectionInfoList={data.sectionInfoList}></LinkTree>
+            <LinkTree
+              iframeLinkNo={data.iframeLinkNo}
+              openIframe={data.openIframe}
+              sectionInfoList={data.sectionInfoList}
+            ></LinkTree>
           )}
         </div>
       </article>

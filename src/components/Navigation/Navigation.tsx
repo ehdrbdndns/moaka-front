@@ -198,6 +198,8 @@ function Navigation(data: NavigationProps) {
                   sidebarElem={treeSidebarElem}
                   sectionInfoList={data.sectionInfo}
                   openTree={openTree}
+                  openIframe={data.openIframe}
+                  iframeLinkNo={data.iframeLinkNo}
                 ></TreeSideBar>
               </>
             )}
@@ -240,6 +242,8 @@ Navigation.defaultProps = {
   archiveInfo: null,
   sectionInfo: null,
   chunkInfo: null,
+  openIframe: () => {},
+  iframeLinkNo: 0,
 };
 
-export default Navigation;
+export default React.memo(Navigation);

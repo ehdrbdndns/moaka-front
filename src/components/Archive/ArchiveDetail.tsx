@@ -37,21 +37,31 @@ function ArchiveDetail(data: ArchiveDetailProps) {
   const [iframeShow, setIframeShow] = useState<boolean>(false);
   const [iframeUrl, setIframeUrl] = useState<string>('');
   const [iframeDomain, setIframeDomain] = useState<string>('');
+  const [iframeLinkNo, setIframeLinkNo] = useState<number>(0);
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [navMode, setNavMode] = useState<string>('detail');
 
   const [editChunk, setEditChunk] = useState<chunkInfo>({} as chunkInfo);
 
-  const openIframe = (chunkInfo: chunkInfo) => {
+  const onClickLink = (chunkInfo: chunkInfo) => {
     if (!isEditMode) {
-      setIframeShow(true);
-      setIframeDomain(chunkInfo.domain);
-      setIframeUrl(chunkInfo.link);
+      openIframe(chunkInfo.domain, chunkInfo.link, chunkInfo.no);
     } else {
-      setNavMode('edit');
-      setEditChunk(chunkInfo);
+      openEditLinkSidebar(chunkInfo);
     }
+  };
+
+  const openIframe = (domain: string, link: string, no: number) => {
+    setIframeShow(true);
+    setIframeDomain(domain);
+    setIframeUrl(link);
+    setIframeLinkNo(no);
+  };
+
+  const openEditLinkSidebar = (chunkInfo: chunkInfo) => {
+    setNavMode('edit');
+    setEditChunk(chunkInfo);
   };
 
   const openEditMode = () => {
@@ -115,6 +125,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
             url={iframeUrl}
             isShow={iframeShow}
             setIsShow={setIframeShow}
+            setIframeNo={setIframeLinkNo}
           ></Iframe>
           <div className="archive">
             {archiveLoading || !archiveInfo ? (
@@ -284,7 +295,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
                       like_value: '',
                       like_isActive: false,
                       is_info_show: true,
-                      onClick: () => openIframe(chunk),
+                      onClick: () => onClickLink(chunk),
                     };
                     linkList = [...linkList, link];
 
@@ -312,6 +323,8 @@ function ArchiveDetail(data: ArchiveDetailProps) {
             chunkInfo={editChunk}
             sectionInfo={data.sectionInfo.data}
             mode={navMode}
+            openIframe={openIframe}
+            iframeLinkNo={iframeLinkNo}
           ></Navigation>
         </div>
       </div>

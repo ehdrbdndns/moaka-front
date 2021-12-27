@@ -11,7 +11,7 @@ function LinkTree(data: LinkTreeProps) {
         {data.sectionInfoList.map(section => (
           <div
             key={nanoid()}
-            className="link-tree__content"
+            className="link-tree__content active"
             id={section.no + ''}
           >
             <div
@@ -28,7 +28,16 @@ function LinkTree(data: LinkTreeProps) {
             </div>
             <ul className="link-tree__item-list">
               {section.chunk_list.map(link => (
-                <li key={link.no} className="link-tree__item">
+                <li
+                  key={nanoid()}
+                  className={
+                    'link-tree__item ' +
+                    (data.iframeLinkNo === link.no && 'active')
+                  }
+                  onClick={() => {
+                    data.openIframe(link.domain, link.link, link.no);
+                  }}
+                >
                   <Favicon src={link.favicon} />
                   <span className="link-tree__item-text">{link.domain}</span>
                 </li>
