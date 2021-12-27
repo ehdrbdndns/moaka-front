@@ -37,7 +37,7 @@ function Component() {
       <div>
         <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Nav</h1>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Navigation dispatch={dispath} authInfo={authInfo} />
+          {/* <Navigation dispatch={dispath} authInfo={authInfo} /> */}
         </div>
       </div>
       <div className="w-100">

@@ -247,6 +247,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
             dispatch={data.dispatch}
             authInfo={data.authInfo}
             archiveInfo={archiveInfo}
+            sectionInfo={data.sectionInfo.data}
             mode="detail"
           ></Navigation>
         </div>

@@ -156,12 +156,17 @@ function Navigation(data: NavigationProps) {
             sidebarElem={linkSidebarElem}
             openLink={openLink}
           ></LinkSideBar>
-          {data.mode === 'detail' && data.archiveInfo && (
+          {data.mode === 'detail' && data.sectionInfo && (
             <>
               <TreeSideBar
                 sidebarElem={treeSidebarElem}
+                sectionInfoList={data.sectionInfo}
                 openTree={openTree}
               ></TreeSideBar>
+            </>
+          )}
+          {data.mode === 'detail' && data.archiveInfo && (
+            <>
               {data.archiveInfo.user_no === data.authInfo.data.no && (
                 <ArchiveSideBar
                   dispatch={data.dispatch}
@@ -185,6 +190,7 @@ function Navigation(data: NavigationProps) {
 Navigation.defaultProps = {
   mode: 'home',
   archiveInfo: null,
+  sectionInfo: null,
 };
 
 export default Navigation;

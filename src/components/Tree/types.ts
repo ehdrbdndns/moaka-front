@@ -1,11 +1,5 @@
+import { sectionInfo } from '../../modules/section/types';
+
 export type LinkTreeProps = {
-  tree: {
-    id: string;
-    title: string;
-    linkList: {
-      no: number;
-      link: string;
-      favicon: string;
-    }[];
-  }[];
+  sectionInfoList: Array<sectionInfo>;
 };

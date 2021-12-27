@@ -1,5 +1,6 @@
 import { Dispatch, RefObject } from 'react';
 import { archiveInfo } from '../../modules/archive';
+import { sectionInfo } from '../../modules/section';
 import { initialState as AuthInfo } from '../../modules/auth/types';
 
 export type LinkSideBarProps = {
@@ -13,6 +14,7 @@ export type LinkSideBarProps = {
 export type TreeSideBarProps = {
   openTree: boolean;
   sidebarElem: RefObject<HTMLDivElement>;
+  sectionInfoList: Array<sectionInfo>;
 };
 
 export type CommentSideBarProps = {

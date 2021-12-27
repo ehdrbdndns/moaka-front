@@ -201,7 +201,7 @@ export type chunkInfo = {
 };
 
 export type sectionInfo = {
-  no: number | undefined;
+  no: number;
   archive_no: number;
   title: string;
   description: string;

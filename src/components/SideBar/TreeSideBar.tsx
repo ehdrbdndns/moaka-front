@@ -10,7 +10,9 @@ function TreeSideBar(data: TreeSideBarProps) {
           <h1 className="sidebar__title">링크 트리</h1>
         </div>
         <div className="sidebar__content">
-          {data.openTree && <LinkTree></LinkTree>}
+          {data.openTree && (
+            <LinkTree sectionInfoList={data.sectionInfoList}></LinkTree>
+          )}
         </div>
       </article>
     </>

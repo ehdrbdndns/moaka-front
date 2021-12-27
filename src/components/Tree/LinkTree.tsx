@@ -8,11 +8,15 @@ function LinkTree(data: LinkTreeProps) {
   return (
     <>
       <div className="link-tree">
-        {data.tree.map(section => (
-          <div key={section.id} className="link-tree__content" id={section.id}>
+        {data.sectionInfoList.map(section => (
+          <div
+            key={nanoid()}
+            className="link-tree__content"
+            id={section.no + ''}
+          >
             <div
               className="link-tree__header"
-              data-id={section.id}
+              data-id={section.no}
               onClick={onClickOfTreeHeader}
             >
               <h1 className="link-tree__title">{section.title}</h1>
@@ -23,7 +27,7 @@ function LinkTree(data: LinkTreeProps) {
               />
             </div>
             <ul className="link-tree__item-list">
-              {section.linkList.map(link => (
+              {section.chunk_list.map(link => (
                 <li key={link.no} className="link-tree__item">
                   <Favicon src={link.favicon} />
                   <span className="link-tree__item-text">{link.link}</span>

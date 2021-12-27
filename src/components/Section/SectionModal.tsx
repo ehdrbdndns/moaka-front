@@ -148,7 +148,7 @@ export function MakeSectionModal({
       tag_list.push(tagList[i].tag);
     }
     const sectionInfo: sectionInfo = {
-      no: undefined,
+      no: 0,
       title: title,
       archive_no: archive_no,
       description: description,
