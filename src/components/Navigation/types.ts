@@ -16,4 +16,5 @@ export type NavigationProps = {
   openSidebar: string; // archive or edit or chat
   openIframe: (domain: string, link: string, no: number) => void;
   iframeLinkNo: number;
+  isChatting: boolean;
 };

@@ -37,6 +37,7 @@ export type CommentSideBarProps = {
   chunkInfo: chunkInfo;
   authInfo: AuthInfo;
   chatList: Array<chatInfo>;
+  isChatting: boolean;
 };
 
 export type EmptyCommentSideBarProps = {

@@ -52,8 +52,12 @@ function ArchiveDetail(data: ArchiveDetailProps) {
   const [chatList, setChatList] = useState<Array<chatInfo>>([]);
   const [newChatInfo, setNewChatInfo] = useState<chatInfo | null>(null);
 
+  let isChattingTime: NodeJS.Timeout;
+  const [isChatting, setIsChatting] = useState<boolean>(false);
+
   useEffect(() => {
     if (newChatInfo) {
+      isChattingTimeout();
       let chatIndex;
       let _chatInfo;
       switch (newChatInfo.type) {
@@ -87,6 +91,14 @@ function ArchiveDetail(data: ArchiveDetailProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newChatInfo]);
+
+  const isChattingTimeout = useCallback(() => {
+    setIsChatting(true);
+    clearTimeout(isChattingTime);
+    isChattingTime = setTimeout(() => {
+      setIsChatting(false);
+    }, 10000);
+  }, []);
 
   const onClickLink = (chunkInfo: chunkInfo) => {
     if (!isEditMode) {
@@ -398,6 +410,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
         </div>
         <div className="container__sub">
           <Navigation
+            isChatting={isChatting}
             dispatch={data.dispatch}
             authInfo={data.authInfo}
             chatList={chatList}

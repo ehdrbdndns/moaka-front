@@ -253,6 +253,7 @@ function Navigation(data: NavigationProps) {
               chunkInfo={data.chunkInfo}
               sidebarElem={commentSidebarElem}
               openComment={openComment}
+              isChatting={data.isChatting}
             ></CommentSidebar>
           ) : (
             <EmptyCommentSidebar
@@ -275,6 +276,7 @@ Navigation.defaultProps = {
   openIframe: () => {},
   iframeLinkNo: 0,
   openSidebar: '',
+  isChatting: false,
 };
 
 export default React.memo(Navigation);
