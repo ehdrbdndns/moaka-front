@@ -4,6 +4,7 @@ import { sectionInfo } from '../../modules/section';
 import { chunkInfo } from '../../modules/section';
 import { initialState as AuthInfo } from '../../modules/auth/types';
 import { DirectoryResponseByAxios } from '../../apis/user/types';
+import { chatInfo } from '../../apis/chat/types';
 
 export type LinkSideBarProps = {
   authInfo: AuthInfo;
@@ -32,6 +33,13 @@ export type TreeSideBarProps = {
 
 export type CommentSideBarProps = {
   openComment: boolean;
+  sidebarElem: RefObject<HTMLDivElement>;
+  chunkInfo: chunkInfo;
+  authInfo: AuthInfo;
+  chatList: Array<chatInfo>;
+};
+
+export type EmptyCommentSideBarProps = {
   sidebarElem: RefObject<HTMLDivElement>;
 };
 

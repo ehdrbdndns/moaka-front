@@ -1,5 +1,8 @@
 import { nanoid } from 'nanoid';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { retrieveChatByRoomNo } from '../../apis/chat/chat';
+import { chatInfo, retrieveChatByRoomNoResponse } from '../../apis/chat/types';
+import { chatConnect } from '../../asset/stomp';
 import {
   archiveBookmarkActionType,
   archiveLikeActionType,
@@ -16,7 +19,7 @@ import { LinkProps } from '../Link/type';
 import Navigation from '../Navigation/Navigation';
 import Profile from '../Profile/Profile';
 import ArchiveSkeleton from '../Skeleton/ArchiveSkeleton';
-import { closeToast, openToast } from '../Toast/event';
+import { closeToast, openToast, toasting } from '../Toast/event';
 import Toast from '../Toast/Toast';
 import { changeLinkType } from './event';
 import { ArchiveDetailProps } from './types';
@@ -39,15 +42,29 @@ function ArchiveDetail(data: ArchiveDetailProps) {
   const [iframeDomain, setIframeDomain] = useState<string>('');
   const [iframeLinkNo, setIframeLinkNo] = useState<number>(0);
 
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [navMode, setNavMode] = useState<string>('detail');
+  const errorChatElem = useRef<HTMLDivElement>(null);
 
-  const [editChunk, setEditChunk] = useState<chunkInfo>({} as chunkInfo);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  // archive or edit or chat
+  const [navMode, setNavMode] = useState<string>('archive');
+
+  const [chunkInfo, setChunkInfo] = useState<chunkInfo>({} as chunkInfo);
+  const [chatList, setChatList] = useState<Array<chatInfo>>([]);
+  const [newChatInfo, setNewChatInfo] = useState<chatInfo | null>(null);
+
+  useEffect(() => {
+    newChatInfo && setChatList([...chatList, newChatInfo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newChatInfo]);
 
   const onClickLink = (chunkInfo: chunkInfo) => {
     if (!isEditMode) {
+      // Iframe 오픈
       openIframe(chunkInfo.domain, chunkInfo.link, chunkInfo.no);
+      // 댓글 네비게이션 오픈
+      openCommentSidebar(chunkInfo);
     } else {
+      // 수정 navigation 오픈
       openEditLinkSidebar(chunkInfo);
     }
   };
@@ -61,7 +78,29 @@ function ArchiveDetail(data: ArchiveDetailProps) {
 
   const openEditLinkSidebar = (chunkInfo: chunkInfo) => {
     setNavMode('edit');
-    setEditChunk(chunkInfo);
+    setChunkInfo(chunkInfo);
+  };
+
+  // 댓글 실시간 업데이트
+  const updateChatEvent = useCallback((payload: any) => {
+    setNewChatInfo(payload);
+  }, []);
+
+  const openCommentSidebar = async (chunkInfo: chunkInfo) => {
+    let result: retrieveChatByRoomNoResponse = await retrieveChatByRoomNo(
+      chunkInfo.room_no,
+    );
+
+    if (result.isSuccess) {
+      // 댓글 연결
+      chatConnect(chunkInfo.room_id, updateChatEvent);
+
+      setChatList(result.chat_list);
+      setChunkInfo(chunkInfo);
+      setNavMode('chat');
+    } else {
+      toasting(errorChatElem);
+    }
   };
 
   const openEditMode = () => {
@@ -70,7 +109,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
 
   const closeEditMode = () => {
     setIsEditMode(false);
-    setNavMode('detail');
+    setNavMode('archive');
   };
 
   const setArchiveBookmarkRedux = useCallback(
@@ -105,6 +144,12 @@ function ArchiveDetail(data: ArchiveDetailProps) {
 
   return (
     <>
+      <Toast
+        toastElem={errorChatElem}
+        showType="fixed"
+        type="error"
+        message="댓글을 불러오지 못했습니다."
+      ></Toast>
       <Toast
         message="편집모드입니다. 수정할 링크를 클릭하세요."
         type="default"
@@ -294,7 +339,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
                       favicon_src: chunk.favicon,
                       title: chunk.domain,
                       description: chunk.description,
-                      comment_count: 0,
+                      chat_count: chunk.chat_count,
                       like_value: chunk.like_count,
                       like_isActive: chunk.like_no ? true : false,
                       like_no: chunk.like_no,
@@ -324,10 +369,12 @@ function ArchiveDetail(data: ArchiveDetailProps) {
           <Navigation
             dispatch={data.dispatch}
             authInfo={data.authInfo}
+            chatList={chatList}
             archiveInfo={archiveInfo}
-            chunkInfo={editChunk}
+            chunkInfo={chunkInfo}
             sectionInfo={data.sectionInfo.data}
-            mode={navMode}
+            openSidebar={navMode}
+            mode={'detail'}
             openIframe={openIframe}
             iframeLinkNo={iframeLinkNo}
           ></Navigation>

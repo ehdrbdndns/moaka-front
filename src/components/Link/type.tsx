@@ -12,7 +12,7 @@ export type LinkProps = {
   description: string;
 
   // 답글 개수
-  comment_count: number;
+  chat_count: number;
 
   // 좋아요 개수
   like_value: number;

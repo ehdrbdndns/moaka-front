@@ -21,6 +21,8 @@
     "@types/react-router-dom": "^5.1.8",
     "@types/redux-devtools-extension": "^2.13.2",
     "@types/serialize-javascript": "^5.0.1",
+    "@types/sockjs-client": "^1.5.1",
+    "@types/stompjs": "^2.3.5",
     "axios": "^0.21.1",
     "jwt-decode": "^3.1.2",
     "nanoid": "^3.1.25",
@@ -36,6 +38,8 @@
     "redux": "^4.1.1",
     "redux-saga": "^1.1.3",
     "serialize-javascript": "^6.0.0",
+    "sockjs-client": "^1.5.2",
+    "stompjs": "2.3.3",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
   },

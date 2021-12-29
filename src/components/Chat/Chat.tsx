@@ -15,9 +15,7 @@ function Chat(data: ChatProps) {
             <div className={'chat__name ' + (data.isMine && 'active')}>
               {data.name}
             </div>
-            {data.isTimeShow && (
-              <span className="chat__time">{data.time}시간</span>
-            )}
+            {data.isTimeShow && <span className="chat__time">{data.time}</span>}
           </div>
           <p className="chat__description">{data.description}</p>
           {data.isLikeShow && <HeartIcon />}

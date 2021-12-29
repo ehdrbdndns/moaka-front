@@ -33,7 +33,7 @@ function LinkList(props: LinkListProps) {
                 thumbnail_src={link.thumbnail_src}
                 description={link.description}
                 favicon_src={link.favicon_src}
-                comment_count={link.comment_count}
+                chat_count={link.chat_count}
                 like_value={link.like_value}
                 like_isActive={link.like_isActive}
                 like_no={link.like_no}

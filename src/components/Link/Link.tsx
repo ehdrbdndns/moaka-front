@@ -66,7 +66,7 @@ function Link(data: LinkProps) {
               setLikeEvent={setLikeRedux}
               deleteLikeEvent={deleteLikeRedux}
             />
-            <span>{data.comment_count}개의 답글</span>
+            <span>{data.chat_count}개의 답글</span>
           </div>
         )}
         <div className="link__description">{data.description}</div>
@@ -86,7 +86,7 @@ Link.defaultProps = {
   description: '링크에 대한 설명',
 
   // 답글 개수
-  comment_count: 0,
+  chat_count: 0,
 
   // 좋아요 개수
   like_value: 0,

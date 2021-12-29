@@ -1,14 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { nanoid } from 'nanoid';
 import Chat from '../Chat/Chat';
 import LinkBox from '../Link/LinkBox';
 import Input from '../Input/Input';
 import { CommentSideBarProps } from './types';
 import { initialCommentSidebarEvent, resetCommentVariableEvent } from './event';
+import { sendMessageOfChat } from '../../asset/stomp';
+import { chatInfo } from '../../apis/chat/types';
 
 function CommentSidebar(data: CommentSideBarProps) {
+  const { chunkInfo, authInfo } = data;
+
   const commentElem = useRef<HTMLDivElement>(null);
+  const chatListElem = useRef<HTMLDivElement>(null);
   const linkElem = useRef<HTMLDivElement>(null);
+
+  const [chat, setChat] = useState<string>('');
 
   useEffect(() => {
     if (data.openComment) {
@@ -16,7 +23,32 @@ function CommentSidebar(data: CommentSideBarProps) {
     } else {
       resetCommentVariableEvent();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data.sidebarElem, data.openComment]);
+
+  const onKeyPressOfEnter = (e: any) => {
+    if (e.key === 'Enter' && chat !== '') {
+      sendChatEvent();
+    }
+  };
+
+  const onClickOfSuffix = () => {
+    if (chat !== '') {
+      sendChatEvent();
+    }
+  };
+
+  const sendChatEvent = () => {
+    sendMessageOfChat(chunkInfo.room_id, {
+      content: chat,
+      room_no: chunkInfo.room_no,
+      user_name: authInfo.data.name,
+      user_profile: authInfo.data.profile,
+      user_no: authInfo.data.no,
+    } as chatInfo);
+
+    setChat('');
+  };
 
   return (
     <>
@@ -41,29 +73,37 @@ function CommentSidebar(data: CommentSideBarProps) {
             <div className="sidebar__comment" ref={commentElem}>
               <div className="sidebar__link" ref={linkElem}>
                 <div className="px-p-8">
-                  <LinkBox id={nanoid()}></LinkBox>
+                  <LinkBox
+                    url={data.chunkInfo.domain}
+                    favicon_src={data.chunkInfo.favicon}
+                    description={data.chunkInfo.description}
+                    id={nanoid()}
+                  ></LinkBox>
                 </div>
                 <div className="sidebar__div" />
               </div>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true}></Chat>
-              <Chat isTimeShow={true} isLikeShow={true} isMine={true}></Chat>
+              <div ref={chatListElem}>
+                {data.chatList.map(chat => (
+                  <Chat
+                    key={nanoid()}
+                    name={chat.user_name}
+                    profileSrc={chat.user_profile}
+                    description={chat.content}
+                    time={chat.regdate}
+                    isTimeShow={true}
+                    isLikeShow={true}
+                    isMine={chat.user_no === data.authInfo.data.no}
+                  ></Chat>
+                ))}
+              </div>
             </div>
           )}
           <div className="sidebar__comment-input">
             <Input
+              value={chat}
+              setValue={setChat}
+              onKeyPress={onKeyPressOfEnter}
+              onClickOfSuffix={onClickOfSuffix}
               placeholder="답글..."
               suffix={'/img/svg/comment-input.svg'}
             ></Input>

@@ -4,6 +4,7 @@ import { getLocalDirectory } from '../../apis/user/user';
 import ArchiveSideBar from '../SideBar/ArchiveSideBar';
 import CommentSidebar from '../SideBar/CommentSidebar';
 import EditLinkSideBar from '../SideBar/EditLinkSideBar';
+import EmptyCommentSidebar from '../SideBar/EmptyCommentSidebar';
 import LinkSideBar from '../SideBar/LinkSideBar';
 import TreeSideBar from '../SideBar/TreeSideBar';
 import { toasting } from '../Toast/event';
@@ -55,8 +56,9 @@ function Navigation(data: NavigationProps) {
   }, [data.authInfo.data.no, openLink]);
 
   useEffect(() => {
+    // 아카이브 수정 사이드바 열기
     if (
-      data.mode === 'detail' &&
+      data.openSidebar === 'archive' &&
       data.archiveInfo &&
       data.archiveInfo.user_no === data.authInfo.data.no
     ) {
@@ -65,13 +67,32 @@ function Navigation(data: NavigationProps) {
       setInitValueOfNav(editArchiveSidebarElem);
     }
 
-    if (data.mode === 'edit') {
+    // 링크 수정 사이드바 열기
+    if (data.openSidebar === 'edit') {
       sideNavElem.current?.classList.add('active');
       editLinkSidebarElem.current?.classList.add('show');
       setInitValueOfNav(editLinkSidebarElem);
     }
+
+    // 댓글 사이드바 열기
+    if (data.openSidebar === 'chat') {
+      if (commentNavItemElem.current?.classList.contains('active')) {
+        onClickNavItem(
+          sideNavElem,
+          commentSidebarElem,
+          commentNavItemElem,
+          setOpenComment,
+        );
+      }
+      onClickNavItem(
+        sideNavElem,
+        commentSidebarElem,
+        commentNavItemElem,
+        setOpenComment,
+      );
+    }
   }, [
-    data.mode,
+    data.openSidebar,
     data.archiveInfo,
     data.archiveInfo?.user_no,
     data.authInfo.data.no,
@@ -120,7 +141,7 @@ function Navigation(data: NavigationProps) {
                 />
               </svg>
             </li>
-            {(data.mode === 'detail' || data.mode === 'edit') && (
+            {data.mode === 'detail' && (
               <li
                 className="side-nav__item"
                 onClick={() =>
@@ -191,32 +212,30 @@ function Navigation(data: NavigationProps) {
             sidebarElem={linkSidebarElem}
             openLink={openLink}
           ></LinkSideBar>
-          {(data.mode === 'detail' || data.mode === 'edit') &&
-            data.sectionInfo && (
-              <>
-                <TreeSideBar
-                  sidebarElem={treeSidebarElem}
-                  sectionInfoList={data.sectionInfo}
-                  openTree={openTree}
-                  openIframe={data.openIframe}
-                  iframeLinkNo={data.iframeLinkNo}
-                ></TreeSideBar>
-              </>
-            )}
-          {(data.mode === 'detail' || data.mode === 'edit') &&
-            data.archiveInfo && (
-              <>
-                {data.archiveInfo.user_no === data.authInfo.data.no && (
-                  <ArchiveSideBar
-                    dispatch={data.dispatch}
-                    authInfo={data.authInfo}
-                    archiveInfo={data.archiveInfo}
-                    sidebarElem={editArchiveSidebarElem}
-                  ></ArchiveSideBar>
-                )}
-              </>
-            )}
-          {data.mode === 'edit' && data.chunkInfo && (
+          {data.mode === 'detail' && data.sectionInfo && (
+            <>
+              <TreeSideBar
+                sidebarElem={treeSidebarElem}
+                sectionInfoList={data.sectionInfo}
+                openTree={openTree}
+                openIframe={data.openIframe}
+                iframeLinkNo={data.iframeLinkNo}
+              ></TreeSideBar>
+            </>
+          )}
+          {data.openSidebar === 'archive' && data.archiveInfo && (
+            <>
+              {data.archiveInfo.user_no === data.authInfo.data.no && (
+                <ArchiveSideBar
+                  dispatch={data.dispatch}
+                  authInfo={data.authInfo}
+                  archiveInfo={data.archiveInfo}
+                  sidebarElem={editArchiveSidebarElem}
+                ></ArchiveSideBar>
+              )}
+            </>
+          )}
+          {data.openSidebar === 'edit' && data.chunkInfo && (
             <>
               <EditLinkSideBar
                 dispatch={data.dispatch}
@@ -227,10 +246,19 @@ function Navigation(data: NavigationProps) {
               ></EditLinkSideBar>
             </>
           )}
-          <CommentSidebar
-            sidebarElem={commentSidebarElem}
-            openComment={openComment}
-          ></CommentSidebar>
+          {data.openSidebar === 'chat' && data.chunkInfo ? (
+            <CommentSidebar
+              authInfo={data.authInfo}
+              chatList={data.chatList}
+              chunkInfo={data.chunkInfo}
+              sidebarElem={commentSidebarElem}
+              openComment={openComment}
+            ></CommentSidebar>
+          ) : (
+            <EmptyCommentSidebar
+              sidebarElem={commentSidebarElem}
+            ></EmptyCommentSidebar>
+          )}
         </div>
       </aside>
     </>
@@ -241,9 +269,12 @@ Navigation.defaultProps = {
   mode: 'home',
   archiveInfo: null,
   sectionInfo: null,
+  chatList: [],
   chunkInfo: null,
+  newChatInfo: null,
   openIframe: () => {},
   iframeLinkNo: 0,
+  openSidebar: '',
 };
 
 export default React.memo(Navigation);

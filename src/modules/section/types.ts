@@ -196,6 +196,9 @@ export type chunkInfo = {
   user_no: number;
   like_no: number;
   like_count: number;
+  room_id: string;
+  room_no: number;
+  chat_count: number;
 
   // 구 버전 타입
   title: string;
