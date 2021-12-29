@@ -5,7 +5,11 @@ import LinkBox from '../Link/LinkBox';
 import Input from '../Input/Input';
 import { CommentSideBarProps } from './types';
 import { initialCommentSidebarEvent, resetCommentVariableEvent } from './event';
-import { sendMessageOfChat } from '../../asset/stomp';
+import {
+  deleteLikeOfChat,
+  insertLikeOfChat,
+  sendMessageOfChat,
+} from '../../asset/stomp';
 import { chatInfo } from '../../apis/chat/types';
 
 function CommentSidebar(data: CommentSideBarProps) {
@@ -93,6 +97,14 @@ function CommentSidebar(data: CommentSideBarProps) {
                     isTimeShow={true}
                     isLikeShow={true}
                     isMine={chat.user_no === data.authInfo.data.no}
+                    likeValue={chat.like_count}
+                    likeIsActive={chat.like_no ? true : false}
+                    setLikeEvent={() => {
+                      insertLikeOfChat(chunkInfo.room_id, chat);
+                    }}
+                    deleteLikeEvent={() => {
+                      deleteLikeOfChat(chunkInfo.room_id, chat);
+                    }}
                   ></Chat>
                 ))}
               </div>

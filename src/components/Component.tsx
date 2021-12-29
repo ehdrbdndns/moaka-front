@@ -10,7 +10,7 @@ import Link from './Link/Link';
 import { nanoid } from 'nanoid';
 import AddArchiveModal from './Modal/AddArchiveModal';
 import DropDown from './DropDown/DropDown';
-import Chat from './Chat/Chat';
+// import Chat from './Chat/Chat';
 import NotificationModal from './Modal/NotificationModal';
 import { searchUnsplashImg } from '../apis/unsplash/unsplash';
 import LoginModal from './Modal/LoginModal';
@@ -110,7 +110,7 @@ function Component() {
         </div>
         <div style={{ width: '280px' }}>
           <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Chat</h1>
-          <Chat />
+          {/* <Chat /> */}
         </div>
       </div>
       <div className="w-100">

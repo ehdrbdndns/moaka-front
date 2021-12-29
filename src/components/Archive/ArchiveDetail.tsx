@@ -53,7 +53,38 @@ function ArchiveDetail(data: ArchiveDetailProps) {
   const [newChatInfo, setNewChatInfo] = useState<chatInfo | null>(null);
 
   useEffect(() => {
-    newChatInfo && setChatList([...chatList, newChatInfo]);
+    if (newChatInfo) {
+      let chatIndex;
+      let _chatInfo;
+      switch (newChatInfo.type) {
+        case 'message':
+          setChatList([...chatList, newChatInfo]);
+          break;
+        case 'insertLike':
+          chatIndex = chatList.findIndex(chat => chat.no === newChatInfo.no);
+          _chatInfo = [...chatList];
+          // 액션을 한 사람이 자신인지 확인
+          newChatInfo.user_no === data.authInfo.data.no &&
+            (_chatInfo[chatIndex].like_no = newChatInfo.like_no);
+
+          _chatInfo[chatIndex].like_count += 1;
+
+          setChatList(_chatInfo);
+
+          break;
+        case 'deleteLike':
+          chatIndex = chatList.findIndex(chat => chat.no === newChatInfo.no);
+          _chatInfo = [...chatList];
+          newChatInfo.user_no === data.authInfo.data.no &&
+            (_chatInfo[chatIndex].like_no = 0);
+          _chatInfo[chatIndex].like_count -= 1;
+
+          setChatList(_chatInfo);
+          break;
+        default:
+          break;
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newChatInfo]);
 

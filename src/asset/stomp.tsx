@@ -1,6 +1,7 @@
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { chatInfo } from '../apis/chat/types';
+import { BASE_URL } from '../apis/utils';
 
 let chatStompClient: Stomp.Client;
 let AlarmStompClient: Stomp.Client;
@@ -63,7 +64,7 @@ const chatConnect = (
   roomId: string,
   updateChatEvent: (payload: any) => void,
 ) => {
-  let socket = new SockJS('http://localhost:8080/stomp/chat');
+  let socket = new SockJS(BASE_URL + '/stomp/chat');
   chatStompClient = Stomp.over(socket);
 
   chatStompClient.heartbeat.outgoing = 0; //Rabbit에선 heartbeat 안먹힌다고 함
@@ -91,16 +92,6 @@ const chatConnect = (
         },
         { 'auto-delete': true, durable: false, exclusive: false },
       );
-
-      //입장 메세지 전송
-      // chatStompClient.send(
-      //   `/pub/chat.enter.${roomId}`,
-      //   {},
-      //   JSON.stringify({
-      //     memberId: 1,
-      //     nickname: 'enterMessage!',
-      //   }),
-      // );
     },
     onError,
     '/',
@@ -117,6 +108,32 @@ const sendMessageOfChat = (roomId: string, chatInfo: chatInfo) => {
       user_no: chatInfo.user_no,
       user_name: chatInfo.user_name,
       user_profile: chatInfo.user_profile,
+      type: 'message',
+    }),
+  );
+};
+
+const insertLikeOfChat = (roomId: string, chatInfo: chatInfo) => {
+  chatStompClient.send(
+    `/pub/chat.insertLike.${roomId}`,
+    {},
+    JSON.stringify({
+      no: chatInfo.no,
+      user_no: chatInfo.user_no,
+      type: 'insertLike',
+    }),
+  );
+};
+
+const deleteLikeOfChat = (roomId: string, chatInfo: chatInfo) => {
+  chatStompClient.send(
+    `/pub/chat.deleteLike.${roomId}`,
+    {},
+    JSON.stringify({
+      no: chatInfo.no,
+      like_no: chatInfo.like_no,
+      user_no: chatInfo.user_no,
+      type: 'deleteLike',
     }),
   );
 };
@@ -129,4 +146,11 @@ const disconnectOfChat = () => {
   }
 };
 
-export { chatConnect, sendMessageOfChat, disconnectOfChat, AlarmConnect };
+export {
+  chatConnect,
+  sendMessageOfChat,
+  disconnectOfChat,
+  AlarmConnect,
+  insertLikeOfChat,
+  deleteLikeOfChat,
+};

@@ -7,10 +7,14 @@ export const retrieveChatByRoomNo = async (
 ): Promise<retrieveChatByRoomNoResponse> => {
   let result = {} as retrieveChatByRoomNoResponse;
 
+  const token = localStorage.getItem('token');
   await axios
     .post(BASE_URL + '/retrieveChatByRoomNo', null, {
       params: {
         roomNo,
+      },
+      headers: {
+        Bearer: token,
       },
     })
     .then(function (response) {

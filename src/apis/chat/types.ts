@@ -7,6 +7,11 @@ export type chatInfo = {
 
   user_name: string;
   user_profile: string;
+
+  like_count: number;
+  like_no: number;
+
+  type: string; // 'message' or 'like'
 };
 
 export type retrieveChatByRoomNoResponse = {
