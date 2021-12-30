@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { retrieveChatByRoomNo } from '../../apis/chat/chat';
 import { chatInfo, retrieveChatByRoomNoResponse } from '../../apis/chat/types';
-import { chatConnect } from '../../asset/stomp';
+import { chatConnect, sendMessageOfAlarm } from '../../asset/stomp';
 import {
   archiveBookmarkActionType,
   archiveLikeActionType,
@@ -95,6 +95,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
   const isChattingTimeout = useCallback(() => {
     setIsChatting(true);
     clearTimeout(isChattingTime);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     isChattingTime = setTimeout(() => {
       setIsChatting(false);
     }, 10000);
@@ -155,12 +156,15 @@ function ArchiveDetail(data: ArchiveDetailProps) {
     setNavMode('archive');
   };
 
-  const setArchiveBookmarkRedux = useCallback(
-    (bookmarkInfo: archiveBookmarkActionType) => {
-      dispatch(setArchiveBookmark(bookmarkInfo));
-    },
-    [dispatch],
-  );
+  const setArchiveBookmarkRedux = (bookmarkInfo: archiveBookmarkActionType) => {
+    dispatch(setArchiveBookmark(bookmarkInfo));
+    sendMessageOfAlarm(
+      data.archiveInfo.data[0].user_no,
+      data.archiveInfo.data[0].title + ' 아카이브를 북마크했습니다.',
+      data.authInfo.data.name,
+      data.authInfo.data.profile,
+    );
+  };
 
   const deleteArchiveBookmarkRedux = useCallback(
     (bookmarkInfo: archiveBookmarkActionType) => {
@@ -177,13 +181,19 @@ function ArchiveDetail(data: ArchiveDetailProps) {
     dispatch(deleteArchiveLike(likeInfo));
   }, [dispatch, archiveInfo]);
 
-  const setArchiveLikeRedux = useCallback(() => {
+  const setArchiveLikeRedux = () => {
     const likeInfo: archiveLikeActionType = {
       archive_no: archiveInfo.no,
       like_no: archiveInfo.like_no,
     };
     dispatch(setArchiveLike(likeInfo));
-  }, [dispatch, archiveInfo]);
+    sendMessageOfAlarm(
+      data.archiveInfo.data[0].user_no,
+      data.archiveInfo.data[0].title + ' 아카이브를 좋아합니다.',
+      data.authInfo.data.name,
+      data.authInfo.data.profile,
+    );
+  };
 
   return (
     <>
@@ -372,6 +382,8 @@ function ArchiveDetail(data: ArchiveDetailProps) {
 
                   section.chunk_list.map(chunk => {
                     let link: LinkProps = {
+                      user_no: chunk.user_no,
+                      authInfo: data.authInfo.data,
                       section_no: section.no,
                       dispatch: null,
                       no: chunk.no,
@@ -396,6 +408,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
 
                   return (
                     <LinkList
+                      authInfo={data.authInfo.data}
                       dispatch={dispatch}
                       key={nanoid()}
                       linktype={linkType}

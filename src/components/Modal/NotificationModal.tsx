@@ -1,8 +1,10 @@
+import { nanoid } from 'nanoid';
 import React, { useRef } from 'react';
 import Chat from '../Chat/Chat';
 import { closeModal, toggleModal } from './event';
+import { NotificationModalProps } from './type';
 
-function NotificationModal() {
+function NotificationModal(data: NotificationModalProps) {
   const modalElem = useRef<HTMLDivElement>(null);
 
   return (
@@ -31,46 +33,16 @@ function NotificationModal() {
               <h3 className="modal__title">알림</h3>
             </div>
             <div className="modal__content">
-              <Chat
-                isTimeShow={true}
-                name="닉네임"
-                description="(아카이브제목/링크제목)을 좋아합니다."
-              />
-              <Chat
-                isTimeShow={true}
-                name="닉네임"
-                description="(아카이브제목/링크제목)을 좋아합니다."
-              />
-              <Chat
-                isTimeShow={true}
-                name="닉네임"
-                description="(아카이브제목/링크제목)을 좋아합니다."
-              />
-              <Chat
-                isTimeShow={true}
-                name="닉네임"
-                description="(아카이브제목/링크제목)을 좋아합니다."
-              />
-              <Chat
-                isTimeShow={true}
-                name="닉네임"
-                description="(아카이브제목/링크제목)을 좋아합니다."
-              />
-              <Chat
-                isTimeShow={true}
-                name="닉네임"
-                description="(아카이브제목/링크제목)을 좋아합니다."
-              />
-              <Chat
-                isTimeShow={true}
-                name="닉네임"
-                description="(아카이브제목/링크제목)을 좋아합니다."
-              />
-              <Chat
-                isTimeShow={true}
-                name="닉네임"
-                description="(아카이브제목/링크제목)을 좋아합니다."
-              />
+              {data.alarmList.map(alarm => (
+                <Chat
+                  key={nanoid()}
+                  isTimeShow={true}
+                  name={alarm.send_name}
+                  description={alarm.content}
+                  profileSrc={alarm.send_profile}
+                  time={alarm.regdate}
+                />
+              ))}
             </div>
           </div>
         </div>

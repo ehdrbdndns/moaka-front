@@ -36,7 +36,6 @@ function section(
       );
 
       const _data = [...state.data];
-      console.log(_data[section_index].chunk_list[chunk_index]);
 
       _data[section_index].chunk_list[chunk_index].relative_chunk_loading =
         true;
@@ -268,13 +267,6 @@ function section(
       const chunk_index = state.data[section_index].chunk_list.findIndex(
         chunk => chunk.no === action.payload.chunk_no,
       );
-
-      console.log(action.payload);
-
-      console.log(action.payload.like_no);
-      console.log(chunk_index);
-      console.log(section_index);
-
       const _data = [...state.data];
       _data[section_index].chunk_list[chunk_index].like_no =
         action.payload.like_no;
@@ -292,8 +284,6 @@ function section(
       const chunk_index = state.data[section_index].chunk_list.findIndex(
         chunk => chunk.no === action.payload.chunk_no,
       );
-
-      console.log(action.payload.like_no);
 
       const _data = [...state.data];
       _data[section_index].chunk_list[chunk_index].like_no =

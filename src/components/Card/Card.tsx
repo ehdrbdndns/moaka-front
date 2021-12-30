@@ -15,16 +15,29 @@ import {
   setArchiveBookmark,
   setArchiveLike,
 } from '../../modules/archive';
+import { sendMessageOfAlarm } from '../../asset/stomp';
 
 function Card(data: CardProps) {
   const { push } = useHistory();
-  const { dispatch, archiveInfo } = data;
+  const { dispatch, archiveInfo, authInfo } = data;
 
   const setArchiveBookmarkRedux = useCallback(
     (bookmarkInfo: archiveBookmarkActionType) => {
       dispatch(setArchiveBookmark(bookmarkInfo));
+      sendMessageOfAlarm(
+        archiveInfo.user_no,
+        archiveInfo.title + ' 아카이브를 북마크했습니다.',
+        authInfo.name,
+        authInfo.profile,
+      );
     },
-    [dispatch],
+    [
+      archiveInfo.title,
+      archiveInfo.user_no,
+      authInfo.name,
+      authInfo.profile,
+      dispatch,
+    ],
   );
 
   const deleteArchiveBookmarkRedux = useCallback(
@@ -48,7 +61,21 @@ function Card(data: CardProps) {
       like_no: archiveInfo.like_no,
     };
     dispatch(setArchiveLike(likeInfo));
-  }, [dispatch, archiveInfo]);
+    sendMessageOfAlarm(
+      archiveInfo.user_no,
+      '' + archiveInfo.title + ' 아카이브를 좋아합니다.',
+      authInfo.name,
+      authInfo.profile,
+    );
+  }, [
+    archiveInfo.no,
+    archiveInfo.like_no,
+    archiveInfo.user_no,
+    archiveInfo.title,
+    dispatch,
+    authInfo.name,
+    authInfo.profile,
+  ]);
 
   return (
     <>

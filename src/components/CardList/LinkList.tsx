@@ -24,6 +24,8 @@ function LinkList(props: LinkListProps) {
           {props.linkList.map(link => (
             <div key={nanoid()}>
               <Link
+                user_no={link.user_no}
+                authInfo={props.authInfo}
                 dispatch={props.dispatch}
                 type={props.linktype}
                 no={link.no}

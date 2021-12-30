@@ -10,12 +10,14 @@ function Mypage(data: MypageProps) {
       <div className="container">
         <div className="container__main">
           <CardList
+            authInfo={authInfo.data}
             dispatch={dispatch}
             archiveType="group"
             archiveInfoList={archiveInfo}
             title="내 아카이브"
           />
           <CardList
+            authInfo={authInfo.data}
             dispatch={dispatch}
             archiveType="bookmark"
             archiveInfoList={archiveInfo}

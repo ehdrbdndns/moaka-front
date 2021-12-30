@@ -6,12 +6,12 @@ import Thumbnail from './Thumbnail/Thumbnail';
 import Favicon from './Favicon/Favicon';
 import HeartIcon from './Icon/HeartIcon';
 import Button from './Button/Button';
-import Link from './Link/Link';
-import { nanoid } from 'nanoid';
+// import Link from './Link/Link';
+// import { nanoid } from 'nanoid';
 import AddArchiveModal from './Modal/AddArchiveModal';
 import DropDown from './DropDown/DropDown';
 // import Chat from './Chat/Chat';
-import NotificationModal from './Modal/NotificationModal';
+// import NotificationModal from './Modal/NotificationModal';
 import { searchUnsplashImg } from '../apis/unsplash/unsplash';
 import LoginModal from './Modal/LoginModal';
 import Toggle from './Toggle/Toggle';
@@ -64,7 +64,7 @@ function Component() {
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
               Norification Modal
             </h1>
-            <NotificationModal />
+            {/* <NotificationModal /> */}
           </div>
           <div style={{ width: '50px', marginRight: '50px' }}>
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>
@@ -158,10 +158,10 @@ function Component() {
             <h1 style={{ fontSize: '30px', marginBottom: '20px' }}>Link</h1>
             <div style={{ display: 'flex' }}>
               <div style={{ width: '230px', marginRight: '50px' }}>
-                <Link id={nanoid()} type="listview" />
+                {/* <Link id={nanoid()} type="listview" /> */}
               </div>
               <div style={{ width: '230px', marginRight: '50px' }}>
-                <Link id={nanoid()} type="imageview" />
+                {/* <Link id={nanoid()} type="imageview" /> */}
               </div>
             </div>
           </div>

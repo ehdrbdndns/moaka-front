@@ -212,7 +212,9 @@ function EditLinkSideBar(data: EditLinkSideBarProps) {
             ) : (
               isShowLinkPreview && (
                 <Link
+                  authInfo={data.authInfo.data}
                   no={data.chunkInfo.no}
+                  user_no={0}
                   dispatch={data.dispatch}
                   url={linkPreviewInfo.link}
                   thumbnail_src={linkPreviewInfo.thumbnail}
