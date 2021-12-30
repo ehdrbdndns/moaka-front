@@ -11,11 +11,13 @@ function Home(data: HomeProps) {
         <CardList
           dispatch={dispatch}
           archiveInfoList={archiveInfo}
+          authInfo={authInfo.data}
           archiveType="top"
           title="가장 인기있는 아카이브"
         />
         <CardList
           dispatch={dispatch}
+          authInfo={authInfo.data}
           archiveInfoList={archiveInfo}
           archiveType="category"
           title="내가 관심있는 아카이브"

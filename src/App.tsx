@@ -7,6 +7,7 @@ import MyPage from './containers/MyPage/MyPage';
 import ArchiveDetail from './containers/Archive/ArchiveDetail';
 import Component from './components/Component';
 import Header from './containers/Header/Header';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/mypage" component={MyPage} />
         <Route path="/" component={Home} />
       </Switch>
+      <Footer />
       {/* <NewSide /> */}
       {/* <Header /> */}
       {/* <Switch>

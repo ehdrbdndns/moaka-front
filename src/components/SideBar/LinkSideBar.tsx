@@ -152,6 +152,8 @@ function LinkSideBar(data: LinkSideBarProps) {
                 ) : (
                   isShowLinkPreview && (
                     <Link
+                      authInfo={data.authInfo.data}
+                      user_no={0}
                       url={linkPreviewInfo.link}
                       thumbnail_src={linkPreviewInfo.thumbnail}
                       favicon_src={linkPreviewInfo.favicon}

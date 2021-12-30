@@ -1,7 +1,9 @@
 import { Dispatch } from 'react';
+import { userInfo } from '../../modules/auth';
 
 export type LinkProps = {
   dispatch: Dispatch<any> | null;
+  authInfo: userInfo;
   no: number; // link db 프라이머리 키
   id: string; // link 고유 번호
   type: string; // listview, imageview
@@ -10,9 +12,10 @@ export type LinkProps = {
   favicon_src: string;
   title: string;
   description: string;
+  user_no: number; // 링크 작성한 사용자
 
   // 답글 개수
-  comment_count: number;
+  chat_count: number;
 
   // 좋아요 개수
   like_value: number;

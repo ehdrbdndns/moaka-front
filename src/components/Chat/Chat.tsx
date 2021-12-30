@@ -15,12 +15,17 @@ function Chat(data: ChatProps) {
             <div className={'chat__name ' + (data.isMine && 'active')}>
               {data.name}
             </div>
-            {data.isTimeShow && (
-              <span className="chat__time">{data.time}시간</span>
-            )}
+            {data.isTimeShow && <span className="chat__time">{data.time}</span>}
           </div>
           <p className="chat__description">{data.description}</p>
-          {data.isLikeShow && <HeartIcon />}
+          {data.isLikeShow && (
+            <HeartIcon
+              setLikeEvent={data.setLikeEvent}
+              deleteLikeEvent={data.deleteLikeEvent}
+              isActive={data.likeIsActive}
+              value={data.likeValue}
+            />
+          )}
         </div>
       </div>
     </>
@@ -42,6 +47,9 @@ Chat.defaultProps = {
   likeIsActive: false,
 
   isMine: false,
+
+  setLikeEvent: () => {},
+  deleteLikeEvent: () => {},
 };
 
 export default Chat;

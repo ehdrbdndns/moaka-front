@@ -179,6 +179,7 @@ function EditLinkSideBar(data: EditLinkSideBarProps) {
         secondButtonValue="취소"
         onClickFirstButtonEvent={deleteLinkRedux}
         onClickSecondButtonEvent={() => closeToast(removeToastElem)}
+        top={100}
       ></Toast>
       <article className="sidebar" ref={data.sidebarElem}>
         <div className="sidebar__header">
@@ -212,7 +213,9 @@ function EditLinkSideBar(data: EditLinkSideBarProps) {
             ) : (
               isShowLinkPreview && (
                 <Link
+                  authInfo={data.authInfo.data}
                   no={data.chunkInfo.no}
+                  user_no={0}
                   dispatch={data.dispatch}
                   url={linkPreviewInfo.link}
                   thumbnail_src={linkPreviewInfo.thumbnail}

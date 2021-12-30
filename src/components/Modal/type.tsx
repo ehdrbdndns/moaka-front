@@ -1,4 +1,5 @@
 import { Dispatch, RefObject } from 'react';
+import { alarmInfo } from '../../apis/alarm/types';
 import { initialState as AuthState } from '../../modules/auth';
 
 export type AddArchiveModalProps = {
@@ -88,4 +89,8 @@ export type LogoutModalProps = {
 export type ProfileModalProps = {
   dispatch: Dispatch<any>;
   authInfo: AuthState;
+};
+
+export type NotificationModalProps = {
+  alarmList: Array<alarmInfo>;
 };

@@ -24,7 +24,11 @@ function CardList(props: CardListProps) {
             archive =>
               archive.type === props.archiveType && (
                 <div key={archive.no}>
-                  <Card dispatch={props.dispatch} archiveInfo={archive}></Card>
+                  <Card
+                    dispatch={props.dispatch}
+                    authInfo={props.authInfo}
+                    archiveInfo={archive}
+                  ></Card>
                 </div>
               ),
           )}

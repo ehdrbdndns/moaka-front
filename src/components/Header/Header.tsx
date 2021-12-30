@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
+import { retrieveAlarm } from '../../apis/alarm/alarm';
+import { alarmInfo, retrieveAlarmResponse } from '../../apis/alarm/types';
+import { myAlarmConnect } from '../../asset/stomp';
 import AddArchiveModal from '../Modal/AddArchiveModal';
 import LoginModal from '../Modal/LoginModal';
 import NotificationModal from '../Modal/NotificationModal';
@@ -22,6 +25,8 @@ function Header(data: HeaderProps) {
   const secondTabElem = useRef<HTMLDivElement>(null);
 
   const [headerActiveTab, setHeaderActiveTab] = useState<string>('first');
+  const [alarmList, setAlarmList] = useState<Array<alarmInfo>>([]);
+  const [alarmInfo, setAlarmInfo] = useState<alarmInfo>();
 
   useEffect(() => {
     if (pathname === '/') {
@@ -30,6 +35,30 @@ function Header(data: HeaderProps) {
       setHeaderActiveTab('second');
     }
   }, [pathname]);
+
+  // 알람 정보 가져오기 및 소캣 연결
+  useEffect(() => {
+    const retrieveAlarmList = async () => {
+      let result: retrieveAlarmResponse = await retrieveAlarm();
+
+      setAlarmList(result.alarm_list);
+    };
+
+    authInfo.data.no && myAlarmConnect(authInfo.data.no, updateAlarm);
+
+    retrieveAlarmList();
+  }, [authInfo.data.no]);
+
+  // 알람 정보 갱신
+  useEffect(() => {
+    if (alarmInfo !== undefined) {
+      setAlarmList(alarmList => [alarmInfo, ...alarmList]);
+    }
+  }, [alarmInfo]);
+
+  const updateAlarm = (payload: any) => {
+    setAlarmInfo(payload);
+  };
 
   const headerFirstTabClick = () => {
     push('/');
@@ -118,7 +147,7 @@ function Header(data: HeaderProps) {
           </div>
         </div>
         <div className="header__item-list absolute" style={{ right: '10px' }}>
-          <div className="header__item">
+          {/* <div className="header__item">
             <div className="modal__state">
               <svg
                 width="24"
@@ -134,9 +163,9 @@ function Header(data: HeaderProps) {
                 />
               </svg>
             </div>
-          </div>
+          </div> */}
           <div className="header__item">
-            <NotificationModal></NotificationModal>
+            <NotificationModal alarmList={alarmList}></NotificationModal>
           </div>
           <div className="header__item">
             <AddArchiveModal
