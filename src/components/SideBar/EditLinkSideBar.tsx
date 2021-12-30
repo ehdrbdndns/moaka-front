@@ -179,6 +179,7 @@ function EditLinkSideBar(data: EditLinkSideBarProps) {
         secondButtonValue="취소"
         onClickFirstButtonEvent={deleteLinkRedux}
         onClickSecondButtonEvent={() => closeToast(removeToastElem)}
+        top={100}
       ></Toast>
       <article className="sidebar" ref={data.sidebarElem}>
         <div className="sidebar__header">

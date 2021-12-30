@@ -49,9 +49,10 @@ function Header(data: HeaderProps) {
     retrieveAlarmList();
   }, [authInfo.data.no]);
 
+  // 알람 정보 갱신
   useEffect(() => {
     if (alarmInfo !== undefined) {
-      setAlarmList(alarmList => [...alarmList, alarmInfo]);
+      setAlarmList(alarmList => [alarmInfo, ...alarmList]);
     }
   }, [alarmInfo]);
 
@@ -146,7 +147,7 @@ function Header(data: HeaderProps) {
           </div>
         </div>
         <div className="header__item-list absolute" style={{ right: '10px' }}>
-          <div className="header__item">
+          {/* <div className="header__item">
             <div className="modal__state">
               <svg
                 width="24"
@@ -162,7 +163,7 @@ function Header(data: HeaderProps) {
                 />
               </svg>
             </div>
-          </div>
+          </div> */}
           <div className="header__item">
             <NotificationModal alarmList={alarmList}></NotificationModal>
           </div>

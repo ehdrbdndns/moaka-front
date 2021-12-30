@@ -33,16 +33,17 @@ function NotificationModal(data: NotificationModalProps) {
               <h3 className="modal__title">알림</h3>
             </div>
             <div className="modal__content">
-              {data.alarmList.map(alarm => (
-                <Chat
-                  key={nanoid()}
-                  isTimeShow={true}
-                  name={alarm.send_name}
-                  description={alarm.content}
-                  profileSrc={alarm.send_profile}
-                  time={alarm.regdate}
-                />
-              ))}
+              {data.alarmList &&
+                data.alarmList.map(alarm => (
+                  <Chat
+                    key={nanoid()}
+                    isTimeShow={true}
+                    name={alarm.send_name}
+                    description={alarm.content}
+                    profileSrc={alarm.send_profile}
+                    time={alarm.regdate}
+                  />
+                ))}
             </div>
           </div>
         </div>

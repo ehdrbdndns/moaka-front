@@ -6,6 +6,9 @@ import { BASE_URL } from '../apis/utils';
 let chatStompClient: Stomp.Client;
 let myAlarmStompClient: Stomp.Client;
 
+const socketId = 'moaka';
+const socketPw = 'moaka2021!zz';
+
 const onError = (e: any) => {
   console.log('STOMP ERROR', e);
 };
@@ -27,8 +30,8 @@ const myAlarmConnect = (
   myAlarmStompClient.debug = onDebug;
 
   myAlarmStompClient.connect(
-    'guest',
-    'guest',
+    socketId,
+    socketPw,
     function (frame) {
       console.log('STOMP Connected');
 
@@ -64,8 +67,8 @@ const chatConnect = (
   chatStompClient.debug = onDebug;
 
   chatStompClient.connect(
-    'guest',
-    'guest',
+    socketId,
+    socketPw,
     function (frame) {
       console.log('STOMP Connected');
 

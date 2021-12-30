@@ -9,4 +9,5 @@ export type ToastProps = {
   secondButtonValue: string;
   onClickFirstButtonEvent: () => void;
   onClickSecondButtonEvent: () => void;
+  top: number; // taost 위치 값 설정
 };

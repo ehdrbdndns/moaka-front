@@ -7,6 +7,7 @@ function Toast(data: ToastProps) {
       <div
         ref={data.toastElem}
         className={'toast toast-' + data.type + ' toast-show-' + data.showType}
+        style={{ transform: `translate(-50%, ${data.top}px)` }}
       >
         <span className="toast__message">{data.message}</span>
         {data.isFirstButton && (
@@ -43,6 +44,7 @@ Toast.defaultProps = {
   secondButtonValue: '',
   onClickFirstButtonEvent: () => {},
   onClickSecondButtonEvent: () => {},
+  top: 40,
 };
 
 export default Toast;
