@@ -1,56 +1,47 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core';
 
-const footerStyles = makeStyles(theme => ({
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6, 0),
-    width: '100%',
-    bottom: 0,
-  },
-}));
-
-function Copyright() {
+function Footer() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <>
+      <footer className="footer">
+        <img className="footer__img" src="/img/footer.png" alt="푸터 이미지" />
+        <span className="footer__email">Moaka2021@gmail.com</span>
+        <div className="footer__sns">
+          <span
+            onClick={() =>
+              window.open('https://www.instagram.com/moaka_official/?hl=ko')
+            }
+          >
+            Instagram
+          </span>
+        </div>
+        <div className="footer__privacy">
+          <span
+            onClick={() => {
+              window.open(
+                'https://moaka.notion.site/58b69c688c8e4465b6d91ea00ca169ed',
+              );
+            }}
+          >
+            이용 약관
+          </span>
+          <span
+            className="px-ml-15"
+            onClick={() => {
+              window.open(
+                'https://moaka.notion.site/4939e546ef704fefb913dc7d34c64d9d',
+              );
+            }}
+          >
+            개인정보 처리방침
+          </span>
+        </div>
+        <span className="footer__caption">
+          ⓒ 2021. moaca. All rights reserved.
+        </span>
+      </footer>
+    </>
   );
 }
 
-export default function Footer() {
-  const classes = footerStyles();
-
-  return (
-    <footer className={classes.footer}>
-      <Container maxWidth="lg">
-        <Typography variant="h6" align="center" gutterBottom>
-          모두가 함께하는 아카이브 모아카
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          서로 다른 mbti들의 모임
-        </Typography>
-        <Copyright />
-      </Container>
-    </footer>
-  );
-}
-
-Footer.propTypes = {
-  description: PropTypes.string,
-  title: PropTypes.string,
-};
+export default Footer;

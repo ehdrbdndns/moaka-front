@@ -1,4 +1,5 @@
 import { archiveInfo } from '../../modules/archive/types';
+import { searchUserType } from '../user/types';
 
 export type getGroupArchiveListResponse = {
   isSuccess: boolean;
@@ -51,12 +52,13 @@ export type insertArchiveRequest = {
   info: {
     title: string;
     description: string;
-    tag_list: string[];
     privacy_type: string;
+    thumbnail: string;
+    tag_list: string[];
     group_no_list: number[];
     category: string;
   };
-  thumbnailFile: File;
+  thumbnailFile: File | undefined;
 };
 
 export type updateArchiveRequest = {
@@ -70,7 +72,8 @@ export type updateArchiveRequest = {
     thumbnail: string;
     category: string;
   };
-  thumbnailFile: File | null;
+  thumbnailFile: File | undefined;
+  user_list: Array<searchUserType>;
 };
 
 export type updateArchiveResponse = {

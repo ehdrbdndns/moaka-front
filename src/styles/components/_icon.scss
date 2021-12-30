@@ -1,0 +1,14 @@
+.icon {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 2px;
+
+  img {
+    margin-right: 4px;
+    cursor: pointer;
+  }
+
+  span {
+    @include button;
+  }
+}

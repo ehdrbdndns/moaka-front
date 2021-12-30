@@ -1,7 +1,6 @@
-export type DirectoryResponse = {
-  archive_no: number;
-  archive_title: string;
-  section_list: {
+export type DirectoryResponseByAxios = {
+  title: string;
+  list: {
     no: number;
     title: string;
   }[];
@@ -17,6 +16,19 @@ export type userListType = {
 export type searchUserListResponse = {
   isSuccess: boolean;
   user_list: Array<userListType>;
+  error: number;
+};
+
+export type searchUserType = {
+  no: number;
+  id: string;
+  name: string;
+  profile: string;
+};
+
+export type searchUserResponse = {
+  isSuccess: boolean;
+  user: searchUserType;
   error: number;
 };
 

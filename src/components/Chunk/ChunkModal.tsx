@@ -244,6 +244,13 @@ function UpdateChunkModal({
         relative_chunk_loading: false,
         comment_list: [],
         comment_loading: false,
+        domain: '',
+        favicon: '',
+        user_no: 0,
+        like_count: 0,
+        room_id: '',
+        room_no: 0,
+        chat_count: 0,
       };
 
       updateChunkRedux(chunkInfo);
@@ -356,6 +363,13 @@ function MakeChunkModal({
         relative_chunk_loading: false,
         comment_list: [],
         comment_loading: false,
+        domain: '',
+        favicon: '',
+        user_no: 0,
+        like_count: 0,
+        room_id: '',
+        room_no: 0,
+        chat_count: 0,
       };
 
       makeChunkRedux(chunkInfo);

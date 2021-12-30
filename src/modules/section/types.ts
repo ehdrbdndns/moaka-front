@@ -153,20 +153,60 @@ export type relativeChunkInfo = {
   regdate: string;
 };
 
-export type chunkInfo = {
+export type newChunkInfo = {
   no: number;
-  section_no: number;
-  title: string;
-  thumbnail: string;
   link: string;
-  link_title: string;
-  link_description: string;
+  thumbnail: string;
+  section_no: number;
   description: string;
   regdate: string;
+  favicon: string;
+  domain: string;
+  user_no: number;
+};
+
+export type insertChunkInfo = {
+  link: string;
+  thumbnail: string;
+  section_no: number;
+  description: string;
+  favicon: string;
+  domain: string;
+};
+
+export type updateChunkInfo = {
+  no: number;
+  link: string;
+  thumbnail: string;
+  section_no: number;
+  description: string;
+  favicon: string;
+  domain: string;
+};
+
+export type chunkInfo = {
+  no: number;
+  link: string;
+  thumbnail: string;
+  section_no: number;
+  description: string;
+  regdate: string;
+  favicon: string;
+  domain: string;
+  user_no: number;
+  like_no: number;
+  like_count: number;
+  room_id: string;
+  room_no: number;
+  chat_count: number;
+
+  // 구 버전 타입
+  title: string;
+  link_title: string;
+  link_description: string;
   tag_list: Array<string>;
   bookmark_no: number;
   bookmark_loading: boolean;
-  like_no: number;
   like_loading: boolean;
   relative_chunk_list: Array<relativeChunkInfo>;
   relative_chunk_loading: boolean;
@@ -175,13 +215,15 @@ export type chunkInfo = {
 };
 
 export type sectionInfo = {
-  no: number | undefined;
+  no: number;
   archive_no: number;
   title: string;
   description: string;
-  tag_list: Array<string>;
   chunk_list: Array<chunkInfo>;
   regdate: string | undefined;
+
+  // 구 버전 타입
+  tag_list: Array<string>;
 };
 
 export type initialState = {

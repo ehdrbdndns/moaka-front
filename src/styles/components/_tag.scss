@@ -1,0 +1,44 @@
+.tag {
+  @include caption;
+  color: $gray700;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 4px;
+  border: 1px solid $gray400;
+  cursor: pointer;
+
+  position: relative;
+
+  &.m {
+    height: 20px;
+  }
+
+  &.l {
+    height: 28px;
+  }
+
+  &.primary {
+    color: white;
+    background: $primary-color;
+  }
+
+  &:hover &__close {
+    display: block;
+  }
+
+  &__close {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
+  }
+
+  & + & {
+    margin-left: 8px;
+  }
+}

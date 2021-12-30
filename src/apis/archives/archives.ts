@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { defaultThumbnailImg } from '../../asset';
+import { archiveInfo } from '../../modules/archive';
 import { BASE_URL } from '../utils';
 import {
   deleteArchiveResponse,
@@ -20,28 +22,16 @@ export const insertArchive = async (
   const result: insertArchiveResponse = {
     isSuccess: false,
     error: 0,
-    archive: {
-      no: 0,
-      user_no: 0,
-      title: '',
-      description: '',
-      thumbnail: '',
-      creator_name: '',
-      privacy_type: '',
-      regdate: '',
-      tag_list: [],
-      bookmark_no: 0,
-      bookmark_loading: false,
-      like_no: 0,
-      like_loading: false,
-      type: '',
-      category: '',
-    },
+    archive: {} as archiveInfo,
   };
 
   const formData = new FormData();
 
-  formData.append('thumbnailFile', insertArchiveRequest.thumbnailFile);
+  if (insertArchiveRequest.thumbnailFile !== undefined) {
+    formData.append('thumbnailFile', insertArchiveRequest.thumbnailFile);
+  } else {
+    insertArchiveRequest.info.thumbnail = defaultThumbnailImg;
+  }
   formData.append(
     'archive',
     new Blob([JSON.stringify(insertArchiveRequest.info)], {
@@ -63,7 +53,7 @@ export const insertArchive = async (
       result.archive.type = 'group';
     })
     .catch(function (error) {
-      console.log(error.response);
+      console.log(error);
       result.isSuccess = false;
       result.error = error.response.status;
     });
@@ -82,7 +72,7 @@ export const updateArchive = async (
 
   const formData = new FormData();
 
-  updateArchiveRequest.thumbnailFile &&
+  updateArchiveRequest.thumbnailFile !== undefined &&
     formData.append('thumbnailFile', updateArchiveRequest.thumbnailFile);
 
   formData.append(
@@ -240,7 +230,7 @@ export const getCategoryArchiveList =
     try {
       const token = localStorage.getItem('token');
       await axios
-        .post(BASE_URL + '/user/retrieveArchiveOfCategory', null, {
+        .post(BASE_URL + '/retrieveArchiveOfCategory', null, {
           headers: {
             Bearer: token,
           },
@@ -297,23 +287,7 @@ export const getArchive = async (
   const result: getArchiveResponse = {
     isSuccess: false,
     error: 0,
-    archive: {
-      no: 0,
-      user_no: 0,
-      title: '',
-      description: '',
-      thumbnail: '',
-      creator_name: '',
-      privacy_type: '',
-      regdate: '',
-      tag_list: [],
-      bookmark_no: 0,
-      bookmark_loading: false,
-      like_no: 0,
-      like_loading: false,
-      type: '',
-      category: '',
-    },
+    archive: {} as archiveInfo,
   };
 
   const token = localStorage.getItem('token');

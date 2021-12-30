@@ -1,0 +1,17 @@
+.container {
+  max-width: $max-width;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+
+  padding: 0 30px;
+  &__main {
+    position: relative;
+    max-width: $main-max-width;
+    width: 100%;
+  }
+
+  &__sub {
+    max-width: $sub-max-width;
+  }
+}

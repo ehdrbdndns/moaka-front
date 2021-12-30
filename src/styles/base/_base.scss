@@ -1,0 +1,106 @@
+* {
+  @include nodrag;
+}
+
+html,
+body {
+  @include scroll;
+}
+
+.d-none {
+  display: none;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-item-center {
+  align-items: center;
+}
+
+.m-0-auto {
+  margin: 0 auto;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+a {
+  text-decoration: none;
+}
+
+svg {
+  cursor: pointer;
+}
+
+@include desktop {
+  .desktop {
+    display: initial !important;
+  }
+
+  .tablet {
+    display: none;
+  }
+
+  .mobile {
+    display: none;
+  }
+}
+
+@include tablet {
+  .desktop {
+    display: none;
+  }
+
+  .tablet {
+    display: initial !important;
+  }
+
+  .mobile {
+    display: none;
+  }
+}
+
+@include mobile {
+  .desktop {
+    display: none;
+  }
+
+  .tablet {
+    display: none;
+  }
+
+  .mobile {
+    display: initial !important;
+  }
+}

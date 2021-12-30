@@ -267,8 +267,9 @@ function MakeArchiveModal({
       const insertArchiveRequest: insertArchiveRequest = {
         info: {
           title: title,
+          thumbnail: '',
+          tag_list: [],
           description: description,
-          tag_list: tag_list,
           group_no_list: group_list,
           privacy_type: privacy,
           category: category,
@@ -660,7 +661,8 @@ function UpdateArchiveModal({
         privacy_type: privacy,
         category: category,
       },
-      thumbnailFile: thumbnailFile || null,
+      thumbnailFile: thumbnailFile,
+      user_list: [],
     };
 
     updateArchiveRedux(updateArchiveRequest);

@@ -37,3 +37,79 @@
     margin: 0;
   }
 }
+
+.card {
+  display: grid;
+  row-gap: 11px;
+  justify-content: center;
+  width: 230px;
+  padding: 12px 0;
+  background-color: white;
+  border-radius: 6px;
+  border: 1px solid $gray200;
+  transition: 0.25s;
+
+  &:hover {
+    border: 1px solid #20212c;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.24);
+  }
+
+  &__header {
+    display: grid;
+    row-gap: 11px;
+    justify-content: center;
+  }
+
+  &__bookmark {
+    width: 24px;
+    height: 24px;
+    margin: 0 auto;
+    cursor: pointer;
+  }
+
+  &__title {
+    @include h5;
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    line-height: 23.17px;
+    height: 64px;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__icon-box {
+    display: flex;
+    align-items: center;
+    margin-right: 4px;
+
+    &:nth-last-child(1) {
+      margin: 0;
+    }
+  }
+
+  &__icon-name {
+    @include button;
+
+    color: $gray800;
+    margin-left: 4px;
+  }
+
+  &-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 8px;
+
+    &__item {
+      margin: 0px 4px;
+    }
+  }
+}

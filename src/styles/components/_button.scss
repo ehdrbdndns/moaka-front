@@ -50,3 +50,101 @@
     box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.15);
   }
 }
+
+.button {
+  @include button;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &.m {
+    height: 40px;
+  }
+
+  &.s {
+    height: 24px;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+
+  &.primary {
+    background-color: $gray300;
+    color: $gray500;
+
+    &.disabled {
+      background-color: $gray300;
+      color: $gray500;
+    }
+  }
+
+  &.outline {
+    border: 1px solid $primary-color;
+    background: none;
+    color: $primary-color;
+
+    &:hover {
+      color: white;
+      background-color: $primary-color;
+    }
+
+    &.pressed {
+      color: white;
+      background-color: $secondary-color;
+      border: 1px solid $secondary-color;
+    }
+  }
+
+  &.outline.disabled {
+    border: 1px solid $gray500;
+    color: $gray500;
+    cursor: not-allowed;
+
+    &.pressed,
+    &:hover {
+      color: $gray500;
+      background: none;
+    }
+  }
+
+  &.outline-text {
+    background: none;
+    color: $primary-color;
+
+    &.disabled {
+      border: 1px solid $gray300;
+      color: $gray400;
+    }
+  }
+
+  &.text {
+    font-size: 0.813rem;
+    font-weight: 700;
+    color: $quaternary-color;
+    letter-spacing: 0.0125em;
+
+    &.disabled {
+      color: $gray500;
+    }
+  }
+
+  &.text.primary-color {
+    color: $primary-color;
+  }
+
+  &.google {
+    background-color: $gray100;
+    color: black;
+  }
+
+  &__img {
+    margin-right: 16px;
+    width: 20px;
+    height: 20px;
+  }
+}

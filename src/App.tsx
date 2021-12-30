@@ -2,27 +2,33 @@ import React from 'react';
 import './App.css';
 import './styles/main.scss';
 import { Route, Switch } from 'react-router-dom';
-import Home from './containers/Home';
-import Login from './containers/Login';
-import Register from './containers/Register';
-import MyPage from './containers/MyPage';
-import ArchiveDetail from './containers/ArchiveDetail';
-import TEST from './containers/TEST';
+import Home from './containers/Home/Home';
+import MyPage from './containers/MyPage/MyPage';
+import ArchiveDetail from './containers/Archive/ArchiveDetail';
+import Component from './components/Component';
+import Header from './containers/Header/Header';
 import Footer from './components/Footer/Footer';
-import Header from './containers/Header';
-import Search from './containers/Search';
 
 function App() {
   return (
     <div>
       <Header />
       <Switch>
+        <Route path="/component" component={Component} />
+        <Route path="/archive" component={ArchiveDetail} />
+        <Route path="/mypage" component={MyPage} />
+        <Route path="/" component={Home} />
+      </Switch>
+      <Footer />
+      {/* <NewSide /> */}
+      {/* <Header /> */}
+      {/* <Switch>
         <Route path="/test">
           <TEST />
         </Route>
         <Route path="/login">
           <Login />
-        </Route>
+        </Route> 
         <Route path="/register">
           <Register />
         </Route>
@@ -39,7 +45,7 @@ function App() {
           <Home />
         </Route>
       </Switch>
-      <Footer />
+      <Footer /> */}
     </div>
   );
 }

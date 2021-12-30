@@ -1,3 +1,12 @@
+export type linkPreviewResponse = {
+  domain: string;
+  link: string;
+  description: string;
+  thumbnail: string;
+  favicon: string;
+  error: number;
+};
+
 export type insertBookmarkOfArchiveResponse = {
   isSuccess: boolean;
   error: number;

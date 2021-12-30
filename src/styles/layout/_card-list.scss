@@ -1,0 +1,47 @@
+.card-list {
+  max-width: 1010px;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding-top: 4px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  &__toggle {
+    cursor: pointer;
+    transform: rotate(180deg);
+    transform-origin: center center;
+    transition: 0.25s;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 230px);
+    column-gap: 30px;
+    row-gap: 20px;
+    height: 0;
+    overflow: hidden;
+    justify-content: center;
+  }
+
+  &.show &__content {
+    @include scroll;
+
+    height: 100%;
+  }
+
+  &.show &__toggle {
+    transform: rotate(0);
+  }
+}
