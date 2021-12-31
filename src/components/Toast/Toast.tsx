@@ -7,7 +7,9 @@ function Toast(data: ToastProps) {
       <div
         ref={data.toastElem}
         className={'toast toast-' + data.type + ' toast-show-' + data.showType}
-        style={{ transform: `translate(-50%, ${data.top}px)` }}
+        style={
+          data.top !== 0 ? { transform: `translate(-50%, ${data.top}px)` } : {}
+        }
       >
         <span className="toast__message">{data.message}</span>
         {data.isFirstButton && (
