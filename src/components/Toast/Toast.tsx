@@ -8,7 +8,7 @@ function Toast(data: ToastProps) {
         ref={data.toastElem}
         className={'toast toast-' + data.type + ' toast-show-' + data.showType}
         style={
-          data.top !== 0 ? { transform: `translate(-50%, ${data.top}px)` } : {}
+          data.top !== 40 ? { transform: `translate(-50%, ${data.top}px)` } : {}
         }
       >
         <span className="toast__message">{data.message}</span>
