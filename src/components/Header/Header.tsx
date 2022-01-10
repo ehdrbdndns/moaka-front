@@ -14,8 +14,7 @@ import Toast from '../Toast/Toast';
 import { HeaderProps } from './types';
 
 function Header(data: HeaderProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { dispatch, authInfo, userListInfo } = data;
+  const { dispatch, authInfo } = data;
 
   const { push } = useHistory();
   const { pathname } = useLocation();

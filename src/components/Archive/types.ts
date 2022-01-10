@@ -9,5 +9,3 @@ export type ArchiveDetailProps = {
   sectionInfo: SectionInfo;
   authInfo: AuthInfo;
 };
-
-export {};
