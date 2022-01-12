@@ -15,7 +15,7 @@ type CardListProps = {
 type LinkListProps = {
   title: string;
   isShow: boolean;
-  linktype: string;
+  linktype: string; // imageview or linkview
   linkList: Array<LinkProps>;
   dispatch: Dispatch<any>;
   authInfo: userInfo;

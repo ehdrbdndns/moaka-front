@@ -24,37 +24,52 @@ import Toast from '../Toast/Toast';
 import { changeLinkType } from './event';
 import { ArchiveDetailProps } from './types';
 
+// TODO 아카이브 상세 페이지 컴포넌트
 function ArchiveDetail(data: ArchiveDetailProps) {
   const dispatch = data.dispatch;
 
+  // 리덕스 state에 있는 아카이브 정보
   const archiveInfo = data.archiveInfo.data[0];
+  // 리덕스 state로부터 아카이브를 가지고 올 동안의 로딩여부
   const archiveLoading = data.archiveInfo.loading;
 
+  // 리덕스 state에 있는 섹션 정보
   const sectionInfo = data.sectionInfo;
 
+  // 수정전용 토스트 Element
   const editToastElem = useRef<HTMLDivElement>(null);
+  // 에러 전용 토스트 Element
+  const errorToastElem = useRef<HTMLDivElement>(null);
 
+  // 링크를 보여주는 view 방식 ex) iamgeview or linkview
   const [linkType, setLinkType] = useState<string>('imageview');
 
+  // 링크를 클릭할 경우 생성되는 Iframe Element
   const iframeElem = useRef<HTMLDivElement>(null);
   const [iframeShow, setIframeShow] = useState<boolean>(false);
   const [iframeUrl, setIframeUrl] = useState<string>('');
   const [iframeDomain, setIframeDomain] = useState<string>('');
   const [iframeLinkNo, setIframeLinkNo] = useState<number>(0);
 
-  const errorChatElem = useRef<HTMLDivElement>(null);
-
+  // 현재 수정모드인지에 대한 여부
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  // archive or edit or chat
+  // 현재 사이드바의 상태
+  // archive -> 아카이브 수정 사이드바
+  // edit    -> 링크 수정 사이드 바
+  // chat    -> 채팅 사이드바
   const [navMode, setNavMode] = useState<string>('archive');
 
+  // Iframe을 열 때에 사용되는 useState
   const [chunkInfo, setChunkInfo] = useState<chunkInfo>({} as chunkInfo);
+  // 채팅방을 열 때에 사용되는 useState
   const [chatList, setChatList] = useState<Array<chatInfo>>([]);
+  // 새로운 채팅이 올 때에 사용되는 useState
   const [newChatInfo, setNewChatInfo] = useState<chatInfo | null>(null);
 
   let isChattingTime: NodeJS.Timeout;
   const [isChatting, setIsChatting] = useState<boolean>(false);
 
+  // 새로운 채팅 혹은 좋아요가 일어날 때마다 실시간 업데이트를 해주는 Hook
   useEffect(() => {
     if (newChatInfo) {
       isChattingTimeout();
@@ -120,16 +135,13 @@ function ArchiveDetail(data: ArchiveDetailProps) {
     setIframeLinkNo(no);
   };
 
+  // 링크 수정 사이드바 열람
   const openEditLinkSidebar = (chunkInfo: chunkInfo) => {
     setNavMode('edit');
     setChunkInfo(chunkInfo);
   };
 
-  // 댓글 실시간 업데이트
-  const updateChatEvent = useCallback((payload: any) => {
-    setNewChatInfo(payload);
-  }, []);
-
+  // 댓글 사이드바 열람
   const openCommentSidebar = async (chunkInfo: chunkInfo) => {
     let result: retrieveChatByRoomNoResponse = await retrieveChatByRoomNo(
       chunkInfo.room_no,
@@ -143,19 +155,27 @@ function ArchiveDetail(data: ArchiveDetailProps) {
       setChunkInfo(chunkInfo);
       setNavMode('chat');
     } else {
-      toasting(errorChatElem);
+      toasting(errorToastElem);
     }
   };
 
+  // 댓글 실시간 업데이트
+  const updateChatEvent = useCallback((payload: any) => {
+    setNewChatInfo(payload);
+  }, []);
+
+  // 수정모드로 전환 함수
   const openEditMode = () => {
     setIsEditMode(true);
   };
 
+  // 수정모드 취소 함수
   const closeEditMode = () => {
     setIsEditMode(false);
     setNavMode('archive');
   };
 
+  // 아카이브 북마크를 할 경우 함수
   const setArchiveBookmarkRedux = (bookmarkInfo: archiveBookmarkActionType) => {
     dispatch(setArchiveBookmark(bookmarkInfo));
     sendMessageOfAlarm(
@@ -166,6 +186,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
     );
   };
 
+  // 아카이브 북마크를 취소할 경우 함수
   const deleteArchiveBookmarkRedux = useCallback(
     (bookmarkInfo: archiveBookmarkActionType) => {
       dispatch(deleteArchiveBookmark(bookmarkInfo));
@@ -173,6 +194,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
     [dispatch],
   );
 
+  // 아카이브 좋아요를 취소할 경우 함수
   const deleteArchiveLikeRedux = useCallback(() => {
     const likeInfo: archiveLikeActionType = {
       archive_no: archiveInfo.no,
@@ -181,6 +203,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
     dispatch(deleteArchiveLike(likeInfo));
   }, [dispatch, archiveInfo]);
 
+  // 아카이브를 좋아요 할 경우 함수
   const setArchiveLikeRedux = () => {
     const likeInfo: archiveLikeActionType = {
       archive_no: archiveInfo.no,
@@ -198,7 +221,7 @@ function ArchiveDetail(data: ArchiveDetailProps) {
   return (
     <>
       <Toast
-        toastElem={errorChatElem}
+        toastElem={errorToastElem}
         showType="fixed"
         type="error"
         message="댓글을 불러오지 못했습니다."

@@ -22,6 +22,7 @@ function EditLinkSideBar(data: EditLinkSideBarProps) {
   const removeToastElem = useRef<HTMLDivElement>(null);
   const resultToastElem = useRef<HTMLDivElement>(null);
 
+  // 수정할 링크의 Primary key
   const [chunkNo, setChunkNo] = useState<number>(0);
 
   const [link, setLink] = useState<string>('');
@@ -80,6 +81,7 @@ function EditLinkSideBar(data: EditLinkSideBarProps) {
     linkPreviewEvent(e);
   };
 
+  // Link 입력 시 Link Preview 생성
   const linkPreviewEvent = async (e: any) => {
     if (regUrl.test(e.target.value)) {
       setLinkLoading(true);
@@ -98,6 +100,7 @@ function EditLinkSideBar(data: EditLinkSideBarProps) {
     }
   };
 
+  // 링크 수정 함수
   const updateLinkEvent = async () => {
     let isError = false;
     if (description === '') {

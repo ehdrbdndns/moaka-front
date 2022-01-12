@@ -1,4 +1,4 @@
 export type FaviconProps = {
-  type: string;
+  type: string; // link or moaka
   src: string;
 };
