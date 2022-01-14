@@ -60,6 +60,10 @@
         transform: translateX(0);
       }
     }
+
+    &.tag {
+      @include scroll;
+    }
   }
 
   &.active &__caret {

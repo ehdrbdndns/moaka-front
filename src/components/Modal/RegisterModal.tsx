@@ -144,7 +144,7 @@ function RegisterModal(data: RegisterModalProps) {
         subModalElem={data.profileModalElem}
         onClickButton={onClickProfileBtnEvent}
       />
-      <div className="modal__view sub" ref={categoryModalElem}>
+      <div className="modal__view sub tag" ref={categoryModalElem}>
         {modalError !== '' && (
           <div className="modal__caption-error">{modalError}</div>
         )}
