@@ -1,4 +1,5 @@
 import React from 'react';
+import TagManager from 'react-gtm-module';
 import './App.css';
 import './styles/main.scss';
 import { Route, Switch } from 'react-router-dom';
@@ -9,6 +10,12 @@ import Header from './containers/Header/Header';
 import Footer from './components/Footer/Footer';
 
 function App() {
+  const tagManagerArgs = {
+    gtmId: 'GTM-KFL43BS',
+  };
+
+  TagManager.initialize(tagManagerArgs);
+
   return (
     <div>
       <Header />

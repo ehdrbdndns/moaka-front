@@ -163,11 +163,39 @@ function RegisterModal(data: RegisterModalProps) {
           <div>
             <h6 className="modal__subtitle">카테고리 테마</h6>
             <div className="modal__tag-box">
-              <Tag size="l" value="개발" onClick={onClickTagEvent} />
-              <Tag size="l" value="기획" onClick={onClickTagEvent} />
-              <Tag size="l" value="디자인" onClick={onClickTagEvent} />
+              <Tag size="l" value="개발 일반" onClick={onClickTagEvent} />
+              <Tag size="l" value="툴 / 생산성" onClick={onClickTagEvent} />
+              <Tag size="l" value="서버/ 백엔드" onClick={onClickTagEvent} />
+              <Tag size="l" value="JavaScript" onClick={onClickTagEvent} />
+              <Tag size="l" value="웹 프론트엔드" onClick={onClickTagEvent} />
+              <Tag size="l" value="Python" onClick={onClickTagEvent} />
+              <Tag size="l" value="Java" onClick={onClickTagEvent} />
+              <Tag size="l" value="클라우드" onClick={onClickTagEvent} />
+              <Tag size="l" value="웹" onClick={onClickTagEvent} />
+              <Tag size="l" value="데이터 과학" onClick={onClickTagEvent} />
+              <Tag size="l" value="Git / Github" onClick={onClickTagEvent} />
+              <Tag size="l" value="Kotlin" onClick={onClickTagEvent} />
+              <Tag size="l" value="비전공자 / 신입" onClick={onClickTagEvent} />
+              <Tag size="l" value="React" onClick={onClickTagEvent} />
+              <Tag size="l" value="블록체인" onClick={onClickTagEvent} />
+              <Tag size="l" value="안드로이드" onClick={onClickTagEvent} />
+              <Tag size="l" value="테스팅" onClick={onClickTagEvent} />
+              <Tag size="l" value="커리어" onClick={onClickTagEvent} />
+              <Tag size="l" value="보안" onClick={onClickTagEvent} />
+              <Tag size="l" value="데이터베이스" onClick={onClickTagEvent} />
+              <Tag size="l" value="머신러닝" onClick={onClickTagEvent} />
+              <Tag size="l" value="ios" onClick={onClickTagEvent} />
+              <Tag size="l" value="컴퓨터 과학" onClick={onClickTagEvent} />
+              <Tag size="l" value="세미나" onClick={onClickTagEvent} />
+              <Tag size="l" value="데브옵스" onClick={onClickTagEvent} />
+              <Tag size="l" value="동기부여" onClick={onClickTagEvent} />
+              <Tag size="l" value="UI/UX" onClick={onClickTagEvent} />
+              <Tag size="l" value="IT 이야기" onClick={onClickTagEvent} />
+              <Tag size="l" value="기업 / 스타트업" onClick={onClickTagEvent} />
+              <Tag size="l" value="Tech" onClick={onClickTagEvent} />
               <Tag size="l" value="마케팅" onClick={onClickTagEvent} />
-              <Tag size="l" value="스타트업" onClick={onClickTagEvent} />
+              <Tag size="l" value="기획" onClick={onClickTagEvent} />
+              <Tag size="l" value="게임" onClick={onClickTagEvent} />
             </div>
           </div>
           <Button
