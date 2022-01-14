@@ -37,6 +37,7 @@ function ArchiveSideBar(data: ArchiveSideBarProps) {
   const resultToastElem = useRef<HTMLDivElement>(null);
   const removeToastElem = useRef<HTMLDivElement>(null);
 
+  // 비공개 or 공개
   const [privacyType, setPrivacyType] = useState<string>('private');
   const [title, setTitle] = useState<string>('');
   const [titleError, setTitleError] = useState<string>('');
@@ -55,6 +56,7 @@ function ArchiveSideBar(data: ArchiveSideBarProps) {
 
   const [btnLoading, setBtnLoading] = useState<boolean>(false);
 
+  // 아카이브 정보 셋팅
   useEffect(() => {
     setTitle(archiveInfo.title);
     setPrivacyType(archiveInfo.privacy_type);
@@ -76,6 +78,7 @@ function ArchiveSideBar(data: ArchiveSideBarProps) {
     onClickTab(secondTabElem, firstTabElem);
   };
 
+  // 참여자 초대 함수
   const setUserListEvent = async (e: any) => {
     if (e.key === 'Enter') {
       let newEmail = e.target.value;
@@ -111,12 +114,16 @@ function ArchiveSideBar(data: ArchiveSideBarProps) {
       }
     }
   };
+  const removeUserList = (id: string) => {
+    setUserList(userList.filter(user => user.id !== id));
+  };
 
   const setTagEvent = (value: string) => {
     setTag(value);
     setTagError('');
   };
 
+  // 태그 추가 함수
   const setTagListEvent = (e: any) => {
     if (e.key === 'Enter') {
       let newTag: string = e.target.value.trim();
@@ -141,7 +148,6 @@ function ArchiveSideBar(data: ArchiveSideBarProps) {
       }
     }
   };
-
   const removeTagListEvent = (existTag: string) => {
     setTagList(tagList.filter(tag => tag !== existTag));
   };
@@ -166,10 +172,7 @@ function ArchiveSideBar(data: ArchiveSideBarProps) {
     return isTrue;
   };
 
-  const removeUserList = (id: string) => {
-    setUserList(userList.filter(user => user.id !== id));
-  };
-
+  // 아카이브 업데이트 함수
   const updateArchiveRedux = async () => {
     if (checkValue()) {
       setBtnLoading(true);

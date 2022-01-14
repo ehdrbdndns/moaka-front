@@ -21,9 +21,12 @@ function Card(data: CardProps) {
   const { push } = useHistory();
   const { dispatch, archiveInfo, authInfo } = data;
 
+  // TODO 아카이브 북마크 생성 함수
   const setArchiveBookmarkRedux = useCallback(
     (bookmarkInfo: archiveBookmarkActionType) => {
       dispatch(setArchiveBookmark(bookmarkInfo));
+
+      // 사용자에게 북마크 알람 전송
       sendMessageOfAlarm(
         archiveInfo.user_no,
         archiveInfo.title + ' 아카이브를 북마크했습니다.',
@@ -40,6 +43,7 @@ function Card(data: CardProps) {
     ],
   );
 
+  // TODO 아카이브 북마크 삭제 함수
   const deleteArchiveBookmarkRedux = useCallback(
     (bookmarkInfo: archiveBookmarkActionType) => {
       dispatch(deleteArchiveBookmark(bookmarkInfo));
@@ -47,6 +51,7 @@ function Card(data: CardProps) {
     [dispatch],
   );
 
+  // TODO 아카이브 좋아요 삭제 함수
   const deleteArchiveLikeRedux = useCallback(() => {
     const likeInfo: archiveLikeActionType = {
       archive_no: archiveInfo.no,
@@ -55,12 +60,15 @@ function Card(data: CardProps) {
     dispatch(deleteArchiveLike(likeInfo));
   }, [dispatch, archiveInfo]);
 
+  // TODO 아카이브 좋아요 생성 함수
   const setArchiveLikeRedux = useCallback(() => {
     const likeInfo: archiveLikeActionType = {
       archive_no: archiveInfo.no,
       like_no: archiveInfo.like_no,
     };
     dispatch(setArchiveLike(likeInfo));
+
+    // 사용자에게 좋아요 알람 전송
     sendMessageOfAlarm(
       archiveInfo.user_no,
       '' + archiveInfo.title + ' 아카이브를 좋아합니다.',

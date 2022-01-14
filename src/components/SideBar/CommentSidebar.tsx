@@ -16,12 +16,16 @@ import PuffLoader from 'react-spinners/PuffLoader';
 function CommentSidebar(data: CommentSideBarProps) {
   const { chunkInfo, authInfo } = data;
 
+  // 채팅 바 Element
   const commentElem = useRef<HTMLDivElement>(null);
+  // 채팅 내용 Element
   const chatListElem = useRef<HTMLDivElement>(null);
+  // 채팅 사이드바에 링크 Element
   const linkElem = useRef<HTMLDivElement>(null);
 
   const [chat, setChat] = useState<string>('');
 
+  // 채팅 사이드 바를 열고 닫았을 때 변수 셋팅하는 함수
   useEffect(() => {
     if (data.openComment) {
       initialCommentSidebarEvent(commentElem, linkElem);
@@ -43,7 +47,9 @@ function CommentSidebar(data: CommentSideBarProps) {
     }
   };
 
+  // 채팅 전송 함수
   const sendChatEvent = () => {
+    // 실시간 채팅 전송
     sendMessageOfChat(chunkInfo.room_id, {
       content: chat,
       room_no: chunkInfo.room_no,

@@ -17,9 +17,10 @@ const onDebug = (m: any) => {
   console.log('STOMP DEBUG', m);
 };
 
+// TODO 알림방 연결
 const myAlarmConnect = (
-  user_no: number,
-  updateAlarmEvent: (payload: any) => void,
+  user_no: number, // 자신의 primary key
+  updateAlarmEvent: (payload: any) => void, // 알람이 왔을 경우의 Event 함수
 ) => {
   let socket = new SockJS(BASE_URL + '/stomp/chat');
   myAlarmStompClient = Stomp.over(socket);
@@ -54,9 +55,10 @@ const myAlarmConnect = (
   );
 };
 
+// TODO 링크 채팅방 연결
 const chatConnect = (
-  roomId: string,
-  updateChatEvent: (payload: any) => void,
+  roomId: string, // 채팅방 번호
+  updateChatEvent: (payload: any) => void, // 채팅이 왔을 경우의 Event 함수
 ) => {
   let socket = new SockJS(BASE_URL + '/stomp/chat');
   chatStompClient = Stomp.over(socket);
@@ -92,6 +94,7 @@ const chatConnect = (
   );
 };
 
+// TODO 채팅방에 채팅 보내기
 const sendMessageOfChat = (roomId: string, chatInfo: chatInfo) => {
   chatStompClient.send(
     `/pub/chat.message.${roomId}`,
@@ -107,6 +110,7 @@ const sendMessageOfChat = (roomId: string, chatInfo: chatInfo) => {
   );
 };
 
+// TODO 알림방에 알림 보내기
 const sendMessageOfAlarm = (
   user_no: number,
   content: string,
@@ -126,6 +130,7 @@ const sendMessageOfAlarm = (
   );
 };
 
+// TODO 채팅방에 채팅을 좋아요 누르기
 const insertLikeOfChat = (roomId: string, chatInfo: chatInfo) => {
   chatStompClient.send(
     `/pub/chat.insertLike.${roomId}`,
@@ -138,6 +143,7 @@ const insertLikeOfChat = (roomId: string, chatInfo: chatInfo) => {
   );
 };
 
+// TODO 채팅방에 채팅을 삭제 누르기
 const deleteLikeOfChat = (roomId: string, chatInfo: chatInfo) => {
   chatStompClient.send(
     `/pub/chat.deleteLike.${roomId}`,
@@ -151,6 +157,7 @@ const deleteLikeOfChat = (roomId: string, chatInfo: chatInfo) => {
   );
 };
 
+// TODO 채팅방 연결 해제
 const disconnectOfChat = () => {
   if (chatStompClient !== null) {
     chatStompClient.disconnect(() => {
@@ -159,6 +166,7 @@ const disconnectOfChat = () => {
   }
 };
 
+// TODO 알림방 연결 해제
 const disconnectOfMyAlarm = () => {
   if (myAlarmStompClient !== null) {
     myAlarmStompClient.disconnect(() => {

@@ -57,6 +57,7 @@ function LoginModal(data: LoginModalProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authInfo.loading]);
 
+  // 패스워드창에서 엔터를 누를 시 로그인 로직을 수행하는 함수
   const onKeyPressOfPwdEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (mode === 'login') {
@@ -67,6 +68,7 @@ function LoginModal(data: LoginModalProps) {
     }
   };
 
+  // 패스워드 노출 여부를 선택하는 함수
   const onClickOfPwdSuffixEvent = () => {
     if (isPwdOpenEye) {
       // open eye -> close
@@ -135,6 +137,7 @@ function LoginModal(data: LoginModalProps) {
     setPwd('');
   };
 
+  // 존재하는 이메일인지 확인하는 함수
   const isExistEmailEvent = async () => {
     if (!isloginDisabled) {
       setBtnLoading(true);
@@ -182,8 +185,6 @@ function LoginModal(data: LoginModalProps) {
   const googleRegisterRedux = async (response: any) => {
     const user = response.profileObj;
 
-    console.log(user.email);
-
     let retrieveUserResponse = await retrieveUserById(user.email);
 
     if (retrieveUserResponse.isSuccess) {
@@ -202,11 +203,13 @@ function LoginModal(data: LoginModalProps) {
     }
   };
 
+  // 로그인 창 클릭 함수
   const onClickOfFirstTabEvent = () => {
     onClickTab(firstTabElem, secondTabElem);
     setMode('login');
   };
 
+  // 회원가입 창 글릭 함수
   const onClickOfSecondTabEvent = () => {
     onClickTab(secondTabElem, firstTabElem);
     setMode('register');
