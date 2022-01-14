@@ -15,6 +15,7 @@ import {
   LocalRegisterRequest,
   localRegisterResponse,
 } from '../../apis/auth/types';
+import { findParentElem } from '../../asset';
 
 function RegisterModal(data: RegisterModalProps) {
   const categoryModalElem = useRef<HTMLDivElement>(null);
@@ -63,7 +64,8 @@ function RegisterModal(data: RegisterModalProps) {
   };
 
   const onClickTagEvent = (e: any, value: string) => {
-    e.target.classList.toggle('primary');
+    let target = findParentElem('tag', e.target);
+    target?.classList.toggle('primary');
 
     let isExist = false;
     categoryList.forEach(category => {
@@ -144,7 +146,7 @@ function RegisterModal(data: RegisterModalProps) {
         subModalElem={data.profileModalElem}
         onClickButton={onClickProfileBtnEvent}
       />
-      <div className="modal__view sub tag" ref={categoryModalElem}>
+      <div className="modal__view sub scroll" ref={categoryModalElem}>
         {modalError !== '' && (
           <div className="modal__caption-error">{modalError}</div>
         )}

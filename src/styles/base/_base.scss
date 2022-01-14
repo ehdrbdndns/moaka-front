@@ -55,6 +55,10 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.scroll {
+  @include scroll;
+}
+
 a {
   text-decoration: none;
 }
