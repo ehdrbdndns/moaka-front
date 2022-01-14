@@ -14,18 +14,24 @@ import Toast from '../Toast/Toast';
 import { HeaderProps } from './types';
 
 function Header(data: HeaderProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { dispatch, authInfo, userListInfo } = data;
+  const { dispatch, authInfo } = data;
 
   const { push } = useHistory();
   const { pathname } = useLocation();
 
+  // 에러 토스트 Element
   const errorToastElem = useRef<HTMLDivElement>(null);
+
+  // 탐색하기 나만보기 Tab Element
   const firstTabElem = useRef<HTMLDivElement>(null);
   const secondTabElem = useRef<HTMLDivElement>(null);
 
   const [headerActiveTab, setHeaderActiveTab] = useState<string>('first');
+
+  // View에 노출되는 알림 리스트
   const [alarmList, setAlarmList] = useState<Array<alarmInfo>>([]);
+
+  // 새로운 알림이 올 때에 사용되는 변수
   const [alarmInfo, setAlarmInfo] = useState<alarmInfo>();
 
   useEffect(() => {
@@ -60,12 +66,14 @@ function Header(data: HeaderProps) {
     setAlarmInfo(payload);
   };
 
+  // 탐색하기 클릭 시
   const headerFirstTabClick = () => {
     push('/');
     setHeaderActiveTab('first');
     onClickTab(firstTabElem, secondTabElem);
   };
 
+  // 나만보기 클릭 시
   const headerSecondTabClick = () => {
     if (authInfo.data.isLogin) {
       push('/mypage');

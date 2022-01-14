@@ -15,6 +15,9 @@ import { useLocation } from 'react-router';
 import queryString from 'query-string';
 
 function LinkSideBar(data: LinkSideBarProps) {
+  const location = useLocation();
+  const query = queryString.parse(location.search);
+
   const [link, setLink] = useState<string>('');
   const [linkError, setLinkError] = useState<string>('');
   const [linkLoading, setLinkLoading] = useState<boolean>(false);
@@ -31,9 +34,6 @@ function LinkSideBar(data: LinkSideBarProps) {
   const [directoryError, setDirectoryError] = useState<string>('');
 
   const [isBtnLoading, setIsBtnLoading] = useState<boolean>(false);
-
-  const location = useLocation();
-  const query = queryString.parse(location.search);
 
   const onKeyPressOfLink = (e: any) => {
     if (e.key === 'Enter') {

@@ -9,9 +9,8 @@
 @import 'base/base', 'base/fonts', 'base/helpers', 'base/reset';
 
 // 4. Layout-related sections
-@import 'layout/header', 'layout/footer', 'layout/editor', 'layout/tag',
-  'layout/modal', 'layout/card-list', 'layout/navigation', 'layout/sidebar',
-  'layout/archive';
+@import 'layout/header', 'layout/footer', 'layout/modal', 'layout/card-list',
+  'layout/navigation', 'layout/sidebar', 'layout/archive';
 
 // 5. Components
 @import 'components/button', 'components/card', 'components/input',
