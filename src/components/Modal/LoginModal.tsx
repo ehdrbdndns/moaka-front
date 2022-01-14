@@ -209,7 +209,7 @@ function LoginModal(data: LoginModalProps) {
     setMode('login');
   };
 
-  // 회원가입 창 클릭 함수
+  // 회원가입 창 글릭 함수
   const onClickOfSecondTabEvent = () => {
     onClickTab(secondTabElem, firstTabElem);
     setMode('register');
